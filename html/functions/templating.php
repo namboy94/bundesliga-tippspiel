@@ -1,7 +1,7 @@
 <?php
 
-Include "../resources/strings-en.php";
-Include "../resources/urls.php";
+Include "resources/strings-en.php";
+Include "resources/urls.php";
 
 function load_html($html_file) {
 	$content = file_get_contents($html_file, true);
