@@ -37,7 +37,7 @@ function load_header($title) {
 function get_css_theme_file() {
 
 	if ($_SESSION['theme'] === "clean_blog") {
-		return "css/clean-blog.css";
+		return "css/speak.css";
 	} 
 	else {
 		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/" .
