@@ -36,8 +36,8 @@ function load_header($title) {
 
 function get_css_theme_file() {
 
-	if ($_SESSION['theme'] === "placeholder") {
-		return "";
+	if ($_SESSION['theme'] === "clean_blog") {
+		return "css/clean-blog.css";
 	} 
 	else {
 		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/" .
@@ -89,6 +89,11 @@ function load_navbar($page_name) {
 	$default_link = $page_file . "?theme=default";
 	$content = str_replace("@DEFAULT_THEME_NAV", $default_selected, $content);
 	$content = str_replace("@DEFAULT_THEME_SELECTED", $default_link, $content);
+
+	$cleanb_selected = ($theme === 'clean_blog' ? 'class="active"' : "");
+	$cleanb_link = $page_file . "?theme=clean_blog";
+	$content = str_replace("@CLEANB_THEME_NAV", $cleanb_selected, $content);
+	$content = str_replace("@CLEANB_THEME_SELECTED", $cleanb_link, $content);
 
 	$german_selected = ($language === 'de' ? 'class="active"' : "");
 	$german_link = $page_file . "?language=de";
