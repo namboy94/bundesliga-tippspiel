@@ -4,7 +4,8 @@ function get_english_dictionary() {
 
 	return array(
 
-		'@$admin_contact_title' => 'Admin / Developer'
+		'@$ADMIN_CONTACT_TITLE' => 'Admin / Developer',
+		'@$SOURCE_CODE_TITLE' => "Source Code"
 
 	);
 
