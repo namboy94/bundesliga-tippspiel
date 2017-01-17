@@ -14,9 +14,20 @@ echo load_header("Bundesliga Tippspiel - Contact");
 	?>
 
 	<div class="container">
+
 		<div class="jumbotron">
 			<h1>Contact</h1>
 		</div>
+
+		<div class="row">
+
+			<div class="col-sm-4">
+				<h2>@$admin_contact_title</h2>
+				<p><a href="mailto:@!DEV_EMAIL_ADDR">@!DEV_EMAIL_ADDR</a></p>
+			</div>
+
+		</div>
+
 	</div>
 
 </body>

@@ -1,7 +1,11 @@
 <?php
 
+Include "../resources/strings-en.php";
+Include "../resources/urls.php";
+
 function load_html($html_file) {
-	return file_get_contents($html_file, true);
+	$content = file_get_contents($html_file, true);
+	$content = fill_string_variables($content);
 }
 
 function load_header($title) {
@@ -31,6 +35,7 @@ function initialize_session() {
 	if (!isset($_SESSION['theme'])) {
 			session_start();
 			$_SESSION['theme'] = "default";
+			$_SESSION['language'] = "en";
 	}
 }
 
@@ -58,6 +63,35 @@ function load_navbar($page_name) {
 	return $content;
 
 }
+
+function fill_string_variables($content) {
+
+	$urls = get_url_map();
+
+	if ($_SESSION['language'] === "de") {
+		$dictionary = array();
+	}
+	else {
+		$dictionary = get_english_dictionary();
+	}
+
+	$content = fill_strings($content, $dictionary);
+	$content = fill_strings($content, $urls);
+
+	return $content;
+
+}
+
+function fill_strings($content, $dictionary) {
+
+	foreach ($array_keys($dictionary) as $key) {
+		$content = str_replace($key, $dictionary[$key], $content);
+	}
+	return $content;
+
+}
+
+
 
 
 ?>
