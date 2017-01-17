@@ -21,8 +21,8 @@ function get_css_theme_file() {
 		return "";
 	} 
 	else {
-		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/
-		        css/bootstrap.min.css";
+		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/" .
+		       "css/bootstrap.min.css";
 	}
 }
 
