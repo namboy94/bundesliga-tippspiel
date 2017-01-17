@@ -16,7 +16,7 @@ function process_global_gets() {
 		$_SESSION['theme'] = $_GET['theme'];
 	}
 	if (isset($_GET['language'])) {
-		$_SESSION['language'] = $_GET['language']
+		$_SESSION['language'] = $_GET['language'];
 	}
 
 }
