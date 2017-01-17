@@ -57,10 +57,15 @@ function get_current_dictionary() {
 
 function initialize_session() {
 
-	if (!isset($_SESSION['theme'])) {
-			session_start();
+	if (session_id() == "") {
+  		session_start();
+	}
+
+	if (!array_key_exists('theme', $_SESSION['theme'])) {
 			$_SESSION['theme'] = "default";
-			$_SESSION['language'] = "en";
+	}
+	if (!array_key_exists('language', $_SESSION)) {
+		$_SESSION['language'] = "en";
 	}
 }
 
