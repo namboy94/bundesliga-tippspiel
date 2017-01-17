@@ -1,6 +1,6 @@
 <?php
 
-get_english_dictionary() {
+function get_english_dictionary() {
 
 	return array(
 

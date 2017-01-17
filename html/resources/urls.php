@@ -1,6 +1,6 @@
 <?php
 
-get_url_map() {
+function get_url_map() {
 
 	return array(
 
