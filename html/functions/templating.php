@@ -11,10 +11,12 @@ function load_html($html_file) {
 
 function load_header($title) {
 
+	$dictionary = get_current_dictionary();
+	$page_title = $dictionary["@$" . strtoupper($title) . "_TITLE"];
 	$css = '<link rel="stylesheet" href="' . get_css_theme_file() . '">';
 
 	$content = load_html("templates/header.html");
-	$content = str_replace("@TITLE", $title, $content);
+	$content = str_replace("@TITLE", $page_title, $content);
 	$content = str_replace("@CSS_THEME", $css, $content);
 
 	return $content;
@@ -28,6 +30,16 @@ function get_css_theme_file() {
 	else {
 		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/" .
 		       "css/bootstrap.min.css";
+	}
+}
+
+function get_current_dictionary() {
+
+	if ($_SESSION['language'] === "de") {
+		return array();
+	}
+	else {
+		return get_english_dictionary();
 	}
 }
 
@@ -68,13 +80,7 @@ function load_navbar($page_name) {
 function fill_string_variables($content) {
 
 	$urls = get_url_map();
-
-	if ($_SESSION['language'] === "de") {
-		$dictionary = array();
-	}
-	else {
-		$dictionary = get_english_dictionary();
-	}
+	$dictionary = get_current_dictionary();
 
 	$content = fill_strings($content, $dictionary);
 	$content = fill_strings($content, $urls);
