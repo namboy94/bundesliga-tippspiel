@@ -47,7 +47,7 @@ function load_navbar($page_name) {
 	$content = str_replace("@ABOUT_SELECTED", $about_selected, $content);
 	$content = str_replace("@CONTACT_SELECTED", $contact_selected, $content);
 
-	$theme = $_SESSION['theme']
+	$theme = $_SESSION['theme'];
 
 	$default_selected = ($theme === 'default' ? 'class="active"' : "");
 	$default_link = $page_file . "?theme=default";
