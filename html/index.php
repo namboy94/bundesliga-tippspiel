@@ -9,7 +9,7 @@ echo load_header("Bundesliga Tippspiel");
 	
 	<?php
 
-		echo load_navbar()
+		echo load_navbar("home")
 
 	?>
 
