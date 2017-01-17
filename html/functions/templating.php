@@ -9,7 +9,7 @@ function load_header($title) {
 	$content = load_html("templates/header.html");
 	$content = str_replace("@TITLE", $title, $content);
 	$content = str_replace("@CSS_THEME", get_css_theme_file(), $content);
-	return $content
+	return $content;
 }
 
 function get_css_theme_file() {
