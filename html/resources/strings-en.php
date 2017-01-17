@@ -13,7 +13,9 @@ function get_english_dictionary() {
 		'@$HOME_NAV' => "Home",
 		'@$ABOUT_NAV' => "About",
 		'@$CONTACT_NAV' => "Contact",
-		'@$LANGUAGE_NAV' => "Language"
+		'@$THEMES_NAV' => "Themes",
+		'@$GERMAN_LANG' => "German",
+		'@$ENGLISH_LANG' => "English"
 
 	);
 
