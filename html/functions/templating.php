@@ -13,14 +13,13 @@ function load_header($title) {
 }
 
 function get_css_theme_file() {
-	switch ($_SESSION['theme']) {
-		case 'default':
-			return "https://maxcdn.bootstrapcdn.com/
-			        bootstrap/3.3.7/css/bootstrap.min.css"
-			break;
-		
-		default:
-			break;
+
+	if ($_SESSION['theme'] === "placeholder") {
+		return "";
+	} 
+	else {
+		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/
+		        css/bootstrap.min.css";
 	}
 }
 
