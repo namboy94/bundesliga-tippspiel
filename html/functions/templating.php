@@ -85,15 +85,15 @@ function load_navbar($page_name) {
 	$theme = $_SESSION['theme'];
 	$language = $_SESSION['language'];
 
-	$default_selected = ($theme === 'default' ? 'class="active"' : "");
+	$default_sel = ($theme === 'default' ? 'class="active"' : "");
 	$default_link = $page_file . "?theme=default";
-	$content = str_replace("@DEFAULT_THEME_NAV", $default_selected, $content);
-	$content = str_replace("@DEFAULT_THEME_SELECTED", $default_link, $content);
+	$content = str_replace("@DEFAULT_THEME_NAV", $default_link, $content);
+	$content = str_replace("@DEFAULT_THEME_SELECTED", $default_sel, $content);
 
-	$cleanb_selected = ($theme === 'clean_blog' ? 'class="active"' : "");
+	$cleanb_sel = ($theme === 'clean_blog' ? 'class="active"' : "");
 	$cleanb_link = $page_file . "?theme=clean_blog";
-	$content = str_replace("@CLEANB_THEME_NAV", $cleanb_selected, $content);
-	$content = str_replace("@CLEANB_THEME_SELECTED", $cleanb_link, $content);
+	$content = str_replace("@CLEANB_THEME_NAV", $cleanb_link, $content);
+	$content = str_replace("@CLEANB_THEME_SELECTED", $cleanb_sel, $content);
 
 	$german_selected = ($language === 'de' ? 'class="active"' : "");
 	$german_link = $page_file . "?language=de";

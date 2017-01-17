@@ -15,7 +15,9 @@ function get_german_dictionary() {
 		'@$CONTACT_NAV' => "Kontakt",
 		'@$THEMES_NAV' => "Themen",
 		'@$GERMAN_LANG' => "Deutsch",
-		'@$ENGLISH_LANG' => "Englisch"
+		'@$ENGLISH_LANG' => "Englisch",
+		'@$DEFAULT_THEME' => "Standard",
+		'@$CLEANBLOG_THEME' => "Clean-Blog"
 
 	);
 
