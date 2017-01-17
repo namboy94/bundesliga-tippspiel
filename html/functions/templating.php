@@ -6,6 +6,7 @@ Include "resources/urls.php";
 function load_html($html_file) {
 	$content = file_get_contents($html_file, true);
 	$content = fill_string_variables($content);
+	return $content;
 }
 
 function load_header($title) {
