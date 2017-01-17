@@ -55,7 +55,7 @@ function load_navbar($page_name) {
 	$content = str_replace("@DEFAULT_T_SELECTED", $default_selected, $content);
 	$content = str_replace("@DEFAULT_T_LINK", $default_link, $content);
 
-	return $content
+	return $content;
 
 }
 
