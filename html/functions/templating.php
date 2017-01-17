@@ -61,7 +61,7 @@ function initialize_session() {
   		session_start();
 	}
 
-	if (!array_key_exists('theme', $_SESSION['theme'])) {
+	if (!array_key_exists('theme', $_SESSION)) {
 			$_SESSION['theme'] = "default";
 	}
 	if (!array_key_exists('language', $_SESSION)) {
