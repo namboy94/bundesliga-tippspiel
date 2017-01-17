@@ -30,16 +30,16 @@
                     <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li @DEFAULT_T_SELECTED>
-                            <a href="@DEFAULT_T_LINK">Default</a>
+                        <li @DEFAULT_THEME_SELECTED>
+                            <a href="@DEFAULT_THEME_NAV">Default</a>
                         </li>
                     </ul>
                 </li>
-                <li> 
-                    <a href="#">@$GERMAN_LANG</a>
+                <li @NAV_GERMAN_SELECT> 
+                    <a href="@NAV_GERMAN_LINK">@$GERMAN_LANG</a>
                 </li>
-                <li> 
-                    <a href="#">@$ENGLISH_LANG</a>
+                <li @NAV_ENGLISH_SELECT> 
+                    <a href="@NAV_ENGLISH_LINK">@$ENGLISH_LANG</a>
                 </li>
             </ul>
         </div>

@@ -1,12 +1,24 @@
 <?php
 
 Include "resources/strings-en.php";
+Include "resources/strings-de.php";
 Include "resources/urls.php";
 
 function load_html($html_file) {
 	$content = file_get_contents($html_file, true);
 	$content = fill_string_variables($content);
 	return $content;
+}
+
+function process_global_gets() {
+
+	if (isset($_GET['theme'])) {
+		$_SESSION['theme'] = $_GET['theme'];
+	}
+	if (isset($_GET['language'])) {
+		$_SESSION['language'] = $_GET['language']
+	}
+
 }
 
 function load_header($title) {
@@ -36,7 +48,7 @@ function get_css_theme_file() {
 function get_current_dictionary() {
 
 	if ($_SESSION['language'] === "de") {
-		return array();
+		return get_german_dictionary();
 	}
 	else {
 		return get_english_dictionary();
@@ -66,12 +78,22 @@ function load_navbar($page_name) {
 	$content = str_replace("@CONTACT_SELECTED", $contact_selected, $content);
 
 	$theme = $_SESSION['theme'];
+	$language = $_SESSION['language'];
 
 	$default_selected = ($theme === 'default' ? 'class="active"' : "");
 	$default_link = $page_file . "?theme=default";
+	$content = str_replace("@DEFAULT_THEME_NAV", $default_selected, $content);
+	$content = str_replace("@DEFAULT_THEME_SELECTED", $default_link, $content);
 
-	$content = str_replace("@DEFAULT_T_SELECTED", $default_selected, $content);
-	$content = str_replace("@DEFAULT_T_LINK", $default_link, $content);
+	$german_selected = ($language === 'de' ? 'class="active"' : "");
+	$german_link = $page_file . "?language=de";
+	$content = str_replace("@NAV_GERMAN_LINK", $german_link, $content);
+	$content = str_replace("@NAV_GERMAN_SELECT", $german_selected, $content);
+
+	$english_selected = ($language === 'en' ? 'class="active"' : "");
+	$english_link = $page_file . "?language=en";
+	$content = str_replace("@NAV_ENGLISH_LINK", $english_link, $content);
+	$content = str_replace("@NAV_ENGLISH_SELECT", $english_selected, $content);
 
 	return $content;
 
