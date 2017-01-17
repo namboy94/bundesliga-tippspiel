@@ -6,12 +6,12 @@ function load_html($html_file) {
 
 function load_header($title) {
 
-	$css = '<link rel="stylesheet" href="' . get_css_theme_file() . '">'
+	$css = '<link rel="stylesheet" href="' . get_css_theme_file() . '">';
 
 	$content = load_html("templates/header.html");
 	$content = str_replace("@TITLE", $title, $content);
 	$content = str_replace("@CSS_THEME", $css, $content);
-	
+
 	return $content;
 }
 
