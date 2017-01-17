@@ -13,4 +13,10 @@ echo load_header("Bundesliga Tippspiel - Contact");
 
 	?>
 
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Contact</h1>
+		</div>
+	</div>
+
 </body>
