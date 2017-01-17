@@ -12,6 +12,7 @@ function load_html($html_file) {
 function load_header($title) {
 
 	$dictionary = get_current_dictionary();
+	echo "@$" . strtoupper($title) . "_TITLE";
 	$page_title = $dictionary["@$" . strtoupper($title) . "_TITLE"];
 	$css = '<link rel="stylesheet" href="' . get_css_theme_file() . '">';
 
