@@ -86,6 +86,7 @@ function fill_string_variables($content) {
 function fill_strings($content, $dictionary) {
 
 	foreach (array_keys($dictionary) as $key) {
+		echo $key;
 		$content = str_replace($key, $dictionary[$key], $content);
 	}
 	return $content;
