@@ -9,7 +9,7 @@ echo load_header("Bundesliga Tippspiel - Contact");
 	<?php
 
 		echo load_navbar("contact");
-		load_html("templates/contact_body.html");
+		echo load_html("templates/contact_body.html");
 
 	?>
 
