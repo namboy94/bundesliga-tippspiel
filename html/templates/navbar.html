@@ -30,19 +30,19 @@
                     <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li @DEFAULT_THEME_SELECTED>
-                            <a href="@DEFAULT_THEME_NAV">@$DEFAULT_THEME</a>
+                        <li @NAV_ACTIVE_DEFAULT>
+                            <a href="@NAV_LINK_DEFAULT">@$DEFAULT_THEME</a>
                         </li>
-                        <li @CLEANB_THEME_SELECTED>
-                            <a href="@CLEANB_THEME_NAV">@$CLEANBLOG_THEME</a>
+                        <li @NAV_ACTIVE_TERMINAL>
+                            <a href="@NAV_LINK_TERMINAL">@$TERMINAL_THEME</a>
                         </li>
                     </ul>
                 </li>
-                <li @NAV_GERMAN_SELECT> 
-                    <a href="@NAV_GERMAN_LINK">@$GERMAN_LANG</a>
+                <li @NAV_ACTIVE_DE> 
+                    <a href="@NAV_LINK_DE">@$GERMAN_LANG</a>
                 </li>
-                <li @NAV_ENGLISH_SELECT> 
-                    <a href="@NAV_ENGLISH_LINK">@$ENGLISH_LANG</a>
+                <li @NAV_ACTIVE_EN> 
+                    <a href="@NAV_LINK_EN">@$ENGLISH_LANG</a>
                 </li>
             </ul>
         </div>

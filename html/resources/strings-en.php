@@ -17,7 +17,8 @@ function get_english_dictionary() {
 		'@$GERMAN_LANG' => "German",
 		'@$ENGLISH_LANG' => "English",
 		'@$DEFAULT_THEME' => "Default",
-		'@$CLEANBLOG_THEME' => "Clean-Blog"
+		'@$Terminal' => "Terminal",
+		'@$GITLAB_NAME' => "Gitlab"
 
 	);
 

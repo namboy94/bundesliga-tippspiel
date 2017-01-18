@@ -36,16 +36,15 @@ function load_header($title) {
 
 function get_css_theme_file() {
 
-	if ($_SESSION['theme'] === "clean_blog") {
-		return "css/speak.css";
+	if ($_SESSION['theme'] === "terminal") {
+		return "css/hacker.css";
 	} 
 	else {
-		return "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/" .
-		       "css/bootstrap.min.css";
+		return get_url_map()['default_css_theme'];
 	}
 }
 
-function get_current_dictionary() {
+function get_current_dictionary() {'default_css_theme'
 
 	if ($_SESSION['language'] === "de") {
 		return get_german_dictionary();
@@ -82,28 +81,25 @@ function load_navbar($page_name) {
 	$content = str_replace("@ABOUT_SELECTED", $about_selected, $content);
 	$content = str_replace("@CONTACT_SELECTED", $contact_selected, $content);
 
-	$theme = $_SESSION['theme'];
-	$language = $_SESSION['language'];
+	$content = fill_navbar_element("theme", "default", $page_file, $content);
+	$content = fill_navbar_element("theme", "terminal", $page_file, $content);
+	$content = fill_navbar_element("language", "en", $page_file, $content);
+	$content = fill_navbar_element("language", "de", $page_file, $content);
 
-	$default_sel = ($theme === 'default' ? 'class="active"' : "");
-	$default_link = $page_file . "?theme=default";
-	$content = str_replace("@DEFAULT_THEME_NAV", $default_link, $content);
-	$content = str_replace("@DEFAULT_THEME_SELECTED", $default_sel, $content);
+	return $content;
 
-	$cleanb_sel = ($theme === 'clean_blog' ? 'class="active"' : "");
-	$cleanb_link = $page_file . "?theme=clean_blog";
-	$content = str_replace("@CLEANB_THEME_NAV", $cleanb_link, $content);
-	$content = str_replace("@CLEANB_THEME_SELECTED", $cleanb_sel, $content);
+}
 
-	$german_selected = ($language === 'de' ? 'class="active"' : "");
-	$german_link = $page_file . "?language=de";
-	$content = str_replace("@NAV_GERMAN_LINK", $german_link, $content);
-	$content = str_replace("@NAV_GERMAN_SELECT", $german_selected, $content);
+function fill_navbar_element($keyname, $keyvalue, $page_file, $content) {
 
-	$english_selected = ($language === 'en' ? 'class="active"' : "");
-	$english_link = $page_file . "?language=en";
-	$content = str_replace("@NAV_ENGLISH_LINK", $english_link, $content);
-	$content = str_replace("@NAV_ENGLISH_SELECT", $english_selected, $content);
+	$link = $page_file . "?" . $keyname . "=" . $keyvalue;
+	$active = ($keyvalue === $_SESSION[$keyname] ? 'clas="active"' : "");
+
+	$nav_link = "@NAV_LINK_" + strtoupper($keyvalue);
+	$nav_active = "NAV_ACTIVE_" + strtoupper($keyvalue);
+
+	$content = str_replace($nav_link, $link, $content);
+	$content = str_replace($nav_active, $active, $content);
 
 	return $content;
 
