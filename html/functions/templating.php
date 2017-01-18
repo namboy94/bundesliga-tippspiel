@@ -76,13 +76,9 @@ function load_navbar($page_name) {
 	$page_file = ($page_name == "home" ? "index.php" : $page_name . ".php");
 
 	$home_selected = ($page_name === "home" ? 'class="active"' : "");
-	$about_selected = ($page_name === "about" ? 'class="active"' : "");
-	$contact_selected = ($page_name === "contact" ? 'class="active"' : "");
 
 	$content = load_html("templates/navbar.html");
 	$content = str_replace("@HOME_SELECTED", $home_selected, $content);
-	$content = str_replace("@ABOUT_SELECTED", $about_selected, $content);
-	$content = str_replace("@CONTACT_SELECTED", $contact_selected, $content);
 
 	$content = fill_navbar_element("theme", "default", $page_file, $content);
 	$content = fill_navbar_element("theme", "terminal", $page_file, $content);
