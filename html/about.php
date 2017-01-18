@@ -10,7 +10,8 @@ echo load_header("about");
 	
 	<?php
 
-		echo load_navbar("about")
+		echo load_navbar("about");
+		echo load_html("templates/about_body.html");
 
 	?>
 
