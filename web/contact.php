@@ -1,5 +1,5 @@
 <?php
-Include "../php_functions/templating.php";
+Include "php_functions/templating.php";
 initialize_session();
 process_global_gets();
 echo load_header("contact");
