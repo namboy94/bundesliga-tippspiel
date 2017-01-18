@@ -44,7 +44,7 @@ function get_css_theme_file() {
 	}
 }
 
-function get_current_dictionary() {'default_css_theme'
+function get_current_dictionary() {
 
 	if ($_SESSION['language'] === "de") {
 		return get_german_dictionary();
