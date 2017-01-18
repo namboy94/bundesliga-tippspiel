@@ -1,5 +1,6 @@
 <?php
 
+Include "resources/strings.php"
 Include "resources/strings-en.php";
 Include "resources/strings-de.php";
 Include "resources/urls.php";
@@ -111,9 +112,11 @@ function fill_string_variables($content) {
 
 	$urls = get_url_map();
 	$dictionary = get_current_dictionary();
+	$strings = get_strings();
 
 	$content = fill_strings($content, $dictionary);
 	$content = fill_strings($content, $urls);
+	$content = fill_strings($content, $strings);
 
 	return $content;
 
