@@ -40,7 +40,7 @@ function get_css_theme_file() {
 		return "css/hacker.css";
 	} 
 	else {
-		return get_url_map()['default_css_theme'];
+		return get_url_map()['@!DEFAULT_CSS_THEME'];
 	}
 }
 
@@ -60,10 +60,12 @@ function initialize_session() {
   		session_start();
 	}
 
-	if (!array_key_exists('theme', $_SESSION)) {
+	if (!array_key_exists('theme', $_SESSION) 
+		|| $_SESSION['theme'] === "") {
 			$_SESSION['theme'] = "default";
 	}
-	if (!array_key_exists('language', $_SESSION)) {
+	if (!array_key_exists('language', $_SESSION)
+		|| $_SESSION['language'] === "") {
 		$_SESSION['language'] = "en";
 	}
 }
@@ -96,7 +98,7 @@ function fill_navbar_element($keyname, $keyvalue, $page_file, $content) {
 	$active = ($keyvalue === $_SESSION[$keyname] ? 'clas="active"' : "");
 
 	$nav_link = "@NAV_LINK_" + strtoupper($keyvalue);
-	$nav_active = "NAV_ACTIVE_" + strtoupper($keyvalue);
+	$nav_active = "@NAV_ACTIVE_" + strtoupper($keyvalue);
 
 	$content = str_replace($nav_link, $link, $content);
 	$content = str_replace($nav_active, $active, $content);
