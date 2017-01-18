@@ -1,6 +1,6 @@
 <?php
 
-Include "resources/strings.php"
+Include "resources/strings.php";
 Include "resources/strings-en.php";
 Include "resources/strings-de.php";
 Include "resources/urls.php";
