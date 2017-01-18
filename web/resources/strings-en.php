@@ -9,7 +9,7 @@ function get_english_dictionary() {
 		'@$HOME_TITLE' => "Bundesliga Betting Game - HOME",
 		'@$ABOUT_TITLE' => "Bundesliga Betting Game - ABOUT",
 		'@$CONTACT_TITLE' => "Bundesliga Betting Game - CONTACT",
-        '@$SIGNUP_TITLE' => "Login",
+        '@$SIGNUP_TITLE' => "Bundesliga Betting Game - Login",
 		'@$NAVBAR_TITLE' => "Bundesliga Betting Game",
 		'@$HOME_NAV' => "Home",
 		'@$ABOUT_NAV' => "About",
@@ -21,7 +21,9 @@ function get_english_dictionary() {
 		'@$DEFAULT_THEME' => "Default",
 		'@$TERMINAL_THEME' => "Terminal",
 		'@$GITLAB_NAME' => "Gitlab",
-		'@$ABOUT_TEXT' => file_get_contents("resources/impressum.en", true)
+		'@$ABOUT_TEXT' => file_get_contents("resources/impressum.en", true),
+        '@$SIGNUP_HEADER' => "Signup",
+        '@$LOGIN_HEADER' => "Log In"
 
 	);
 

@@ -9,7 +9,7 @@ function get_german_dictionary() {
 		'@$HOME_TITLE' => "Bundesliga Tippspiel - HOME",
 		'@$ABOUT_TITLE' => "Bundesliga Tippspiel - IMPRESSUM",
 		'@$CONTACT_TITLE' => "Bundesliga Tippspiel - KONTAKT",
-        '@$SIGNUP_TITLE' => "Login",
+        '@$SIGNUP_TITLE' => "Bundesliga Tippspiel - Login",
 		'@$NAVBAR_TITLE' => "Bundesliga Tippspiel",
 		'@$HOME_NAV' => "Home",
 		'@$ABOUT_NAV' => "Impressum",
@@ -21,7 +21,9 @@ function get_german_dictionary() {
 		'@$DEFAULT_THEME' => "Standard",
 		'@$TERMINAL_THEME' => "Terminal",
 		'@$GITLAB_NAME' => "Gitlab",
-		'@$ABOUT_TEXT' => file_get_contents("resources/impressum.de", true)
+		'@$ABOUT_TEXT' => file_get_contents("resources/impressum.de", true),
+        '@$SIGNUP_HEADER' => "Registrieren",
+        '@$LOGIN_HEADER' => "Anmelden"
 
 	);
 

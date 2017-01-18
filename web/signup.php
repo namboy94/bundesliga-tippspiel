@@ -11,6 +11,7 @@ echo load_header("signup");
 <?php
 
     echo load_navbar("signup");
+    echo load_html("html_content/signup_body.html");
     echo load_html("html_content/templates/footer.html");
 
 ?>
