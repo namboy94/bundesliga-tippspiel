@@ -11,6 +11,7 @@ echo load_header("contact");
 
 		echo load_navbar("contact");
 		echo load_html("templates/contact_body.html");
+		echo load_html("templates/footer.html");
 
 	?>
 

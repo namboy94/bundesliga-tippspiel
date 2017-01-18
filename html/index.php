@@ -10,7 +10,8 @@ echo load_header("home");
 	
 	<?php
 
-		echo load_navbar("home")
+		echo load_navbar("home");
+		echo load_html("templates/footer.html");
 
 	?>
 

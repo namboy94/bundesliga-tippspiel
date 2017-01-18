@@ -12,6 +12,7 @@ echo load_header("about");
 
 		echo load_navbar("about");
 		echo load_html("templates/about_body.html");
+		echo load_html("templates/footer.html");
 
 	?>
 
