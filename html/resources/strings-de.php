@@ -19,6 +19,7 @@ function get_german_dictionary() {
 		'@$DEFAULT_THEME' => "Standard",
 		'@$TERMINAL_THEME' => "Terminal",
 		'@$GITLAB_NAME' => "Gitlab",
+		"@$ABOUT_TEXT" => file_get_contents("resources/impressum.de", true)
 
 	);
 

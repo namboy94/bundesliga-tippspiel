@@ -18,7 +18,8 @@ function get_english_dictionary() {
 		'@$ENGLISH_LANG' => "English",
 		'@$DEFAULT_THEME' => "Default",
 		'@$TERMINAL_THEME' => "Terminal",
-		'@$GITLAB_NAME' => "Gitlab"
+		'@$GITLAB_NAME' => "Gitlab",
+		"@$ABOUT_TEXT" => file_get_contents("resources/impressum.en", true)
 
 	);
 
