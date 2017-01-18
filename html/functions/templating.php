@@ -95,10 +95,12 @@ function load_navbar($page_name) {
 function fill_navbar_element($keyname, $keyvalue, $page_file, $content) {
 
 	$link = $page_file . "?" . $keyname . "=" . $keyvalue;
-	$active = ($keyvalue === $_SESSION[$keyname] ? 'clas="active"' : "");
+	$active = ($keyvalue === $_SESSION[$keyname] ? 'class="active"' : "");
 
 	$nav_link = "@NAV_LINK_" + strtoupper($keyvalue);
 	$nav_active = "@NAV_ACTIVE_" + strtoupper($keyvalue);
+	echo $nav_link;
+	echo $nav_active;
 
 	$content = str_replace($nav_link, $link, $content);
 	$content = str_replace($nav_active, $active, $content);
