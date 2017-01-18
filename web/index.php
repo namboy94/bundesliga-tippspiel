@@ -1,5 +1,5 @@
 <?php
-Include "functions/templating.php";
+Include "php_functions/templating.php";
 initialize_session();
 process_global_gets();
 echo load_header("home");
@@ -11,7 +11,7 @@ echo load_header("home");
 	<?php
 
 		echo load_navbar("home");
-		echo load_html("templates/footer.html");
+		echo load_html("html_content/templates/footer.web");
 
 	?>
 

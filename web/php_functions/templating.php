@@ -5,6 +5,7 @@ Include "resources/strings-en.php";
 Include "resources/strings-de.php";
 Include "resources/urls.php";
 
+
 function load_html($html_file) {
 	$content = file_get_contents($html_file, true);
 	$content = fill_string_variables($content);
@@ -28,7 +29,7 @@ function load_header($title) {
 	$page_title = $dictionary["@$" . strtoupper($title) . "_TITLE"];
 	$css = '<link rel="stylesheet" href="' . get_css_theme_file() . '">';
 
-	$content = load_html("templates/header.html");
+	$content = load_html("html_content/templates/header.web");
 	$content = str_replace("@TITLE", $page_title, $content);
 	$content = str_replace("@CSS_THEME", $css, $content);
 
@@ -77,7 +78,7 @@ function load_navbar($page_name) {
 
 	$home_selected = ($page_name === "home" ? 'class="active"' : "");
 
-	$content = load_html("templates/navbar.html");
+	$content = load_html("html_content/templates/navbar.web");
 	$content = str_replace("@HOME_SELECTED", $home_selected, $content);
 
 	$content = fill_navbar_element("theme", "default", $page_file, $content);

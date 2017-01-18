@@ -6,12 +6,12 @@ deploy_page:
   only:
     - master
   script:
-    - rsync -av html/ /var/www/tippspiel.krumreyh.com/public_html --delete-after
+    - rsync -av web/ /var/www/tippspiel.krumreyh.com/public_html --delete-after
 
 deploy_demo_page:
   stage: deploy
   only:
     - develop
   script:
-    - rsync -av html/ /var/www/demo.tippspiel.krumreyh.com/public_html
+    - rsync -av web/ /var/www/demo.tippspiel.krumreyh.com/public_html
       --delete-after
