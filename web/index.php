@@ -11,7 +11,7 @@ echo load_header("home");
 	<?php
 
 		echo load_navbar("home");
-		echo load_html("html_content/templates/footer.web");
+		echo load_html("html_content/templates/footer.html");
 
 	?>
 

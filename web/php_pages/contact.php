@@ -10,8 +10,8 @@ echo load_header("contact");
 	<?php
 
 		echo load_navbar("contact");
-		echo load_html("html_content/contact_body.web");
-		echo load_html("html_content/templates/footer.web");
+		echo load_html("html_content/contact_body.html");
+		echo load_html("html_content/templates/footer.html");
 
 	?>
 

@@ -11,8 +11,8 @@ echo load_header("about");
 	<?php
 
 		echo load_navbar("about");
-		echo load_html("html_content/about_body.web");
-		echo load_html("html_content/templates/footer.web");
+		echo load_html("html_content/about_body.html");
+		echo load_html("html_content/templates/footer.html");
 
 	?>
 
