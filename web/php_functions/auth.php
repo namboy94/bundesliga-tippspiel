@@ -34,7 +34,13 @@ function get_next_user_id() {
 
     $db = open_db_connection();
     $result = $db->query("SELECT MAX(user_id) FROM users");
-    $next_id = $result->fetch_assoc()["user_id"] + 1;
+
+    if ($result->num_rows == 0) {
+        $next_id = 1;
+    }
+    else {
+        $next_id = $result->fetch_assoc()["user_id"] + 1;
+    }
 
     $db->close();
 
