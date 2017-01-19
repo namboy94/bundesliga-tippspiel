@@ -69,13 +69,10 @@ function verify_password($username, $password) {
 
 function open_db_connection() {
 
-	$user = file_get_contents("../secrets/db_user", true);
-	$pass = file_get_contents("../secrets/db_pass", true);
+	$user = trim(file_get_contents("../secrets/db_user", true));
+	$pass = trim(file_get_contents("../secrets/db_pass", true));
 
-	echo $user;
-	echo $pass;
-
-	return new mysqli("localhost", "hermann", "123456", "bundesliga_tippspiel");
+	return new mysqli("localhost", $user, $pass, "bundesliga_tippspiel");
 }
 
 ?>
