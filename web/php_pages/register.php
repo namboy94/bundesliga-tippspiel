@@ -7,6 +7,8 @@ $username = $_POST["register_username"];
 $password = $_POST["register_password"];
 $repeat_password = $_POST["register_password_repeat"];
 
+echo $username;
+
 if (username_exists($username)) {
     echo "Username Exists";
 }
