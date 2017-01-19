@@ -4,6 +4,7 @@ function username_exists($username) {
 	$db = open_db_connection();
 	
 	$stmt = $db->prepare('SELECT name FROM users WHERE name = ?;');
+	echo $stmt;
 	$stmt->bind_param('s', $username);
 	$stmt->execute();
 
