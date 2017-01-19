@@ -10,7 +10,7 @@
 
         </div>
 
-        <div class="col-sm-6 col-md-6 col-lg-6 text-center">
+        <div class="col-sm-6 col-md-6 col-lg-6">
             <h2>@$LOGIN_HEADER</h2>
             <form action="../php_pages/login.php" method="post">
                 <p>Email: <input type="text" name="email_address" /></p>
@@ -19,18 +19,18 @@
             </form>
 
 
-            <form class="form-horizontal" action="../php_pages/login.php">
+            <form class="form-horizontal" action="../php_pages/login.php" method="post">
                 <fieldset>
                     <div class="form-group">
                         <label for="email_address" class="col-lg-2 control-label">Email</label>
                         <div class="col-lg-10">
-                            <input class="form-control" id="email_address" placeholder="Email" type="text">
+                            <input class="form-control" id="email_address" placeholder="Email" type="text" name="email_address">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-lg-2 control-label">Password</label>
                         <div class="col-lg-10">
-                            <input class="form-control" id="password" placeholder="Password" type="password">
+                            <input class="form-control" id="password" placeholder="Password" type="password" name="password">
                         </div>
                     </div>
                     <div class="form-group">
