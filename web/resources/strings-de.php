@@ -27,7 +27,8 @@ function get_german_dictionary() {
         '@$EMAIL_TITLE' => "Email Addresse",
         '@$USERNAME_TITLE' => "Benutzername",
         '@$PASSWORD_TITLE' => "Passwort",
-        '@$SUBMIT_TITLE' => "Bestätigen"
+        '@$SUBMIT_TITLE' => "Bestätigen",
+        '@$PASSWORD_REPEAT' => "Passwort (Nochmals)"
 
 	);
 

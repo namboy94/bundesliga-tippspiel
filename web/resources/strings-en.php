@@ -27,7 +27,8 @@ function get_english_dictionary() {
         '@$EMAIL_TITLE' => "Email Address",
         '@$USERNAME_TITLE' => "Username",
         '@$PASSWORD_TITLE' => "Password",
-        '@$SUBMIT_TITLE' => "Confirm"
+        '@$SUBMIT_TITLE' => "Confirm",
+        '@$PASSWORD_REPEAT' => "Password (Repeat)"
 
 	);
 
