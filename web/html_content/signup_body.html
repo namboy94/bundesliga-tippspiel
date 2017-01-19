@@ -7,10 +7,16 @@
 
         <div class="col-sm-6 col-md-6 col-lg-6 text-center">
             <h2>@$SIGNUP_HEADER</h2>
+
         </div>
 
         <div class="col-sm-6 col-md-6 col-lg-6 text-center">
             <h2>@$LOGIN_HEADER</h2>
+            <form action="php_pages/login.php" method="post">
+                <p>Email: <input type="text" name="email_address" /></p>
+                <p>Password: <input type="text" name="password" /></p>
+                <input type="submit" name="submit" value="Submit" />
+            </form>
         </div>
 
     </div>
