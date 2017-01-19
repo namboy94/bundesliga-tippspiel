@@ -33,13 +33,14 @@ function create_new_user($email_address, $username, $password) {
 function get_next_user_id() {
 
     $db = open_db_connection();
-    $result = $db->query("SELECT MAX(user_id) FROM users");
+    $result = $db->query("SELECT MAX(user_id) AS id FROM users");
 
+    echo $result->num_rows;
     if ($result->num_rows == 0) {
         $next_id = 1;
     }
     else {
-        $next_id = $result->fetch_assoc()["user_id"] + 1;
+        $next_id = $result->fetch_assoc()["id"] + 1;
     }
 
     $db->close();
@@ -78,6 +79,7 @@ function verify_password($username, $password) {
 
 function open_db_connection() {
 
+    mysqli_report(MYSQLI_REPORT_ALL);
 	$user = trim(file_get_contents("../secrets/db_user", true));
 	$pass = trim(file_get_contents("../secrets/db_pass", true));
 
