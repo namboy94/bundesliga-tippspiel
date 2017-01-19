@@ -79,7 +79,6 @@ function verify_password($username, $password) {
 
 function open_db_connection() {
 
-    mysqli_report(MYSQLI_REPORT_ALL);
 	$user = trim(file_get_contents("../secrets/db_user", true));
 	$pass = trim(file_get_contents("../secrets/db_pass", true));
 
