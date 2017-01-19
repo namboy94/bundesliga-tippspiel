@@ -75,7 +75,7 @@ function open_db_connection() {
 	echo $user;
 	echo $pass;
 
-	return new mysqli("localhost", $user, $pass, "bundesliga_tippspiel");
+	return new mysqli("localhost", "hermann", "123456", "bundesliga_tippspiel");
 }
 
 ?>
