@@ -23,7 +23,11 @@ function get_german_dictionary() {
 		'@$GITLAB_NAME' => "Gitlab",
 		'@$ABOUT_TEXT' => file_get_contents("resources/impressum.de", true),
         '@$SIGNUP_HEADER' => "Registrieren",
-        '@$LOGIN_HEADER' => "Anmelden"
+        '@$LOGIN_HEADER' => "Anmelden",
+        '@$EMAIL_TITLE' => "Email Addresse",
+        '@$USERNAME_TITLE' => "Benutzername",
+        '@$PASSWORD_TITLE' => "Passwort",
+        '@$SUBMIT_TITLE' => "Bestätigen"
 
 	);
 

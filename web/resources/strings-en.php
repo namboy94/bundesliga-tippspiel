@@ -23,7 +23,11 @@ function get_english_dictionary() {
 		'@$GITLAB_NAME' => "Gitlab",
 		'@$ABOUT_TEXT' => file_get_contents("resources/impressum.en", true),
         '@$SIGNUP_HEADER' => "Signup",
-        '@$LOGIN_HEADER' => "Log In"
+        '@$LOGIN_HEADER' => "Log In",
+        '@$EMAIL_TITLE' => "Email Address",
+        '@$USERNAME_TITLE' => "Username",
+        '@$PASSWORD_TITLE' => "Password",
+        '@$SUBMIT_TITLE' => "Confirm"
 
 	);
 
