@@ -18,12 +18,10 @@ function username_exists($username) {
 function create_new_user($email_address, $username, $password) {
 	$hash = password_hash($password, PASSWORD_BCRYPT);
 	$db = open_db_connection();
+	$id = get_next_user_id();
 
 	$stmt = $db->prepare('INSERT INTO users (user_id, email_address, username, password_hash) VALUES (?, ?, ?, ?);');
-	$stmt->bind_param('i', get_next_user_id());
-	$stmt->bind_param('s', $email_address);
-    $stmt->bind_param('s', $username);
-    $stmt->bind_param('s', $hash);
+	$stmt->bind_param('isss', $id, $email_address, $username, $hash);
     $stmt->execute();
 
     $db->commit();
@@ -35,7 +33,6 @@ function get_next_user_id() {
     $db = open_db_connection();
     $result = $db->query("SELECT MAX(user_id) AS id FROM users");
 
-    echo $result->num_rows;
     if ($result->num_rows == 0) {
         $next_id = 1;
     }
