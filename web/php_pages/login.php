@@ -1,7 +1,7 @@
 <?php
 
-echo $_POST["email_address"];
-echo $_POST["password"];
+echo $_POST["login_email"];
+echo $_POST["login_password"];
 
 
 ?>
