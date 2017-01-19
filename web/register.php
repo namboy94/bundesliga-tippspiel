@@ -13,7 +13,12 @@ if (username_exists($username)) {
     echo "Username Exists";
 }
 else {
-    echo "Username Does Not Exist";
+    echo "Username Does Not Exist. Creating User: ";
+    create_new_user($email, $username, $password);
+
+    if (username_exists($username)) {
+        echo "Username Exists Now";
+    }
 }
 
 
