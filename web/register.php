@@ -1,6 +1,6 @@
 <?php
 
-Include "../php_functions/auth.php";
+Include "php_functions/auth.php";
 
 $email = $_POST["register_email"];
 $username = $_POST["register_username"];
