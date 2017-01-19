@@ -26,6 +26,8 @@ function create_new_user($email_address, $username, $password) {
 
     $db->commit();
     $db->close();
+
+    return "AAAAAAAAA";
 }
 
 function get_next_user_id() {

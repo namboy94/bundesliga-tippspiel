@@ -6,6 +6,7 @@ function get_german_dictionary() {
 
 		'@$ADMIN_CONTACT_TITLE' => 'Administrator',
 		'@$SOURCE_CODE_TITLE' => "Quellcode",
+        '@$WEBSITE_NAME' => "Bundesliga Tippspiel",
 		'@$HOME_TITLE' => "Bundesliga Tippspiel - HOME",
 		'@$ABOUT_TITLE' => "Bundesliga Tippspiel - IMPRESSUM",
 		'@$CONTACT_TITLE' => "Bundesliga Tippspiel - KONTAKT",
@@ -28,7 +29,10 @@ function get_german_dictionary() {
         '@$USERNAME_TITLE' => "Benutzername",
         '@$PASSWORD_TITLE' => "Passwort",
         '@$SUBMIT_TITLE' => "Bestätigen",
-        '@$PASSWORD_REPEAT' => "Passwort (Nochmals)"
+        '@$PASSWORD_REPEAT' => "Passwort (Nochmals)",
+        '@$EMAIL_CONFIRMATION' => "Vielen Dank für ihre Registrierung für das Bundesliga Tippspiel!\n\n" .
+                                  "Um ihre Registrierung zu vervollständigen, clicken Sie den nachfolgenden Link:\n\n",
+        '@$CONFIRMATION_NAME' => "Confirmation"
 
 	);
 

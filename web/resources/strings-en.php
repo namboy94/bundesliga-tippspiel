@@ -6,6 +6,7 @@ function get_english_dictionary() {
 
 		'@$ADMIN_CONTACT_TITLE' => 'Admin / Developer',
 		'@$SOURCE_CODE_TITLE' => "Source Code",
+        '@$WEBSITE_NAME' => "Bundesliga Betting Game",
 		'@$HOME_TITLE' => "Bundesliga Betting Game - HOME",
 		'@$ABOUT_TITLE' => "Bundesliga Betting Game - ABOUT",
 		'@$CONTACT_TITLE' => "Bundesliga Betting Game - CONTACT",
@@ -28,7 +29,10 @@ function get_english_dictionary() {
         '@$USERNAME_TITLE' => "Username",
         '@$PASSWORD_TITLE' => "Password",
         '@$SUBMIT_TITLE' => "Confirm",
-        '@$PASSWORD_REPEAT' => "Password (Repeat)"
+        '@$PASSWORD_REPEAT' => "Password (Repeat)",
+        '@$EMAIL_CONFIRMATION' => "Thank you for signing up for the Bundesliga Betting Game!\n\n" .
+                                  "To finish your registration, click on the link below:\n\n",
+        '@$CONFIRMATION_NAME' => "Confirmation"
 
 	);
 
