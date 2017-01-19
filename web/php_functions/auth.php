@@ -34,7 +34,7 @@ function get_next_user_id() {
 
     $db = open_db_connection();
     $result = $db->query("SELECT MAX(user_id) FROM users");
-    $next_id = $result->fetch_assoc()["id"] + 1;
+    $next_id = $result->fetch_assoc()["user_id"] + 1;
 
     $db->close();
 
@@ -63,7 +63,7 @@ function verify_password($username, $password) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $hash = $result->fetch_assoc()["hash"];
+    $hash = $result->fetch_assoc()["password_hash"];
     $db->close();
 
     return password_verify($password, $hash);
