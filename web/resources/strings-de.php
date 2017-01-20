@@ -32,7 +32,21 @@ function get_german_dictionary() {
         '@$PASSWORD_REPEAT' => "Passwort (Nochmals)",
         '@$EMAIL_CONFIRMATION' => "Vielen Dank für ihre Registrierung für das Bundesliga Tippspiel!\n\n" .
                                   "Um ihre Registrierung zu vervollständigen, clicken Sie den nachfolgenden Link:\n\n",
-        '@$CONFIRMATION_NAME' => "Confirmation"
+        '@$CONFIRMATION_NAME' => "Bestätigung",
+        '@$PASSWORD_MISMATCH_TITLE' => "Passwörter stimmen nicht überein",
+        '@$PASSWORD_MISMATCH_BODY' => "Bitte geb das Passwort noch einmal ein",
+        '@$NO_EMAIL_TITLE' => "Keine Email Adresse",
+        '@$NO_EMAIL_BODY' => "Bitte geb eine Email Adresse an",
+        '@$NO_USERNAME_TITLE' => "Kein Nutzername angegeben",
+        '@$NO_USERNAME_BODY' => "Bitte gebe einen Nutzernamen an",
+        '@$NO_PASSWORD_TITLE' => "Kein Passwort eingegeben",
+        '@$NO_PASSWORD_BODY' => "Bitte geb ein Passwort an",
+        '@$USERNAME_EXISTS_TITLE' => "Nutzername existiert bereits",
+        '@$USERNAME_EXISTST_BODY' => "Bitte wahle einen anderen Nutzernamen",
+        '@$EMAIL_USED_TITLE' => "Email Adresse bereits verwendet",
+        '@$EMAIL_USED_BODY' => "Bitte benutze eine andere Email Adresse",
+        '@$PASSWORD_TOO_SHORT_TITLE' => 'Passwort zu kurz',
+        '@$PASSWORD_TOO_SHORT_BODY' => "Bitte geb ein Passwort mit mindestens 8 Zeichen an"
 
 	);
 

@@ -16,6 +16,20 @@ function username_exists($username) {
 	return $result->num_rows > 0;
 }
 
+function email_used($email_address) {
+
+    $db = open_db_connection();
+
+    $stmt = $db->prepare('SELECT email_address FROM users WHERE email_address = ?;');
+    $stmt->bind_param('s', $email_address);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $db->close();
+
+    return $result->num_rows > 0;
+}
+
 function create_new_user($email_address, $username, $password) {
 
 	$hash = password_hash($password, PASSWORD_BCRYPT);

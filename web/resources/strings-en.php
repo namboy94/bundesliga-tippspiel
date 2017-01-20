@@ -32,7 +32,21 @@ function get_english_dictionary() {
         '@$PASSWORD_REPEAT' => "Password (Repeat)",
         '@$EMAIL_CONFIRMATION' => "Thank you for signing up for the Bundesliga Betting Game!\n\n" .
                                   "To finish your registration, click on the link below:\n\n",
-        '@$CONFIRMATION_NAME' => "Confirmation"
+        '@$CONFIRMATION_NAME' => "Confirmation",
+        '@$PASSWORD_MISMATCH_TITLE' => "Password Mismatch",
+        '@$PASSWORD_MISMATCH_BODY' => "Please enter your password again",
+        '@$NO_EMAIL_TITLE' => "No email address entered",
+        '@$NO_EMAIL_BODY' => "Please enter a valid email address",
+        '@$NO_USERNAME_TITLE' => "No username provided",
+        '@$NO_USERNAME_BODY' => "Please enter a username",
+        '@$NO_PASSWORD_TITLE' => "No password entered",
+        '@$NO_PASSWORD_BODY' => "Please enter a password",
+        '@$USERNAME_EXISTS_TITLE' => "This username already exists",
+        '@$USERNAME_EXISTST_BODY' => "Please use a different username",
+        '@$EMAIL_USED_TITLE' => "This email address is was already used",
+        '@$EMAIL_USED_BODY' => "Please use a different email address",
+        '@$PASSWORD_TOO_SHORT_TITLE' => "This password is too short",
+        '@$PASSWORD_TOO_SHORT_BODY' => "Please enter a password with at least 8 characters"
 
 	);
 

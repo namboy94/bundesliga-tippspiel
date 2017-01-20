@@ -17,12 +17,26 @@ switch ($_SESSION['language']) {
         $dictionary = get_english_dictionary();
 }
 
-if ($password != $repeat_password) {
+if ($email === "") {
+    header('Location: signup.php?no_email=true');
+}
+else if ($username === "") {
+    header('Location: signup.php?no_username=true');
+}
+else if ($password) {
+    header('Location: signup.php?no_password=true');
+}
+else if ($password != $repeat_password) {
     header('Location: signup.php?password_mismatch=true');
 }
-
-if (username_exists($username)) {
-    echo "Username Exists";
+else if (username_exists($username)) {
+    header('Location: signup.php?username_exists=true');
+}
+else if (email_used($email)) {
+    header('Location: signup.php?email_used=true');
+}
+else if (strlen($password) < 8) {
+    header('Loaction: signup.php?password_too_short=true');
 }
 else {
 
@@ -33,7 +47,7 @@ else {
     $body = $dictionary['@$EMAIL_CONFIRMATION'] . "tippspiel.krumreyh.com/confirmation.php?" . $confirmation;
     mail($email, $title, $body, $from);
 
-    header('Location: login.php?registration=initialized');
+    header('Location: signup.php?registration=initialized');
 
 }
 
