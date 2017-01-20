@@ -17,6 +17,10 @@ switch ($_SESSION['language']) {
         $dictionary = get_english_dictionary();
 }
 
+if ($password != $repeat_password) {
+    header('Location: signup.php?password_mismatch=true');
+}
+
 if (username_exists($username)) {
     echo "Username Exists";
 }
@@ -26,10 +30,10 @@ else {
 
     $from = "From: " . $dictionary['@$WEBSITE_NAME']  . "<noreply@tippspiel.krumreyh.com>";
     $title = $dictionary['@$CONFIRMATION'];
-    $body = "tippspiel.krumreyh.com/confirmation.php?" . $dictionary['@$EMAIL_CONFIRMATION'] . $confirmation;
+    $body = $dictionary['@$EMAIL_CONFIRMATION'] . "tippspiel.krumreyh.com/confirmation.php?" . $confirmation;
     mail($email, $title, $body, $from);
 
-    header('Location: login.php');
+    header('Location: login.php?registration=initialized');
 
 }
 

@@ -12,6 +12,11 @@ echo load_header("signup");
 
     echo load_navbar("signup");
     echo load_html("html_content/signup_body.html");
+
+    if (isset($_GET['password_missmatch'])) {
+        generate_error_message("Test", "Password Missmatch");
+    }
+
     echo load_html("html_content/templates/footer.html");
 
 ?>

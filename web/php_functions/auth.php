@@ -3,6 +3,7 @@
 # user_id, username, email_address, password_hash
 
 function username_exists($username) {
+
 	$db = open_db_connection();
 	
 	$stmt = $db->prepare('SELECT username FROM users WHERE username = ?;');
@@ -16,18 +17,43 @@ function username_exists($username) {
 }
 
 function create_new_user($email_address, $username, $password) {
+
 	$hash = password_hash($password, PASSWORD_BCRYPT);
 	$db = open_db_connection();
 	$id = get_next_user_id();
+	$confirmation_string = password_hash($email_address, PASSWORD_BCRYPT);
 
-	$stmt = $db->prepare('INSERT INTO users (user_id, email_address, username, password_hash) VALUES (?, ?, ?, ?);');
-	$stmt->bind_param('isss', $id, $email_address, $username, $hash);
+	$stmt = $db->prepare('INSERT INTO users ' .
+                         '(user_id, email_address, username, password_hash, confirmation)' .
+                         'VALUES (?, ?, ?, ?, ?);');
+	$stmt->bind_param('issss', $id, $email_address, $username, $hash, $confirmation_string);
     $stmt->execute();
 
     $db->commit();
     $db->close();
 
-    return "AAAAAAAAA";
+    return $confirmation_string;
+}
+
+function confirm($confirmation) {
+
+    $db = open_db_connection();
+    $stmt = $db->prepare('SELECT username FROM users WHERE confirmation=?');
+    $stmt->bind_param("s", $confirmation);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows != 1) {
+        return false;
+    } else {
+
+        $username = $result->fetch_assoc()["username"];
+        $stmt = $db->prepare('UPDATE users SET confirmation=? WHERE username=?');
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+    }
+
 }
 
 function get_next_user_id() {
@@ -83,5 +109,6 @@ function open_db_connection() {
 
 	return new mysqli("localhost", $user, $pass, "bundesliga_tippspiel");
 }
+
 
 ?>
