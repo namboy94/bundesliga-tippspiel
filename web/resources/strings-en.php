@@ -46,7 +46,9 @@ function get_english_dictionary() {
         '@$EMAIL_USED_TITLE' => "This email address is was already used",
         '@$EMAIL_USED_BODY' => "Please use a different email address",
         '@$PASSWORD_TOO_SHORT_TITLE' => "This password is too short",
-        '@$PASSWORD_TOO_SHORT_BODY' => "Please enter a password with at least 8 characters"
+        '@$PASSWORD_TOO_SHORT_BODY' => "Please enter a password with at least 8 characters",
+        '@$INVALID_CREDENTIALS_TITLE' => 'Login Failed',
+        '@$INVALID_CREDENTIALS_BODY' => "Please check your login data"
 
 	);
 

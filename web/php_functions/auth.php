@@ -49,6 +49,41 @@ function create_new_user($email_address, $username, $password) {
     return $confirmation_string;
 }
 
+function login($email) {
+
+    $token = password_hash($email, PASSWORD_DEFAULT);
+
+    $db = open_db_connection();
+
+    $stmt = $db->prepare('SELECT user_id FROM users WHERE email_address=?');
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows < 1) {
+        $db->close();
+        return "";
+    }
+
+    $id = $stmt->get_result()->fetch_assoc()['user_id'];
+
+    if ($db->query("SELECT * FROM sessions WHERE id=" . $id)->num_rows === 0) {
+        $stmt = $db->prepare("INSERT INTO sessions (id, token) VALUES (?, ?);");
+        $stmt->bind_param('ss', $id, $token);
+        $stmt->execute();
+    }
+    else {
+        $stmt = $db->prepare('UPDATE sessions SET token=? WHERE id=?');
+        $stmt->bind_param('ss', $token, $id);
+        $stmt->execute();
+    }
+
+    $db->commit();
+    $db->close();
+
+    return $token;
+}
+
 function confirm($confirmation) {
 
     $db = open_db_connection();
@@ -67,6 +102,9 @@ function confirm($confirmation) {
         $stmt->bind_param("s", $username);
         $stmt->execute();
     }
+
+    $db->commit();
+    $db->close();
 
 }
 
@@ -101,11 +139,11 @@ function change_password($username, $password) {
 
 }
 
-function verify_password($username, $password) {
+function verify_password($email, $password) {
     $db = open_db_connection();
 
-    $stmt = $db->prepare("SELECT password_hash FROM users WHERE username=?");
-    $stmt->bind_param('s', $username);
+    $stmt = $db->prepare("SELECT password_hash FROM users WHERE email_address=?");
+    $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
 

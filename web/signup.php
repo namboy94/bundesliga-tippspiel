@@ -30,11 +30,15 @@ echo load_header("signup");
         echo generate_error_message($dictionary['@$USERNAME_EXISTS_TITLE'], $dictionary['@$USERNAME_EXISTS_BODY']);
     }
     else if (isset($_GET["email_used"])) {
-        echo generate_error_message($dictionary['@$EMAIL_USED_TITLE'], $dictionary['@$EMAIL_USED_TITLE']);
+        echo generate_error_message($dictionary['@$EMAIL_USED_TITLE'], $dictionary['@$EMAIL_USED_BODY']);
     }
     else if (isset($_GET["password_too_short"])) {
         echo generate_error_message($dictionary['@$PASSWORD_TOO_SHORT_TITLE'],
-                                    $dictionary['@$PASSWORD_TOO_SHORT_TITLE']);
+                                    $dictionary['@$PASSWORD_TOO_SHORT_BODY']);
+    }
+    else if (isset($_GET["invalid_credentials"])) {
+        echo generate_error_message($dictionary['@$INVALID_CREDENTIALS_TITLE'],
+            $dictionary['@$INVALID_CREDENTIALS_BODY']);
     }
 
     echo load_html("html_content/signup_body.html");

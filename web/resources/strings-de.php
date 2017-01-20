@@ -46,7 +46,9 @@ function get_german_dictionary() {
         '@$EMAIL_USED_TITLE' => "Email Adresse bereits verwendet",
         '@$EMAIL_USED_BODY' => "Bitte benutze eine andere Email Adresse",
         '@$PASSWORD_TOO_SHORT_TITLE' => 'Passwort zu kurz',
-        '@$PASSWORD_TOO_SHORT_BODY' => "Bitte geb ein Passwort mit mindestens 8 Zeichen an"
+        '@$PASSWORD_TOO_SHORT_BODY' => "Bitte geb ein Passwort mit mindestens 8 Zeichen an",
+        '@$INVALID_CREDENTIALS_TITLE' => 'Login Fehlgeschlagen',
+        '@$INVALID_CREDENTIALS_BODY' => "Bitte überprüfe deine Login Daten"
 
 	);
 
