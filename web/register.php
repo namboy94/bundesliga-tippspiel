@@ -46,7 +46,8 @@ else {
 
     $from = "From: " . $dictionary['@$WEBSITE_NAME']  . "<noreply@tippspiel.krumreyh.com>";
     $title = $dictionary['@$CONFIRMATION_NAME'];
-    $body = $dictionary['@$EMAIL_CONFIRMATION'] . "tippspiel.krumreyh.com/confirmation.php?" . $confirmation;
+    $body = $dictionary['@$EMAIL_CONFIRMATION'] . '<a href="tippspiel.krumreyh.com/confirmation.php?confirmation='
+            . $confirmation . "&username=" . $username . '">Confirmation<a>';
     mail($email, $title, $body, $from);
 
     header('Location: signup.php?registration_initialized=true');

@@ -57,7 +57,8 @@ echo load_header("signup");
             $dictionary['@$REGISTRATION_INITIALIZED_BODY']);
     }
     else if (isset($_GET["registration_success"])) {
-        echo generate_success_message('@$REGISTRATION_SUCCESS_TITLE', '@$REGISTRATION_SUCCESS_BODY');
+        echo generate_success_message($dictionary['@$REGISTRATION_SUCCESS_TITLE'],
+            $dictionary['@$REGISTRATION_SUCCESS_BODY']);
     }
 
     echo load_html("html_content/signup_body.html");

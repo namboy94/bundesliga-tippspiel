@@ -1,8 +1,9 @@
 <?php
 
+Include "php_functions/auth.php";
 
 $username = $_GET['username'];
-$confirmation_token = $_GET['username'];
+$confirmation_token = $_GET['confirmation'];
 
 $status = confirm($username, $confirmation_token);
 

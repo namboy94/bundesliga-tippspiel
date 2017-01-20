@@ -10,6 +10,10 @@ echo load_header("home");
 	
 	<?php
 
+        if (isset($_SESSION['token'])) {
+            echo "Logged In";
+        }
+
 		echo load_navbar("home");
 		echo load_html("html_content/templates/footer.html");
 

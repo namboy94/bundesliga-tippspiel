@@ -65,7 +65,7 @@ function login($email) {
         return "";
     }
 
-    $id = $stmt->get_result()->fetch_assoc()['user_id'];
+    $id = $result->fetch_assoc()['user_id'];
 
     if ($db->query("SELECT * FROM sessions WHERE id=" . $id)->num_rows === 0) {
         $stmt = $db->prepare("INSERT INTO sessions (id, token) VALUES (?, ?);");
