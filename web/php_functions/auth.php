@@ -84,28 +84,42 @@ function login($email) {
     return $token;
 }
 
-function confirm($confirmation) {
+function confirm($username, $confirmation) {
 
     $db = open_db_connection();
-    $stmt = $db->prepare('SELECT username FROM users WHERE confirmation=?');
-    $stmt->bind_param("s", $confirmation);
+    $stmt = $db->prepare('SELECT confirmation FROM users WHERE username=?');
+    $stmt->bind_param('s', $username);
     $stmt->execute();
-
     $result = $stmt->get_result();
 
-    if ($result->num_rows != 1) {
-        return false;
-    } else {
-
-        $username = $result->fetch_assoc()["username"];
-        $stmt = $db->prepare('UPDATE users SET confirmation=? WHERE username=?');
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
+    if ($result->num_rows === 0) {
+        $db->close();
+        return "no_user";
     }
+    else {
+        $previous = $result->fetch_assoc()['confirmation'];
+        if ($confirmation != $previous) {
+            $db->close();
+            return "no_match";
+        }
+        elseif ($previous === "conirmed") {
+            $db->close();
+            return "already_confirmed";
+        }
+        else {
 
-    $db->commit();
-    $db->close();
+            $new_confirmation = "confirmed";
 
+            $stmt = $db->prepare('UPDATE users SET confirmation=? WHERE username=?');
+            $stmt->bind_param('ss', $new_confirmation, $username);
+            $stmt->execute();
+
+            $db->commit();
+            $db->close();
+
+            return "success";
+        }
+    }
 }
 
 function get_next_user_id() {

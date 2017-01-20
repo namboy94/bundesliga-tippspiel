@@ -48,7 +48,18 @@ function get_english_dictionary() {
         '@$PASSWORD_TOO_SHORT_TITLE' => "This password is too short",
         '@$PASSWORD_TOO_SHORT_BODY' => "Please enter a password with at least 8 characters",
         '@$INVALID_CREDENTIALS_TITLE' => 'Login Failed',
-        '@$INVALID_CREDENTIALS_BODY' => "Please check your login data"
+        '@$INVALID_CREDENTIALS_BODY' => "Please check your login data",
+        '@$REGISTRATION_INITIALIZED_TITLE' => "Registration Complete",
+        '@$REGISTRATION_INITIALIZED_BODY' => "Check your inbox for the confirmation email",
+        '@$ALREADY_CONFIRMED_TITLE' => 'Registration Already Complete',
+        '@$ALREADY_CONFIRMED_BODY' => 'You can log in using your email address and password',
+        '@$CONFIRMATION_NOT_MATCHING_TITLE' => 'Confirmation Link invalid',
+        '@$CONFIRMATION_NOT_MATCHING_BODY' => 'Make sure you clicked the correct link',
+        '@$NOT_EXISTING_USER_TITLE' => 'This username does not exist',
+        '@$NOT_EXISTING_USER_BODY' => 'Make sure you clicked the correct link',
+        '@$REGISTRATION_SUCCESS_TITLE' => "Account confirmed",
+        '@$REGISTRATION_SUCCESS_BODY' => "You can now log in"
+
 
 	);
 

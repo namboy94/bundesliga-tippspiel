@@ -49,7 +49,7 @@ else {
     $body = $dictionary['@$EMAIL_CONFIRMATION'] . "tippspiel.krumreyh.com/confirmation.php?" . $confirmation;
     mail($email, $title, $body, $from);
 
-    header('Location: signup.php?registration=initialized');
+    header('Location: signup.php?registration_initialized=true');
 
 }
 

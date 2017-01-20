@@ -48,7 +48,17 @@ function get_german_dictionary() {
         '@$PASSWORD_TOO_SHORT_TITLE' => 'Passwort zu kurz',
         '@$PASSWORD_TOO_SHORT_BODY' => "Bitte geb ein Passwort mit mindestens 8 Zeichen an",
         '@$INVALID_CREDENTIALS_TITLE' => 'Login Fehlgeschlagen',
-        '@$INVALID_CREDENTIALS_BODY' => "Bitte überprüfe deine Login Daten"
+        '@$INVALID_CREDENTIALS_BODY' => "Bitte überprüfe deine Login Daten",
+        '@$REGISTRATION_INITIALIZED_TITLE' => "Registrierung abgeschlossen",
+        '@$REGISTRATION_INITIALIZED_BODY' => "Schau in deinem Email Postfach nach der Bestätigungsemail",
+        '@$ALREADY_CONFIRMED_TITLE' => 'Registrierung bereits abgeschlossen',
+        '@$ALREADY_CONFIRMED_BODY' => 'Du kannst dich mit deiner Email Adresse und deinem Passwort anmelden',
+        '@$CONFIRMATION_NOT_MATCHING_TITLE' => 'Bestätigung Ungültig',
+        '@$CONFIRMATION_NOT_MATCHING_BODY' => 'Stelle sicher dass der richtige Link geclickt wurde',
+        '@$NOT_EXISTING_USER_TITLE' => 'Dieser Nutzername existiert nicht',
+        '@$NOT_EXISTING_USER_BODY' => 'Stelle sicher dass der richtige Link geclickt wurde',
+        '@$REGISTRATION_SUCCESS_TITLE' => "Account bestätigt",
+        '@$REGISTRATION_SUCCESS_BODY' => "Du kannst dich jetzt anmelden"
 
 	);
 

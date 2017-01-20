@@ -40,6 +40,25 @@ echo load_header("signup");
         echo generate_error_message($dictionary['@$INVALID_CREDENTIALS_TITLE'],
             $dictionary['@$INVALID_CREDENTIALS_BODY']);
     }
+    else if (isset($_GET["not_existing_user"])) {
+        echo generate_error_message($dictionary['@$NOT_EXISTING_USER_TITLE'],
+            $dictionary['@$NOT_EXISTING_USER_BODY']);
+    }
+    else if (isset($_GET["confirmation_not_matching"])) {
+        echo generate_error_message($dictionary['@$CONFIRMATION_NOT_MATCHING_TITLE'],
+            $dictionary['@$CONFIRMATION_NOT_MATCHING_BODY']);
+    }
+    else if (isset($_GET["already_confirmed"])) {
+        echo generate_error_message($dictionary['@$ALREADY_CONFIRMED_TITLE'],
+            $dictionary['@$ALREADY_CONFIRMED_BODY']);
+    }
+    else if (isset($_GET["registration_initialized"])) {
+        echo generate_success_message($dictionary['@$REGISTRATION_INITIALIZED_TITLE'],
+            $dictionary['@$REGISTRATION_INITIALIZED_BODY']);
+    }
+    else if (isset($_GET["registration_success"])) {
+        echo generate_success_message('@$REGISTRATION_SUCCESS_TITLE', '@$REGISTRATION_SUCCESS_BODY');
+    }
 
     echo load_html("html_content/signup_body.html");
     echo load_html("html_content/templates/footer.html");

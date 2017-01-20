@@ -30,6 +30,13 @@ function generate_error_message($title, $message) {
     return $html;
 }
 
+function generate_success_message($title, $message) {
+    $html = load_html("html_content/templates/success_message.html");
+    $html = str_replace('@TITLE', $title, $html);
+    $html = str_replace('@BODY', $message, $html);
+    return $html;
+}
+
 function load_header($title) {
 
 	$dictionary = get_current_dictionary();
