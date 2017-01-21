@@ -35,7 +35,7 @@ generateDefaultHeaderNavbar('contact.php')->echo();
 ?>
 <div class="container">
 	<div class="jumbotron text-center">
-		<h1><?php echo $dictionary->translate('@$CONTACT_TITLE') ?></h1>
+		<h1><?php echo $dictionary->translate('@$CONTACT_JUMBO') ?></h1>
 	</div>
 	<div class="row">
 		<div class="col-sm-6 col-md-6 col-lg-6 text-center">

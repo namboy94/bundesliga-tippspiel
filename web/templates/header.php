@@ -18,7 +18,7 @@
 */
 
 session_start();
-include_once dirname(__FILE__) . 'generator.php';
+include_once dirname(__FILE__) . '/generator.php';
 
 class Header extends HtmlGenerator {
 

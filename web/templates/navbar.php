@@ -27,17 +27,22 @@ include_once dirname(__FILE__) . '/../strings/dictionary.php';
 class NavBar extends HtmlGenerator {
 
     /**
-     * @var string The Title of the Navbar, displayed on the Left side
+     * @var string: The Title of the Navbar, displayed on the Left side
      */
     private $title;
 
     /**
-     * @var array An Array of NavBarButtons or NavBarDropDowns to be displayed on the left side of the navbar
+     * @var string: The link to which the title button leads to
+     */
+    private $title_link;
+
+    /**
+     * @var array: An Array of NavBarButtons or NavBarDropDowns to be displayed on the left side of the navbar
      */
     private $left_elements;
 
     /**
-     * @var array An Array of NavBarButtons or NavBarDropDowns to be displayed on the rigth side of the navbar
+     * @var array: An Array of NavBarButtons or NavBarDropDowns to be displayed on the rigth side of the navbar
      */
     private $right_elements;
 
@@ -45,11 +50,13 @@ class NavBar extends HtmlGenerator {
      * NavBar constructor.
      * UI elements can be either NavBarButtons or NavBarDropDowns
      * @param $title           string: the Navbar Title displayed on the Left side of the Navbar
+     * @param $title_link      string: The Navbar Title button's destination link
      * @param $left_elements   array:  the UI elements on the left side of the navbar
      * @param $right_elements  array:  the UI elements on the right side of the button
      */
-    public function __construct($title, $left_elements, $right_elements) {
+    public function __construct($title, $title_link, $left_elements, $right_elements) {
         $this->title = $title;
+        $this->title_link = $title_link;
         $this->left_elements = $left_elements;
         $this->right_elements=$right_elements;
         $this->template = dirname(__FILE__) . '/html/navbar.html';
@@ -79,6 +86,7 @@ class NavBar extends HtmlGenerator {
         $html = file_get_contents($this->template);
 
         $html = str_replace('@NAVBAR_TITLE', $this->title, $html);
+        $html = str_replace('@NAVBAR_LINK', $this->title_link, $html);
 
         $left = '';
         foreach($this->left_elements as $element) {
@@ -224,7 +232,7 @@ function generateDefaultHeaderNavbar($page_file) {
     $english_active = $_SESSION['language'] === 'en';
     $german_active = $_SESSION['language'] === 'de';
 
-    $navbar = new NavBar('@$WEBSITE_NAME',
+    $navbar = new NavBar('@$WEBSITE_NAME', 'index.php',
         array(
             new NavBarButton('@$HOME_NAV_TITLE', 'index.php', $home_active)
         ),
@@ -260,7 +268,7 @@ function generateFooter($page_file) {
 
     $contact_page_active = $page_file === 'contact.php';
 
-    return new NavBar('@$FOOTER_IMPRESSUM_TITLE',
+    return new NavBar('@$FOOTER_IMPRESSUM_TITLE', 'about.php',
         array(new NavBarButton('@$FOOTER_COPYRIGHT_TEXT', 'contact.php', $contact_page_active)),
         array(new NavBarButton('@$FOOTER_VERSION_TEXT',
             'https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel', false))

@@ -43,6 +43,7 @@ function get_german() {
         'FOOTER_VERSION_TEXT' => '0.1.0',
 
         # contact.php
+        'CONTACT_JUMBO' => 'Kontakt',
         'ADMIN_SECTION_TITLE' => 'Administrator',
         'SOURCE_CODE_SECTION_TITLE' => 'Quellcode'
     );
