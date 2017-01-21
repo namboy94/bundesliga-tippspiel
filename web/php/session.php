@@ -1,4 +1,5 @@
-<!-- Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
+<?php
+/*  Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
 
     This file is part of bundesliga-tippspiel.
 
@@ -14,24 +15,19 @@
 
     You should have received a copy of the GNU General Public License
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
--->
+*/
 
-<!DOCTYPE html>
-<html lang="en">
+/**
+ * Initializes a default session, if none has yet been initialized
+ */
+function initializeSession() {
 
-<head>
+    session_start();
 
-	<title>@TITLE</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<script 
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-	</script>
-
-	<script 
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-	</script>
-
-	@CSS_THEME
-</head>
+    if (!isset($_SESSION['theme'])) {
+        $_SESSION['theme'] = "default";
+    }
+    if (!isset($_SESSION['language'])) {
+        $_SESSION['language'] = "en";
+    }
+}
