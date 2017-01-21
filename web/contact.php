@@ -23,10 +23,9 @@ include_once 'strings/dictionary.php';
 include_once 'templates/header.php';
 include_once 'templates/navbar.php';
 
-$dictionary = new Dictionary($_SESSION['language']);
-
 initializeSession();
 processGlobalGets();
+$dictionary = new Dictionary($_SESSION['language']);
 
 (new Header('@$CONTACT_TITLE'))->echo();
 echo '<body>';
@@ -51,5 +50,4 @@ generateDefaultHeaderNavbar('contact.php')->echo();
 <?php
 
 generateFooter('contact.php')->echoWithContainer();
-
 echo '</body>';

@@ -17,21 +17,33 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Include "php_functions/templating.php";
-initialize_session();
-process_global_gets();
-echo load_header("about");
+
+include_once 'php/gets.php';
+include_once 'php/session.php';
+include_once 'strings/dictionary.php';
+include_once 'templates/header.php';
+include_once 'templates/navbar.php';
+
+initializeSession();
+processGlobalGets();
+$dictionary = new Dictionary($_SESSION['language']);
+
+(new Header('@$ABOUT_TITLE'))->echo();
+echo '<body>';
+generateDefaultHeaderNavbar('about.php')->echo();
+
 ?>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1><?php echo $dictionary->translate('@$ABOUT_JUMBO') ?></h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <?php echo file_get_contents('resources/impressum.' . $_SESSION['language']); ?>
+        </div>
+    </div>
+</div>
+<?php
 
-
-<body>
-	
-	<?php
-
-		echo load_navbar("about");
-		echo load_html("html_content/about_body.html");
-		echo load_html("html_content/templates/footer.html");
-
-	?>
-
-</body>
+generateFooter('about.php')->echoWithContainer();
+echo '</body>';

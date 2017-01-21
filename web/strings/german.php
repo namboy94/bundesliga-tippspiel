@@ -27,6 +27,7 @@ function get_german() {
         # HEADER TITLES
         'HOME_TITLE' => 'Bundesliga Tippspiel - Home',
         'CONTACT_TITLE' => 'Bundesliga Tippspiel - Kontakt',
+        'ABOUT_TITLE' => 'Bundesliga Betting Game - Impressum',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Tippspiel',
@@ -45,6 +46,9 @@ function get_german() {
         # contact.php
         'CONTACT_JUMBO' => 'Kontakt',
         'ADMIN_SECTION_TITLE' => 'Administrator',
-        'SOURCE_CODE_SECTION_TITLE' => 'Quellcode'
+        'SOURCE_CODE_SECTION_TITLE' => 'Quellcode',
+
+        # about.php
+        'ABOUT_JUMBO' => 'Impressum'
     );
 }

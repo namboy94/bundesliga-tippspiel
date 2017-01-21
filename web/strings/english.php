@@ -27,6 +27,7 @@ function get_english() {
         # HEADER TITLES
         'HOME_TITLE' => 'Bundesliga Betting Game - Home',
         'CONTACT_TITLE' => 'Bundesliga Betting Game - Contact',
+        'ABOUT_TITLE' => 'Bundesliga Betting Game - About',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Betting Game',
@@ -45,7 +46,10 @@ function get_english() {
         # contact.php
         'CONTACT_JUMBO' => 'Contact',
         'ADMIN_SECTION_TITLE' => 'Administrator',
-        'SOURCE_CODE_SECTION_TITLE' => 'Source Code'
+        'SOURCE_CODE_SECTION_TITLE' => 'Source Code',
+
+        # about.php
+        'ABOUT_JUMBO' => 'About'
 
     );
 }
