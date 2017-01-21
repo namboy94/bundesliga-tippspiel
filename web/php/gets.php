@@ -5,7 +5,7 @@ session_start();
 /**
  * Process GET requests that act the same on every page (e.g. switching the theme)
  */
-function process_global_gets() {
+function processGlobalGets() {
 
     if (isset($_GET['theme'])) {
         $_SESSION['theme'] = $_GET['theme'];

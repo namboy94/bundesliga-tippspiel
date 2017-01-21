@@ -17,20 +17,39 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Include "php_functions/templating.php";
-initialize_session();
-process_global_gets();
-echo load_header("contact");
+include_once 'php/gets.php';
+include_once 'php/session.php';
+include_once 'strings/dictionary.php';
+include_once 'templates/header.php';
+include_once 'templates/navbar.php';
+
+$dictionary = new Dictionary($_SESSION['language']);
+
+initializeSession();
+processGlobalGets();
+
+(new Header('@$CONTACT_TITLE'))->echo();
+echo '<body>';
+generateDefaultHeaderNavbar('contact.php')->echo();
+
 ?>
+<div class="container">
+	<div class="jumbotron text-center">
+		<h1><?php echo $dictionary->translate('@$CONTACT_TITLE') ?></h1>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 col-md-6 col-lg-6 text-center">
+			<h2><?php echo $dictionary->translate('@$ADMIN_SECTION_TITLE') ?></h2>
+			<h3><a href="mailto:hermann@krumreyh.com">hermann@krumreyh.com</a></h3>
+		</div>
+		<div class="col-sm-6 col-md-6 col-lg-6 text-center">
+			<h2><?php echo $dictionary->translate('@$SOURCE_CODE_SECTION_TITLE') ?></h2>
+			<h3><a href="https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel">Gitlab</a></h3>
+		</div>
+	</div>
+</div>
+<?php
 
-<body>
-	
-	<?php
+generateFooter('contact.php')->echoWithContainer();
 
-		echo load_navbar("contact");
-		echo load_html("html_content/contact_body.html");
-		echo load_html("html_content/templates/footer.html");
-
-	?>
-
-</body>
+echo '</body>';

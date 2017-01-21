@@ -22,9 +22,14 @@ include_once 'php/session.php';
 include_once 'templates/navbar.php';
 include_once 'templates/header.php';
 
-initialize_session();
-process_global_gets();
+initializeSession();
+processGlobalGets();
 
-(new Header('HOME_TITLE'))->echo();
+(new Header('@$HOME_TITLE'))->echo();
+
+echo '<body>';
+
 generateDefaultHeaderNavbar('index.php')->echo();
 generateFooter('index.php')->echoWithContainer();
+
+echo '</body>';

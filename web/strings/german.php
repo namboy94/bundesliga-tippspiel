@@ -24,6 +24,10 @@
 function get_german() {
     return array(
 
+        # HEADER TITLES
+        'HOME_TITLE' => 'Bundesliga Tippspiel - Home',
+        'CONTACT_TITLE' => 'Bundesliga Tippspiel - Kontakt',
+
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Tippspiel',
         'HOME_NAV_TITLE' => 'Home',
@@ -36,6 +40,10 @@ function get_german() {
         'LANGUAGE_ENGLISH_NAV_TITLE' => 'Englisch',
         'FOOTER_IMPRESSUM_TITLE' => 'Impressum',
         'FOOTER_COPYRIGHT_TEXT' => '© Hermann Krumrey 2017',
-        'FOOTER_VERSION_TEXT' => '0.1.0'
+        'FOOTER_VERSION_TEXT' => '0.1.0',
+
+        # contact.php
+        'ADMIN_SECTION_TITLE' => 'Administrator',
+        'SOURCE_CODE_SECTION_TITLE' => 'Quellcode'
     );
 }

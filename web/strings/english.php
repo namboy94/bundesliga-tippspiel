@@ -24,6 +24,10 @@
 function get_english() {
     return array(
 
+        # HEADER TITLES
+        'HOME_TITLE' => 'Bundesliga Betting Game - Home',
+        'CONTACT_TITLE' => 'Bundesliga Betting Game - Contact',
+
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Betting Game',
         'HOME_NAV_TITLE' => 'Home',
@@ -36,6 +40,11 @@ function get_english() {
         'LANGUAGE_ENGLISH_NAV_TITLE' => 'English',
         'FOOTER_IMPRESSUM_TITLE' => 'About',
         'FOOTER_COPYRIGHT_TEXT' => '© Hermann Krumrey 2017',
-        'FOOTER_VERSION_TEXT' => '0.1.0'
+        'FOOTER_VERSION_TEXT' => '0.1.0',
+
+        # contact.php
+        'ADMIN_SECTION_TITLE' => 'Administrator',
+        'SOURCE_CODE_SECTION_TITLE' => 'Source Code'
+
     );
 }
