@@ -227,7 +227,7 @@ function generateDefaultHeaderNavbar($page_file) {
     );
 
     if (isset($_SESSION['token'])) {
-        # TODO Add stuff here
+        $navbar->addRight(new NavBarButton('@$LOGOUT_NAV_TITLE', '#', false));
     }
     else {
         $navbar->addLeft(new NavBarButton('@$LOGIN_NAV_TITLE', 'signup.php', $login_active));
@@ -237,6 +237,11 @@ function generateDefaultHeaderNavbar($page_file) {
 
 }
 
+/**
+ * Generated the site-wide footer navbar
+ * @param $page_file string: The page calling this method
+ * @return           NavBar: The generated Navbar
+ */
 function generateFooter($page_file) {
 
     $contact_page_active = $page_file === 'contact.php';
