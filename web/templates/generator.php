@@ -3,6 +3,9 @@
  * Copyright Hermann Krumrey<hermann@krumreyh.com> 2017
  */
 
+session_start();
+include_once dirname(__FILE__) . '/../strings/dictionary.php';
+
 /**
  * Class HtmlGenerator is a common interface for HTML generators to enable a developer
  * to expect some sort of default behaviour for all template generators
@@ -28,7 +31,8 @@ abstract class HtmlGenerator {
      * @return void
      */
     public function echo() {
-        echo $this->render();
+        $dictionary = new Dictionary($_SESSION['language']);
+        echo $dictionary->translate($this->render());
     }
 
     /**

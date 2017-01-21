@@ -1,5 +1,6 @@
 <?php
 Include "php_functions/templating.php";
+Include "templates/navbar.php";
 initialize_session();
 process_global_gets();
 echo load_header("home");
@@ -14,8 +15,8 @@ echo load_header("home");
             echo "Logged In";
         }
 
-		echo load_navbar("home");
-		echo load_html("html_content/templates/footer.html");
+        generateDefaultHeaderNavbar('index.php')->echo();
+        generateFooter('index.php')->echoWithContainer();
 
 	?>
 

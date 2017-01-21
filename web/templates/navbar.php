@@ -3,6 +3,10 @@
  * Copyright Hermann Krumrey<hermann@krumreyh.com> 2017
  */
 
+session_start();
+include_once dirname(__FILE__) . '/generator.php';
+include_once dirname(__FILE__) . '/../strings/dictionary.php';
+
 /**
  * Class NavBar is a class that models a Navbar with custom elements
  */
@@ -24,11 +28,6 @@ class NavBar extends HtmlGenerator {
     private $right_elements;
 
     /**
-     * @var string The template file used to generate the HTML content
-     */
-    private $template;
-
-    /**
      * NavBar constructor.
      * UI elements can be either NavBarButtons or NavBarDropDowns
      * @param $title           string: the Navbar Title displayed on the Left side of the Navbar
@@ -39,7 +38,23 @@ class NavBar extends HtmlGenerator {
         $this->title = $title;
         $this->left_elements = $left_elements;
         $this->right_elements=$right_elements;
-        $this->template = dirname(__DIR__) . '/html/navbar.html';
+        $this->template = dirname(__FILE__) . '/html/navbar.html';
+    }
+
+    /**
+     * Adds a UI element to the left side of the Navbar
+     * @param $element: The element to add.
+     */
+    public function addLeft($element) {
+        array_push($this->left_elements, $element);
+    }
+
+    /**
+     * Adds a UI element to the right side of the Navbar
+     * @param $element: The element to add.
+     */
+    public function addRight($element) {
+        array_push($this->right_elements, $element);
     }
 
     /**
@@ -81,7 +96,8 @@ class NavBar extends HtmlGenerator {
      * @return void
      */
     public function echoWithContainer() {
-        echo $this->renderWithContainer();
+        $dictionary = new Dictionary($_SESSION['language']);
+        echo $dictionary->translate($this->renderWithContainer());
     }
 }
 
@@ -115,7 +131,8 @@ class NavBarButton extends HtmlGenerator {
     public function __construct($name, $link, $selected) {
         $this->name = $name;
         $this->link = $link;
-        $this->template = dirname(__DIR__) . '/html/navbar_button.html';
+        $this->selected = $selected;
+        $this->template = dirname(__FILE__) . '/html/navbar_button.html';
     }
 
     /**
@@ -158,7 +175,7 @@ class NavBarDropDown extends HtmlGenerator {
     public function __construct($title, $entries) {
         $this->title = $title;
         $this->entries = $entries;
-        $this->template = dirname(__DIR__) . '/html/navbar_dropdown.html';
+        $this->template = dirname(__FILE__) . '/html/navbar_dropdown.html';
     }
 
     /**
@@ -177,4 +194,56 @@ class NavBarDropDown extends HtmlGenerator {
         return str_replace('@ENTRIES', $entries_html, $html);
 
     }
+}
+
+/**
+ * Generates the default header Navbar
+ * @param $page_file string: The page calling this method
+ * @return           NavBar: The generated Navbar
+ */
+function generateDefaultHeaderNavbar($page_file) {
+
+    $home_active = $page_file === 'index.php';
+    $login_active = $page_file === 'signup.php';
+    $default_theme_active = $_SESSION['theme'] === 'default';
+    $terminal_theme_active = $_SESSION['theme'] === 'terminal';
+    $english_active = $_SESSION['language'] === 'en';
+    $german_active = $_SESSION['language'] === 'de';
+
+    $navbar = new NavBar('@$WEBSITE_NAME',
+        array(
+            new NavBarButton('@$HOME_NAV_TITLE', 'index.php', $home_active)
+        ),
+        array(
+            new NavBarDropDown('@$THEMES_NAV_TITLE', array(
+                new NavBarButton('@$THEME_DEFAULT_NAV_TITLE', $page_file . '?theme=default', $default_theme_active),
+                new NavBarButton('@$THEME_TERMINAL_NAV_TITLE', $page_file . '?theme=terminal', $terminal_theme_active)
+            )),
+            new NavBarDropDown('@$LANGUAGES_NAV_TITLE', array(
+                new NavBarButton('@$LANGUAGE_GERMAN_NAV_TITLE', $page_file . '?language=de', $german_active),
+                new NavBarButton('@$LANGUAGE_ENGLISH_NAV_TITLE', $page_file . '?language=en', $english_active)
+            ))
+        )
+    );
+
+    if (isset($_SESSION['token'])) {
+        # TODO Add stuff here
+    }
+    else {
+        $navbar->addLeft(new NavBarButton('@$LOGIN_NAV_TITLE', 'signup.php', $login_active));
+    }
+
+    return $navbar;
+
+}
+
+function generateFooter($page_file) {
+
+    $contact_page_active = $page_file === 'contact.php';
+
+    return new NavBar('@$FOOTER_IMPRESSUM_TITLE',
+        array(new NavBarButton('@$FOOTER_COPYRIGHT_TEXT', 'contact.php', $contact_page_active)),
+        array(new NavBarButton('@$FOOTER_VERSION_TEXT',
+            'https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel', false))
+    );
 }
