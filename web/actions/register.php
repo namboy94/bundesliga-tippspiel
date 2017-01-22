@@ -19,6 +19,7 @@
 
 session_start();
 
+include_once  dirname(__FILE__) . '/../php/registration.php';
 include_once dirname(__FILE__) . '/../strings/dictionary.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
@@ -45,32 +46,35 @@ else if ($password != $repeat_password) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_MISSMATCH_TITLE',
         '@$REGISTER_ERROR_PASSWORD_MISSMATCH_BODY'))->show('../signup.php');
 }
-else if (username_exists($username)) {
-    (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_EXISTS_TITLE',
-        '@$REGISTER_ERROR_USERNAME_EXISTS_BODY'))->show('../signup.php');
-}
-else if (email_used($email)) {
-    (new DismissableMessage('error', '@$REGISTER_ERROR_EMAIL_USED_TITLE',
-        '@$REGISTER_ERROR_EMAIL_USED_BODY'))->show('../signup.php');
-}
 else if (strlen($password) < 8) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_TITLE',
         '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY'))->show('../signup.php');
 }
 else {
+    $registration = register($email, $username, $password);
 
-    $confirmation = create_new_user($email, $username, $password);
+    if ($registration['status']) {
 
-    $from = "From: " . $dictionary['@$WEBSITE_NAME']  . "<noreply@tippspiel.krumreyh.com>";
-    $title = $dictionary['@$CONFIRMATION_NAME'];
-    $body = $dictionary['@$EMAIL_CONFIRMATION'] . '<a href="tippspiel.krumreyh.com/confirmation.php?confirmation='
-            . $confirmation . "&username=" . $username . '">Confirmation<a>';
-    mail($email, $title, $body, $from);
+        $confirmation_token = $registration['token'];
 
-    header('Location: signup.php?registration_initialized=true');
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "From: " . $dictionary->translate('@$CONFIRMATION_EMAIL_SENDER') .
+                    "<noreply@tippspiel.krumreyh.com>";
 
+        $title = $dictionary->translate('@$CONFIRMATION_EMAIL_TITLE');
+        $body = $dictionary->translate('@$CONFIRMATION_EMAIL_BODY');
+        $body .= '<hr><a href="tippspiel.krumreyh.com/actions/confirmation.php?confirmation=' . $confirmation_token;
+        $body .= "&username=" . $username . '">' . $dictionary->translate('@$CONFIRMATION_EMAIL_LINK_NAME') . '<a>';
+
+        mail($email, $title, $body, $headers);
+
+        $message = new DismissableMessage('success', '@$REGISTER_SUCCESS_TITLE', '@$REGISTER_SUCCESS_BODY');
+        $message->show('../signup.php');
+    }
+
+    else {
+        $error_message = new DismissableMessage('error', $registration['error_title'], $registration['error_body']);
+        $error_message->show('../signup.php');
+    }
 }
-
-
-
-?>

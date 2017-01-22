@@ -48,6 +48,8 @@ class DismissableMessage extends HtmlGenerator {
      */
     public function __construct($message_type, $title, $body) {
         $this->message_type = $message_type;
+        $this->title = $title;
+        $this->body = $body;
     }
 
     /**

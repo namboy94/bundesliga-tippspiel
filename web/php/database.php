@@ -72,14 +72,19 @@ class Database {
         $db = $this->openDatabase();
         $stmt = $db->prepare($sql);
 
-        $params = $this->makeReference(array_merge(array($types), $variables));
-        call_user_func_array(array($stmt, 'bind_param'), $params);
-        $stmt->execute();
+        if ($types === '') {
+            return $db->query($sql);
+        }
+        else {
+            $params = $this->makeReference(array_merge(array($types), $variables));
+            call_user_func_array(array($stmt, 'bind_param'), $params);
+            $stmt->execute();
 
-        $result = $stmt->get_result();
+            $result = $stmt->get_result();
 
-        $db->close();
-        return $result;
+            $db->close();
+            return $result;
+        }
     }
 
     /**
@@ -93,9 +98,14 @@ class Database {
         $db = $this->openDatabase();
         $stmt = $db->prepare($sql);
 
-        $params = $this->makeReference(array_merge(array($types), $variables));
-        call_user_func_array(array($stmt, 'bind_param'), $params);
-        $stmt->execute();
+        if ($types === '') {
+            $db->query($sql);
+        }
+        else {
+            $params = $this->makeReference(array_merge(array($types), $variables));
+            call_user_func_array(array($stmt, 'bind_param'), $params);
+            $stmt->execute();
+        }
 
         $db->commit();
         $db->close();

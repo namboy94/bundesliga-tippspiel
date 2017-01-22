@@ -17,25 +17,11 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Include "php_functions/auth.php";
+include_once dirname(__FILE__) . '/../php/registration.php';
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 $username = $_GET['username'];
 $confirmation_token = $_GET['confirmation'];
 
-$status = confirm($username, $confirmation_token);
-
-if ($status === "no_user") {
-    header('Location: signup.php?not_existing_user=true');
-}
-elseif ($status === "no_match") {
-    header('Location: signup.php?confirmation_not_matching=true');
-}
-elseif ($status === "already_confirmed") {
-    header('Location: signup.php?already_confirmed=true');
-}
-elseif ($status === "success") {
-    header('Location: signup.php?registration_success=true');
-}
-
-
-?>
+$message = confirm($username, $confirmation_token);
+(new DismissableMessage($message['status'], $message['title'], $message['body']))->show('signup.php');
