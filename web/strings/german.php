@@ -59,7 +59,7 @@ function get_german() {
         'REGISTER_EMAIL_TITLE' => 'Email Adresse',
         'REGISTER_EMAIL_PLACEHOLDER' => 'email@example.com',
         'REGISTER_USERNAME_TITLE' => 'Benutzername',
-        'REGISTER_USERNAME_PLACEHOLDER' => 'Nutzername',
+        'REGISTER_USERNAME_PLACEHOLDER' => 'Benutzername',
         'REGISTER_PASSWORD_TITLE' => 'Passwort',
         'REGISTER_PASSWORD_PLACEHOLDER' => '********',
         'REGISTER_PASSWORD_REPEAT_TITLE' => 'Passwort (Wiederholung)',
@@ -90,7 +90,7 @@ function get_german() {
         'REGISTER_ERROR_EMAIL_USED_BODY' => 'Diese Email wird berets verwendet',
         'CONFIRMATION_EMAIL_SENDER' => 'Bundesliga Tippspiel',
         'CONFIRMATION_EMAIL_TITLE' => 'Registrierung - Bestatigung',
-        'CONFIRMATION_EMAIL_BODY' => '<h2>Bestätigung</h2><p>Herzlich willkommen beim Bundesliga Tippspiel!</p>'.
+        'CONFIRMATION_EMAIL_BODY' => '<h2>Bestätigung</h2><p>Herzlich willkommen beim Bundesliga Tippspiel!</p>' .
                                      '<p>Um deine Registrierung abzuschließen, clicke bitte den folgenden link:</p>',
         'CONFIRMATION_EMAIL_LINK_NAME' => 'Bestätigen',
         'REGISTER_SUCCESS_TITLE' => 'Registrierung abgeschlossen',
