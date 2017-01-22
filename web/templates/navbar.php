@@ -249,7 +249,7 @@ function generateDefaultHeaderNavbar($page_file) {
     );
 
     if (isset($_SESSION['token'])) {
-        $navbar->addRight(new NavBarButton('@$LOGOUT_NAV_TITLE', '#', false));
+        $navbar->addRight(new NavBarButton('@$LOGOUT_NAV_TITLE', 'actions/logout.php', false));
     }
     else {
         $navbar->addLeft(new NavBarButton('@$LOGIN_NAV_TITLE', 'signup.php', $login_active));
