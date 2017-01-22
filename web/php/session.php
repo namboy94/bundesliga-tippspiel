@@ -41,15 +41,19 @@ function initializeSession() {
  * @param $password string: The user's password
  * @return          array:  The Status of the login attempt
  *                          status: the status of the attempt. If true, successful, else not successful
- *                          reason: if failed, detailed explanation
+ *                          title, body: if failed, detailed explanation
  */
 function login($email, $password) {
 
     if (isLoggedIn()) {
-        return array('status' => false, 'reason' => 'already_logged_in');
+        return array('status' => false,
+                     'title' => '@$LOGIN_ERROR_ALREADY_LOGGED_IN_TITLE',
+                     'body' => '@$LOGIN_ERROR_ALREADY_LOGGED_IN_BODY');
     }
     elseif (!passwordMatches($email, $password)) {
-        return array('status' => false, 'reason' => 'password_missmatch');
+        return array('status' => false,
+                     'title' => '@$LOGIN_ERROR_PASSWORD_MISSMATCH_TITLE',
+                     'body' => '@$LOGIN_ERROR_PASSWORD_MISSMATCH_BODY');
     }
     else {
 
@@ -58,7 +62,9 @@ function login($email, $password) {
         $result = $db->query('SELECT user_id FROM users WHERE email_address=?', 's', array($email));
 
         if ($result->num_rows < 1) {
-            return array('status' => false, 'reason' => 'user_does_not_exist');
+            return array('status' => false,
+                         'title' => '@$LOGIN_ERROR_USER_DOES_NOT_EXIST_TITLE',
+                         'body' => '@$LOGIN_ERROR_USER_DOES_NOT_EXIST_BODY');
 
         } else {
 
@@ -73,7 +79,7 @@ function login($email, $password) {
             $_SESSION['id'] = $id;
             $_SESSION['token'] = $token;
 
-            return array('status' => true);
+            return array('status' => true, );
         }
     }
 }

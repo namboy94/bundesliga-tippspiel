@@ -17,27 +17,19 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Include "php_functions/auth.php";
+include_once dirname(__FILE__) . '/../php/session.php';
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 session_start();
 
 $email = $_POST["login_email"];
 $password = $_POST["login_password"];
 
+$login_result = login($email, $password);
 
-if (verify_password($email, $password)) {
-
-    $token = login($email);
-
-    if ($token === "") {
-        header('Location: signup.php?invalid_credentials');
-    }
-
-    $_SESSION['token'] = $token;
-    header('Location: index.php');
+if (!$login_result['status']) {
+    (new DismissableMessage('error', $login_result['title'], $login_result['body']))->show('../signup.php');
 }
 else {
-    header('Location: signup.php?invalid_credentials');
+    header('Location: ../index.php');
 }
-
-?>
