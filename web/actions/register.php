@@ -66,8 +66,6 @@ else {
         $body .= '<hr><a href="https://tippspiel.krumreyh.com/actions/confirmation.php?confirmation=' . $confirmation_token;
         $body .= "&username=" . $username . '">' . $dictionary->translate('@$CONFIRMATION_EMAIL_LINK_NAME') . '<a>';
 
-        $title = 'aaa';
-
         mail($email, $title, $body, $headers);
 
         $message = new DismissableMessage('success', '@$REGISTER_SUCCESS_TITLE', '@$REGISTER_SUCCESS_BODY');
