@@ -27,12 +27,14 @@ function get_german() {
         # HEADER TITLES
         'HOME_TITLE' => 'Bundesliga Tippspiel - Home',
         'CONTACT_TITLE' => 'Bundesliga Tippspiel - Kontakt',
-        'ABOUT_TITLE' => 'Bundesliga Betting Game - Impressum',
+        'ABOUT_TITLE' => 'Bundesliga Tippspiel - Impressum',
+        'SIGNUP_TITLE' => 'Bundesliga Tippspiel - Anmelden und Registrieren',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Tippspiel',
         'HOME_NAV_TITLE' => 'Home',
         'LOGIN_NAV_TITLE' => 'Anmelden',
+        'LOGOUT_NAV_TITLE' => 'Abmelden',
         'THEMES_NAV_TITLE' => 'Themen',
         'THEME_DEFAULT_NAV_TITLE' => 'Standard',
         'THEME_TERMINAL_NAV_TITLE' => 'Konsole',
@@ -49,6 +51,65 @@ function get_german() {
         'SOURCE_CODE_SECTION_TITLE' => 'Quellcode',
 
         # about.php
-        'ABOUT_JUMBO' => 'Impressum'
+        'ABOUT_JUMBO' => 'Impressum',
+
+        # signup.php
+        'SIGNUP_JUMBO' => 'Anmeldung',
+        'REGISTER_SECTION_TITLE' => 'Registrieren',
+        'REGISTER_EMAIL_TITLE' => 'Email Adresse',
+        'REGISTER_EMAIL_PLACEHOLDER' => 'email@example.com',
+        'REGISTER_USERNAME_TITLE' => 'Benutzername',
+        'REGISTER_USERNAME_PLACEHOLDER' => 'Nutzername',
+        'REGISTER_PASSWORD_TITLE' => 'Passwort',
+        'REGISTER_PASSWORD_PLACEHOLDER' => '********',
+        'REGISTER_PASSWORD_REPEAT_TITLE' => 'Passwort (Wiederholung)',
+        'REGISTER_PASSWORD_REPEAT_PLACEHOLDER' => '********',
+        'REGISTER_SUBMIT_TITLE' => 'Absenden',
+        'LOGIN_SECTION_TITLE' => 'Anmelden',
+        'LOGIN_EMAIL_TITLE' => 'Email Adresse',
+        'LOGIN_EMAIL_PLACEHOLDER' => 'email@example.com',
+        'LOGIN_PASSWORD_TITLE' => 'Passwort',
+        'LOGIN_PASSWORD_PLACEHOLDER' => '********',
+        'LOGIN_SUBMIT_TITLE' => 'Absenden',
+
+        # Registration & Confirmation
+        'REGISTER_ERROR_NO_EMAIL_TITLE' => 'Keine Email Adresse',
+        'REGISTER_ERROR_NO_EMAIL_BODY' => 'Bitte geb eine Email Adresse an',
+        'REGISTER_ERROR_NO_USERNAME_TITLE' => 'Keine Benutzername',
+        'REGISTER_ERROR_NO_USERNAME_BODY' => 'Bitte geb einen Benutzernamen an',
+        'REGISTER_ERROR_NO_PASSWORD_TITLE' => 'Kein Passwort',
+        'REGISTER_ERROR_NO_PASSWORD_BODY' => 'Bitte geb ein Passwort ein',
+        'REGISTER_ERROR_PASSWORD_MISMATCH_TITLE' => 'Passwörter stimmen nicht überein',
+        'REGISTER_ERROR_PASSWORD_MISMATCH_BODY' => 'Bitte überprüfe die Eingabe',
+        'REGISTER_ERROR_PASSWORD_TOO_SHORT_TITLE' => 'Paswort zu kurz',
+        'REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY' => 'Bitte geb ein Passwort mit mindestens 8 Zeichen an',
+        'REGISTER_ERROR_USERNAME_EXISTS_TITLE' => 'Benutzer existiert',
+        'REGISTER_ERROR_USERNAME_EXISTS_BODY' => 'Dieser Besutzer existiert schon. '.
+                                                 'Bitte wähle einen anderen Benutzernamen',
+        'REGISTER_ERROR_EMAIL_USED_TITLE' => 'Email bereits verwendet',
+        'REGISTER_ERROR_EMAIL_USED_BODY' => 'Diese Email wird berets verwendet',
+        'CONFIRMATION_EMAIL_SENDER' => 'Bundesliga Tippspiel',
+        'CONFIRMATION_EMAIL_TITLE' => 'Registrierung - Bestatigung',
+        'CONFIRMATION_EMAIL_BODY' => '<h2>Bestätigung</h2><p>Herzlich willkommen beim Bundesliga Tippspiel!</p>'.
+                                     '<p>Um deine Registrierung abzuschließen, clicke bitte den folgenden link:</p>',
+        'CONFIRMATION_EMAIL_LINK_NAME' => 'Bestätigen',
+        'REGISTER_SUCCESS_TITLE' => 'Registrierung abgeschlossen',
+        'REGISTER_SUCCESS_BODY' => 'Schau in deinem Email Postfach für die Bestätigungs-Email',
+        'CONFIRMATION_ERROR_NO_CONFIRMATION_TITLE' => 'Keine Bestätigung vorhanden',
+        'CONFIRMATION_ERROR_NO_CONFIRMATION_BODY' => 'Dieses Konto kann nicht aktiviert werden',
+        'CONFIRMATION_ERROR_ALREADY_CONFIRMED_TITLE' => 'Bereits bestätigt',
+        'CONFIRMATION_ERROR_ALREADY_CONFIRMED_BODY' => 'Dieses Konto wurde bereits bestätigt',
+        'CONFIRMATION_ERROR_TOKEN_MISMATCH_TITLE' => 'Bestätigungs-Token nicht erkannt',
+        'CONFIRMATION_ERROR_TOKEN_MISMATCH_BODY' => 'Schau nach ob der Link richtig funktioniert',
+        'CONFIRMATION_SUCCESS_TITLE' => 'Bestätigung Abgeschlossen',
+        'CONFIRMATION_SUCCESS_BODY' => 'Du kannst dich jetzt anmelden',
+
+        # Login
+        'LOGIN_ERROR_ALREADY_LOGGED_IN_TITLE' => 'Bereits angemeldet',
+        'LOGIN_ERROR_ALREADY_LOGGED_IN_BODY' => 'Du bist bereits angemeldet',
+        'LOGIN_ERROR_PASSWORD_MISMATCH_TITLE' => 'Anmeldung fehlgeschlagen',
+        'LOGIN_ERROR_PASSWORD_MISMATCH_BODY' => 'Bitte überprüfe deine Angaben',
+        'LOGIN_ERROR_USER_DOES_NOT_EXIST_TITLE' => 'Anmeldung fehlgeschlagen',
+        'LOGIN_ERROR_USER_DOES_NOT_EXIST_BODY' => 'Bitte überprüfe deine Angaben',
     );
 }

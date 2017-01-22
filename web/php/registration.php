@@ -98,17 +98,17 @@ function emailExists($email) {
 
 /**
  * Processes a confirmation
- * @param $token    string: The confirmation token
  * @param $username string: The username
+ * @param $token    string: The confirmation token
  * @return          array:  The status, title and body of the resulting message
  */
-function confirm($token, $username) {
+function confirm($username, $token) {
 
     $db = new Database();
 
     $confirmation_query = $db->query('SELECT confirmation FROM users WHERE username=?', 's', array($username));
     $result_count = $confirmation_query->num_rows;
-    $previous_token = $confirmation_query->fetch_assoc()[''];
+    $previous_token = $confirmation_query->fetch_assoc()['confirmation'];
 
     if ($result_count < 1) {
         return array('status' => 'error',

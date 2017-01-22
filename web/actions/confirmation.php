@@ -24,4 +24,4 @@ $username = $_GET['username'];
 $confirmation_token = $_GET['confirmation'];
 
 $message = confirm($username, $confirmation_token);
-(new DismissableMessage($message['status'], $message['title'], $message['body']))->show('signup.php');
+(new DismissableMessage($message['status'], $message['title'], $message['body']))->show('../signup.php');

@@ -28,11 +28,13 @@ function get_english() {
         'HOME_TITLE' => 'Bundesliga Betting Game - Home',
         'CONTACT_TITLE' => 'Bundesliga Betting Game - Contact',
         'ABOUT_TITLE' => 'Bundesliga Betting Game - About',
+        'SIGNUP_TITLE' => 'Bundesliga Betting Game - Login and Register',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Betting Game',
         'HOME_NAV_TITLE' => 'Home',
         'LOGIN_NAV_TITLE' => 'Login',
+        'LOGOUT_NAV_TITLE' => 'Log Out',
         'THEMES_NAV_TITLE' => 'Themes',
         'THEME_DEFAULT_NAV_TITLE' => 'Default',
         'THEME_TERMINAL_NAV_TITLE' => 'Terminal',
@@ -49,7 +51,64 @@ function get_english() {
         'SOURCE_CODE_SECTION_TITLE' => 'Source Code',
 
         # about.php
-        'ABOUT_JUMBO' => 'About'
+        'ABOUT_JUMBO' => 'About',
+
+        # signup.php
+        'SIGNUP_JUMBO' => '',
+        'REGISTER_SECTION_TITLE' => '',
+        'REGISTER_EMAIL_TITLE' => '',
+        'REGISTER_EMAIL_PLACEHOLDER' => '',
+        'REGISTER_USERNAME_TITLE' => '',
+        'REGISTER_USERNAME_PLACEHOLDER' => '',
+        'REGISTER_PASSWORD_TITLE' => '',
+        'REGISTER_PASSWORD_PLACEHOLDER' => '',
+        'REGISTER_PASSWORD_REPEAT_TITLE' => '',
+        'REGISTER_PASSWORD_REPEAT_PLACEHOLDER' => '',
+        'REGISTER_SUBMIT_TITLE' => '',
+        'LOGIN_SECTION_TITLE' => '',
+        'LOGIN_EMAIL_TITLE' => '',
+        'LOGIN_EMAIL_PLACEHOLDER' => '',
+        'LOGIN_PASSWORD_TITLE' => '',
+        'LOGIN_PASSWORD_PLACEHOLDER' => '',
+        'LOGIN_SUBMIT_TITLE' => '',
+
+        # Registration & Confirmation
+        'REGISTER_ERROR_NO_EMAIL_TITLE' => '',
+        'REGISTER_ERROR_NO_EMAIL_BODY' => '',
+        'REGISTER_ERROR_NO_USERNAME_TITLE' => '',
+        'REGISTER_ERROR_NO_USERNAME_BODY' => '',
+        'REGISTER_ERROR_NO_PASSWORD_TITLE' => '',
+        'REGISTER_ERROR_NO_PASSWORD_BODY' => '',
+        'REGISTER_ERROR_PASSWORD_MISMATCH_TITLE' => '',
+        'REGISTER_ERROR_PASSWORD_MISMATCH_BODY' => '',
+        'REGISTER_ERROR_PASSWORD_TOO_SHORT_TITLE' => '',
+        'REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY' => '',
+        'REGISTER_ERROR_USERNAME_EXISTS_TITLE' => '',
+        'REGISTER_ERROR_USERNAME_EXISTS_BODY' => '',
+        'REGISTER_ERROR_EMAIL_USED_TITLE' => '',
+        'REGISTER_ERROR_EMAIL_USED_BODY' => '',
+        'CONFIRMATION_EMAIL_SENDER' => '',
+        'CONFIRMATION_EMAIL_TITLE' => '',
+        'CONFIRMATION_EMAIL_BODY' => '',
+        'CONFIRMATION_EMAIL_LINK_NAME' => '',
+        'REGISTER_SUCCESS_TITLE' => '',
+        'REGISTER_SUCCESS_BODY' => '',
+        'CONFIRMATION_ERROR_NO_CONFIRMATION_TITLE' => '',
+        'CONFIRMATION_ERROR_NO_CONFIRMATION_BODY' => '',
+        'CONFIRMATION_ERROR_ALREADY_CONFIRMED_TITLE' => '',
+        'CONFIRMATION_ERROR_ALREADY_CONFIRMED_BODY' => '',
+        'CONFIRMATION_ERROR_TOKEN_MISMATCH_TITLE' => '',
+        'CONFIRMATION_ERROR_TOKEN_MISMATCH_BODY' => '',
+        'CONFIRMATION_SUCCESS_TITLE' => '',
+        'CONFIRMATION_SUCCESS_BODY' => '',
+
+        # Login
+        'LOGIN_ERROR_ALREADY_LOGGED_IN_TITLE' => '',
+        'LOGIN_ERROR_ALREADY_LOGGED_IN_BODY' => '',
+        'LOGIN_ERROR_PASSWORD_MISMATCH_TITLE' => '',
+        'LOGIN_ERROR_PASSWORD_MISMATCH_BODY' => '',
+        'LOGIN_ERROR_USER_DOES_NOT_EXIST_TITLE' => '',
+        'LOGIN_ERROR_USER_DOES_NOT_EXIST_BODY' => '',
 
     );
 }

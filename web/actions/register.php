@@ -43,8 +43,8 @@ else if ($password === "") {
         '@$REGISTER_ERROR_NO_PASSWORD_BODY'))->show('../signup.php');
 }
 else if ($password != $repeat_password) {
-    (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_MISSMATCH_TITLE',
-        '@$REGISTER_ERROR_PASSWORD_MISSMATCH_BODY'))->show('../signup.php');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_MISMATCH_TITLE',
+        '@$REGISTER_ERROR_PASSWORD_MISMATCH_BODY'))->show('../signup.php');
 }
 else if (strlen($password) < 8) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_TITLE',
@@ -58,14 +58,15 @@ else {
         $confirmation_token = $registration['token'];
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        $headers .= "From: " . $dictionary->translate('@$CONFIRMATION_EMAIL_SENDER') .
-                    "<noreply@tippspiel.krumreyh.com>";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+        $headers .= 'From: <noreply@tippspiel.krumreyh.com>';
 
         $title = $dictionary->translate('@$CONFIRMATION_EMAIL_TITLE');
         $body = $dictionary->translate('@$CONFIRMATION_EMAIL_BODY');
-        $body .= '<hr><a href="tippspiel.krumreyh.com/actions/confirmation.php?confirmation=' . $confirmation_token;
+        $body .= '<hr><a href="https://tippspiel.krumreyh.com/actions/confirmation.php?confirmation=' . $confirmation_token;
         $body .= "&username=" . $username . '">' . $dictionary->translate('@$CONFIRMATION_EMAIL_LINK_NAME') . '<a>';
+
+        $title = 'aaa';
 
         mail($email, $title, $body, $headers);
 

@@ -52,8 +52,8 @@ function login($email, $password) {
     }
     elseif (!passwordMatches($email, $password)) {
         return array('status' => false,
-                     'title' => '@$LOGIN_ERROR_PASSWORD_MISSMATCH_TITLE',
-                     'body' => '@$LOGIN_ERROR_PASSWORD_MISSMATCH_BODY');
+                     'title' => '@$LOGIN_ERROR_PASSWORD_MISMATCH_TITLE',
+                     'body' => '@$LOGIN_ERROR_PASSWORD_MISMATCH_BODY');
     }
     else {
 
