@@ -19,9 +19,9 @@
 
 include_once 'php/gets.php';
 include_once 'php/session.php';
-include_once 'strings/dictionary.php';
 include_once 'templates/header.php';
 include_once 'templates/navbar.php';
+include_once 'strings/dictionary.php';
 
 initializeSession();
 processGlobalGets();
@@ -30,6 +30,7 @@ $dictionary = new Dictionary($_SESSION['language']);
 (new Header('@$CONTACT_TITLE'))->echo();
 echo '<body>';
 generateDefaultHeaderNavbar('contact.php')->echo();
+processDismissableMessages();
 
 ?>
 <div class="container">

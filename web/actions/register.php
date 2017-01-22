@@ -17,45 +17,45 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Include "php_functions/auth.php";
-Include "resources/strings-de.php";
-Include "resources/strings-en.php";
-
 session_start();
+
+include_once dirname(__FILE__) . '/../strings/dictionary.php';
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 $email = $_POST["register_email"];
 $username = $_POST["register_username"];
 $password = $_POST["register_password"];
 $repeat_password = $_POST["register_password_repeat"];
+$dictionary = new Dictionary($_SESSION['language']);
 
-switch ($_SESSION['language']) {
-    case 'de':
-        $dictionary = get_german_dictionary();
-        break;
-    default:
-        $dictionary = get_english_dictionary();
-}
 
 if ($email === "") {
-    header('Location: signup.php?no_email=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_NO_EMAIL_TITLE',
+        '@$REGISTER_ERROR_NO_EMAIL_BODY'))->show('../signup.php');
 }
 else if ($username === "") {
-    header('Location: signup.php?no_username=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_NO_USERNAME_TITLE',
+        '@$REGISTER_ERROR_NO_USERNAME_BODY'))->show('../signup.php');
 }
 else if ($password === "") {
-    header('Location: signup.php?no_password=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_NO_PASSWORD_TITLE',
+        '@$REGISTER_ERROR_NO_PASSWORD_BODY'))->show('../signup.php');
 }
 else if ($password != $repeat_password) {
-    header('Location: signup.php?password_mismatch=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_MISSMATCH_TITLE',
+        '@$REGISTER_ERROR_PASSWORD_MISSMATCH_BODY'))->show('../signup.php');
 }
 else if (username_exists($username)) {
-    header('Location: signup.php?username_exists=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_EXISTS_TITLE',
+        '@$REGISTER_ERROR_USERNAME_EXISTS_BODY'))->show('../signup.php');
 }
 else if (email_used($email)) {
-    header('Location: signup.php?email_used=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_EMAIL_USED_TITLE',
+        '@$REGISTER_ERROR_EMAIL_USED_BODY'))->show('../signup.php');
 }
 else if (strlen($password) < 8) {
-    header('Location: signup.php?password_too_short=true');
+    (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_TITLE',
+        '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY'))->show('../signup.php');
 }
 else {
 

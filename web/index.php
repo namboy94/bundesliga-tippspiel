@@ -30,6 +30,7 @@ processGlobalGets();
 echo '<body>';
 
 generateDefaultHeaderNavbar('index.php')->echo();
+processDismissableMessages();
 generateFooter('index.php')->echoWithContainer();
 
 echo '</body>';

@@ -17,21 +17,64 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Include "php_functions/templating.php";
-initialize_session();
-process_global_gets();
-echo load_header("signup");
+include_once 'php/gets.php';
+include_once 'php/session.php';
+include_once 'templates/form.php';
+include_once 'templates/header.php';
+include_once 'templates/navbar.php';
+include_once 'strings/dictionary.php';
+
+initializeSession();
+processGlobalGets();
+$dictionary = new Dictionary($_SESSION['language']);
+
+(new Header('@$CONTACT_TITLE'))->echo();
+echo '<body>';
+generateDefaultHeaderNavbar('signup.php')->echo();
+processDismissableMessages();
+
+$signup_form = new Form('@$SIGNUP_SECTION_TITLE', 'actions/register.php', array(
+    new FormTextEntry('@$REGISTER_EMAIL_TITLE', 'register_email', 'text',
+        '@$REGISTER_EMAIL_PLACEHOLDER', 'reg_email'),
+    new FormTextEntry('@$REGISTER_USERNAME_TITLE', 'register_username', 'text',
+        '@$REGISTER_USERNAME_PLACEHOLDER', 'reg_username'),
+    new FormTextEntry('@$REGISTER_PASSWORD_TITLE', 'register_password', 'password',
+        '@$REGISTER_PASSWORD_PLACEHOLDER', 'reg_password'),
+    new FormTextEntry('@$REGISTER_PASSWORD_REPEAT_TITLE', 'register_password_repeat', 'password',
+        '@$REGISTER_PASSWORD_REPEAT_PLACEHOLDER', 'reg_password_repeat'),
+    new ConfirmationButton('@$REGISTER_SUBMIT_TITLE')
+));
+
+$login_form = new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
+    new FormTextEntry('@$LOGIN_EMAIL_TITLE', 'login_email', 'text',
+        '@$LOGIN_EMAIL_PLACEHOLDER', 'login_email_id'),
+    new FormTextEntry('@$LOGIN_PASSWORD_TITLE', 'login_password', 'text',
+        '@$LOGIN_PASSWORD_PLACEHOLDER', 'login_password_id'),
+    new ConfirmationButton('@$LOGIN_SUBMIT_TITLE')
+));
+
 ?>
-
-
-<body>
-
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1><?php echo $dictionary->translate('@$SIGNUP_JUMBO') ?></h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 col-md-5 col-lg-5">
+            <?php $signup_form->echo(); ?>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <hr width="1" size="500">
+        </div>
+        <div class="col-sm-5 col-md-5 col-lg-5">
+            <?php $login_form->echo(); ?>
+        </div>
+    </div>
+</div>
 <?php
 
-    $dictionary = get_current_dictionary();
 
-    echo load_navbar("signup");
 
+/*
     if (isset($_GET['password_mismatch'])) {
         echo generate_error_message($dictionary['@$PASSWORD_MISMATCH_TITLE'], $dictionary['@$PASSWORD_MISMATCH_BODY']);
     }
@@ -77,11 +120,7 @@ echo load_header("signup");
     else if (isset($_GET["registration_success"])) {
         echo generate_success_message($dictionary['@$REGISTRATION_SUCCESS_TITLE'],
             $dictionary['@$REGISTRATION_SUCCESS_BODY']);
-    }
+    }*/
 
-    echo load_html("html_content/signup_body.html");
-    echo load_html("html_content/templates/footer.html");
-
-?>
-
-</body>
+generateFooter('signup.php')->echoWithContainer();
+echo '</body>';
