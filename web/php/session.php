@@ -59,7 +59,7 @@ function login($email, $password) {
 
         $token = password_hash($email, PASSWORD_DEFAULT);
         $db = new Database();
-        $result = $db->query('SELECT user_id FROM users WHERE email_address=?', 's', array($email));
+        $result = $db->query('SELECT user_id, username FROM users WHERE email_address=?', 's', array($email));
 
         if ($result->num_rows < 1) {
             return array('status' => false,
@@ -68,7 +68,8 @@ function login($email, $password) {
 
         } else {
 
-            $id = $result->fetch_assoc()['user_id'];
+            $row = $result->fetch_assoc();
+            $id = $row['user_id'];
 
             if ($db->query('SELECT * FROM sessions WHERE id=?', 'i', array($id))->num_rows === 0) {
                 $db->queryWrite('INSERT INTO sessions (id, token) VALUES (?, ?)', 'is', array($id, $token));
@@ -78,6 +79,7 @@ function login($email, $password) {
 
             $_SESSION['id'] = $id;
             $_SESSION['token'] = $token;
+            $_SESSION['userdata'] = array('email' => $email, 'id' => $id, 'name' => $row['username']);
 
             return array('status' => true, );
         }

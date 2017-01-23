@@ -29,12 +29,14 @@ function get_english() {
         'CONTACT_TITLE' => 'Bundesliga Betting Game - Contact',
         'ABOUT_TITLE' => 'Bundesliga Betting Game - About',
         'SIGNUP_TITLE' => 'Bundesliga Betting Game - Login and Register',
+        'BETS_TITLE' => 'Bundesliga Betting Game - Bets',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Betting Game',
         'HOME_NAV_TITLE' => 'Home',
         'LOGIN_NAV_TITLE' => 'Login',
         'LOGOUT_NAV_TITLE' => 'Log Out',
+        'BETS_NAV_TITLE' => 'Bets',
         'THEMES_NAV_TITLE' => 'Themes',
         'THEME_DEFAULT_NAV_TITLE' => 'Default',
         'THEME_TERMINAL_NAV_TITLE' => 'Terminal',
@@ -44,6 +46,10 @@ function get_english() {
         'FOOTER_IMPRESSUM_TITLE' => 'About',
         'FOOTER_COPYRIGHT_TEXT' => '© Hermann Krumrey 2017',
         'FOOTER_VERSION_TEXT' => '0.1.0',
+
+        # index.php
+        'HOME_JUMBO' => 'Bundesliga Betting Game',
+        'OR_SIGN_UP_TEXT' => 'Or sign up <a href="signup.php">here</a>!',
 
         # contact.php
         'CONTACT_JUMBO' => 'Contact',
@@ -71,6 +77,9 @@ function get_english() {
         'LOGIN_PASSWORD_TITLE' => 'Password',
         'LOGIN_PASSWORD_PLACEHOLDER' => '********',
         'LOGIN_SUBMIT_TITLE' => 'Submit',
+
+        # bets.php
+        'BETS_JUMBO' => 'Bets',
 
         # Registration & Confirmation
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'No Email Address Provided',

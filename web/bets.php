@@ -1,0 +1,59 @@
+<?php
+/*  Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
+
+    This file is part of bundesliga-tippspiel.
+
+    bundesliga-tippspiel is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    bundesliga-tippspiel is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+include_once 'php/gets.php';
+include_once 'php/session.php';
+include_once 'php/matchdb.php';
+include_once 'templates/form.php';
+include_once 'templates/navbar.php';
+include_once 'templates/header.php';
+include_once 'strings/dictionary.php';
+
+initializeSession();
+processGlobalGets();
+$dictionary = new Dictionary($_SESSION['language']);
+
+(new Header('@$BETS_TITLE'))->echo();
+echo '<body>';
+
+generateDefaultHeaderNavbar('bets.php')->echo();
+processDismissableMessages();
+
+$matchday = getCurrentMatches();
+$teams = getTeams();
+
+?>
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1><?php echo $dictionary->translate('@$BETS_JUMBO') ?></h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+        </div>
+    </div>
+</div>
+<?php
+
+foreach ($matchday as $match) {
+    echo $teams[$match['team_one']]['name'] . ' vs. ' . $teams[$match['team_two']]['name'] . "\n\n";
+}
+
+generateFooter('bets.php')->echoWithContainer();
+
+echo '</body>';

@@ -29,12 +29,14 @@ function get_german() {
         'CONTACT_TITLE' => 'Bundesliga Tippspiel - Kontakt',
         'ABOUT_TITLE' => 'Bundesliga Tippspiel - Impressum',
         'SIGNUP_TITLE' => 'Bundesliga Tippspiel - Anmelden und Registrieren',
+        'BETS_TITLE' => 'Bundesliga Tippspiel - Wetten',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Tippspiel',
         'HOME_NAV_TITLE' => 'Home',
         'LOGIN_NAV_TITLE' => 'Anmelden',
         'LOGOUT_NAV_TITLE' => 'Abmelden',
+        'BETS_NAV_TITLE' => 'Wetten',
         'THEMES_NAV_TITLE' => 'Themen',
         'THEME_DEFAULT_NAV_TITLE' => 'Standard',
         'THEME_TERMINAL_NAV_TITLE' => 'Konsole',
@@ -44,6 +46,10 @@ function get_german() {
         'FOOTER_IMPRESSUM_TITLE' => 'Impressum',
         'FOOTER_COPYRIGHT_TEXT' => '© Hermann Krumrey 2017',
         'FOOTER_VERSION_TEXT' => '0.1.0',
+
+        # index.php
+        'HOME_JUMBO' => 'Bundesliga Tippspiel',
+        'OR_SIGN_UP_TEXT' => 'Oder registriere dich <a href="signup.php">hier</a>!',
 
         # contact.php
         'CONTACT_JUMBO' => 'Kontakt',
@@ -71,6 +77,9 @@ function get_german() {
         'LOGIN_PASSWORD_TITLE' => 'Passwort',
         'LOGIN_PASSWORD_PLACEHOLDER' => '********',
         'LOGIN_SUBMIT_TITLE' => 'Absenden',
+
+        # bets.php
+        'BETS_JUMBO' => 'Wetten',
 
         # Registration & Confirmation
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'Keine Email Adresse',
