@@ -17,20 +17,19 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
+include_once dirname(__FILE__) . '/../php/session.php';
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
-initializeSession();
-processGlobalGets();
+session_start();
 
-(new Header('@$HOME_TITLE'))->echo();
+$email = $_POST["login_email"];
+$password = $_POST["login_password"];
 
-echo '<body>';
+$login_result = login($email, $password);
 
-generateDefaultHeaderNavbar('index.php')->echo();
-processDismissableMessages();
-generateFooter('index.php')->echoWithContainer();
-
-echo '</body>';
+if (!$login_result['status']) {
+    (new DismissableMessage('error', $login_result['title'], $login_result['body']))->show('../signup.php');
+}
+else {
+    header('Location: ../index.php');
+}

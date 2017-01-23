@@ -17,20 +17,32 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
+session_start();
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
-initializeSession();
-processGlobalGets();
+/**
+ * Process GET requests that act the same on every page (e.g. switching the theme)
+ */
+function processGlobalGets() {
 
-(new Header('@$HOME_TITLE'))->echo();
+    if (isset($_GET['theme'])) {
+        $_SESSION['theme'] = $_GET['theme'];
+    }
+    if (isset($_GET['language'])) {
+        $_SESSION['language'] = $_GET['language'];
+    }
+}
 
-echo '<body>';
+/**
+ * Processes displaying dismissable messages
+ */
+function processDismissableMessages() {
 
-generateDefaultHeaderNavbar('index.php')->echo();
-processDismissableMessages();
-generateFooter('index.php')->echoWithContainer();
+    foreach(array('error', 'warning', 'info', 'success') as $dismissable) {
+        if (isset($_SESSION[$dismissable])) {
+            DismissableMessage::fromArray($_SESSION[$dismissable])->echo();
+            unset($_SESSION[$dismissable]);
+        }
+    }
 
-echo '</body>';
+}

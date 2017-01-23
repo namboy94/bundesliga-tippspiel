@@ -17,20 +17,11 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
+include_once dirname(__FILE__) . '/../php/registration.php';
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
-initializeSession();
-processGlobalGets();
+$username = $_GET['username'];
+$confirmation_token = $_GET['confirmation'];
 
-(new Header('@$HOME_TITLE'))->echo();
-
-echo '<body>';
-
-generateDefaultHeaderNavbar('index.php')->echo();
-processDismissableMessages();
-generateFooter('index.php')->echoWithContainer();
-
-echo '</body>';
+$message = confirm($username, $confirmation_token);
+(new DismissableMessage($message['status'], $message['title'], $message['body']))->show('../signup.php');

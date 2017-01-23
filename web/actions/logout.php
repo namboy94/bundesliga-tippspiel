@@ -17,20 +17,8 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
+session_start();
+include_once dirname(__FILE__) . '/../php/session.php';
 
-initializeSession();
-processGlobalGets();
-
-(new Header('@$HOME_TITLE'))->echo();
-
-echo '<body>';
-
-generateDefaultHeaderNavbar('index.php')->echo();
-processDismissableMessages();
-generateFooter('index.php')->echoWithContainer();
-
-echo '</body>';
+logOut();
+header('Location: ../index.php');
