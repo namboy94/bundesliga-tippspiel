@@ -18,6 +18,7 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import sys
 import json
 import MySQLdb
 import requests
@@ -26,21 +27,21 @@ def load(season='2016', league='bl1'):
 
     base_url = "https://www.openligadb.de/api/getmatchdata/bl1/"
     matchdays = []
-    data = json.loads(requests.get(base_url + season))
+    data = json.loads(requests.get(base_url + season).text)
 
     for day in range(1, 35):
         matchday = []
         for match in data:
-            if match["Group"]["GroupOrderId"] == day:
+            if match["Group"]["GroupOrderID"] == day:
                 matchday.append(match)
         matchdays.append(matchday)
 
     return matchdays
 
-def update_db():
+def update_db(username, password):
 
     data = load()
-    db = connect_db()
+    db = connect_db(username, password)
 
     update_db_teams(data, db)
     update_db_matches(data, db)
@@ -83,16 +84,35 @@ def update_db_matches(data, db):
 
             matchday = i + 1
             match_id = match["MatchID"]
-            match_location_city = match["Location"]["LocationCity"]
-            match_location_stadium = match["Location"]["LocationStadium"]
+
+            if match["Location"] is not None:
+                match_location_city = match["Location"]["LocationCity"]
+                match_location_stadium = match["Location"]["LocationStadium"]
+            else:
+                match_location_city = "Unknown"
+                match_location_stadium = "Unknown"
+
             match_time = match["MatchDateTimeUTC"]
             match_finished = match["MatchIsFinished"]
             team_one = match["Team1"]["TeamId"]
             team_two = match["Team2"]["TeamId"]
-            team_one_halftime_points = match["MatchResults"][0]["PointsTeam1"]
-            team_two_halftime_points = match["MatchResults"][0]["PointsTeam2"]
-            team_one_points = match["MatchResults"][1]["PointsTeam1"]
-            team_two_points = match["MatchResults"][1]["PointsTeam2"]
+
+            if len(match["MatchResults"]) > 0:
+                team_one_halftime_points = \
+                    match["MatchResults"][0]["PointsTeam1"]
+                team_two_halftime_points = \
+                    match["MatchResults"][0]["PointsTeam2"]
+            else:
+                team_one_halftime_points = -1
+                team_two_halftime_points = -1
+
+            if len(match["MatchResults"]) > 1:
+                team_one_points = match["MatchResults"][1]["PointsTeam1"]
+                team_two_points = match["MatchResults"][1]["PointsTeam2"]
+            else:
+                team_one_points = -1
+                team_two_points = -1
+
             last_update = match["LastUpdateDateTime"]
 
             sql = ""
