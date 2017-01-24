@@ -23,6 +23,7 @@ include_once 'php/matchdb.php';
 include_once 'templates/form.php';
 include_once 'templates/navbar.php';
 include_once 'templates/header.php';
+include_once 'templates/betform.php';
 include_once 'strings/dictionary.php';
 
 initializeSession();
@@ -37,6 +38,7 @@ processDismissableMessages();
 
 $matchday = getCurrentMatches();
 $teams = getTeams();
+$betform = new BetForm();
 
 ?>
 <div class="container">
@@ -45,14 +47,11 @@ $teams = getTeams();
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
+            <?php $betform->echo(); ?>
         </div>
     </div>
 </div>
 <?php
-
-foreach ($matchday as $match) {
-    echo $teams[$match['team_one']]['name'] . ' vs. ' . $teams[$match['team_two']]['name'] . "\n\n";
-}
 
 generateFooter('bets.php')->echoWithContainer();
 

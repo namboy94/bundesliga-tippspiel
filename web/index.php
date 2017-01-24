@@ -44,8 +44,23 @@ generateDefaultHeaderNavbar('index.php')->echo();
 processDismissableMessages();
 
 ?>
+    <div class="jumbotron text-center"
+         style="background-image: url(resources/images/grass.jpg); background-size: cover;">
+        <div class="container readable-bg">
+            <h1 class="readable"><?php
+                if (!isLoggedIn()) {
+                    echo $dictionary->translate('@$HOME_JUMBO');
+                }
+                else {
+                    echo $dictionary->translate($_SESSION['userdata']['name']);
+                }
+                ?></h1>
+        </div>
+
+    </div>
     <div class="container">
-        <div class="jumbotron text-center">
+        <!--div class="jumbotron text-center"
+             style="background-image: url(resources/images/grass.jpg); background-size: cover; color: #ffffff">
             <h1><?php
                 if (!isLoggedIn()) {
                     echo $dictionary->translate('@$HOME_JUMBO');
@@ -54,7 +69,7 @@ processDismissableMessages();
                     echo $dictionary->translate($_SESSION['userdata']['name']);
                 }
                  ?></h1>
-        </div>
+        </div-->
         <div class="row">
             <div class="col-sm-8 text-center">
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
