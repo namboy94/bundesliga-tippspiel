@@ -18,22 +18,20 @@
 */
 
 include_once dirname(__FILE__) . '/generator.php';
-include_once dirname(__FILE__) . '../php/matchdb.php';
+include_once dirname(__FILE__) . '/../php/matchdb.php';
 
 
-class BetForm extends HtmlGenerator {
+class FullBetForm extends HtmlGenerator {
 
     private $matches;
     private $teams;
+    private $matchday;
+    private $userbets;
 
     public function __construct($matchday=-1) {
 
-        if ($matchday === -1) {
-            $this->matches = getCurrentMatches();
-        }
-        else {
-            $this->matches = getMatches($matchday);
-        }
+        $this->matches = ($matchday === -1 ? getCurrentMatches() : getMatches($matchday));
+        $this->matchday = ($matchday === -1 ? getCurrentMatchDay() : $matchday);
         $this->teams = getTeams();
 
     }
@@ -44,11 +42,51 @@ class BetForm extends HtmlGenerator {
      */
     public function render() {
 
-        $html = '';
+        $html = file_get_contents(dirname(__FILE__) . '/html/betform_full.html');
+        $title = '@$BUNDESLIGA_MATCHDAY_BETS_TITLE ' . $this->matchday;
 
+        $html = str_replace('@TITLE', $title, $html);
+        $html = str_replace('@SUBMIT', '@$BET_SUBMIT_BUTTON_TEXT', $html);
+
+        $elements = '';
         foreach ($this->matches as $match) {
-            $html .= '<p>' . $this->teams[$match['team_one']]['name'] . ' vs.' . $this->teams[$match['team_two']]['name'] . '</p>';
+            $team_one = $this->teams[$match['team_one']];
+            $team_two = $this->teams[$match['team_two']];
+            $elements .= (new FullBetFormElement($team_one, $team_two))->render();
         }
+
+        return str_replace('@ELEMENTS', $elements, $html);
+    }
+}
+
+class FullBetFormElement extends HtmlGenerator {
+
+    private $team_one;
+    private $team_two;
+    private $team_one_default;
+    private $team_two_default;
+
+    public function __construct($team_one, $team_two, $team_one_default, $team_two_default) {
+        $this->team_one = $team_one;
+        $this->team_two = $team_two;
+        $this->team_one_default = $team_one_default;
+        $this->team_two_default = $team_two_default;
+    }
+
+    /**
+     * Renders the HTML string
+     * @return string: The generated HTML content
+     */
+    public function render() {
+        $html = file_get_contents(dirname(__FILE__) . '/html/betform_full_element.html');
+
+        $html = str_replace('@TEAM_ONE', $this->team_one['name'], $html);
+        $html = str_replace('@TEAM_TWO', $this->team_two['name'], $html);
+        $html = str_replace('@NAME_ONE', $this->team_one['id'], $html);
+        $html = str_replace('@NAME_TWO', $this->team_two['id'], $html);
+        $html = str_replace('@DEFAULT_ONE', $this->team_one_default, $html);
+        $html = str_replace('@DEFAULT_TWO', $this->team_two_default, $html);
+
         return $html;
     }
 }

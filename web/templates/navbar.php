@@ -17,7 +17,6 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-session_start();
 include_once dirname(__FILE__) . '/generator.php';
 include_once dirname(__FILE__) . '/../strings/dictionary.php';
 
@@ -270,9 +269,11 @@ function generateFooter($page_file) {
 
     $contact_page_active = $page_file === 'contact.php';
 
-    return new NavBar('@$FOOTER_IMPRESSUM_TITLE', 'about.php',
+    $navbar = new NavBar('@$FOOTER_IMPRESSUM_TITLE', 'about.php',
         array(new NavBarButton('@$FOOTER_COPYRIGHT_TEXT', 'contact.php', $contact_page_active)),
         array(new NavBarButton('@$FOOTER_VERSION_TEXT',
             'https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel', false))
     );
+    $navbar->changeTemplateFile(dirname(__FILE__) . '/html/navbar_bottom.html');
+    return $navbar;
 }

@@ -17,7 +17,6 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-session_start();
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 /**

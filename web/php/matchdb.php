@@ -25,10 +25,18 @@ include_once dirname(__FILE__) . '/database.php';
  * @return array: Array of match arrays
  */
 function getCurrentMatches() {
+    return getMatches(getCurrentMatchday());
+}
+
+/**
+ * Determines the current match day number
+ * @return int: The current matchday
+ */
+function getCurrentMatchday() {
     $db = new Database();
     $result = $db->query('SELECT MAX(matchday) as matchday FROM matches WHERE city != "Unknown"', '', array());
     $matchday = $result->fetch_assoc()['matchday'] + 1;
-    return getMatches($matchday);
+    return $matchday;
 }
 
 /**
@@ -57,4 +65,11 @@ function getTeams() {
         $teams[$team['id']] = $team;
     }
     return $teams;
+}
+
+function getUserBets($matchday) {
+    $db = new Database();
+    $result = $db->query('SELECT * FROM bets WHERE matchday=?', 'i', array($matchday));
+    $bets = array();
+
 }
