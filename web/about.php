@@ -17,12 +17,12 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 include_once 'php/gets.php';
 include_once 'php/session.php';
 include_once 'templates/header.php';
 include_once 'templates/navbar.php';
 include_once 'strings/dictionary.php';
+include_once 'templates/title_jumbotron.php';
 
 initializeSession();
 processGlobalGets();
@@ -31,13 +31,11 @@ $dictionary = new Dictionary($_SESSION['language']);
 (new Header('@$ABOUT_TITLE'))->echo();
 echo '<body>';
 generateDefaultHeaderNavbar('about.php')->echo();
+(new TitleJumboTron('@$ABOUT_JUMBO'))->echo();
 processDismissableMessages();
 
 ?>
 <div class="container">
-    <div class="jumbotron text-center">
-        <h1><?php echo $dictionary->translate('@$ABOUT_JUMBO') ?></h1>
-    </div>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <?php echo file_get_contents('resources/impressum.' . $_SESSION['language']); ?>

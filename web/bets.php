@@ -25,6 +25,7 @@ include_once 'templates/navbar.php';
 include_once 'templates/header.php';
 include_once 'templates/betform.php';
 include_once 'strings/dictionary.php';
+include_once 'templates/title_jumbotron.php';
 
 initializeSession();
 processGlobalGets();
@@ -34,6 +35,7 @@ $dictionary = new Dictionary($_SESSION['language']);
 echo '<body>';
 
 generateDefaultHeaderNavbar('bets.php')->echo();
+(new TitleJumboTron('@$BETS_JUMBO'))->echo();
 processDismissableMessages();
 
 $matchday = getCurrentMatches();
@@ -42,9 +44,6 @@ $betform = new FullBetForm();
 
 ?>
 <div class="container">
-    <div class="jumbotron text-center">
-        <h1><?php echo $dictionary->translate('@$BETS_JUMBO') ?></h1>
-    </div>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <?php $betform->echo(); ?>

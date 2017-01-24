@@ -22,6 +22,7 @@ include_once 'php/session.php';
 include_once 'templates/header.php';
 include_once 'templates/navbar.php';
 include_once 'strings/dictionary.php';
+include_once 'templates/title_jumbotron.php';
 
 initializeSession();
 processGlobalGets();
@@ -30,13 +31,11 @@ $dictionary = new Dictionary($_SESSION['language']);
 (new Header('@$CONTACT_TITLE'))->echo();
 echo '<body>';
 generateDefaultHeaderNavbar('contact.php')->echo();
+(new TitleJumboTron('@$CONTACT_JUMBO'))->echo();
 processDismissableMessages();
 
 ?>
 <div class="container">
-	<div class="jumbotron text-center">
-		<h1><?php echo $dictionary->translate('@$CONTACT_JUMBO') ?></h1>
-	</div>
 	<div class="row">
 		<div class="col-sm-6 col-md-6 col-lg-6 text-center">
 			<h2><?php echo $dictionary->translate('@$ADMIN_SECTION_TITLE') ?></h2>

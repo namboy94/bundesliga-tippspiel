@@ -68,7 +68,8 @@ function getTeams() {
  */
 function getUserBets($matchday) {
     $db = new Database();
-    $result = $db->query('SELECT * FROM bets WHERE matchday=?', 'i', array($matchday));
+    $result = $db->query('SELECT * FROM bets JOIN matches ON bets.match_id = matches.id WHERE matchday=?',
+        'i', array($matchday));
     $bets = array();
     while($bet = $result->fetch_assoc()) {
         $bets[$bet['match_id']] = $bet;

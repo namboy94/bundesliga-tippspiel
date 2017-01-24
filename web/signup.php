@@ -23,6 +23,7 @@ include_once 'templates/form.php';
 include_once 'templates/header.php';
 include_once 'templates/navbar.php';
 include_once 'strings/dictionary.php';
+include_once 'templates/title_jumbotron.php';
 
 initializeSession();
 processGlobalGets();
@@ -31,6 +32,7 @@ $dictionary = new Dictionary($_SESSION['language']);
 (new Header('@$SIGNUP_TITLE'))->echo();
 echo '<body>';
 generateDefaultHeaderNavbar('signup.php')->echo();
+(new TitleJumboTron('@$SIGNUP_JUMBO'))->echo();
 processDismissableMessages();
 
 $signup_form = new Form('@$REGISTER_SECTION_TITLE', 'actions/register.php', array(
@@ -55,9 +57,6 @@ $login_form = new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
 
 ?>
 <div class="container">
-    <div class="jumbotron text-center">
-        <h1><?php echo $dictionary->translate('@$SIGNUP_JUMBO') ?></h1>
-    </div>
     <div class="row">
         <div class="col-sm-5 col-md-5 col-lg-5">
             <?php $signup_form->echo(); ?>
