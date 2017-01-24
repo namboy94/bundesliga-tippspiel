@@ -20,19 +20,41 @@
 include_once dirname(__FILE__) . '/generator.php';
 include_once dirname(__FILE__) . '/../php/matchdb.php';
 
-
+/**
+ * Class FullBetForm is class that models a Bet Form for a standalone bets page
+ */
 class FullBetForm extends HtmlGenerator {
 
+    /**
+     * @var array: The matches to be bet on
+     */
     private $matches;
+
+    /**
+     * @var array: The teams represented by those bets
+     */
     private $teams;
+
+    /**
+     * @var int:   The matchday to be bet on
+     */
     private $matchday;
+
+    /**
+     * @var array|mysqli_result: The user's bets
+     */
     private $userbets;
 
+    /**
+     * FullBetForm constructor.
+     * @param int $matchday: The matchday to represent. Defaults to the current match day
+     */
     public function __construct($matchday=-1) {
 
         $this->matches = ($matchday === -1 ? getCurrentMatches() : getMatches($matchday));
         $this->matchday = ($matchday === -1 ? getCurrentMatchDay() : $matchday);
         $this->teams = getTeams();
+        $this->userbets = getUserBets($this->matchday);
 
     }
 
@@ -52,20 +74,62 @@ class FullBetForm extends HtmlGenerator {
         foreach ($this->matches as $match) {
             $team_one = $this->teams[$match['team_one']];
             $team_two = $this->teams[$match['team_two']];
-            $elements .= (new FullBetFormElement($team_one, $team_two))->render();
+
+            if (isset($this->userbets[$match['id']])) {
+
+                $bet = $this->userbets[$match['id']];
+                $team_one_default = $bet['team_one'];
+                $team_two_default = $bet['team_two'];
+
+            }
+            else {
+                $team_one_default = null;
+                $team_two_default = null;
+            }
+
+
+            $team_one_default = ($team_one_default === null ? 0 : $team_one_default);
+            $team_two_default = ($team_two_default === null ? 0 : $team_two_default);
+
+            $elements .= (new FullBetFormElement($team_one, $team_two, $team_one_default, $team_two_default))->render();
         }
 
         return str_replace('@ELEMENTS', $elements, $html);
     }
 }
 
+/**
+ * Class FullBetFormElement is a class that models an entry in the full bet form
+ */
 class FullBetFormElement extends HtmlGenerator {
 
+    /**
+     * @var array: The home team of the matchup
+     */
     private $team_one;
+
+    /**
+     * @var array: The away team of the matchup
+     */
     private $team_two;
+
+    /**
+     * @var int: The default value to be displayed for the home team
+     */
     private $team_one_default;
+
+    /**
+     * @var int: The default value to be displayed for the away team
+     */
     private $team_two_default;
 
+    /**
+     * FullBetFormElement constructor.
+     * @param $team_one         array: The home team
+     * @param $team_two         array: The away team
+     * @param $team_one_default int:   The default home team value
+     * @param $team_two_default int:   The default away team value
+     */
     public function __construct($team_one, $team_two, $team_one_default, $team_two_default) {
         $this->team_one = $team_one;
         $this->team_two = $team_two;
@@ -84,8 +148,13 @@ class FullBetFormElement extends HtmlGenerator {
         $html = str_replace('@TEAM_TWO', $this->team_two['name'], $html);
         $html = str_replace('@NAME_ONE', $this->team_one['id'], $html);
         $html = str_replace('@NAME_TWO', $this->team_two['id'], $html);
-        $html = str_replace('@DEFAULT_ONE', $this->team_one_default, $html);
-        $html = str_replace('@DEFAULT_TWO', $this->team_two_default, $html);
+
+        if ($this->team_one_default !== null) {
+            $html = str_replace('@DEFAULT_ONE', 'value="' . $this->team_one_default . '"', $html);
+        }
+        if ($this->team_two_default !== null) {
+            $html = str_replace('@DEFAULT_TWO', 'value="' . $this->team_two_default . '"', $html);
+        }
 
         return $html;
     }

@@ -46,17 +46,12 @@ function getCurrentMatchday() {
  */
 function getMatches($matchday) {
     $db = new Database();
-    $result = $db->query('SELECT * FROM matches WHERE matchday=?', 'i', array($matchday));
-
-    $matches = array();
-    while ($match = $result->fetch_assoc()) {
-        array_push($matches, $match);
-    }
-
-    return $matches;
-
+    return $db->query('SELECT * FROM matches WHERE matchday=?', 'i', array($matchday), true);
 }
 
+/**
+ * @return array: All teams in the teams table of the database
+ */
 function getTeams() {
     $db = new Database();
     $result = $db->query('SELECT * FROM teams', '', array());
@@ -67,9 +62,16 @@ function getTeams() {
     return $teams;
 }
 
+/**
+ * @param $matchday int:                  The matchday to check
+ * @return          array|mysqli_result:  The bets of the user for the specified matchday
+ */
 function getUserBets($matchday) {
     $db = new Database();
     $result = $db->query('SELECT * FROM bets WHERE matchday=?', 'i', array($matchday));
     $bets = array();
-
+    while($bet = $result->fetch_assoc()) {
+        $bets[$bet['match_id']] = $bet;
+    }
+    return $bets;
 }

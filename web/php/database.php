@@ -62,27 +62,36 @@ class Database {
 
     /**
      * Runs an SQL query
-     * @param $sql                 string:        The parameterized SQL query
-     * @param $types               string:        The types of the variables
-     * @param $variables           array:         The variables to be put into the SQL statement
-     * @return                     mysqli_result: The Query Result (or false if the SQL statement failed)
+     * @param $sql                 string:               The parameterized SQL query
+     * @param $types               string:               The types of the variables
+     * @param $variables           array:                The variables to be put into the SQL statement
+     * @param $asArray             boolean:              Can be set to return the query result as an array
+     * @return                     mysqli_result|array : The Query Result (or false if the SQL statement failed)
      */
-    public function query($sql, $types, $variables) {
+    public function query($sql, $types, $variables, $asArray=false) {
 
         $db = $this->openDatabase();
         $stmt = $db->prepare($sql);
 
         if ($types === '') {
-            return $db->query($sql);
+            $result = $db->query($sql);
         }
         else {
             $params = $this->makeReference(array_merge(array($types), $variables));
             call_user_func_array(array($stmt, 'bind_param'), $params);
             $stmt->execute();
-
             $result = $stmt->get_result();
+        }
+        $db->close();
 
-            $db->close();
+        if ($asArray) {
+            $result_array = array();
+            while($item = $result->fetch_assoc()) {
+                array_push($result_array, $item);
+            }
+            return $result_array;
+        }
+        else {
             return $result;
         }
     }
