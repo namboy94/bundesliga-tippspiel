@@ -55,6 +55,9 @@ class FullBetForm extends HtmlGenerator {
         $this->matchday = ($matchday === -1 ? getCurrentMatchDay() : $matchday);
         $this->teams = getTeams();
         $this->userbets = getUserBets($this->matchday);
+        $_SESSION['current_matches'] = $this->matches;
+        $_SESSION['current_teams'] = $this->teams;
+        $_SESSION['current_bets'] = $this->userbets;
 
     }
 
@@ -72,6 +75,7 @@ class FullBetForm extends HtmlGenerator {
 
         $elements = '';
         foreach ($this->matches as $match) {
+
             $team_one = $this->teams[$match['team_one']];
             $team_two = $this->teams[$match['team_two']];
 
@@ -86,7 +90,6 @@ class FullBetForm extends HtmlGenerator {
                 $team_one_default = null;
                 $team_two_default = null;
             }
-
 
             $team_one_default = ($team_one_default === null ? 0 : $team_one_default);
             $team_two_default = ($team_two_default === null ? 0 : $team_two_default);

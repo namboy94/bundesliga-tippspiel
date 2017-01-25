@@ -82,6 +82,8 @@ function get_german() {
         'BETS_JUMBO' => 'Wetten',
         'BUNDESLIGA_MATCHDAY_BETS_TITLE' => 'Bundesliga Spieltag',
         'BET_SUBMIT_BUTTON_TEXT' => 'Bestätigen',
+        'BETS_UPDATED_TITLE' => 'Tipps aktualisiert',
+        'BETS_UPDATED_BODY' => '',
 
         # Registration & Confirmation
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'Keine Email Adresse',

@@ -134,8 +134,11 @@ function logOut() {
         (new DataBase())->query('DELETE FROM sessions WHERE id=? AND token=?', 'is',
             array($_SESSION['id'], $_SESSION['token']));
 
-        unset($_SESSION['id']);
-        unset($_SESSION['token']);
+        $language = $_SESSION['language'];
+        $theme = $_SESSION['language'];
+        session_unset();
+        $_SESSION['language'] = $language;
+        $_SESSION['language'] = $theme;
     }
 
 
