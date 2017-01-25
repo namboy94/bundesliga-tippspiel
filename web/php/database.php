@@ -65,10 +65,11 @@ class Database {
      * @param $sql                 string:               The parameterized SQL query
      * @param $types               string:               The types of the variables
      * @param $variables           array:                The variables to be put into the SQL statement
-     * @param $asArray             boolean:              Can be set to return the query result as an array
+     * @param $as_array            boolean:              Can be set to return the query result as an array
+     * @param $array_key           string:               Can be used to specify an array key type
      * @return                     mysqli_result|array : The Query Result (or false if the SQL statement failed)
      */
-    public function query($sql, $types, $variables, $asArray=false) {
+    public function query($sql, $types, $variables, $as_array=false, $array_key='') {
 
         $db = $this->openDatabase();
         $stmt = $db->prepare($sql);
@@ -84,11 +85,20 @@ class Database {
         }
         $db->close();
 
-        if ($asArray) {
+        if ($as_array && $array_key === '') {
             $result_array = array();
-            while($item = $result->fetch_assoc()) {
-                array_push($result_array, $item);
+
+            if ($array_key === '') {
+                while($item = $result->fetch_assoc()) {
+                    array_push($result_array, $item);
+                }
             }
+            else {
+                while ($item = $result->fetch_assoc()) {
+                    $result_array[$item[$array_key]] = $item;
+                }
+            }
+
             return $result_array;
         }
         else {

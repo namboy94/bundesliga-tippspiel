@@ -227,6 +227,7 @@ function generateDefaultHeaderNavbar($page_file) {
     $home_active = $page_file === 'index.php';
     $login_active = $page_file === 'signup.php';
     $bets_active = $page_file === 'bets.php';
+    $leaderboard_active = $page_file === 'leaderboard.php';
     $default_theme_active = $_SESSION['theme'] === 'default';
     $terminal_theme_active = $_SESSION['theme'] === 'terminal';
     $english_active = $_SESSION['language'] === 'en';
@@ -251,6 +252,7 @@ function generateDefaultHeaderNavbar($page_file) {
     if (isset($_SESSION['token'])) {
         $navbar->addRight(new NavBarButton('@$LOGOUT_NAV_TITLE', 'actions/logout.php', false));
         $navbar->addLeft(new NavBarButton('@$BETS_NAV_TITLE', 'bets.php', $bets_active));
+        $navbar->addLeft(new NavBarButton('@$LEADERBOARD_NAV_TITLE', 'leaderboard.php', $leaderboard_active));
     }
     else {
         $navbar->addLeft(new NavBarButton('@$LOGIN_NAV_TITLE', 'signup.php', $login_active));
