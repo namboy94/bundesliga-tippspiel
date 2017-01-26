@@ -37,6 +37,7 @@ function get_german() {
         'LOGIN_NAV_TITLE' => 'Anmelden',
         'LOGOUT_NAV_TITLE' => 'Abmelden',
         'BETS_NAV_TITLE' => 'Wetten',
+        'LEADERBOARD_NAV_TITLE' => 'Rangliste',
         'THEMES_NAV_TITLE' => 'Themen',
         'THEME_DEFAULT_NAV_TITLE' => 'Standard',
         'THEME_TERMINAL_NAV_TITLE' => 'Konsole',
@@ -84,6 +85,12 @@ function get_german() {
         'BET_SUBMIT_BUTTON_TEXT' => 'Bestätigen',
         'BETS_UPDATED_TITLE' => 'Tipps aktualisiert',
         'BETS_UPDATED_BODY' => '',
+
+        # leaderboard.php
+        'LEADERBOARD_TABLE_TITLE' => 'Rangliste',
+        'LEADERBOARD_POSITION_HEADER' => '#',
+        'LEADERBOARD_NAME_HEADER' => 'Name',
+        'LEADERBOARD_POINTS_HEADER' => 'Punkte',
 
         # Registration & Confirmation
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'Keine Email Adresse',

@@ -43,9 +43,7 @@ processDismissableMessages();
 
     <div class="row">
         <div class="col-sm-12">
-            <?php echo $dictionary->translate('@$LEADERBOARD_TABLE_TITLE');
-                  (new LeadboardTable($_SESSION['userdata']['name']))->echo();
-            ?>
+            <?php (new LeadboardTable($_SESSION['userdata']['name']))->echo(); ?>
         </div>
     </div>
 

@@ -37,6 +37,7 @@ function get_english() {
         'LOGIN_NAV_TITLE' => 'Login',
         'LOGOUT_NAV_TITLE' => 'Log Out',
         'BETS_NAV_TITLE' => 'Bets',
+        'LEADERBOARD_NAV_TITLE' => 'Rankings',
         'THEMES_NAV_TITLE' => 'Themes',
         'THEME_DEFAULT_NAV_TITLE' => 'Default',
         'THEME_TERMINAL_NAV_TITLE' => 'Terminal',
@@ -84,6 +85,12 @@ function get_english() {
         'BET_SUBMIT_BUTTON_TEXT' => 'Confirm',
         'BETS_UPDATED_TITLE' => 'Bets updated',
         'BETS_UPDATED_BODY' => '',
+
+        # leaderboard.php
+        'LEADERBOARD_TABLE_TITLE' => 'Leaderboard',
+        'LEADERBOARD_POSITION_HEADER' => '#',
+        'LEADERBOARD_NAME_HEADER' => 'Name',
+        'LEADERBOARD_POINTS_HEADER' => 'Points',
 
         # Registration & Confirmation
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'No Email Address Provided',

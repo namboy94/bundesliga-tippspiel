@@ -85,7 +85,7 @@ class Database {
         }
         $db->close();
 
-        if ($as_array && $array_key === '') {
+        if ($as_array) {
             $result_array = array();
 
             if ($array_key === '') {

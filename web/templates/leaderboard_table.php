@@ -27,7 +27,7 @@ class LeadboardTable extends HtmlGenerator {
     private $username;
 
     public function __construct($username) {
-        $this->template = dirname(__FILE__) . '/html/leaderboard_template.html';
+        $this->template = dirname(__FILE__) . '/html/leaderboard.html';
         $this->username = $username;
     }
 
@@ -39,8 +39,43 @@ class LeadboardTable extends HtmlGenerator {
         $html = file_get_contents($this->template);
 
         $leaderboard = getLeaderboard();
-        print_r($leaderboard);
 
+        $elements = '';
+        $position = 1;
+        foreach($leaderboard as $user) {
+            $elements .=
+                (new LeaderboardUser($position, $user['username'], $user['points'], $this->username))->render();
+            $position += 1;
+        }
+
+        return str_replace('@ELEMENTS', $elements, $html);
+    }
+}
+
+class LeaderboardUser extends HtmlGenerator {
+
+    private $position;
+    private $username;
+    private $points;
+
+    public function __construct($position, $username, $points, $active_user) {
+        $this->position = $position;
+        $this->username = $username;
+        $this->points = $points;
+
+        $this->template = dirname(__FILE__) .
+            ($username === $active_user ? '/html/leaderboard_active_user.html' : '/html/leaderboard_user.html');
+    }
+
+    /**
+     * Renders the HTML string
+     * @return string: The generated HTML content
+     */
+    public function render() {
+        $html = file_get_contents($this->template);
+        $html = str_replace('@POSITION', $this->position, $html);
+        $html = str_replace('@USERNAME', $this->username, $html);
+        $html = str_replace('@POINTS', $this->points, $html);
         return $html;
     }
 }

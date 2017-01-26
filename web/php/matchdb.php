@@ -77,35 +77,26 @@ function getUserBets($matchday) {
 function getLeaderboard() {
     $db = new Database();
 
-    $bets = $db->query('SELECT user, match_id, team_one, team_two FROM bets', '', array(), true);
-    $users = $db->query('SELECT user_id FROM users', '', array(), true);
-    $matches = $db->query('SELECT id, team_one_ft, team_two_ft FROM matches', '', array(), true);
+    $users = $db->query('SELECT user_id, username FROM users WHERE confirmation="confirmed"',
+        '', array(), true, 'user_id');
+    $bets = $db->query('SELECT user, match_id, team_one, team_two FROM bets WHERE locked=true',
+        '', array(), true, 'match_id');
+    $matches = $db->query('SELECT id, team_one_ft, team_two_ft FROM matches WHERE team_one_ft!=-1 AND team_two_ft!=-1',
+        '', array(), true, 'id');
 
-    $userpoints = array();
-    foreach($users as $user) {
-        $userpoints[$user['user_id']] = 0;
+    $leaderboard = array();
+    foreach($users as $user_id => $user) {
+        $leaderboard[$user_id] = array('username' => $user['username'], 'points' => 0);
     }
 
-    foreach($matches as $match) {
-        $team_one = $match['team_one_ft'];
-        $team_two = $match['team_two_ft'];
-
-        if ((int) $team_one === -1 || (int) $team_two === -1) {
-            continue;
-        }
-
-        foreach($userpoints as $user => $points) {
-
-            foreach ($bets as $bet) {
-
-                if (((int) $bet['user'] === (int) $user) && ((int) $bet['match_id'] === (int) $match['id'])) {
-                    $userpoints[$user] += calculatePoints($bet['team_one'], $bet['team_two'], $team_one, $team_two);
-                }
-            }
-        }
+    foreach($bets as $match_id => $bet) {
+        $leaderboard[$bet['user']]['points'] += calculatePoints(
+            $bet['team_one'], $bet['team_two'],
+            $matches[$match_id]['team_one_ft'], $matches[$match_id]['team_two_ft']);
     }
 
-    return $userpoints;
+    return $leaderboard;
+
 }
 
 function calculatePoints($team_one_bet, $team_two_bet, $team_one_actual, $team_two_actual) {
