@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="" />
+    <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,8 +91,8 @@
       <file leaf-file-name="navbar.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/templates/html/navbar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="28" column="21" lean-forward="true" selection-start-line="21" selection-start-column="66" selection-end-line="28" selection-end-column="21" />
+            <state relative-caret-position="165">
+              <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -183,7 +185,6 @@
         <option value="$PROJECT_DIR$/web/templates/header.php" />
         <option value="$PROJECT_DIR$/web/templates/generator.php" />
         <option value="$PROJECT_DIR$/web/php/gets.php" />
-        <option value="$PROJECT_DIR$/web/templates/html/navbar.html" />
         <option value="$PROJECT_DIR$/web/css/custom.css" />
         <option value="$PROJECT_DIR$/web/templates/html/navbar_bottom.html" />
         <option value="$PROJECT_DIR$/web/templates/title_jumbotron.php" />
@@ -211,6 +212,7 @@
         <option value="$PROJECT_DIR$/web/templates/leaderboard_table.php" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard.html" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_active_user.html" />
+        <option value="$PROJECT_DIR$/web/templates/html/navbar.html" />
       </list>
     </option>
   </component>
@@ -503,7 +505,7 @@
       <workItem from="1485348229799" duration="6359000" />
       <workItem from="1485437382211" duration="3911000" />
       <workItem from="1485442432332" duration="2065000" />
-      <workItem from="1485558716287" duration="1307000" />
+      <workItem from="1485558716287" duration="1660000" />
     </task>
     <task id="LOCAL-00021" summary="Try auth functions for first time">
       <created>1484833020440</created>
@@ -852,11 +854,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137247000" />
+    <option name="totallyTimeSpent" value="137600000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1765625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -864,7 +866,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1303,8 +1305,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/html/navbar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="28" column="21" lean-forward="true" selection-start-line="21" selection-start-column="66" selection-end-line="28" selection-end-column="21" />
+        <state relative-caret-position="165">
+          <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
           <folding />
         </state>
       </provider>
