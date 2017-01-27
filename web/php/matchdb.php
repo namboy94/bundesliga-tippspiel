@@ -34,9 +34,8 @@ function getCurrentMatches() {
  */
 function getCurrentMatchday() {
     $db = new Database();
-    $result = $db->query('SELECT MAX(matchday) as matchday FROM matches WHERE city != "Unknown"', '', array());
-    $matchday = $result->fetch_assoc()['matchday'] + 1;
-    return $matchday;
+    $result = $db->query('SELECT MIN(matchday) as matchday FROM matches WHERE team_one_ft=-1 AND team_two_ft=-1');
+    return (int) $result->fetch_assoc()['matchday'];
 }
 
 /**

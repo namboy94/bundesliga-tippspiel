@@ -69,7 +69,7 @@ class Database {
      * @param $array_key           string:               Can be used to specify an array key type
      * @return                     mysqli_result|array : The Query Result (or false if the SQL statement failed)
      */
-    public function query($sql, $types, $variables, $as_array=false, $array_key='') {
+    public function query($sql, $types='', $variables=array(), $as_array=false, $array_key='') {
 
         $db = $this->openDatabase();
         $stmt = $db->prepare($sql);

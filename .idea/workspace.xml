@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/html/navbar.html" afterPath="$PROJECT_DIR$/web/templates/html/navbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/html/navbar_bottom.html" afterPath="$PROJECT_DIR$/web/templates/html/navbar_bottom.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/php/matchdb.php" afterPath="$PROJECT_DIR$/web/php/matchdb.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,20 +50,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="matchdb.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="matchdb.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/php/matchdb.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1440">
-              <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+            <state relative-caret-position="417">
+              <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
               <folding>
-                <marker date="1485440754067" expanded="true" signature="1177:1246" ph="SELECT MAX(m... matches" />
-                <marker date="1485440754067" expanded="true" signature="1557:1595" ph="SELECT * FRO... matches" />
-                <marker date="1485440754067" expanded="true" signature="1776:1795" ph="SELECT * FRO... teams" />
-                <marker date="1485440754067" expanded="true" signature="2264:2360" ph="SELECT * FRO... bets" />
-                <marker date="1485440754067" expanded="true" signature="2497:2563" ph="SELECT user_... users" />
-                <marker date="1485440754067" expanded="true" signature="2629:2680" ph="SELECT user,... bets" />
-                <marker date="1485440754067" expanded="true" signature="2629:2698" ph="SELECT user,... bets" />
-                <marker date="1485440754067" expanded="true" signature="2768:2858" ph="SELECT id, t... matches" />
+                <marker date="1485561034766" expanded="true" signature="1177:1229" ph="SELECT MAX(m... matches" />
+                <marker date="1485561034766" expanded="true" signature="1177:1262" ph="SELECT MIN(m... matches" />
+                <marker date="1485561034766" expanded="true" signature="1581:1619" ph="SELECT * FRO... matches" />
+                <marker date="1485561034766" expanded="true" signature="1800:1819" ph="SELECT * FRO... teams" />
+                <marker date="1485561034766" expanded="true" signature="2288:2384" ph="SELECT * FRO... bets" />
+                <marker date="1485561034766" expanded="true" signature="2521:2587" ph="SELECT user_... users" />
+                <marker date="1485561034766" expanded="true" signature="2653:2704" ph="SELECT user,... bets" />
+                <marker date="1485561034766" expanded="true" signature="2653:2722" ph="SELECT user,... bets" />
+                <marker date="1485561034766" expanded="true" signature="2792:2882" ph="SELECT id, t... matches" />
               </folding>
             </state>
           </provider>
@@ -110,7 +110,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navbar.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="navbar.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1347">
@@ -205,7 +205,6 @@
         <option value="$PROJECT_DIR$/web/templates/leaderboardtable.php" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_template.html" />
         <option value="$PROJECT_DIR$/web/php/database.php" />
-        <option value="$PROJECT_DIR$/web/php/matchdb.php" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_user.html" />
         <option value="$PROJECT_DIR$/web/strings/german.php" />
         <option value="$PROJECT_DIR$/web/strings/english.php" />
@@ -215,6 +214,7 @@
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_active_user.html" />
         <option value="$PROJECT_DIR$/web/templates/html/navbar.html" />
         <option value="$PROJECT_DIR$/web/templates/html/navbar_bottom.html" />
+        <option value="$PROJECT_DIR$/web/php/matchdb.php" />
       </list>
     </option>
   </component>
@@ -507,7 +507,7 @@
       <workItem from="1485348229799" duration="6359000" />
       <workItem from="1485437382211" duration="3911000" />
       <workItem from="1485442432332" duration="2065000" />
-      <workItem from="1485558716287" duration="1962000" />
+      <workItem from="1485558716287" duration="2203000" />
     </task>
     <task id="LOCAL-00021" summary="Try auth functions for first time">
       <created>1484833020440</created>
@@ -856,7 +856,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137902000" />
+    <option name="totallyTimeSpent" value="138143000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="7" />
@@ -1242,23 +1242,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/php/matchdb.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <marker date="1485440754067" expanded="true" signature="1177:1246" ph="SELECT MAX(m... matches" />
-            <marker date="1485440754067" expanded="true" signature="1557:1595" ph="SELECT * FRO... matches" />
-            <marker date="1485440754067" expanded="true" signature="1776:1795" ph="SELECT * FRO... teams" />
-            <marker date="1485440754067" expanded="true" signature="2264:2360" ph="SELECT * FRO... bets" />
-            <marker date="1485440754067" expanded="true" signature="2497:2563" ph="SELECT user_... users" />
-            <marker date="1485440754067" expanded="true" signature="2629:2680" ph="SELECT user,... bets" />
-            <marker date="1485440754067" expanded="true" signature="2629:2698" ph="SELECT user,... bets" />
-            <marker date="1485440754067" expanded="true" signature="2768:2858" ph="SELECT id, t... matches" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/header.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -1312,6 +1295,24 @@
         <state relative-caret-position="-1347">
           <caret line="178" column="42" lean-forward="true" selection-start-line="178" selection-start-column="42" selection-end-line="178" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/php/matchdb.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="40" column="1" lean-forward="true" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <folding>
+            <marker date="1485561034766" expanded="true" signature="1177:1229" ph="SELECT MAX(m... matches" />
+            <marker date="1485561034766" expanded="true" signature="1177:1262" ph="SELECT MIN(m... matches" />
+            <marker date="1485561034766" expanded="true" signature="1581:1619" ph="SELECT * FRO... matches" />
+            <marker date="1485561034766" expanded="true" signature="1800:1819" ph="SELECT * FRO... teams" />
+            <marker date="1485561034766" expanded="true" signature="2288:2384" ph="SELECT * FRO... bets" />
+            <marker date="1485561034766" expanded="true" signature="2521:2587" ph="SELECT user_... users" />
+            <marker date="1485561034766" expanded="true" signature="2653:2704" ph="SELECT user,... bets" />
+            <marker date="1485561034766" expanded="true" signature="2653:2722" ph="SELECT user,... bets" />
+            <marker date="1485561034766" expanded="true" signature="2792:2882" ph="SELECT id, t... matches" />
+          </folding>
         </state>
       </provider>
     </entry>
