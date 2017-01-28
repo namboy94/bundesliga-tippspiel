@@ -134,3 +134,14 @@ function confirm($username, $token) {
     }
 
 }
+
+/**
+ * Changes the current password of a user
+ * @param $email    string: The user's email
+ * @param $password string: The user's new password
+ */
+function changePassword($email, $password) {
+    $db = new Database();
+    $hash = password_hash($password, PASSWORD_BCRYPT);
+    $db->queryWrite('UPDATE users SET password_hash=? WHERE email_address=?', 'ss', array($hash, $email));
+}

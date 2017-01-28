@@ -66,6 +66,7 @@ $login_form = new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
         </div>
         <div class="col-sm-5 col-md-5 col-lg-5">
             <?php $login_form->echo(); ?>
+            <a href="password_reset.php"><?php echo $dictionary->translate('@$FORGOT_PASSWORD_TEXT'); ?></a>
         </div>
     </div>
 </div>

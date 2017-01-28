@@ -112,7 +112,7 @@ class Database {
      * @param $types     string: The Types of the Variables
      * @param $variables array:  The Variables
      */
-    public function queryWrite($sql, $types, $variables) {
+    public function queryWrite($sql, $types='', $variables=array()) {
 
         $db = $this->openDatabase();
         $stmt = $db->prepare($sql);
