@@ -117,6 +117,7 @@ function calculatePoints($team_one_bet, $team_two_bet, $team_one_actual, $team_t
     if ($points === 4) {
         $points += 1;  // Extra point for placing a correct bet
     }
+    echo $points;
     return $points;
 
 }
