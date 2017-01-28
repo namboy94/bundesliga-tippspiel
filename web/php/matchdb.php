@@ -67,8 +67,9 @@ function getTeams() {
  */
 function getUserBets($matchday) {
     $db = new Database();
-    return $db->query('SELECT bets.team_one, bets.team_two, bets.points, matches.id AS match_id ' .
-                         'FROM bets JOIN matches ON bets.match_id = matches.id WHERE matchday=?',
+
+    return $db->query('SELECT bets.team_one, bets.team_two, bets.points, matches.id AS match_id '.
+                      'FROM bets JOIN matches ON bets.match_id=matches.id WHERE matchday=?',
         'i', array($matchday), true, 'match_id');
 }
 
