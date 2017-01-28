@@ -84,17 +84,18 @@ class FullBetForm extends HtmlGenerator {
                 $bet = $this->userbets[$match['id']];
                 $team_one_default = $bet['team_one'];
                 $team_two_default = $bet['team_two'];
+                $points = $bet['points'];
 
             }
             else {
                 $team_one_default = null;
                 $team_two_default = null;
+                $points = -1;
             }
 
-            $team_one_default = ($team_one_default === null ? 0 : $team_one_default);
-            $team_two_default = ($team_two_default === null ? 0 : $team_two_default);
-
-            $elements .= (new FullBetFormElement($team_one, $team_two, $team_one_default, $team_two_default))->render();
+            $elements .=
+                (new FullBetFormElement($team_one, $team_two, $team_one_default, $team_two_default, $points))
+                     ->render();
         }
 
         return str_replace('@ELEMENTS', $elements, $html);
@@ -127,17 +128,24 @@ class FullBetFormElement extends HtmlGenerator {
     private $team_two_default;
 
     /**
+     * @var boolean: The currently earned points of this bet. If points were already given, the
+     *               editing of that field will be disabled
+     */
+    private $points;
+
+    /**
      * FullBetFormElement constructor.
      * @param $team_one         array: The home team
      * @param $team_two         array: The away team
      * @param $team_one_default int:   The default home team value
      * @param $team_two_default int:   The default away team value
      */
-    public function __construct($team_one, $team_two, $team_one_default, $team_two_default) {
+    public function __construct($team_one, $team_two, $team_one_default, $team_two_default, $points) {
         $this->team_one = $team_one;
         $this->team_two = $team_two;
         $this->team_one_default = $team_one_default;
         $this->team_two_default = $team_two_default;
+        $this->points = $points;
     }
 
     /**
@@ -157,6 +165,13 @@ class FullBetFormElement extends HtmlGenerator {
         }
         if ($this->team_two_default !== null) {
             $html = str_replace('@DEFAULT_TWO', 'value="' . $this->team_two_default . '"', $html);
+        }
+
+        if ($this->points >= 0) {
+            $html = str_replace('@DISABLED', 'disabled', $html);
+        }
+        else {
+            $html = str_replace('@DISABLED', '', $html);
         }
 
         return $html;

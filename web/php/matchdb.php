@@ -34,7 +34,7 @@ function getCurrentMatches() {
  */
 function getCurrentMatchday() {
     $db = new Database();
-    $result = $db->query('SELECT MIN(matchday) as matchday FROM matches WHERE team_one_ft=-1 AND team_two_ft=-1');
+    $result = $db->query('SELECT MIN(matchday) as matchday FROM matches WHERE finished=FALSE');
     return (int) $result->fetch_assoc()['matchday'];
 }
 
@@ -67,18 +67,22 @@ function getTeams() {
  */
 function getUserBets($matchday) {
     $db = new Database();
-    return $db->query('SELECT bets.team_one, bets.team_two, bets.locked, matches.id AS match_id ' .
+    return $db->query('SELECT bets.team_one, bets.team_two, bets.points, matches.id AS match_id ' .
                          'FROM bets JOIN matches ON bets.match_id = matches.id WHERE matchday=?',
         'i', array($matchday), true, 'match_id');
 }
 
-
+/**
+ * Calculates the current leaderboard
+ * @return array the leaderboard as a multi-dimensional array. The array will be sorted by points in a descending order
+ *          [{username, user_id, points}]
+ */
 function getLeaderboard() {
     $db = new Database();
 
     $users = $db->query('SELECT user_id, username FROM users WHERE confirmation="confirmed"',
         '', array(), true, 'user_id');
-    $bets = $db->query('SELECT user, match_id, team_one, team_two FROM bets WHERE locked=true',
+    $bets = $db->query('SELECT user, match_id, team_one, team_two FROM bets WHERE points!=-1',
         '', array(), true, 'match_id');
     $matches = $db->query('SELECT id, team_one_ft, team_two_ft FROM matches WHERE team_one_ft!=-1 AND team_two_ft!=-1',
         '', array(), true, 'id');
@@ -95,29 +99,5 @@ function getLeaderboard() {
     }
 
     return $leaderboard;
-
-}
-
-function calculatePoints($team_one_bet, $team_two_bet, $team_one_actual, $team_two_actual) {
-
-    $points = 0;
-    if ($team_one_actual === $team_one_bet) {
-        $points += 1;  // Check if first team score was tipped correctly
-    }
-    if ($team_two_actual === $team_two_bet) {
-        $points += 1;  // Check if second team score was tipped correctly
-    }
-    if (($team_one_bet - $team_two_bet) === ($team_one_actual - $team_two_actual)) {
-        $points += 1;  // Check if goal difference was tipped correctly
-    }
-    if ((($team_one_bet > $team_two_bet) === ($team_one_actual > $team_two_actual)) &&
-        (($team_one_bet === $team_two_bet) === ($team_one_actual === $team_two_actual))) {
-        $points += 1;  // Check if tendency was tipped correctly
-    }
-    if ($points === 4) {
-        $points += 1;  // Extra point for placing a correct bet
-    }
-    echo $points;
-    return $points;
 
 }
