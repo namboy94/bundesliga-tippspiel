@@ -81,22 +81,11 @@ function getUserBets($matchday) {
 function getLeaderboard() {
     $db = new Database();
 
-    $users = $db->query('SELECT user_id, username FROM users WHERE confirmation="confirmed"',
-        '', array(), true, 'user_id');
-    $bets = $db->query('SELECT user, match_id, team_one, team_two FROM bets WHERE points!=-1',
-        '', array(), true, 'match_id');
-    $matches = $db->query('SELECT id, team_one_ft, team_two_ft FROM matches WHERE team_one_ft!=-1 AND team_two_ft!=-1',
-        '', array(), true, 'id');
+    $users = $db->query('SELECT user_id, username FROM users', '', array(), true, 'user_id');
+    $leaderboard = $db->query('SELECT * FROM leaderboard ORDER BY points DESC', '', array(), true, 'user_id');
 
-    $leaderboard = array();
-    foreach($users as $user_id => $user) {
-        $leaderboard[$user_id] = array('username' => $user['username'], 'points' => 0);
-    }
-
-    foreach($bets as $match_id => $bet) {
-        $leaderboard[$bet['user']]['points'] += calculatePoints(
-            $bet['team_one'], $bet['team_two'],
-            $matches[$match_id]['team_one_ft'], $matches[$match_id]['team_two_ft']);
+    foreach($leaderboard as $user_id => $entry) {
+        $leaderboard[$user_id]['username'] = $users[$user_id]['username'];
     }
 
     return $leaderboard;

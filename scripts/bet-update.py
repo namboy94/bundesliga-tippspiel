@@ -38,6 +38,8 @@ def update_db(user, password):
                 stmt.execute("UPDATE bets SET points=%s "\
                     "WHERE user=%s AND match_id=%s", (points, bet[0], bet[1]))
 
+    update_leaderboard(db)
+
     db.commit()
     db.close()
 
@@ -91,8 +93,31 @@ def get_bets(db):
         "SELECT user, match_id, team_one, team_two, points FROM bets");
     return stmt.fetchall()
 
+def update_leaderboard(db):
 
+    stmt = db.cursor()
+    stmt.execute("SELECT * FROM users")
+    users = stmt.fetchall()
 
+    for user in users:
+        stmt = db.cursor()
+        stmt.execute("SELECT SUM(points) FROM bets WHERE user=%s", (user[0],))
+        points = stmt.fetchall()[0][0]
+
+        if points is None:
+            points = 0
+
+        stmt = db.cursor()
+        stmt.execute("SELECT * FROM leaderboard WHERE user_id=%s", (user[0],))
+        user_exists = len(stmt.fetchall()) > 0
+
+        stmt = db.cursor()
+        if user_exists:
+            stmt.execute("UPDATE leaderboard SET points=%s WHERE user_id=%s", 
+                (points, user[0]))
+        else:
+            stmt.execute("INSERT INTO leaderboard VALUES (%s, %s)", 
+                (user[0], points))
 
 
 if __name__ == "__main__":

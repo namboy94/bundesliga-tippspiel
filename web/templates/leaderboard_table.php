@@ -22,10 +22,20 @@ include_once dirname(__FILE__) . '/generator.php';
 include_once dirname(__FILE__) . '/../php/matchdb.php';
 
 
+/**
+ * Class LeadboardTable is a class that models the leaderboard table
+ */
 class LeadboardTable extends HtmlGenerator {
 
+    /**
+     * @var string: The username of the current user
+     */
     private $username;
 
+    /**
+     * LeadboardTable constructor.
+     * @param $username string: The username to highlight on the table
+     */
     public function __construct($username) {
         $this->template = dirname(__FILE__) . '/html/leaderboard.html';
         $this->username = $username;
@@ -52,12 +62,33 @@ class LeadboardTable extends HtmlGenerator {
     }
 }
 
+/**
+ * Class LeaderboardUser is the class that models an entry in the leaderboard table
+ */
 class LeaderboardUser extends HtmlGenerator {
 
+    /**
+     * @var int: The position of the table entry
+     */
     private $position;
+
+    /**
+     * @var string: The username to be displayed on the table entry
+     */
     private $username;
+
+    /**
+     * @var int: The points the user currently has
+     */
     private $points;
 
+    /**
+     * LeaderboardUser constructor.
+     * @param $position    int:    The position of the entry
+     * @param $username    string: The username of the entry
+     * @param $points      int:    The points of the entry
+     * @param $active_user string: The currently active user, which defines if this entry is selected or not
+     */
     public function __construct($position, $username, $points, $active_user) {
         $this->position = $position;
         $this->username = $username;
