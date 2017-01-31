@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/bet-update.py" afterPath="$PROJECT_DIR$/scripts/bet-update.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/bet.php" afterPath="$PROJECT_DIR$/web/actions/bet.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/password_reset.php" afterPath="$PROJECT_DIR$/web/actions/password_reset.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/register.php" afterPath="$PROJECT_DIR$/web/actions/register.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/password_reset.php" afterPath="$PROJECT_DIR$/web/password_reset.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/php/registration.php" afterPath="$PROJECT_DIR$/web/php/registration.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/english.php" afterPath="$PROJECT_DIR$/web/strings/english.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/german.php" afterPath="$PROJECT_DIR$/web/strings/german.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,80 +25,9 @@
       <file leaf-file-name="password_reset.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/actions/password_reset.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="35" column="75" lean-forward="false" selection-start-line="35" selection-start-column="75" selection-end-line="35" selection-end-column="75" />
+            <state relative-caret-position="396">
+              <caret line="38" column="71" lean-forward="false" selection-start-line="38" selection-start-column="71" selection-end-line="38" selection-end-column="71" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="session.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/php/session.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="139" column="38" lean-forward="false" selection-start-line="139" selection-start-column="38" selection-end-line="139" selection-end-column="38" />
-              <folding>
-                <marker date="1485274313268" expanded="true" signature="2136:2193" ph="SELECT user_... users" />
-                <marker date="1485274313268" expanded="true" signature="2582:2615" ph="SELECT * FRO... sessions" />
-                <marker date="1485274313268" expanded="true" signature="2687:2733" ph="INSERT INTO sessions... " />
-                <marker date="1485274313268" expanded="true" signature="2817:2855" ph="UPDATE sessi... " />
-                <marker date="1485274313268" expanded="true" signature="3483:3536" ph="SELECT passw... users" />
-                <marker date="1485274313268" expanded="true" signature="3916:3953" ph="SELECT token... sessions" />
-                <marker date="1485274313268" expanded="true" signature="4337:4380" ph="DELETE FROM " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="password_change.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/actions/password_change.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="27" column="19" lean-forward="false" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registration.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/php/registration.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="168" column="0" lean-forward="true" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
-              <folding>
-                <marker date="1485869197366" expanded="true" signature="2548:2677" ph="INSERT INTO users... " />
-                <marker date="1485869197366" expanded="true" signature="2981:3017" ph="SELECT MAX(u... users" />
-                <marker date="1485869197366" expanded="true" signature="3314:3350" ph="SELECT * FRO... users" />
-                <marker date="1485869197366" expanded="true" signature="3646:3687" ph="SELECT * FRO... users" />
-                <marker date="1485869197366" expanded="true" signature="4040:4087" ph="SELECT confi... users" />
-                <marker date="1485869197366" expanded="true" signature="5006:5054" ph="UPDATE users... " />
-                <marker date="1485869197366" expanded="true" signature="5570:5624" ph="UPDATE users... " />
-                <marker date="1485869197366" expanded="true" signature="6008:6049" ph="SELECT * FRO... users" />
-                <marker date="1485869197366" expanded="true" signature="6274:6328" ph="UPDATE users... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confirmation.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/actions/confirmation.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="26" column="92" lean-forward="false" selection-start-line="26" selection-start-column="92" selection-end-line="26" selection-end-column="92" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bet.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-              <folding>
-                <marker date="1485345354391" expanded="true" signature="621:687" ph="UPDATE bets " />
-                <marker date="1485345354391" expanded="true" signature="865:949" ph="INSERT INTO bets... " />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -122,21 +52,74 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="betform_full_element.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/html/betform_full_element.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="register.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/actions/register.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
+            <state relative-caret-position="156">
               <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="61" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="password_reset.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/password_reset.php">
+      <file leaf-file-name="bet.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="39" column="61" lean-forward="false" selection-start-line="39" selection-start-column="61" selection-end-line="39" selection-end-column="61" />
+            <state relative-caret-position="489">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding>
+                <marker date="1485871398609" expanded="true" signature="751:817" ph="UPDATE bets " />
+                <marker date="1485871398609" expanded="true" signature="992:1076" ph="INSERT INTO bets... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="title_jumbotron.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/title_jumbotron.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="558">
+              <caret line="47" column="1" lean-forward="false" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="navbar.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="588">
+              <caret line="230" column="51" lean-forward="false" selection-start-line="230" selection-start-column="51" selection-end-line="230" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="betform.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/betform.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-753">
+              <caret line="109" column="7" lean-forward="true" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bet-update.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/bet-update.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1980">
+              <caret line="110" column="60" lean-forward="false" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -177,7 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/templates/form.php" />
         <option value="$PROJECT_DIR$/web/register.php" />
         <option value="$PROJECT_DIR$/web/html_content/templates/error_message.html" />
         <option value="$PROJECT_DIR$/web/templates/html/dismissable_message.html" />
@@ -202,20 +184,15 @@
         <option value="$PROJECT_DIR$/web/contact.php" />
         <option value="$PROJECT_DIR$/web/templates/html/betform_full.html" />
         <option value="$PROJECT_DIR$/web/php/session.php" />
-        <option value="$PROJECT_DIR$/web/actions/bet.php" />
-        <option value="$PROJECT_DIR$/web/index.php" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/web/templates/leaderboardtable.php" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_template.html" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_user.html" />
-        <option value="$PROJECT_DIR$/web/strings/german.php" />
-        <option value="$PROJECT_DIR$/web/strings/english.php" />
         <option value="$PROJECT_DIR$/web/leaderboard.php" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard.html" />
         <option value="$PROJECT_DIR$/web/templates/html/leaderboard_active_user.html" />
         <option value="$PROJECT_DIR$/web/templates/html/navbar.html" />
         <option value="$PROJECT_DIR$/web/templates/html/navbar_bottom.html" />
-        <option value="$PROJECT_DIR$/web/templates/html/betform_full_element.html" />
         <option value="$PROJECT_DIR$/web/templates/betform.php" />
         <option value="$PROJECT_DIR$/web/php/matchdb.php" />
         <option value="$PROJECT_DIR$/web/templates/leaderboard_table.php" />
@@ -226,8 +203,14 @@
         <option value="$PROJECT_DIR$/web/profile.php" />
         <option value="$PROJECT_DIR$/web/password_reset.php" />
         <option value="$PROJECT_DIR$/web/actions/register.php" />
-        <option value="$PROJECT_DIR$/web/actions/password_reset.php" />
         <option value="$PROJECT_DIR$/web/php/registration.php" />
+        <option value="$PROJECT_DIR$/web/actions/password_reset.php" />
+        <option value="$PROJECT_DIR$/web/strings/german.php" />
+        <option value="$PROJECT_DIR$/web/strings/english.php" />
+        <option value="$PROJECT_DIR$/web/index.php" />
+        <option value="$PROJECT_DIR$/web/actions/bet.php" />
+        <option value="$PROJECT_DIR$/web/templates/html/betform_full_element.html" />
+        <option value="$PROJECT_DIR$/scripts/bet-update.py" />
       </list>
     </option>
   </component>
@@ -348,7 +331,69 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="html" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bundesliga-tippspiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bundesliga-tippspiel" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="strings" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bundesliga-tippspiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bundesliga-tippspiel" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bundesliga-tippspiel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bundesliga-tippspiel" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -552,14 +597,7 @@
       <workItem from="1485596133461" duration="672000" />
       <workItem from="1485602547972" duration="440000" />
       <workItem from="1485605160370" duration="9495000" />
-      <workItem from="1485867542059" duration="1655000" />
-    </task>
-    <task id="LOCAL-00026" summary="Try hardcode credentials">
-      <created>1484834221951</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1484834221951</updated>
+      <workItem from="1485867542059" duration="4880000" />
     </task>
     <task id="LOCAL-00027" summary="Try using Password read from file again.">
       <created>1484834358892</created>
@@ -897,11 +935,18 @@
       <option name="project" value="LOCAL" />
       <updated>1485627994694</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Write logic of password reser">
+      <created>1485869207902</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1485869207903</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162022000" />
+    <option name="totallyTimeSpent" value="165247000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1084" extended-state="4" />
@@ -937,7 +982,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed errors in contact.php" />
     <MESSAGE value="Rewrite about.php" />
     <MESSAGE value="Completely redid the registration handling" />
     <MESSAGE value="Redo confirmation process" />
@@ -962,20 +1006,14 @@
     <MESSAGE value="Fix betting page" />
     <MESSAGE value="Fix leaderboard table" />
     <MESSAGE value="Implement profile page with functionality to change password" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement profile page with functionality to change password" />
+    <MESSAGE value="Write logic of password reser" />
+    <option name="LAST_COMMIT_MESSAGE" value="Write logic of password reser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/deploy_demo.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/resources/images/grass.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1044,21 +1082,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/bets.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="37" column="27" lean-forward="false" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/strings/dictionary.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-468">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1081,29 +1104,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/strings/german.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1296">
-          <caret line="88" column="8" lean-forward="false" selection-start-line="88" selection-start-column="8" selection-end-line="92" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/strings/english.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1368">
-          <caret line="92" column="46" lean-forward="false" selection-start-line="92" selection-start-column="46" selection-end-line="92" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/contact.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="33" column="30" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1149,31 +1149,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/html/betform_full.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="61" lean-forward="false" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/html/dismissable_message.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/html/betform_full_element.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="24" lean-forward="false" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/betform.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="178" column="1" lean-forward="true" selection-start-line="178" selection-start-column="1" selection-end-line="178" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1210,6 +1189,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1217,29 +1197,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/title_jumbotron.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="47" column="1" lean-forward="false" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3852">
-          <caret line="230" column="51" lean-forward="false" selection-start-line="230" selection-start-column="51" selection-end-line="230" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1284,10 +1241,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/login.php">
+    <entry file="file://$PROJECT_DIR$/web/actions/confirmation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <caret line="26" column="92" lean-forward="false" selection-start-line="26" selection-start-column="92" selection-end-line="26" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/php/registration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="168" column="0" lean-forward="true" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+          <folding>
+            <marker date="1485869197366" expanded="true" signature="2548:2677" ph="INSERT INTO users... " />
+            <marker date="1485869197366" expanded="true" signature="2981:3017" ph="SELECT MAX(u... users" />
+            <marker date="1485869197366" expanded="true" signature="3314:3350" ph="SELECT * FRO... users" />
+            <marker date="1485869197366" expanded="true" signature="3646:3687" ph="SELECT * FRO... users" />
+            <marker date="1485869197366" expanded="true" signature="4040:4087" ph="SELECT confi... users" />
+            <marker date="1485869197366" expanded="true" signature="5006:5054" ph="UPDATE users... " />
+            <marker date="1485869197366" expanded="true" signature="5570:5624" ph="UPDATE users... " />
+            <marker date="1485869197366" expanded="true" signature="6008:6049" ph="SELECT * FRO... users" />
+            <marker date="1485869197366" expanded="true" signature="6274:6328" ph="UPDATE users... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/bets.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="37" column="27" lean-forward="false" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/contact.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="33" column="30" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/strings/dictionary.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/strings/german.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="40" column="8" lean-forward="true" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/strings/english.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="40" column="39" lean-forward="false" selection-start-line="40" selection-start-column="39" selection-end-line="40" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="77" column="72" lean-forward="false" selection-start-line="77" selection-start-column="64" selection-end-line="77" selection-end-column="72" />
           <folding />
         </state>
       </provider>
@@ -1316,14 +1339,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
+    <entry file="file://$PROJECT_DIR$/web/templates/html/betform_full.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-          <folding>
-            <marker date="1485345354391" expanded="true" signature="621:687" ph="UPDATE bets " />
-            <marker date="1485345354391" expanded="true" signature="865:949" ph="INSERT INTO bets... " />
-          </folding>
+        <state relative-caret-position="126">
+          <caret line="7" column="61" lean-forward="false" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/actions/register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="61" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/actions/password_reset.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="38" column="71" lean-forward="false" selection-start-line="38" selection-start-column="71" selection-end-line="38" selection-end-column="71" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1335,44 +1371,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/confirmation.php">
+    <entry file="file://$PROJECT_DIR$/web/actions/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="26" column="92" lean-forward="false" selection-start-line="26" selection-start-column="92" selection-end-line="26" selection-end-column="92" />
+          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/register.php">
+    <entry file="file://$PROJECT_DIR$/web/templates/title_jumbotron.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="61" selection-end-column="61" />
+        <state relative-caret-position="558">
+          <caret line="47" column="1" lean-forward="false" selection-start-line="47" selection-start-column="1" selection-end-line="47" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/password_reset.php">
+    <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="35" column="75" lean-forward="false" selection-start-line="35" selection-start-column="75" selection-end-line="35" selection-end-column="75" />
+        <state relative-caret-position="588">
+          <caret line="230" column="51" lean-forward="false" selection-start-line="230" selection-start-column="51" selection-end-line="230" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/php/registration.php">
+    <entry file="file://$PROJECT_DIR$/web/templates/html/betform_full_element.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="168" column="0" lean-forward="true" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+        <state relative-caret-position="432">
+          <caret line="24" column="24" lean-forward="false" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/betform.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-753">
+          <caret line="109" column="7" lean-forward="true" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/bet-update.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1980">
+          <caret line="110" column="60" lean-forward="false" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
-            <marker date="1485869197366" expanded="true" signature="2548:2677" ph="INSERT INTO users... " />
-            <marker date="1485869197366" expanded="true" signature="2981:3017" ph="SELECT MAX(u... users" />
-            <marker date="1485869197366" expanded="true" signature="3314:3350" ph="SELECT * FRO... users" />
-            <marker date="1485869197366" expanded="true" signature="3646:3687" ph="SELECT * FRO... users" />
-            <marker date="1485869197366" expanded="true" signature="4040:4087" ph="SELECT confi... users" />
-            <marker date="1485869197366" expanded="true" signature="5006:5054" ph="UPDATE users... " />
-            <marker date="1485869197366" expanded="true" signature="5570:5624" ph="UPDATE users... " />
-            <marker date="1485869197366" expanded="true" signature="6008:6049" ph="SELECT * FRO... users" />
-            <marker date="1485869197366" expanded="true" signature="6274:6328" ph="UPDATE users... " />
+            <marker date="1485871398609" expanded="true" signature="751:817" ph="UPDATE bets " />
+            <marker date="1485871398609" expanded="true" signature="992:1076" ph="INSERT INTO bets... " />
           </folding>
         </state>
       </provider>

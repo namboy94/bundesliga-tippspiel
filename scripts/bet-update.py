@@ -31,7 +31,7 @@ def update_db(user, password):
         if bet[4] == -1:
 
             match = matches[bet[1]]
-            if match[0]:
+            if match[1] != 0:
                 points = calculate_points(bet[2], bet[3], match[2], match[3])
 
                 stmt = db.cursor()

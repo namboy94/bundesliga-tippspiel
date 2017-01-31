@@ -38,6 +38,7 @@ function get_english() {
         'LOGOUT_NAV_TITLE' => 'Log Out',
         'BETS_NAV_TITLE' => 'Bets',
         'LEADERBOARD_NAV_TITLE' => 'Rankings',
+        'PROFILE_NAV_TITLE' => 'Profile',
         'THEMES_NAV_TITLE' => 'Themes',
         'THEME_DEFAULT_NAV_TITLE' => 'Default',
         'THEME_TERMINAL_NAV_TITLE' => 'Terminal',
@@ -87,6 +88,7 @@ function get_english() {
         'BETS_UPDATED_BODY' => '',
 
         # leaderboard.php
+        'LEADERBOARD_JUMBO' => 'Leaderboard',
         'LEADERBOARD_TABLE_TITLE' => 'Leaderboard',
         'LEADERBOARD_POSITION_HEADER' => '#',
         'LEADERBOARD_NAME_HEADER' => 'Name',
@@ -131,5 +133,26 @@ function get_english() {
         'LOGIN_ERROR_USER_DOES_NOT_EXIST_TITLE' => 'Authentication Error',
         'LOGIN_ERROR_USER_DOES_NOT_EXIST_BODY' => 'Please check your credentials',
 
-    );
+        # Forgotten Password / Reset
+        'PASSWORD_RESET_JUMBO' => 'Password Reset',
+        'PASSWORD_RESET_FORM_TITLE' => 'Password Reset',
+        'PASSWORD_RESET_EMAIL_TITLE' => 'Email',
+        'PASSWORD_RESET_FORM_BUTTON' => 'Submit',
+        'FORGOT_PASSWORD_TEXT' => 'Forgot Password?',
+        'PASSWORD_RESET_DISMISSABLE_TITLE' => 'Password was reset',
+        'PASSWORD_RESET_DISMISSABLE_BODY' => 'Check your inbox for further information',
+        'PASSWORD_RESET_EMAIL_SUBJECT' => 'Password Reset',
+        'PASSWORD_RESET_EMAIL_BODY' => '<h2>Password Reset</h2>' .
+                                       '<p>Your password was reset. Please use the following password to log in:</p>' .
+                                       '<p>@TEMPORARY_PASSWORD</p>' .
+                                       '<p>Please change the password as soon as possible using the profile page</p>',
+
+        # Profile Page
+        'PROFILE_PASSWORD_CHANGE_TITLE' => 'Change Password',
+        'PROFILE_PASSWORD_CHANGE_CURRENT_LABEL' => 'Current Password',
+        'PROFILE_PASSWORD_CHANGE_NEW_LABEL' => 'New Password',
+        'PROFILE_PASSWORD_RESET_CHANGE_REPEAT_LABEL' => 'New Password (Repeat)',
+        'PROFILE_PASSWORD_CHANGE_SUBMIT' => 'Confirm'
+
+);
 }

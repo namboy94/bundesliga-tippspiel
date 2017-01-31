@@ -38,6 +38,7 @@ function get_german() {
         'LOGOUT_NAV_TITLE' => 'Abmelden',
         'BETS_NAV_TITLE' => 'Wetten',
         'LEADERBOARD_NAV_TITLE' => 'Rangliste',
+        'PROFILE_NAV_TITLE' => 'Profil',
         'THEMES_NAV_TITLE' => 'Themen',
         'THEME_DEFAULT_NAV_TITLE' => 'Standard',
         'THEME_TERMINAL_NAV_TITLE' => 'Konsole',
@@ -87,6 +88,7 @@ function get_german() {
         'BETS_UPDATED_BODY' => '',
 
         # leaderboard.php
+        'LEADERBOARD_JUMBO' => 'Rangliste',
         'LEADERBOARD_TABLE_TITLE' => 'Rangliste',
         'LEADERBOARD_POSITION_HEADER' => '#',
         'LEADERBOARD_NAME_HEADER' => 'Name',
@@ -131,5 +133,26 @@ function get_german() {
         'LOGIN_ERROR_PASSWORD_MISMATCH_BODY' => 'Bitte überprüfe deine Angaben',
         'LOGIN_ERROR_USER_DOES_NOT_EXIST_TITLE' => 'Anmeldung fehlgeschlagen',
         'LOGIN_ERROR_USER_DOES_NOT_EXIST_BODY' => 'Bitte überprüfe deine Angaben',
+
+        # Forgotten Password / Reset
+        'PASSWORD_RESET_JUMBO' => 'Passwort Zurücksetzen',
+        'PASSWORD_RESET_FORM_TITLE' => 'Passwort Zurücksetzen',
+        'PASSWORD_RESET_EMAIL_TITLE' => 'Email',
+        'PASSWORD_RESET_FORM_BUTTON' => 'Bestätigen',
+        'FORGOT_PASSWORD_TEXT' => 'Passwort vergessen?',
+        'PASSWORD_RESET_DISMISSABLE_TITLE' => 'Passwort wurde zurückgesetzt',
+        'PASSWORD_RESET_DISMISSABLE_BODY' => 'Schau in deinem Email Postfach für mehr Informationen nach',
+        'PASSWORD_RESET_EMAIL_SUBJECT' => 'Passwort Zurücksetzung',
+        'PASSWORD_RESET_EMAIL_BODY' => '<h2>Passwort zurückgesetzt</h2>' .
+            '<p>Dein Passwort wurde zurückgesetzt, bitte verwende das folgende Password um dich anzumelden:</p>' .
+            '<p>@TEMPORARY_PASSWORD</p>' .
+            '<p>Bitte ändere dieses Passwort zeitnah auf der Profilseite</p>',
+
+        # Profile Page
+        'PROFILE_PASSWORD_CHANGE_TITLE' => 'Passwort ändern',
+        'PROFILE_PASSWORD_CHANGE_CURRENT_LABEL' => 'Derzeitiges Passwort',
+        'PROFILE_PASSWORD_CHANGE_NEW_LABEL' => 'Neues Passwort',
+        'PROFILE_PASSWORD_RESET_CHANGE_REPEAT_LABEL' => 'Neues Passwort (Wiederholen)',
+        'PROFILE_PASSWORD_CHANGE_SUBMIT' => 'Bestätigen'
     );
 }
