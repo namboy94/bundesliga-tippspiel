@@ -36,6 +36,21 @@ generateDefaultHeaderNavbar('password_reset.php')->echo();
 (new TitleJumboTron('@$PASSWORD_RESET_JUMBO'))->echo();
 processDismissableMessages();
 
+$reset_form = new Form('@$PASSWORD_RESET_FORM_TITLE', 'actions/password_reset.php', array(
+    new FormTextEntry('@$PASSWORD_RESET_EMAIL_TITLE', 'reset_email', 'text', 'email@example.com', 'email'),
+    new ConfirmationButton('@$PASSWORD_RESET_FORM_BUTTON')
+));
+
+?>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <?php $reset_form->echo(); ?>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+<?php
+
 
 generateFooter('password_reset.php')->echoWithContainer();
 echo '</body>';

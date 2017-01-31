@@ -62,9 +62,9 @@ else {
         $headers .= 'From: <noreply@tippspiel.krumreyh.com>';
 
         $title = $dictionary->translate('@$CONFIRMATION_EMAIL_TITLE');
-        $body = $dictionary->translate('@$CONFIRMATION_EMAIL_BODY');
-        $body .= '<hr><a href="https://tippspiel.krumreyh.com/actions/confirmation.php?confirmation=' . $confirmation_token;
-        $body .= "&username=" . $username . '">' . $dictionary->translate('@$CONFIRMATION_EMAIL_LINK_NAME') . '<a>';
+        $body = $dictionary->translate('@$CONFIRMATION_EMAIL_BODY') . '<hr><a href="https://' . $_SERVER['SERVER_NAME']
+            . '/actions/confirmation.php?confirmation=' . $confirmation_token . "&username=" . $username . '">'
+            . $dictionary->translate('@$CONFIRMATION_EMAIL_LINK_NAME') . '<a>';
 
         mail($email, $title, $body, $headers);
 

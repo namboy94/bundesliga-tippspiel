@@ -17,6 +17,23 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-session_start();
+include_once dirname(__FILE__) . '/../strings/dictionary.php';
+include_once dirname(__FILE__) . '/../php/registration.php';
 
-$email = $_GET['reset_email'];
+session_start();
+$dictionary = new Dictionary($_SESSION['language']);
+
+$email = $_POST['reset_email'];
+$temporary_password = resetPassword($email);
+
+if ($temporary_password !== null) {
+
+    $headers = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    $headers .= 'From: <noreply@tippspiel.krumreyh.com>';
+
+    $body = $dictionary->translate('@$PASSWORD_RESET_EMAIL_BODY');
+    $body = str_replace('@TEMPORARY_PASSWORD', $temporary_password, $body);
+
+    mail($email, $dictionary->translate('@$PASSWORD_RESET_EMAIL_TITLE'), $body, $headers);
+}

@@ -145,3 +145,40 @@ function changePassword($email, $password) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
     $db->queryWrite('UPDATE users SET password_hash=? WHERE email_address=?', 'ss', array($hash, $email));
 }
+
+/**
+ * Resets the password of an email address
+ * @param $email_address string:      The email password for which the password will be reset
+ * @return               null|string: The new temporary password, or null if the email address does not exist
+ */
+function resetPassword($email_address) {
+
+    $db = new Database();
+    $exists = $db->query('SELECT * FROM users WHERE email_address=?', 's', array($email_address))->num_rows > 0;
+
+    if ($exists) {
+        $temporary_password = generateRandomString(50);
+        $password_hash = password_hash($temporary_password, PASSWORD_BCRYPT);
+        $db->queryWrite('UPDATE users SET password_hash=? WHERE email_address=?',
+            'ss', array($password_hash, $email_address));
+        return $temporary_password;
+    }
+    else {
+        return null;
+    }
+
+}
+
+/**
+ * Generates a random string
+ * @param $length int:    The length of the random string
+ * @return        string: The random string
+ */
+function generateRandomString($length) {
+    return substr(
+        str_shuffle(
+            str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                ceil($length / strlen($x)))),
+        1,
+        $length);
+}
