@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/deploy_production.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/bet-update.py" afterPath="$PROJECT_DIR$/scripts/bet-update.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/bet.php" afterPath="$PROJECT_DIR$/web/actions/bet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/password_reset.php" afterPath="$PROJECT_DIR$/web/actions/password_reset.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/english.php" afterPath="$PROJECT_DIR$/web/strings/english.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/german.php" afterPath="$PROJECT_DIR$/web/strings/german.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,16 +19,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="password_reset.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/actions/password_reset.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="38" column="71" lean-forward="false" selection-start-line="38" selection-start-column="71" selection-end-line="38" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="logout.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/actions/logout.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,17 +49,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="register.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/actions/register.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="61" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bet.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bet.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="489">
@@ -81,6 +58,26 @@
                 <marker date="1485871398609" expanded="true" signature="751:817" ph="UPDATE bets " />
                 <marker date="1485871398609" expanded="true" signature="992:1076" ph="INSERT INTO bets... " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="deploy_demo.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/deploy_demo.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="deploy_production.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/deploy_production.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="3" column="130" lean-forward="false" selection-start-line="3" selection-start-column="130" selection-end-line="3" selection-end-column="130" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -118,8 +115,8 @@
       <file leaf-file-name="bet-update.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/bet-update.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1980">
-              <caret line="110" column="60" lean-forward="false" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
+            <state relative-caret-position="246">
+              <caret line="103" column="79" lean-forward="false" selection-start-line="103" selection-start-column="79" selection-end-line="103" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -160,7 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/register.php" />
         <option value="$PROJECT_DIR$/web/html_content/templates/error_message.html" />
         <option value="$PROJECT_DIR$/web/templates/html/dismissable_message.html" />
         <option value="$PROJECT_DIR$/web/templates/dismissable_message.php" />
@@ -211,6 +207,7 @@
         <option value="$PROJECT_DIR$/web/actions/bet.php" />
         <option value="$PROJECT_DIR$/web/templates/html/betform_full_element.html" />
         <option value="$PROJECT_DIR$/scripts/bet-update.py" />
+        <option value="$PROJECT_DIR$/scripts/deploy_production.sh" />
       </list>
     </option>
   </component>
@@ -479,18 +476,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scripts" />
+      <recent name="$PROJECT_DIR$/web/templates/html" />
+      <recent name="$PROJECT_DIR$/web/resources/images" />
+      <recent name="$PROJECT_DIR$/web/scripts" />
+      <recent name="$PROJECT_DIR$/web/html_content/templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/scripts" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/web/actions" />
       <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/web/php_pages" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/web/templates/html" />
-      <recent name="$PROJECT_DIR$/web/resources/images" />
-      <recent name="$PROJECT_DIR$/web/scripts" />
-      <recent name="$PROJECT_DIR$/web/html_content/templates" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.php">
@@ -597,14 +595,7 @@
       <workItem from="1485596133461" duration="672000" />
       <workItem from="1485602547972" duration="440000" />
       <workItem from="1485605160370" duration="9495000" />
-      <workItem from="1485867542059" duration="4880000" />
-    </task>
-    <task id="LOCAL-00027" summary="Try using Password read from file again.">
-      <created>1484834358892</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1484834358892</updated>
+      <workItem from="1485867542059" duration="5224000" />
     </task>
     <task id="LOCAL-00028" summary="First connection to database">
       <created>1484834895685</created>
@@ -942,15 +933,22 @@
       <option name="project" value="LOCAL" />
       <updated>1485869207903</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Fix bet updating script">
+      <created>1485872432861</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1485872432862</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="165247000" />
+    <option name="totallyTimeSpent" value="165591000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1084" extended-state="4" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17520921" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -958,7 +956,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -982,7 +980,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rewrite about.php" />
     <MESSAGE value="Completely redid the registration handling" />
     <MESSAGE value="Redo confirmation process" />
     <MESSAGE value="Fix login procedure" />
@@ -1007,25 +1004,14 @@
     <MESSAGE value="Fix leaderboard table" />
     <MESSAGE value="Implement profile page with functionality to change password" />
     <MESSAGE value="Write logic of password reser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Write logic of password reser" />
+    <MESSAGE value="Fix bet updating script" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bet updating script" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/resources/images/grass.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/html/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/bundesliga.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="590">
@@ -1411,14 +1397,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bet-update.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="110" column="60" lean-forward="false" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="489">
@@ -1427,6 +1405,30 @@
             <marker date="1485871398609" expanded="true" signature="751:817" ph="UPDATE bets " />
             <marker date="1485871398609" expanded="true" signature="992:1076" ph="INSERT INTO bets... " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/bet-update.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="103" column="79" lean-forward="false" selection-start-line="103" selection-start-column="79" selection-end-line="103" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/deploy_demo.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/deploy_production.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="130" lean-forward="false" selection-start-line="3" selection-start-column="130" selection-end-line="3" selection-end-column="130" />
+          <folding />
         </state>
       </provider>
     </entry>

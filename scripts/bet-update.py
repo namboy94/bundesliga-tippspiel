@@ -101,7 +101,7 @@ def update_leaderboard(db):
 
     for user in users:
         stmt = db.cursor()
-        stmt.execute("SELECT SUM(points) FROM bets WHERE user=%s", (user[0],))
+        stmt.execute("SELECT SUM(points) FROM bets WHERE user=%s AND points!=-1", (user[0],))
         points = stmt.fetchall()[0][0]
 
         if points is None:
