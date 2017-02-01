@@ -1,8 +1,10 @@
 <?php
 
-session_start();
+include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
+initializeSession();
+redirectInvalidUser('../index.html');
 
 $previous_bets = $_SESSION['current_bets'];
 $teams = $_SESSION['current_teams'];

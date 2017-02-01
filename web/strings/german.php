@@ -55,6 +55,8 @@ function get_german() {
         'HOME_JUMBO' => 'Bundesliga Tippspiel',
         'OR_SIGN_UP_TEXT' => 'Oder registriere dich <a href="signup.php">hier</a>!',
         'HOME_WELCOME_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/text/welcome-de.html'),
+        'UNAUTHORIZED_MESSAGE_TITLE' => 'Zugriff verweigert',
+        'UNAUTHORIZED_MESSAGE_BODY' => 'Melde dich an um auf diese Seite zuzugreifen',
 
         # contact.php
         'CONTACT_JUMBO' => 'Kontakt',

@@ -140,6 +140,15 @@ function logOut() {
         $_SESSION['language'] = $language;
         $_SESSION['language'] = $theme;
     }
+}
 
-
+/**
+ * Checks if user is logged in on a particular site. If not, the user is redirected to the home page
+ * @param $target string: The redirect target
+ */
+function redirectInvalidUser($target='index.php') {
+    if (!isLoggedIn()) {
+        (new DismissableMessage('error', '@$UNAUTHORIZED_MESSAGE_TITLE', '@$UNAUTHORIZED_MESSAGE_BODY'))
+            ->show($target);
+    }
 }

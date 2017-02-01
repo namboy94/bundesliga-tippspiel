@@ -21,7 +21,8 @@ include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/registration.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
-session_start();
+initializeSession();
+redirectInvalidUser('../index.html');
 
 $email = $_SESSION['userdata']['email'];
 

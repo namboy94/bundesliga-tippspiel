@@ -55,6 +55,8 @@ function get_english() {
         'HOME_JUMBO' => 'Bundesliga Betting Game',
         'OR_SIGN_UP_TEXT' => 'Or sign up <a href="signup.php">here</a>!',
         'HOME_WELCOME_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/text/welcome-en.html'),
+        'UNAUTHORIZED_MESSAGE_TITLE' => 'Unauthorized',
+        'UNAUTHORIZED_MESSAGE_BODY' => 'You are not logged in',
 
         # contact.php
         'CONTACT_JUMBO' => 'Contact',
