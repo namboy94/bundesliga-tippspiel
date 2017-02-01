@@ -1,5 +1,9 @@
 stages:
   - deploy
+  - release
+
+variables:
+  GITLAB_ACCESS_TOKEN: "$GITLAB_ACCESS_TOKEN"
 
 deploy_page:
   stage: deploy
@@ -19,3 +23,16 @@ deploy_demo_page:
     - develop
   script:
     - rsync -av web/ /var/www/demo.tippspiel.krumreyh.com/public_html --delete-after
+
+create_gitlab_release:
+  stage: release
+  only:
+    - master
+  tags:
+    - linux-buildserver
+  script:
+    - git clone https://gitlab.namibsun.net/namboy94/gitlab-release-uploader.git
+    - git clone https://gitlab.namibsun.net/namboy94/changelog-reader.git
+    - python changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
+    - python gitlab-release-uploader/gitlab-release-uploader.py namboy94 bundesliga-tippspiel $GITLAB_ACCESS_TOKEN
+      $(cat web/resources/version) current_changelog artifacts -b master -u https://gitlab.namibsun.net
