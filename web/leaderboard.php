@@ -43,7 +43,7 @@ processDismissableMessages();
 
     <div class="row">
         <div class="col-sm-12">
-            <?php (new LeadboardTable($_SESSION['userdata']['name']))->echo(); ?>
+            <?php (new LeaderboardTable($_SESSION['userdata']['name']))->echo(); ?>
         </div>
     </div>
 

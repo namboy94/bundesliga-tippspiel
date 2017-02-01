@@ -25,7 +25,7 @@ include_once dirname(__FILE__) . '/../php/matchdb.php';
 /**
  * Class LeadboardTable is a class that models the leaderboard table
  */
-class LeadboardTable extends HtmlGenerator {
+class LeaderboardTable extends HtmlGenerator {
 
     /**
      * @var string: The username of the current user

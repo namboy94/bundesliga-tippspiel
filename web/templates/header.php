@@ -41,16 +41,23 @@ class Header extends HtmlGenerator {
     public function render() {
         $html = file_get_contents(dirname(__FILE__) . '/html/header.html');
         $html = str_replace('@TITLE', $this->title, $html);
-        $html = str_replace('@CSS_THEME', $this->determineCssFile(), $html);
+        $html = str_replace('@CSS_THEME', $this->determineCssFile()[0], $html);
+        $html = str_replace('@CUSTOM_CSS_THEME', $this->determineCssFile()[1], $html);
 
         return $html;
     }
 
+    /**
+     * @return array: a tuple of css files according to the current theme
+     */
     private function determineCssFile() {
 
         $css_files = array(
-            'default' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-            'terminal' => 'css/hacker.css'
+            'default' => array(
+                'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+                'css/custom-default.css'
+            ),
+            'terminal' => array('css/hacker.css', 'css/custom-hacker.css')
         );
 
         return $css_files[$_SESSION['theme']];
