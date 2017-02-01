@@ -27,8 +27,8 @@ include_once 'strings/dictionary.php';
 include_once 'templates/title_jumbotron.php';
 include_once 'templates/leaderboard_table.php';
 
-
 initializeSession();
+redirectInvalidUser();
 processGlobalGets();
 $dictionary = new Dictionary($_SESSION['language']);
 

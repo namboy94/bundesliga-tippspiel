@@ -17,8 +17,10 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-session_start();
 include_once dirname(__FILE__) . '/../php/session.php';
+
+initializeSession();
+redirectInvalidUser('../index.html');
 
 logOut();
 header('Location: ../index.php');

@@ -30,6 +30,8 @@ function get_english() {
         'ABOUT_TITLE' => 'Bundesliga Betting Game - About',
         'SIGNUP_TITLE' => 'Bundesliga Betting Game - Login and Register',
         'BETS_TITLE' => 'Bundesliga Betting Game - Bets',
+        'LEADERBOARD_TITLE' => 'Bundesliga Betting Game - Leaderboard',
+        'PROFILE_TITLE' => 'Bundesliga Betting Game - Profile',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Betting Game',
@@ -53,6 +55,8 @@ function get_english() {
         'HOME_JUMBO' => 'Bundesliga Betting Game',
         'OR_SIGN_UP_TEXT' => 'Or sign up <a href="signup.php">here</a>!',
         'HOME_WELCOME_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/text/welcome-en.html'),
+        'UNAUTHORIZED_MESSAGE_TITLE' => 'Unauthorized',
+        'UNAUTHORIZED_MESSAGE_BODY' => 'You are not logged in',
 
         # contact.php
         'CONTACT_JUMBO' => 'Contact',
@@ -87,6 +91,10 @@ function get_english() {
         'BET_SUBMIT_BUTTON_TEXT' => 'Confirm',
         'BETS_UPDATED_TITLE' => 'Bets updated',
         'BETS_UPDATED_BODY' => '',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_TITLE' => 'Input value is negative',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_BODY' => 'Please enter a value between 0 and 1000',
+        'INVALID_BET_VALUE_TOO_HIGH_TITLE' => 'Input value too high',
+        'INVALID_BET_VALUE_TOO_HIGH_BODY' => 'Please enter a value between 0 and 1000',
 
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Leaderboard',
@@ -96,6 +104,10 @@ function get_english() {
         'LEADERBOARD_POINTS_HEADER' => 'Points',
 
         # Registration & Confirmation
+        'REGISTER_ERROR_USERNAME_TOO_LONG_TITLE' => 'Username too long',
+        'REGISTER_ERROR_USERNAME_TOO_LONG_BODY' => 'Please limit your username to a maximum of 60 characters',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_TITLE' => 'Email address too long',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_BODY' => 'Email addresses with more than 100 characters are not supported',
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'No Email Address Provided',
         'REGISTER_ERROR_NO_EMAIL_BODY' => 'Please enter a valid email address',
         'REGISTER_ERROR_NO_USERNAME_TITLE' => 'No username provided',

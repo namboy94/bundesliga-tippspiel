@@ -30,6 +30,8 @@ function get_german() {
         'ABOUT_TITLE' => 'Bundesliga Tippspiel - Impressum',
         'SIGNUP_TITLE' => 'Bundesliga Tippspiel - Anmelden und Registrieren',
         'BETS_TITLE' => 'Bundesliga Tippspiel - Wetten',
+        'LEADERBOARD_TITLE' => 'Bundesliga Tippspiel - Rangliste',
+        'PROFILE_TITLE' => 'Bundesliga Tippspiel - Profil',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Tippspiel',
@@ -53,6 +55,8 @@ function get_german() {
         'HOME_JUMBO' => 'Bundesliga Tippspiel',
         'OR_SIGN_UP_TEXT' => 'Oder registriere dich <a href="signup.php">hier</a>!',
         'HOME_WELCOME_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/text/welcome-de.html'),
+        'UNAUTHORIZED_MESSAGE_TITLE' => 'Zugriff verweigert',
+        'UNAUTHORIZED_MESSAGE_BODY' => 'Melde dich an um auf diese Seite zuzugreifen',
 
         # contact.php
         'CONTACT_JUMBO' => 'Kontakt',
@@ -87,6 +91,10 @@ function get_german() {
         'BET_SUBMIT_BUTTON_TEXT' => 'Bestätigen',
         'BETS_UPDATED_TITLE' => 'Tipps aktualisiert',
         'BETS_UPDATED_BODY' => '',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_TITLE' => 'Eingegebener Wert ist negativ',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_BODY' => 'Bitte gebe einen Wert zwischen 0 und 1000 ein',
+        'INVALID_BET_VALUE_TOO_HIGH_TITLE' => 'Eingegebener Wert ist zu hoch',
+        'INVALID_BET_VALUE_TOO_HIGH_BODY' => 'Bitte gebe einen Wert zwischen 0 und 1000 ein',
 
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Rangliste',
@@ -96,6 +104,10 @@ function get_german() {
         'LEADERBOARD_POINTS_HEADER' => 'Punkte',
 
         # Registration & Confirmation
+        'REGISTER_ERROR_USERNAME_TOO_LONG_TITLE' => 'Benutzername zu lang',
+        'REGISTER_ERROR_USERNAME_TOO_LONG_BODY' => 'Nutzernamen dürfen höchstens 60 Zeichen lang sein',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_TITLE' => 'Email Adresse zu lang',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_BODY' => 'Email Adressen dürfen maximal 100 Zeichen lang sein',
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'Keine Email Adresse',
         'REGISTER_ERROR_NO_EMAIL_BODY' => 'Bitte geb eine Email Adresse an',
         'REGISTER_ERROR_NO_USERNAME_TITLE' => 'Keine Benutzername',

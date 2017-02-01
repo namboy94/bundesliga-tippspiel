@@ -62,15 +62,16 @@ function getTeams() {
 }
 
 /**
- * @param $matchday int:                  The matchday to check
- * @return          array|mysqli_result:  The bets of the user for the specified matchday
+ * @param $matchday int:                   The matchday to check
+ * @param $user     int:                   The user for which to fetch the bets
+ * @return          array|mysqli_result :  The bets of the user for the specified matchday
  */
-function getUserBets($matchday) {
+function getUserBets($matchday, $user) {
     $db = new Database();
 
     return $db->query('SELECT bets.team_one, bets.team_two, bets.points, matches.id AS match_id '.
-                      'FROM bets JOIN matches ON bets.match_id=matches.id WHERE matchday=?',
-        'i', array($matchday), true, 'match_id');
+                      'FROM bets JOIN matches ON bets.match_id=matches.id WHERE matchday=? AND user=?',
+        'ii', array($matchday, $user), true, 'match_id');
 }
 
 /**

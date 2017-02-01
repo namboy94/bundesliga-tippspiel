@@ -17,11 +17,12 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-session_start();
-
+include_once dirname(__FILE__) . '/../php/session.php';
 include_once  dirname(__FILE__) . '/../php/registration.php';
 include_once dirname(__FILE__) . '/../strings/dictionary.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
+
+initializeSession();
 
 $email = $_POST["register_email"];
 $username = $_POST["register_username"];
@@ -34,19 +35,27 @@ if ($email === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_EMAIL_TITLE',
         '@$REGISTER_ERROR_NO_EMAIL_BODY'))->show('../signup.php');
 }
-else if ($username === "") {
+elseif (strlen($email) > 100) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_EMAIL_TOO_LONG_TITLE',
+        '@$REGISTER_ERROR_EMAIL_TOO_LONG_BODY'))->show('../signup.php');
+}
+elseif ($username === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_USERNAME_TITLE',
         '@$REGISTER_ERROR_NO_USERNAME_BODY'))->show('../signup.php');
 }
-else if ($password === "") {
+elseif (strlen($username) > 60) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_TOO_LONG_TITLE',
+        '@$REGISTER_ERROR_USERNAME_TOO_LONG_BODY'))->show('../signup.php');
+}
+elseif ($password === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_PASSWORD_TITLE',
         '@$REGISTER_ERROR_NO_PASSWORD_BODY'))->show('../signup.php');
 }
-else if ($password != $repeat_password) {
+elseif ($password != $repeat_password) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_MISMATCH_TITLE',
         '@$REGISTER_ERROR_PASSWORD_MISMATCH_BODY'))->show('../signup.php');
 }
-else if (strlen($password) < 8) {
+elseif (strlen($password) < 8) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_TITLE',
         '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY'))->show('../signup.php');
 }

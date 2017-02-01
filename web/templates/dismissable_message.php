@@ -102,5 +102,6 @@ class DismissableMessage extends HtmlGenerator {
     public function show($target) {
         $_SESSION[$this->message_type] = $this->toArray();
         header('Location: ' . $target);
+        exit();
     }
 }

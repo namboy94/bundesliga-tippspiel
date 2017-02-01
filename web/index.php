@@ -42,8 +42,6 @@ $login_form = new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
     new ConfirmationButton('@$LOGIN_SUBMIT_TITLE')
 ));
 
-$betform = new BetForm(-1, true);
-
 generateDefaultHeaderNavbar('index.php')->echo();
 
 if (isLoggedIn()) {
@@ -70,6 +68,7 @@ processDismissableMessages();
         <?php
         if (isLoggedIn()) {
             echo '<div class="col-sm-6">';
+            $betform = new BetForm(-1, true);
             $betform->echo();
         }
         else {

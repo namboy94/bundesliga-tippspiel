@@ -17,11 +17,13 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/registration.php';
 include_once dirname(__FILE__) . '/../strings/dictionary.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
-session_start();
+initializeSession();
+
 $dictionary = new Dictionary($_SESSION['language']);
 
 $email = $_POST['reset_email'];

@@ -38,7 +38,7 @@ processDismissableMessages();
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
-            <?php echo file_get_contents('resources/impressum.' . $_SESSION['language']); ?>
+            <?php echo file_get_contents('resources/text/impressum.' . $_SESSION['language']); ?>
         </div>
     </div>
 </div>

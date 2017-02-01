@@ -31,6 +31,7 @@ create_gitlab_release:
   tags:
     - linux-buildserver
   script:
+    - mkdir -p artifacts
     - git clone https://gitlab.namibsun.net/namboy94/gitlab-release-uploader.git
     - git clone https://gitlab.namibsun.net/namboy94/changelog-reader.git
     - python changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
