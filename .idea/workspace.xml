@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
+    <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="Fix showing already bet bets">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/php/matchdb.php" afterPath="$PROJECT_DIR$/web/php/matchdb.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/betform.php" afterPath="$PROJECT_DIR$/web/templates/betform.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/english.php" afterPath="$PROJECT_DIR$/web/strings/english.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/german.php" afterPath="$PROJECT_DIR$/web/strings/german.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -59,7 +59,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bet-update.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bet-update.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/bet-update.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1662">
@@ -95,32 +95,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="register.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/actions/register.php">
+      <file leaf-file-name="german.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/strings/german.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="66" column="32" lean-forward="false" selection-start-line="66" selection-start-column="32" selection-end-line="66" selection-end-column="32" />
+            <state relative-caret-position="77">
+              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="registration.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/php/registration.php">
+      <file leaf-file-name="english.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/strings/english.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2736">
-              <caret line="168" column="0" lean-forward="true" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
-              <folding>
-                <marker date="1485950384567" expanded="true" signature="2548:2677" ph="INSERT INTO users... " />
-                <marker date="1485950384567" expanded="true" signature="2981:3017" ph="SELECT MAX(u... users" />
-                <marker date="1485950384567" expanded="true" signature="3314:3350" ph="SELECT * FRO... users" />
-                <marker date="1485950384567" expanded="true" signature="3646:3687" ph="SELECT * FRO... users" />
-                <marker date="1485950384567" expanded="true" signature="4040:4087" ph="SELECT confi... users" />
-                <marker date="1485950384567" expanded="true" signature="5006:5054" ph="UPDATE users... " />
-                <marker date="1485950384567" expanded="true" signature="5570:5624" ph="UPDATE users... " />
-                <marker date="1485950384567" expanded="true" signature="6008:6049" ph="SELECT * FRO... users" />
-                <marker date="1485950384567" expanded="true" signature="6274:6328" ph="UPDATE users... " />
-              </folding>
+            <state relative-caret-position="234">
+              <caret line="32" column="8" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="33" selection-end-column="63" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -207,8 +197,6 @@
         <option value="$PROJECT_DIR$/web/resources/text/welcome.txt" />
         <option value="$PROJECT_DIR$/web/resources/text/welcome-de.html" />
         <option value="$PROJECT_DIR$/web/resources/text/welcome-en.html" />
-        <option value="$PROJECT_DIR$/web/strings/english.php" />
-        <option value="$PROJECT_DIR$/web/strings/german.php" />
         <option value="$PROJECT_DIR$/web/index.php" />
         <option value="$PROJECT_DIR$/web/bets.php" />
         <option value="$PROJECT_DIR$/web/templates/leaderboard_table.php" />
@@ -225,6 +213,8 @@
         <option value="$PROJECT_DIR$/.gitlab-ci.yml" />
         <option value="$PROJECT_DIR$/web/php/matchdb.php" />
         <option value="$PROJECT_DIR$/web/templates/betform.php" />
+        <option value="$PROJECT_DIR$/web/strings/english.php" />
+        <option value="$PROJECT_DIR$/web/strings/german.php" />
       </list>
     </option>
   </component>
@@ -539,6 +529,24 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="strings">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="bundesliga-tippspiel">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="web">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="php">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -694,14 +702,7 @@
       <workItem from="1485947233877" duration="2952000" />
       <workItem from="1485950391965" duration="145000" />
       <workItem from="1485954021884" duration="3070000" />
-      <workItem from="1485957124729" duration="1200000" />
-    </task>
-    <task id="LOCAL-00034" summary="Fix Parameter Binding">
-      <created>1484837957478</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1484837957478</updated>
+      <workItem from="1485957124729" duration="1640000" />
     </task>
     <task id="LOCAL-00035" summary="Add Mail Functionality">
       <created>1484858863597</created>
@@ -1039,11 +1040,18 @@
       <option name="project" value="LOCAL" />
       <updated>1485957768263</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Fix showing already bet bets">
+      <created>1485958334173</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1485958334174</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173426000" />
+    <option name="totallyTimeSpent" value="173866000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1918" height="1084" extended-state="4" />
@@ -1080,7 +1088,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Login and registration framework complete." />
     <MESSAGE value="Write script to fill database information." />
     <MESSAGE value="Add license to db script" />
     <MESSAGE value="Fix db update script" />
@@ -1105,7 +1112,8 @@
     <MESSAGE value="Add gitlab release build step" />
     <MESSAGE value="Version bump to 0.1.1" />
     <MESSAGE value="Fix release build step" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix release build step" />
+    <MESSAGE value="Fix showing already bet bets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix showing already bet bets" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1399,22 +1407,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/strings/german.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="49" column="95" lean-forward="false" selection-start-line="49" selection-start-column="95" selection-end-line="49" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/strings/english.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="49" column="33" lean-forward="false" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/actions/confirmation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1515,6 +1507,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1662">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/strings/english.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="32" column="8" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="33" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/strings/german.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
           <folding />
         </state>
       </provider>

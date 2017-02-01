@@ -30,6 +30,8 @@ function get_english() {
         'ABOUT_TITLE' => 'Bundesliga Betting Game - About',
         'SIGNUP_TITLE' => 'Bundesliga Betting Game - Login and Register',
         'BETS_TITLE' => 'Bundesliga Betting Game - Bets',
+        'LEADERBOARD_TITLE' => 'Bundesliga Betting Game - Leaderboard',
+        'PROFILE_TITLE' => 'Bundesliga Betting Game - Profile',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Betting Game',

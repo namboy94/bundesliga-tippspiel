@@ -30,6 +30,8 @@ function get_german() {
         'ABOUT_TITLE' => 'Bundesliga Tippspiel - Impressum',
         'SIGNUP_TITLE' => 'Bundesliga Tippspiel - Anmelden und Registrieren',
         'BETS_TITLE' => 'Bundesliga Tippspiel - Wetten',
+        'LEADERBOARD_TITLE' => 'Bundesliga Tippspiel - Rangliste',
+        'PROFILE_TITLE' => 'Bundesliga Tippspiel - Profil',
 
         # NAVBAR TITLES
         'WEBSITE_NAME' => 'Bundesliga Tippspiel',
