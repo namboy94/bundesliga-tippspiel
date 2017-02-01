@@ -47,11 +47,12 @@ function get_german() {
         'LANGUAGE_ENGLISH_NAV_TITLE' => 'Englisch',
         'FOOTER_IMPRESSUM_TITLE' => 'Impressum',
         'FOOTER_COPYRIGHT_TEXT' => '© Hermann Krumrey 2017',
-        'FOOTER_VERSION_TEXT' => '0.1.0',
+        'FOOTER_VERSION_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/version'),
 
         # index.php
         'HOME_JUMBO' => 'Bundesliga Tippspiel',
         'OR_SIGN_UP_TEXT' => 'Oder registriere dich <a href="signup.php">hier</a>!',
+        'HOME_WELCOME_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/text/welcome-de.html'),
 
         # contact.php
         'CONTACT_JUMBO' => 'Kontakt',
@@ -153,6 +154,14 @@ function get_german() {
         'PROFILE_PASSWORD_CHANGE_CURRENT_LABEL' => 'Derzeitiges Passwort',
         'PROFILE_PASSWORD_CHANGE_NEW_LABEL' => 'Neues Passwort',
         'PROFILE_PASSWORD_RESET_CHANGE_REPEAT_LABEL' => 'Neues Passwort (Wiederholen)',
-        'PROFILE_PASSWORD_CHANGE_SUBMIT' => 'Bestätigen'
+        'PROFILE_PASSWORD_CHANGE_SUBMIT' => 'Bestätigen',
+        'PASSWORD_CHANGE_CURRENT_WRONG_TITLE' => 'Falsches Passwort',
+        'PASSWORD_CHANGE_CURRENT_WRONG_BODY' => 'Bitte geb dein derzeitiges Passwort ein',
+        'PASSWORD_CHANGE_TOO_SHORT_TITLE' => 'Passwort zu kurz',
+        'PASSWORD_CHANGE_TOO_SHORT_BODY' => 'Geb bitte ein Passwort mit mindestens 8 Zeichen an',
+        'PASSWORD_CHANGE_MISMATCH_TITLE' => 'Passwörter stimmen nicht überein',
+        'PASSWORD_CHANGE_MISMATCH_BODY' => 'Bitte stell sicher dass die Passwörter dieselben sind',
+        'PASSWORD_CHANGE_SUCCESS_TITLE' => 'Passwort geändert',
+        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Melde dich ab jetzt mit deinem neuen Passwort an.'
     );
 }

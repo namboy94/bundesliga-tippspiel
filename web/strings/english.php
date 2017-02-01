@@ -47,11 +47,12 @@ function get_english() {
         'LANGUAGE_ENGLISH_NAV_TITLE' => 'English',
         'FOOTER_IMPRESSUM_TITLE' => 'About',
         'FOOTER_COPYRIGHT_TEXT' => '© Hermann Krumrey 2017',
-        'FOOTER_VERSION_TEXT' => '0.1.0',
+        'FOOTER_VERSION_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/version'),
 
         # index.php
         'HOME_JUMBO' => 'Bundesliga Betting Game',
         'OR_SIGN_UP_TEXT' => 'Or sign up <a href="signup.php">here</a>!',
+        'HOME_WELCOME_TEXT' => file_get_contents(dirname(__FILE__) . '/../resources/text/welcome-en.html'),
 
         # contact.php
         'CONTACT_JUMBO' => 'Contact',
@@ -152,7 +153,15 @@ function get_english() {
         'PROFILE_PASSWORD_CHANGE_CURRENT_LABEL' => 'Current Password',
         'PROFILE_PASSWORD_CHANGE_NEW_LABEL' => 'New Password',
         'PROFILE_PASSWORD_RESET_CHANGE_REPEAT_LABEL' => 'New Password (Repeat)',
-        'PROFILE_PASSWORD_CHANGE_SUBMIT' => 'Confirm'
+        'PROFILE_PASSWORD_CHANGE_SUBMIT' => 'Confirm',
+        'PASSWORD_CHANGE_CURRENT_WRONG_TITLE' => 'Wrong Password',
+        'PASSWORD_CHANGE_CURRENT_WRONG_BODY' => 'Please enter your current password',
+        'PASSWORD_CHANGE_TOO_SHORT_TITLE' => 'Password too short',
+        'PASSWORD_CHANGE_TOO_SHORT_BODY' => 'Please enter a password with at least 8 characters',
+        'PASSWORD_CHANGE_MISMATCH_TITLE' => 'Passwords do not match',
+        'PASSWORD_CHANGE_MISMATCH_BODY' => 'Please make sure that your entry is correct',
+        'PASSWORD_CHANGE_SUCCESS_TITLE' => 'Password changed',
+        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Please log in using your new password in the future'
 
 );
 }

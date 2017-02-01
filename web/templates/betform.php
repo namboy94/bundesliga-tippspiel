@@ -23,7 +23,7 @@ include_once dirname(__FILE__) . '/../php/matchdb.php';
 /**
  * Class FullBetForm is class that models a Bet Form for a standalone bets page
  */
-class FullBetForm extends HtmlGenerator {
+class BetForm extends HtmlGenerator {
 
     /**
      * @var array: The matches to be bet on
@@ -46,15 +46,24 @@ class FullBetForm extends HtmlGenerator {
     private $userbets;
 
     /**
-     * FullBetForm constructor.
-     * @param int $matchday: The matchday to represent. Defaults to the current match day
+     * @var boolean: If set to true, the small templates are used
      */
-    public function __construct($matchday=-1) {
+    private $small;
+
+    /**
+     * FullBetForm constructor.
+     * @param $matchday int:     The matchday to represent. Defaults to the current match day
+     * @param $small    boolean: Can be set to use the small templates by default
+     */
+    public function __construct($matchday=-1, $small=false) {
 
         $this->matches = ($matchday === -1 ? getCurrentMatches() : getMatches($matchday));
         $this->matchday = ($matchday === -1 ? getCurrentMatchDay() : $matchday);
         $this->teams = getTeams();
         $this->userbets = getUserBets($this->matchday);
+        $this->small = $small;
+        $this->template = dirname(__FILE__) . '/html/betform_full.html';
+
         $_SESSION['current_matches'] = $this->matches;
         $_SESSION['current_teams'] = $this->teams;
         $_SESSION['current_bets'] = $this->userbets;
@@ -67,7 +76,7 @@ class FullBetForm extends HtmlGenerator {
      */
     public function render() {
 
-        $html = file_get_contents(dirname(__FILE__) . '/html/betform_full.html');
+        $html = file_get_contents($this->template);
         $title = '@$BUNDESLIGA_MATCHDAY_BETS_TITLE ' . $this->matchday;
 
         $html = str_replace('@TITLE', $title, $html);
@@ -93,9 +102,13 @@ class FullBetForm extends HtmlGenerator {
                 $points = -1;
             }
 
-            $elements .=
-                (new FullBetFormElement($team_one, $team_two, $team_one_default, $team_two_default, $points))
-                     ->render();
+            $element = new FullBetFormElement($team_one, $team_two, $team_one_default, $team_two_default, $points);
+
+            if ($this->small) {
+                $element->changeTemplateFile(dirname(__FILE__) . '/html/betform_small_element.html');
+            }
+
+            $elements .= $element->render();
         }
 
         return str_replace('@ELEMENTS', $elements, $html);
@@ -139,6 +152,7 @@ class FullBetFormElement extends HtmlGenerator {
      * @param $team_two         array: The away team
      * @param $team_one_default int:   The default home team value
      * @param $team_two_default int:   The default away team value
+     * @param $points           int:   The points that the bet currently has
      */
     public function __construct($team_one, $team_two, $team_one_default, $team_two_default, $points) {
         $this->team_one = $team_one;
@@ -146,6 +160,7 @@ class FullBetFormElement extends HtmlGenerator {
         $this->team_one_default = $team_one_default;
         $this->team_two_default = $team_two_default;
         $this->points = $points;
+        $this->template = dirname(__FILE__) . '/html/betform_full_element.html';
     }
 
     /**
@@ -153,7 +168,7 @@ class FullBetFormElement extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/betform_full_element.html');
+        $html = file_get_contents($this->template);
 
         $html = str_replace('@TEAM_ONE', $this->team_one['name'], $html);
         $html = str_replace('@TEAM_TWO', $this->team_two['name'], $html);

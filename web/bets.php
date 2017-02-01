@@ -40,7 +40,7 @@ processDismissableMessages();
 
 $matchday = getCurrentMatches();
 $teams = getTeams();
-$betform = new FullBetForm();
+$betform = new BetForm();
 
 ?>
 <div class="container">
