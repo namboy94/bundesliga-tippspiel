@@ -102,6 +102,10 @@ function get_german() {
         'LEADERBOARD_POINTS_HEADER' => 'Punkte',
 
         # Registration & Confirmation
+        'REGISTER_ERROR_USERNAME_TOO_LONG_TITLE' => 'Benutzername zu lang',
+        'REGISTER_ERROR_USERNAME_TOO_LONG_BODY' => 'Nutzernamen dürfen höchstens 60 Zeichen lang sein',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_TITLE' => 'Email Adresse zu lang',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_BODY' => 'Email Adressen dürfen maximal 100 Zeichen lang sein',
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'Keine Email Adresse',
         'REGISTER_ERROR_NO_EMAIL_BODY' => 'Bitte geb eine Email Adresse an',
         'REGISTER_ERROR_NO_USERNAME_TITLE' => 'Keine Benutzername',

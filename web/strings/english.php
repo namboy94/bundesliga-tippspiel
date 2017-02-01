@@ -102,6 +102,10 @@ function get_english() {
         'LEADERBOARD_POINTS_HEADER' => 'Points',
 
         # Registration & Confirmation
+        'REGISTER_ERROR_USERNAME_TOO_LONG_TITLE' => 'Username too long',
+        'REGISTER_ERROR_USERNAME_TOO_LONG_BODY' => 'Please limit your username to a maximum of 60 characters',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_TITLE' => 'Email address too long',
+        'REGISTER_ERROR_EMAIL_TOO_LONG_BODY' => 'Email addresses with more than 100 characters are not supported',
         'REGISTER_ERROR_NO_EMAIL_TITLE' => 'No Email Address Provided',
         'REGISTER_ERROR_NO_EMAIL_BODY' => 'Please enter a valid email address',
         'REGISTER_ERROR_NO_USERNAME_TITLE' => 'No username provided',
