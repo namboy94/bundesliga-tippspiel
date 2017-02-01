@@ -60,7 +60,7 @@ class BetForm extends HtmlGenerator {
         $this->matches = ($matchday === -1 ? getCurrentMatches() : getMatches($matchday));
         $this->matchday = ($matchday === -1 ? getCurrentMatchDay() : $matchday);
         $this->teams = getTeams();
-        $this->userbets = getUserBets($this->matchday);
+        $this->userbets = getUserBets($this->matchday, $_SESSION['id']);
         $this->small = $small;
         $this->template = dirname(__FILE__) . '/html/betform_full.html';
 
