@@ -89,6 +89,10 @@ function get_english() {
         'BET_SUBMIT_BUTTON_TEXT' => 'Confirm',
         'BETS_UPDATED_TITLE' => 'Bets updated',
         'BETS_UPDATED_BODY' => '',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_TITLE' => 'Input value is negative',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_BODY' => 'Please enter a value between 0 and 1000',
+        'INVALID_BET_VALUE_TOO_HIGH_TITLE' => 'Input value too high',
+        'INVALID_BET_VALUE_TOO_HIGH_BODY' => 'Please enter a value between 0 and 1000',
 
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Leaderboard',

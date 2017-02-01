@@ -89,6 +89,10 @@ function get_german() {
         'BET_SUBMIT_BUTTON_TEXT' => 'Bestätigen',
         'BETS_UPDATED_TITLE' => 'Tipps aktualisiert',
         'BETS_UPDATED_BODY' => '',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_TITLE' => 'Eingegebener Wert ist negativ',
+        'INVALID_BET_VALUE_NEGATIVE_NUMBER_BODY' => 'Bitte gebe einen Wert zwischen 0 und 1000 ein',
+        'INVALID_BET_VALUE_TOO_HIGH_TITLE' => 'Eingegebener Wert ist zu hoch',
+        'INVALID_BET_VALUE_TOO_HIGH_BODY' => 'Bitte gebe einen Wert zwischen 0 und 1000 ein',
 
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Rangliste',

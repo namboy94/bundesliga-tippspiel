@@ -15,6 +15,18 @@ $db = new Database();
 
 foreach($matches as $match) {
 
+    $team_one = $_POST[$match['team_one']];
+    $team_two = $_POST[$match['team_two']];
+
+    if ($team_one < 0 || $team_two < 0) {
+        (new DismissableMessage('error', '@$INVALID_BET_VALUE_NEGATIVE_NUMBER_TITLE',
+            '@$INVALID_BET_VALUE_NEGATIVE_NUMBER_BODY'))->show('../bets.php');
+    }
+    if ($team_one > 1000 || $team_two > 1000) {
+        (new DismissableMessage('error', '@$INVALID_BET_VALUE_TOO_HIGH_TITLE',
+            '@$INVALID_BET_VALUE_TOO_HIGH_BODY'))->show('../bets.php');
+    }
+
     if ($_POST[$match['team_one']] == null || $_POST[$match['team_two']] == null) {
         echo 'NULL';
         continue;
