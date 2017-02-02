@@ -111,7 +111,7 @@ function getMatch($match_id) {
 }
 
 /**
- * Retrives the teams in a particular match
+ * Retrieves the teams in a particular match
  * @param $match array: The match for which to retrieve the teams for
  * @return       array: The two team, first the home team then then away team
  */
@@ -123,4 +123,15 @@ function getTeamsForMatch($match) {
 
     return array('team_one' => $team_one->fetch_assoc(), 'team_two' => $team_two->fetch_assoc());
 
+}
+
+/**
+ * Checks if a match has already started
+ * @param $match array:   The match to check
+ * @return       boolean: True if the match has started, else false
+ */
+function hasMatchStarted($match) {
+    $start_time = strtotime($match['matchtime']);
+    $current_time = time();
+    return $current_time > $start_time;
 }

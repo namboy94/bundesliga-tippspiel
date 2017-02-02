@@ -93,17 +93,14 @@ class BetForm extends HtmlGenerator {
                 $bet = $this->userbets[$match['id']];
                 $team_one_default = $bet['team_one'];
                 $team_two_default = $bet['team_two'];
-                $points = $bet['points'];
 
             }
             else {
                 $team_one_default = null;
                 $team_two_default = null;
-                $points = -1;
             }
 
-            $element =
-                new FullBetFormElement($match, $team_one, $team_two, $team_one_default, $team_two_default, $points);
+            $element = new FullBetFormElement($match, $team_one, $team_two, $team_one_default, $team_two_default);
 
             if ($this->small) {
                 $element->changeTemplateFile(dirname(__FILE__) . '/html/betform_small_element.html');
@@ -147,27 +144,19 @@ class FullBetFormElement extends HtmlGenerator {
     private $team_two_default;
 
     /**
-     * @var boolean: The currently earned points of this bet. If points were already given, the
-     *               editing of that field will be disabled
-     */
-    private $points;
-
-    /**
      * FullBetFormElement constructor.
      * @param $match            array: The match itself
      * @param $team_one         array: The home team
      * @param $team_two         array: The away team
      * @param $team_one_default int:   The default home team value
      * @param $team_two_default int:   The default away team value
-     * @param $points           int:   The points that the bet currently has
      */
-    public function __construct($match, $team_one, $team_two, $team_one_default, $team_two_default, $points) {
+    public function __construct($match, $team_one, $team_two, $team_one_default, $team_two_default) {
         $this->match = $match;
         $this->team_one = $team_one;
         $this->team_two = $team_two;
         $this->team_one_default = $team_one_default;
         $this->team_two_default = $team_two_default;
-        $this->points = $points;
         $this->template = dirname(__FILE__) . '/html/betform_full_element.html';
     }
 
@@ -205,7 +194,7 @@ class FullBetFormElement extends HtmlGenerator {
             $html = str_replace('@DEFAULT_TWO', 'value="' . $this->team_two_default . '"', $html);
         }
 
-        if ($this->points >= 0) {
+        if (hasMatchStarted($this->match)) {
             $html = str_replace('@DISABLED', 'disabled', $html);
         }
         else {
