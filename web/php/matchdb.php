@@ -102,10 +102,25 @@ function getMatch($match_id) {
     $db = new Database();
 
     $result = $db->query('SELECT * FROM matches WHERE id=?', 's', array($match_id), true);
-    if (array_count_values($result) !== 1) {
+    if (count($result) !== 1) {
         return null;
     }
     else {
         return $result[0];
     }
+}
+
+/**
+ * Retrives the teams in a particular match
+ * @param $match array: The match for which to retrieve the teams for
+ * @return       array: The two team, first the home team then then away team
+ */
+function getTeamsForMatch($match) {
+    $db = new Database();
+
+    $team_one = $db->query('SELECT * FROM teams WHERE id=?', 's', array($match['team_one']));
+    $team_two = $db->query('SELECT * FROM teams WHERE id=?', 's', array($match['team_two']));
+
+    return array('team_one' => $team_one->fetch_assoc(), 'team_two' => $team_two->fetch_assoc());
+
 }

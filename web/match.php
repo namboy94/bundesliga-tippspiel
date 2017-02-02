@@ -20,11 +20,11 @@
 include_once 'php/gets.php';
 include_once 'php/session.php';
 include_once 'php/matchdb.php';
-include_once 'templates/form.php';
 include_once 'templates/navbar.php';
 include_once 'templates/header.php';
 include_once 'templates/betform.php';
 include_once 'strings/dictionary.php';
+include_once 'templates/match_jumbo.php';
 include_once 'templates/title_jumbotron.php';
 include_once 'templates/dismissable_message.php';
 
@@ -32,14 +32,41 @@ initializeSession();
 processGlobalGets();
 $dictionary = new Dictionary($_SESSION['language']);
 
-$match = 0;
-if (isset($_POST['match_id'])) {
-    $match = getMatch($_POST['match_id']);
+$match = null;
+if (isset($_GET['match_id'])) {
+    $match = getMatch($_GET['match_id']);
 }
 if ($match === null) {
     (new DismissableMessage('error', '@$MATCH_NOT_FOUND_ERROR_TITLE', '@$MATCH_NOT_FOUND_ERROR_BODY'))
-        ->show('index.html');
+        ->show('index.php');
 }
+$teams = getTeamsForMatch($match);
 
 (new Header('@$MATCH_TITLE'))->echo();
+
+echo '<body>';
+generateDefaultHeaderNavbar('match.php')->echo();
+
+(new MatchJumbo($match, $teams['team_one'], $teams['team_two']))->echo();
 processDismissableMessages();
+
+?>
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-2"><h1><?php echo $match['team_one_ft']?></h1></div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-2"><h1><?php echo $match['team_two_ft']?></h1></div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+<?php
+
+generateFooter('password_reset.php')->echoWithContainer();
+echo '</body>';
