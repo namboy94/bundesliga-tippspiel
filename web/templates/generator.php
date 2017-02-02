@@ -49,6 +49,13 @@ abstract class HtmlGenerator {
     }
 
     /**
+     * @return string: The template file's content
+     */
+    protected function loadTemplate() {
+        return file_get_contents($this->template);
+    }
+
+    /**
      * Renders the HTML string
      * @return string: The generated HTML content
      */
