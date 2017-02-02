@@ -92,3 +92,20 @@ function getLeaderboard() {
     return $leaderboard;
 
 }
+
+/**
+ * Retrieves a specific Match from the database
+ * @param $match_id int:        The match ID to search for
+ * @return          null|array: The match, or null if none was found
+ */
+function getMatch($match_id) {
+    $db = new Database();
+
+    $result = $db->query('SELECT * FROM matches WHERE id=?', 's', array($match_id), true);
+    if (array_count_values($result) !== 1) {
+        return null;
+    }
+    else {
+        return $result[0];
+    }
+}
