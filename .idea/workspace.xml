@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
+    <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="Version bump to 0.2">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/betform.php" afterPath="$PROJECT_DIR$/web/templates/betform.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/html/betform_full.html" afterPath="$PROJECT_DIR$/web/templates/html/betform_full.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG" afterPath="$PROJECT_DIR$/CHANGELOG" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/resources/version" afterPath="$PROJECT_DIR$/web/resources/version" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,10 +19,55 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="betform.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="match.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/match.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1486055563537" expanded="true" signature="1947:2235" ph="..." />
+                <marker date="1486055563537" expanded="true" signature="2067:2235" ph="..." />
+                <marker date="1486055563537" expanded="true" signature="2099:2235" ph="..." />
+                <marker date="1486055563537" expanded="true" signature="2129:2235" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="password_reset.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/password_reset.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="version" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/resources/version">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CHANGELOG" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CHANGELOG">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="betform.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/betform.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
+            <state relative-caret-position="702">
               <caret line="97" column="38" lean-forward="false" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
               <folding />
             </state>
@@ -48,46 +93,6 @@
                 <marker date="1486052966778" expanded="true" signature="1473:1539" ph="UPDATE bets " />
                 <marker date="1486052966778" expanded="true" signature="1714:1798" ph="INSERT INTO bets... " />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navbar_dropdown.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/html/navbar_dropdown.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generator.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/generator.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leaderboard_table.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/leaderboard_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/profile.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -192,7 +197,6 @@
         <option value="$PROJECT_DIR$/web/templates/html/betform_full_element.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/.gitlab-ci.yml" />
-        <option value="$PROJECT_DIR$/CHANGELOG" />
         <option value="$PROJECT_DIR$/web/profile.php" />
         <option value="$PROJECT_DIR$/web/contact.php" />
         <option value="$PROJECT_DIR$/web/actions/login.php" />
@@ -211,18 +215,19 @@
         <option value="$PROJECT_DIR$/web/templates/generator.php" />
         <option value="$PROJECT_DIR$/web/templates/html/matchjumbo.html" />
         <option value="$PROJECT_DIR$/web/templates/match_jumbo.php" />
-        <option value="$PROJECT_DIR$/web/match.php" />
         <option value="$PROJECT_DIR$/web/css/custom-common.css" />
         <option value="$PROJECT_DIR$/web/css/custom-default.css" />
         <option value="$PROJECT_DIR$/web/css/custom-hacker.css" />
         <option value="$PROJECT_DIR$/web/templates/html/header.html" />
         <option value="$PROJECT_DIR$/web/templates/html/betform_small_element.html" />
         <option value="$PROJECT_DIR$/web/bets.php" />
-        <option value="$PROJECT_DIR$/web/resources/version" />
         <option value="$PROJECT_DIR$/web/php/matchdb.php" />
         <option value="$PROJECT_DIR$/web/actions/bet.php" />
         <option value="$PROJECT_DIR$/web/templates/html/betform_full.html" />
         <option value="$PROJECT_DIR$/web/templates/betform.php" />
+        <option value="$PROJECT_DIR$/web/match.php" />
+        <option value="$PROJECT_DIR$/CHANGELOG" />
+        <option value="$PROJECT_DIR$/web/resources/version" />
       </list>
     </option>
   </component>
@@ -559,6 +564,24 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="strings">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="bundesliga-tippspiel">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="web">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="resources">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
@@ -823,21 +846,7 @@
       <workItem from="1485973498864" duration="895000" />
       <workItem from="1485984252514" duration="2098000" />
       <workItem from="1486031513000" duration="6120000" />
-      <workItem from="1486043730491" duration="4911000" />
-    </task>
-    <task id="LOCAL-00045" summary="Add License Headers">
-      <created>1485003094742</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1485003094742</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Redid the session handling">
-      <created>1485029674033</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1485029674033</updated>
+      <workItem from="1486043730491" duration="6591000" />
     </task>
     <task id="LOCAL-00047" summary="Made index.php completely rely on new code.">
       <created>1485030842966</created>
@@ -1168,15 +1177,29 @@
       <option name="project" value="LOCAL" />
       <updated>1486053093442</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="Implement switcher between matchday pages.">
+      <created>1486053840359</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1486053840359</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Add logos to match page">
+      <created>1486055673668</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1486055673668</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193380000" />
+    <option name="totallyTimeSpent" value="195060000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17239584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1184,7 +1207,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1209,8 +1232,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Create working leaderboard page" />
-    <MESSAGE value="Write script to update scores in database" />
     <MESSAGE value="Fix forms to match new bets schema" />
     <MESSAGE value="Fix betting page" />
     <MESSAGE value="Fix leaderboard table" />
@@ -1234,7 +1255,9 @@
     <MESSAGE value="Fix bet table on index page" />
     <MESSAGE value="Add Team Logos" />
     <MESSAGE value="Disable betting on older matchdays" />
-    <option name="LAST_COMMIT_MESSAGE" value="Disable betting on older matchdays" />
+    <MESSAGE value="Implement switcher between matchday pages." />
+    <MESSAGE value="Add logos to match page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add logos to match page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1259,13 +1282,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CHANGELOG">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1408,14 +1424,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/password_reset.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/php/registration.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1454,16 +1462,6 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/match.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="60" column="36" lean-forward="false" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
-          <folding>
-            <element signature="e#6#791#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1543,14 +1541,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-582">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/resources/version">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1651,8 +1641,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/betform.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
+        <state relative-caret-position="702">
           <caret line="97" column="38" lean-forward="false" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CHANGELOG">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/resources/version">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/match.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1486055563537" expanded="true" signature="1947:2235" ph="..." />
+            <marker date="1486055563537" expanded="true" signature="2067:2235" ph="..." />
+            <marker date="1486055563537" expanded="true" signature="2099:2235" ph="..." />
+            <marker date="1486055563537" expanded="true" signature="2129:2235" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/password_reset.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
