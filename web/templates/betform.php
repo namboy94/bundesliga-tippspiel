@@ -82,6 +82,22 @@ class BetForm extends HtmlGenerator {
         $html = str_replace('@TITLE', $title, $html);
         $html = str_replace('@SUBMIT', '@$BET_SUBMIT_BUTTON_TEXT', $html);
 
+        if ($this->matchday > 1 && !$this->small) {
+            $html = str_replace('@PREV_URL', 'bets.php?matchday=' . ($this->matchday - 1), $html);
+            $html = str_replace('@PREV_ARROW', '<', $html);
+        }
+        else {
+            $html = str_replace('@PREV_ARROW', '', $html);
+        }
+
+        if ($this->matchday < 34 && !$this->small) {
+            $html = str_replace('@NEXT_URL', 'bets.php?matchday=' . ($this->matchday + 1), $html);
+            $html = str_replace('@NEXT_ARROW', '>', $html);
+        }
+        else {
+            $html = str_replace('@NEXT_ARROW', '', $html);
+        }
+
         $elements = '';
         foreach ($this->matches as $match) {
 
