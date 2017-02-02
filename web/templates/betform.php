@@ -185,14 +185,17 @@ class FullBetFormElement extends HtmlGenerator {
         $shortname_two = ($this->team_two['shortname'] !== ''
             ? $this->team_two['shortname'] : $this->team_two['name']);
 
+        $icon_one = 'resources/images/logos/' . $this->team_one['id'] . '.gif';
+        $icon_two = 'resources/images/logos/' . $this->team_two['id'] . '.gif';
+
         $html = str_replace('@TEAM_ONE', $this->team_one['name'], $html);
         $html = str_replace('@TEAM_TWO', $this->team_two['name'], $html);
         $html = str_replace('@SHORTTEAM_ONE', $shortname_one, $html);
         $html = str_replace('@SHORTTEAM_TWO', $shortname_two, $html);
         $html = str_replace('@NAME_ONE', $this->team_one['id'], $html);
         $html = str_replace('@NAME_TWO', $this->team_two['id'], $html);
-        $html = str_replace('@ICON_ONE', $this->team_one['icon'], $html);
-        $html = str_replace('@ICON_TWO', $this->team_two['icon'], $html);
+        $html = str_replace('@ICON_ONE', $icon_one, $html);
+        $html = str_replace('@ICON_TWO', $icon_two, $html);
         $html = str_replace('@MATCH_URL', $url, $html);
 
         if ($this->team_one_default !== null) {
