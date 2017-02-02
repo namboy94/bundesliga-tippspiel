@@ -50,9 +50,12 @@ generateDefaultHeaderNavbar('match.php')->echo();
 (new MatchJumbo($match, $teams['team_one'], $teams['team_two']))->echo();
 processDismissableMessages();
 
+$team_one_logo = 'resources/images/logos/' . $teams['team_one']['id'] . '.gif';
+$team_two_logo = 'resources/images/logos/' . $teams['team_two']['id'] . '.gif';
+
 ?>
 <div class="row">
-    <div class="col-sm-3"></div>
+    <div class="col-sm-3"><img class="center-block" src="<?php echo $team_one_logo?>"></div>
     <div class="col-sm-6">
         <div class="jumbotron">
             <div class="row">
@@ -64,7 +67,7 @@ processDismissableMessages();
             </div>
         </div>
     </div>
-    <div class="col-sm-3"></div>
+    <div class="col-sm-3"><img class="center-block" src="<?php echo $team_two_logo?>"></div>
 </div>
 <?php
 
