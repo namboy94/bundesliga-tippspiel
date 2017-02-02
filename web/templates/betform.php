@@ -102,7 +102,8 @@ class BetForm extends HtmlGenerator {
                 $points = -1;
             }
 
-            $element = new FullBetFormElement($team_one, $team_two, $team_one_default, $team_two_default, $points);
+            $element =
+                new FullBetFormElement($match, $team_one, $team_two, $team_one_default, $team_two_default, $points);
 
             if ($this->small) {
                 $element->changeTemplateFile(dirname(__FILE__) . '/html/betform_small_element.html');
@@ -119,6 +120,11 @@ class BetForm extends HtmlGenerator {
  * Class FullBetFormElement is a class that models an entry in the full bet form
  */
 class FullBetFormElement extends HtmlGenerator {
+
+    /**
+     * @var array: The match
+     */
+    private $match;
 
     /**
      * @var array: The home team of the matchup
@@ -148,13 +154,15 @@ class FullBetFormElement extends HtmlGenerator {
 
     /**
      * FullBetFormElement constructor.
+     * @param $match            array: The match itself
      * @param $team_one         array: The home team
      * @param $team_two         array: The away team
      * @param $team_one_default int:   The default home team value
      * @param $team_two_default int:   The default away team value
      * @param $points           int:   The points that the bet currently has
      */
-    public function __construct($team_one, $team_two, $team_one_default, $team_two_default, $points) {
+    public function __construct($match, $team_one, $team_two, $team_one_default, $team_two_default, $points) {
+        $this->match = $match;
         $this->team_one = $team_one;
         $this->team_two = $team_two;
         $this->team_one_default = $team_one_default;
@@ -170,6 +178,8 @@ class FullBetFormElement extends HtmlGenerator {
     public function render() {
         $html = file_get_contents($this->template);
 
+        $url = 'match.php?match_id=' . $this->match['id'];
+
         $shortname_one = ($this->team_one['shortname'] !== ''
             ? $this->team_one['shortname'] : $this->team_one['name']);
         $shortname_two = ($this->team_two['shortname'] !== ''
@@ -183,6 +193,7 @@ class FullBetFormElement extends HtmlGenerator {
         $html = str_replace('@NAME_TWO', $this->team_two['id'], $html);
         $html = str_replace('@ICON_ONE', $this->team_one['icon'], $html);
         $html = str_replace('@ICON_TWO', $this->team_two['icon'], $html);
+        $html = str_replace('@MATCH_URL', $url, $html);
 
         if ($this->team_one_default !== null) {
             $html = str_replace('@DEFAULT_ONE', 'value="' . $this->team_one_default . '"', $html);
