@@ -1,3 +1,4 @@
+<?php
 /*  Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
 
     This file is part of bundesliga-tippspiel.
@@ -15,7 +16,4 @@
     You should have received a copy of the GNU General Public License
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-.readable-bg {
-    background-color: #134516;
-}
+header('Location: ../index.php');

@@ -39,9 +39,16 @@ generateDefaultHeaderNavbar('bets.php')->echo();
 (new TitleJumboTron('@$BETS_JUMBO'))->echo();
 processDismissableMessages();
 
-$matchday = getCurrentMatches();
 $teams = getTeams();
-$betform = new BetForm();
+if (!isset($_GET['matchday'])) {
+    $matchday = getCurrentMatches();
+    $betform = new BetForm();
+}
+else {
+    $matchday = getMatches($_GET['matchday']);
+    $betform = new BetForm($_GET['matchday']);
+}
+
 
 ?>
 <div class="container">

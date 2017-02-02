@@ -1,7 +1,23 @@
 <form class="form-horizontal" action="actions/bet.php" method="post">
-    <legend>@TITLE</legend>
+    <legend class="text-center">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1">
+                <a href="@PREV_URL">@PREV_ARROW</a>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6">@TITLE</div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1">
+                <a href="@NEXT_URL">@NEXT_ARROW</a>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </legend>
     <fieldset>
-        @ELEMENTS
+        <ul class="list-group">
+            @ELEMENTS
+        </ul>
         <hr>
         <div class="form-group">
             <div class="col-lg-12 text-center">

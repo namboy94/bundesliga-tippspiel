@@ -1,5 +1,6 @@
 <?php
 
+include_once dirname(__FILE__) . '/../php/matchdb.php';
 include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
@@ -16,6 +17,10 @@ unset($_SESSION['current_bets']);
 $db = new Database();
 
 foreach($matches as $match) {
+
+    if (hasMatchStarted($match)) {
+        continue;
+    }
 
     $team_one = $_POST[$match['team_one']];
     $team_two = $_POST[$match['team_two']];
