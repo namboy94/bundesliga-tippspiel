@@ -17,49 +17,15 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
+include_once 'php/page.php';
 include_once 'php/matchdb.php';
-include_once 'templates/form.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
 include_once 'templates/betform.php';
-include_once 'strings/dictionary.php';
-include_once 'templates/title_jumbotron.php';
 
-initializeSession();
-redirectInvalidUser();
-processGlobalGets();
-$dictionary = new Dictionary($_SESSION['language']);
+$page = new Page('@$BETS_TITLE', 'bets.php', '@$BETS_JUMBO', array(), true);
 
-(new Header('@$BETS_TITLE'))->echo();
-echo '<body>';
+$page->addStringBodyElement('<div class="row"><div class="col-sm-12">');
+$matchday = (isset($_GET['matchday']) ? $_GET['matchday'] : getCurrentMatchday());
+$page->addGeneratorBodyElement(new BetForm($matchday));
+$page->addStringBodyElement('</div></div>');
 
-generateDefaultHeaderNavbar('bets.php')->echo();
-(new TitleJumboTron('@$BETS_JUMBO'))->echo();
-processDismissableMessages();
-
-$teams = getTeams();
-if (!isset($_GET['matchday'])) {
-    $matchday = getCurrentMatches();
-    $betform = new BetForm();
-}
-else {
-    $matchday = getMatches($_GET['matchday']);
-    $betform = new BetForm($_GET['matchday']);
-}
-
-
-?>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <?php $betform->echo(); ?>
-        </div>
-    </div>
-</div>
-<?php
-
-generateFooter('bets.php')->echoWithContainer();
-
-echo '</body>';
+$page->display();

@@ -50,6 +50,7 @@ class Form extends HtmlGenerator {
         $this->title = $title;
         $this->target = $target;
         $this->elements = $elements;
+        $this->template = dirname(__FILE__) . '/html/form.html';
     }
 
     /**
@@ -57,7 +58,7 @@ class Form extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/form.html');
+        $html = $this->loadTemplate();
 
         $html = str_replace('@TITLE', $this->title, $html);
         $html = str_replace('@ACTION', $this->target, $html);
@@ -117,6 +118,7 @@ class FormTextEntry extends HtmlGenerator {
         $this->type = $type;
         $this->placeholder = $placeholder;
         $this->id = $element_id;
+        $this->template = dirname(__FILE__) . '/html/form_text_entry.html';
     }
 
     /**
@@ -124,7 +126,7 @@ class FormTextEntry extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/form_text_entry.html');
+        $html = $this->loadTemplate();
 
         $html = str_replace('@TITLE', $this->title , $html);
         $html = str_replace('@NAME', $this->name, $html);
@@ -159,4 +161,34 @@ class ConfirmationButton extends HtmlGenerator {
         $html = str_replace('@TEXT', $this->text , $html);
         return $html;
     }
+}
+
+/**
+ * @return Form: A Login Form
+ */
+function generateLoginForm() {
+    return new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
+        new FormTextEntry('@$LOGIN_EMAIL_TITLE', 'login_email', 'text',
+            '@$LOGIN_EMAIL_PLACEHOLDER', 'login_email_id'),
+        new FormTextEntry('@$LOGIN_PASSWORD_TITLE', 'login_password', 'password',
+            '@$LOGIN_PASSWORD_PLACEHOLDER', 'login_password_id'),
+        new ConfirmationButton('@$LOGIN_SUBMIT_TITLE')
+    ));
+}
+
+/**
+ * @return Form: A Registration Form
+ */
+function generateRegistrationForm() {
+    return new Form('@$REGISTER_SECTION_TITLE', 'actions/register.php', array(
+        new FormTextEntry('@$REGISTER_EMAIL_TITLE', 'register_email', 'text',
+            '@$REGISTER_EMAIL_PLACEHOLDER', 'reg_email'),
+        new FormTextEntry('@$REGISTER_USERNAME_TITLE', 'register_username', 'text',
+            '@$REGISTER_USERNAME_PLACEHOLDER', 'reg_username'),
+        new FormTextEntry('@$REGISTER_PASSWORD_TITLE', 'register_password', 'password',
+            '@$REGISTER_PASSWORD_PLACEHOLDER', 'reg_password'),
+        new FormTextEntry('@$REGISTER_PASSWORD_REPEAT_TITLE', 'register_password_repeat', 'password',
+            '@$REGISTER_PASSWORD_REPEAT_PLACEHOLDER', 'reg_password_repeat'),
+        new ConfirmationButton('@$REGISTER_SUBMIT_TITLE')
+    ));
 }

@@ -35,6 +35,7 @@ class TitleJumboTron extends HtmlGenerator {
      */
     public function __construct($title) {
         $this->title = $title;
+        $this->template = dirname(__file__) . '/html/title_jumbotron.html';
     }
 
     /**
@@ -42,7 +43,7 @@ class TitleJumboTron extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__file__) . '/html/title_jumbotron.html');
+        $html = $this->loadTemplate();
         return str_replace('@TITLE', $this->title, $html);
     }
 }

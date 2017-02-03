@@ -44,21 +44,31 @@ abstract class HtmlGenerator {
      * @return void
      */
     public function echo() {
-        $dictionary = new Dictionary($_SESSION['language']);
-        echo $dictionary->translate($this->render());
+        echo $this->renderHtml();
     }
 
     /**
      * @return string: The template file's content
      */
     protected function loadTemplate() {
-        return file_get_contents($this->template);
+        $html = file_get_contents($this->template);
+        $license_header = file_get_contents(dirname(__FILE__) . '/../resources/text/html-license-header');
+        return str_replace($license_header, '', $html);
     }
 
     /**
      * Renders the HTML string
      * @return string: The generated HTML content
      */
-    public abstract function render();
+    protected abstract function render();
+
+    /**
+     * Renders the HTML string while translating any string values
+     * @return string: The generated, translated HTML content
+     */
+    public function renderHtml() {
+        $dictionary = new Dictionary();
+        return $dictionary->translate($this->render());
+    }
 
 }

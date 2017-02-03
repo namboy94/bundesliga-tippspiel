@@ -17,18 +17,16 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/page.php';
-include_once 'templates/form.php';
+include_once dirname(__FILE__) . '/generator.php';
 
-$page = new Page('@$PASSWORD_RESET_TITLE', 'password_reset.php', '@$PASSWORD_RESET_JUMBO', array(), false);
 
-$reset_form = new Form('@$PASSWORD_RESET_FORM_TITLE', 'actions/password_reset.php', array(
-    new FormTextEntry('@$PASSWORD_RESET_EMAIL_TITLE', 'reset_email', 'text', 'email@example.com', 'email'),
-    new ConfirmationButton('@$PASSWORD_RESET_FORM_BUTTON')
-));
+class CommentSidebar extends HtmlGenerator {
 
-$page->addStringBodyElement('<div class="row"><div class="col-sm-3"></div><div class="col-sm-6">');
-$page->addGeneratorBodyElement($reset_form);
-$page->addStringBodyElement('</div><div class="col-sm-3"></div></div>');
-
-$page->display();
+    /**
+     * Renders the HTML string
+     * @return string: The generated HTML content
+     */
+    public function render() {
+        // TODO: Implement render() method.
+    }
+}

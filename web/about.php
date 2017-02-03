@@ -17,32 +17,13 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/header.php';
-include_once 'templates/navbar.php';
-include_once 'strings/dictionary.php';
-include_once 'templates/title_jumbotron.php';
+include_once 'php/page.php';
+$page = new Page('@$ABOUT_TITLE', 'about.php', '@$ABOUT_JUMBO', array(), false);
 
-initializeSession();
-processGlobalGets();
-$dictionary = new Dictionary($_SESSION['language']);
+$about_content = file_get_contents('resources/text/impressum.' . $_SESSION['language']);
+$content_layout_start = '<div class="container"><div class="row"><div class="col-sm-10">';
+$content_layout_end = '</div></div></div>';
 
-(new Header('@$ABOUT_TITLE'))->echo();
-echo '<body>';
-generateDefaultHeaderNavbar('about.php')->echo();
-(new TitleJumboTron('@$ABOUT_JUMBO'))->echo();
-processDismissableMessages();
+$page->addStringBodyElement($content_layout_start . $about_content . $content_layout_end);
 
-?>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <?php echo file_get_contents('resources/text/impressum.' . $_SESSION['language']); ?>
-        </div>
-    </div>
-</div>
-<?php
-
-generateFooter('about.php')->echoWithContainer();
-echo '</body>';
+$page->display();

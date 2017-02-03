@@ -17,60 +17,16 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
+include_once 'php/page.php';
 include_once 'templates/form.php';
-include_once 'templates/header.php';
-include_once 'templates/navbar.php';
-include_once 'strings/dictionary.php';
-include_once 'templates/title_jumbotron.php';
 
-initializeSession();
-processGlobalGets();
-$dictionary = new Dictionary($_SESSION['language']);
+$page = new Page('@$SIGNUP_TITLE', 'signup.php', '@$SIGNUP_JUMBO', array(), false);
 
-(new Header('@$SIGNUP_TITLE'))->echo();
-echo '<body>';
-generateDefaultHeaderNavbar('signup.php')->echo();
-(new TitleJumboTron('@$SIGNUP_JUMBO'))->echo();
-processDismissableMessages();
+$page->addStringBodyElement('<div class="container"><div class="row"><div class="col-sm-5">');
+$page->addGeneratorBodyElement(generateRegistrationForm());
+$page->addStringBodyElement('</div><div class="col-sm-2"></div><div class="col-sm-5">');
+$page->addGeneratorBodyElement(generateLoginForm());
+$page->addStringBodyElement('<a href="password_reset.php">@$FORGOT_PASSWORD_TEXT</a>');
+$page->addStringBodyElement('</div></div></div>');
 
-$signup_form = new Form('@$REGISTER_SECTION_TITLE', 'actions/register.php', array(
-    new FormTextEntry('@$REGISTER_EMAIL_TITLE', 'register_email', 'text',
-        '@$REGISTER_EMAIL_PLACEHOLDER', 'reg_email'),
-    new FormTextEntry('@$REGISTER_USERNAME_TITLE', 'register_username', 'text',
-        '@$REGISTER_USERNAME_PLACEHOLDER', 'reg_username'),
-    new FormTextEntry('@$REGISTER_PASSWORD_TITLE', 'register_password', 'password',
-        '@$REGISTER_PASSWORD_PLACEHOLDER', 'reg_password'),
-    new FormTextEntry('@$REGISTER_PASSWORD_REPEAT_TITLE', 'register_password_repeat', 'password',
-        '@$REGISTER_PASSWORD_REPEAT_PLACEHOLDER', 'reg_password_repeat'),
-    new ConfirmationButton('@$REGISTER_SUBMIT_TITLE')
-));
-
-$login_form = new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
-    new FormTextEntry('@$LOGIN_EMAIL_TITLE', 'login_email', 'text',
-        '@$LOGIN_EMAIL_PLACEHOLDER', 'login_email_id'),
-    new FormTextEntry('@$LOGIN_PASSWORD_TITLE', 'login_password', 'password',
-        '@$LOGIN_PASSWORD_PLACEHOLDER', 'login_password_id'),
-    new ConfirmationButton('@$LOGIN_SUBMIT_TITLE')
-));
-
-?>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-5 col-md-5 col-lg-5">
-            <?php $signup_form->echo(); ?>
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-2">
-            <hr width="1" size="500">
-        </div>
-        <div class="col-sm-5 col-md-5 col-lg-5">
-            <?php $login_form->echo(); ?>
-            <a href="password_reset.php"><?php echo $dictionary->translate('@$FORGOT_PASSWORD_TEXT'); ?></a>
-        </div>
-    </div>
-</div>
-<?php
-
-generateFooter('signup.php')->echoWithContainer();
-echo '</body>';
+$page->display();

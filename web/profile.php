@@ -17,42 +17,25 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
+include_once 'php/page.php';
 include_once 'templates/form.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
-include_once 'templates/betform.php';
-include_once 'strings/dictionary.php';
-include_once 'templates/title_jumbotron.php';
 
-initializeSession();
-redirectInvalidUser();
-processGlobalGets();
-$dictionary = new Dictionary($_SESSION['language']);
+$page = new Page('@$PROFILE_TITLE', 'profile.php', '@$PROFILE_JUMBO', array(), true);
 
-(new Header('@$PROFILE_TITLE'))->echo();
-echo '<body>';
-generateDefaultHeaderNavbar('profile.php')->echo();
-(new TitleJumboTron($_SESSION['userdata']['name']))->echo();
-processDismissableMessages();
+$reset_form = new Form('@$PROFILE_PASSWORD_CHANGE_TITLE', 'actions/password_change.php',
+    array(
+        new FormTextEntry('@$PROFILE_PASSWORD_CHANGE_CURRENT_LABEL',
+            'current', 'password', '********', 'current'),
+        new FormTextEntry('@$PROFILE_PASSWORD_CHANGE_NEW_LABEL',
+            'new', 'password', '********', 'new'),
+        new FormTextEntry('@$PROFILE_PASSWORD_RESET_CHANGE_REPEAT_LABEL',
+            'repeat', 'password', '********', 'repeat'),
+        new ConfirmationButton('@$PROFILE_PASSWORD_CHANGE_SUBMIT')
+    )
+);
 
-?>
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <?php (new Form('@$PROFILE_PASSWORD_CHANGE_TITLE', 'actions/password_change.php', array(
-                new FormTextEntry('@$PROFILE_PASSWORD_CHANGE_CURRENT_LABEL',
-                    'current', 'password', '********', 'current'),
-                new FormTextEntry('@$PROFILE_PASSWORD_CHANGE_NEW_LABEL',
-                    'new', 'password', '********', 'new'),
-                new FormTextEntry('@$PROFILE_PASSWORD_RESET_CHANGE_REPEAT_LABEL',
-                    'repeat', 'password', '********', 'repeat'),
-                new ConfirmationButton('@$PROFILE_PASSWORD_CHANGE_SUBMIT'))))->echo(); ?>
-        </div>
-        <div class="col-lg-3"></div>
-    </div>
-<?php
+$page->addStringBodyElement('<div class="row"><div class="col-lg-3"></div><div class="col-lg-6">');
+$page->addGeneratorBodyElement($reset_form);
+$page->addStringBodyElement('</div><div class="col-lg-3"></div></div>');
 
-generateFooter('signup.php')->echoWithContainer();
-echo '</body>';
+echo str_replace('@$PROFILE_JUMBO', $_SESSION['userdata']['name'], $page->display(false));

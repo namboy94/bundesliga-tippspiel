@@ -57,8 +57,8 @@ class BetForm extends HtmlGenerator {
      */
     public function __construct($matchday=-1, $small=false) {
 
-        $this->matches = ($matchday === -1 ? getCurrentMatches() : getMatches($matchday));
         $this->matchday = ($matchday === -1 ? getCurrentMatchDay() : $matchday);
+        $this->matches = getMatches($this->matchday);
         $this->teams = getTeams();
         $this->userbets = getUserBets($this->matchday, $_SESSION['id']);
         $this->small = $small;
@@ -76,7 +76,7 @@ class BetForm extends HtmlGenerator {
      */
     public function render() {
 
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
         $title = '@$BUNDESLIGA_MATCHDAY_BETS_TITLE ' . $this->matchday;
 
         $html = str_replace('@TITLE', $title, $html);
@@ -181,7 +181,7 @@ class FullBetFormElement extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
 
         $url = 'match.php?match_id=' . $this->match['id'];
 

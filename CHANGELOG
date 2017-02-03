@@ -1,3 +1,7 @@
+V 0.3.0:
+  - Vast structural changes to avoid duplicate code
+  - Fixed users being able to log in when the account has not been confirmed
+  - License headers are now no longer in the sent HTML pages
 V 0.2.0:
   - Enabled betting on future matchdays
   - Better Image Logos

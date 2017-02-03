@@ -50,6 +50,7 @@ class DismissableMessage extends HtmlGenerator {
         $this->message_type = $message_type;
         $this->title = $title;
         $this->body = $body;
+        $this->template = dirname(__FILE__) . '/html/dismissable_message.html';
     }
 
     /**
@@ -71,7 +72,7 @@ class DismissableMessage extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/dismissable_message.html');
+        $html = $this->loadTemplate();
         $html = str_replace('@TYPE', $this->parseMessageType(), $html);
         $html = str_replace('@TITLE', $this->title, $html);
         $html = str_replace('@BODY', $this->body, $html);

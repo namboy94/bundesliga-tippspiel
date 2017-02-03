@@ -37,16 +37,21 @@ class Dictionary {
 
     /**
      * Dictionary constructor.
-     * @param $active_language: The active language of the dictionary
+     * @param $active_language: The active language of the dictionary. If null, the current active language is used
      */
-    public function __construct($active_language) {
+    public function __construct($active_language=null) {
 
         $this->dictionaries = array(
             'en' => get_english(),
             'de' => get_german()
         );
 
-        $this->active_language = strtolower($active_language);
+        if ($active_language === null) {
+            $this->active_language = strtolower($_SESSION['language']);
+        }
+        else {
+            $this->active_language = strtolower($active_language);
+        }
     }
 
     /**

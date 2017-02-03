@@ -121,4 +121,7 @@ def update_leaderboard(db):
 
 
 if __name__ == "__main__":
-    update_db(sys.argv[1], sys.argv[2])
+    try:
+        update_db(sys.argv[1], sys.argv[2])
+    except Exception as e:
+        print(str(e))
