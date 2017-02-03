@@ -82,7 +82,7 @@ class NavBar extends HtmlGenerator {
      * @return           string:  The generated HTML string
      */
     public function render() {
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
 
         $html = str_replace('@NAVBAR_TITLE', $this->title, $html);
         $html = str_replace('@NAVBAR_LINK', $this->title_link, $html);
@@ -173,7 +173,7 @@ class NavBarButton extends HtmlGenerator {
 
         $active = ($this->selected ? 'class="active"' : '');
 
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
         $html = str_replace('@SELECTED', $active, $html);
         $html = str_replace('@TITLE', $this->name, $html);
         $html = str_replace('@URL', $this->link, $html);
@@ -213,7 +213,7 @@ class NavBarDropDown extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
         $html = str_replace('@TITLE', $this->title, $html);
 
         $entries_html = '';

@@ -50,6 +50,7 @@ class Form extends HtmlGenerator {
         $this->title = $title;
         $this->target = $target;
         $this->elements = $elements;
+        $this->template = dirname(__FILE__) . '/html/form.html';
     }
 
     /**
@@ -57,7 +58,7 @@ class Form extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/form.html');
+        $html = $this->loadTemplate();
 
         $html = str_replace('@TITLE', $this->title, $html);
         $html = str_replace('@ACTION', $this->target, $html);
@@ -117,6 +118,7 @@ class FormTextEntry extends HtmlGenerator {
         $this->type = $type;
         $this->placeholder = $placeholder;
         $this->id = $element_id;
+        $this->template = dirname(__FILE__) . '/html/form_text_entry.html';
     }
 
     /**
@@ -124,7 +126,7 @@ class FormTextEntry extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/form_text_entry.html');
+        $html = $this->loadTemplate();
 
         $html = str_replace('@TITLE', $this->title , $html);
         $html = str_replace('@NAME', $this->name, $html);

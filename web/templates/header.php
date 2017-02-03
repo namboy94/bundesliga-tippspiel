@@ -32,6 +32,7 @@ class Header extends HtmlGenerator {
      */
     public function __construct($title) {
         $this->title = $title;
+        $this->template = dirname(__FILE__) . '/html/header.html';
     }
 
     /**
@@ -39,7 +40,7 @@ class Header extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents(dirname(__FILE__) . '/html/header.html');
+        $html = $this->loadTemplate();
         $html = str_replace('@TITLE', $this->title, $html);
         $html = str_replace('@CSS_THEME', $this->determineCssFile()[0], $html);
         $html = str_replace('@CUSTOM_CSS_THEME', $this->determineCssFile()[1], $html);

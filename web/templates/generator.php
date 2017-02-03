@@ -51,7 +51,9 @@ abstract class HtmlGenerator {
      * @return string: The template file's content
      */
     protected function loadTemplate() {
-        return file_get_contents($this->template);
+        $html = file_get_contents($this->template);
+        $license_header = file_get_contents(dirname(__FILE__) . '/../resources/text/html-license-header');
+        return str_replace($license_header, '', $html);
     }
 
     /**

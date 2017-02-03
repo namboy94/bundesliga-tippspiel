@@ -46,10 +46,12 @@ class Page {
         $this->body = array('<body>',
                             generateDefaultHeaderNavbar($filename)->renderHtml(),
                             (new TitleJumboTron($jumbo_title))->renderHtml(),
-                            processDismissableMessages(),
-                            (new CommentSidebar())->renderHtml(),
-                            '<div id="wrapper">',
-                            '<div id="page-content-wrapper">');
+                            processDismissableMessages()
+                            //(new CommentSidebar())->renderHtml(),
+                            //'<div id="wrapper">',
+                            //'<div id="page-content-wrapper">'
+                            );
+
         foreach ($body_elements as $body_element) {
             array_push($this->body, $body_element->renderHtml());
         }

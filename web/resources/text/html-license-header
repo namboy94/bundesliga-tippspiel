@@ -1,5 +1,4 @@
-<?php
-/*  Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
+<!-- Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
 
     This file is part of bundesliga-tippspiel.
 
@@ -15,15 +14,4 @@
 
     You should have received a copy of the GNU General Public License
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-include_once 'php/page.php';
-$page = new Page('@$ABOUT_TITLE', 'about.php', '@$ABOUT_JUMBO', array(), false);
-
-$about_content = file_get_contents('resources/text/impressum.' . $_SESSION['language']);
-$content_layout_start = '<div class="row"><div class="col-sm-1"></div><div class="col-sm-10">';
-$content_layout_end = '</div><div class="col-sm-1"></div></div>';
-
-$page->addStringBodyElement($content_layout_start . $about_content . $content_layout_end);
-
-$page->display();
+-->

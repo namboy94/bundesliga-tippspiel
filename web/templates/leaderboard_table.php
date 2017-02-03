@@ -46,7 +46,7 @@ class LeaderboardTable extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
 
         $leaderboard = getLeaderboard();
 
@@ -103,7 +103,7 @@ class LeaderboardUser extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
-        $html = file_get_contents($this->template);
+        $html = $this->loadTemplate();
         $html = str_replace('@POSITION', $this->position, $html);
         $html = str_replace('@USERNAME', $this->username, $html);
         $html = str_replace('@POINTS', $this->points, $html);
