@@ -31,12 +31,14 @@ class Page {
     private $body;
     private $footer;
     public $dictionary;
+    public $logged_in;
 
     public function __construct($title, $filename, $jumbo_title, $body_elements, $login_required=false) {
 
         initializeSession();
         processGlobalGets();
         $this->dictionary = new Dictionary();
+        $this->logged_in = isLoggedIn();
 
         if ($login_required) {
             redirectInvalidUser();
@@ -63,11 +65,12 @@ class Page {
     }
 
     public function addStringBodyElement($element, $position=null) {
+        $translated = $this->dictionary->translate($element);
         if ($position === null) {
-            array_push($this->body, $element);
+            array_push($this->body, $translated);
         }
         else {
-            array_splice($this->body, $position, 0, $element);
+            array_splice($this->body, $position, 0, $translated);
         }
 
     }

@@ -21,8 +21,8 @@ include_once 'php/page.php';
 $page = new Page('@$ABOUT_TITLE', 'about.php', '@$ABOUT_JUMBO', array(), false);
 
 $about_content = file_get_contents('resources/text/impressum.' . $_SESSION['language']);
-$content_layout_start = '<div class="row"><div class="col-sm-1"></div><div class="col-sm-10">';
-$content_layout_end = '</div><div class="col-sm-1"></div></div>';
+$content_layout_start = '<div class="container"><div class="row"><div class="col-sm-10">';
+$content_layout_end = '</div></div></div>';
 
 $page->addStringBodyElement($content_layout_start . $about_content . $content_layout_end);
 

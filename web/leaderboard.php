@@ -17,38 +17,9 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/form.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
-include_once 'templates/betform.php';
-include_once 'strings/dictionary.php';
-include_once 'templates/title_jumbotron.php';
+include_once 'php/page.php';
 include_once 'templates/leaderboard_table.php';
 
-initializeSession();
-redirectInvalidUser();
-processGlobalGets();
-$dictionary = new Dictionary($_SESSION['language']);
-
-(new Header('@$LEADERBOARD_TITLE'))->echo();
-echo '<body>';
-
-generateDefaultHeaderNavbar('leaderboard.php')->echo();
-(new TitleJumboTron('@$LEADERBOARD_JUMBO'))->echo();
-processDismissableMessages();
-
-?>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <?php (new LeaderboardTable($_SESSION['userdata']['name']))->echo(); ?>
-        </div>
-    </div>
-
-<?php
-
-generateFooter('leaderboard.php')->echoWithContainer();
-
-echo '</body>';
+$page = new Page('@$LEADERBOARD_TITLE', 'leaderboard.php', '@$LEADERBOARD_JUMBO', array(), true);
+$page->addGeneratorBodyElement(new LeaderboardTable($_SESSION['userdata']['name']));
+$page->display();

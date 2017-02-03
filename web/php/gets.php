@@ -42,7 +42,7 @@ function processDismissableMessages() {
     foreach(array('error', 'warning', 'info', 'success') as $dismissable) {
 
         if (isset($_SESSION[$dismissable])) {
-            $result .= DismissableMessage::fromArray($_SESSION[$dismissable])->render();
+            $result .= DismissableMessage::fromArray($_SESSION[$dismissable])->renderHtml();
             unset($_SESSION[$dismissable]);
         }
     }
