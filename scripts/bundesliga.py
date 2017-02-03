@@ -181,5 +181,8 @@ def connect_db(username, password):
 
 
 if __name__ == "__main__":
-    update_db(sys.argv[1], sys.argv[2])
-    print("Update: " + str(time.time()))
+    try:
+        update_db(sys.argv[1], sys.argv[2])
+        print("Update: " + str(time.time()))
+    except Exception as e:
+        print(str(e))
