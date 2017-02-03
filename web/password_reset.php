@@ -17,40 +17,17 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/gets.php';
-include_once 'php/session.php';
-include_once 'templates/form.php';
-include_once 'templates/navbar.php';
-include_once 'templates/header.php';
-include_once 'templates/betform.php';
-include_once 'strings/dictionary.php';
-include_once 'templates/title_jumbotron.php';
+include_once 'php/page.php';
 
-initializeSession();
-processGlobalGets();
-$dictionary = new Dictionary($_SESSION['language']);
-
-(new Header('@$PASSWORD_RESET_TITLE'))->echo();
-echo '<body>';
-generateDefaultHeaderNavbar('password_reset.php')->echo();
-(new TitleJumboTron('@$PASSWORD_RESET_JUMBO'))->echo();
-processDismissableMessages();
+$page = new Page('@$PASSWORD_RESET_TITLE', 'password_reset.php', '@$PASSWORD_RESET_JUMBO', array(), false);
 
 $reset_form = new Form('@$PASSWORD_RESET_FORM_TITLE', 'actions/password_reset.php', array(
     new FormTextEntry('@$PASSWORD_RESET_EMAIL_TITLE', 'reset_email', 'text', 'email@example.com', 'email'),
     new ConfirmationButton('@$PASSWORD_RESET_FORM_BUTTON')
 ));
 
-?>
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <?php $reset_form->echo(); ?>
-        </div>
-        <div class="col-lg-3"></div>
-    </div>
-<?php
+$page->addStringBodyElement('<div class="row"><div class="col-sm-3"></div><div class="col-sm-6">');
+$page->addGeneratorBodyElement($reset_form);
+$page->addStringBodyElement('</div><div class="col-sm-3"></div></div>');
 
-
-generateFooter('password_reset.php')->echoWithContainer();
-echo '</body>';
+$page->display();
