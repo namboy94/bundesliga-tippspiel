@@ -18,6 +18,7 @@
 */
 
 include_once 'php/page.php';
+include_once 'php/matchdb.php';
 include_once 'templates/dismissable_message.php';
 
 $match = null;
@@ -38,12 +39,14 @@ $page = new Page($title, 'match.php', $title, array(), false);
 
 $page->addStringBodyElement('<div class="row">');
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_one_logo . '"></div>');
+
 $page->addStringBodyElement('<div class="col-sm-6"><div class="jumbotron"><div class="row">');
 $page->addStringBodyElement('<div class="col-sm-2"></div>');
-$page->addStringBodyElement('<div class="col-sm-2">' . $match['team_one_ft'] . '</div>');
+$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $match['team_one_ft'] . '</h1></div>');
 $page->addStringBodyElement('<div class="col-sm-4"></div>');
-$page->addStringBodyElement('<div class="col-sm-2">' . $match['team_two_ft'] . '</div>');
-$page->addStringBodyElement('<div class="col-sm-2"></div></div>');
+$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $match['team_two_ft'] . '</h1></div>');
+$page->addStringBodyElement('<div class="col-sm-2"></div></div></div></div>');
+
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_two_logo . '"></div>');
 $page->addStringBodyElement('</div>');
 
