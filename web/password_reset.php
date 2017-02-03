@@ -18,6 +18,7 @@
 */
 
 include_once 'php/page.php';
+include_once 'templates/form.php';
 
 $page = new Page('@$PASSWORD_RESET_TITLE', 'password_reset.php', '@$PASSWORD_RESET_JUMBO', array(), false);
 
