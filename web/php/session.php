@@ -67,13 +67,13 @@ function login($email, $password) {
                          'body' => '@$LOGIN_ERROR_USER_DOES_NOT_EXIST_BODY');
 
         }
-        else if ($result['confirmation'] !== 'confirmed') {
+        else if ($result[0]['confirmation'] !== 'confirmed') {
             return array('status' => false,
                         'title' => '@$LOGIN_ERROR_NOT_CONFIRMED_TITLE',
                         'body' => '@$LOGIN_ERROR_NOT_CONFIRMED_BODY');
         }
         else {
-            $id = $result['user_id'];
+            $id = $result[0]['user_id'];
 
             if ($db->query('SELECT * FROM sessions WHERE id=?', 'i', array($id))->num_rows === 0) {
                 $db->queryWrite('INSERT INTO sessions (id, token) VALUES (?, ?)', 'is', array($id, $token));
@@ -83,7 +83,7 @@ function login($email, $password) {
 
             $_SESSION['id'] = $id;
             $_SESSION['token'] = $token;
-            $_SESSION['userdata'] = array('email' => $email, 'id' => $id, 'name' => $result['username']);
+            $_SESSION['userdata'] = array('email' => $email, 'id' => $id, 'name' => $result[0]['username']);
 
             return array('status' => true, );
         }

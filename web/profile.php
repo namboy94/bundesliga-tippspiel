@@ -38,4 +38,4 @@ $page->addStringBodyElement('<div class="row"><div class="col-lg-3"></div><div c
 $page->addGeneratorBodyElement($reset_form);
 $page->addStringBodyElement('</div><div class="col-lg-3"></div></div>');
 
-$page->display();
+echo str_replace('@$PROFILE_JUMBO', $_SESSION['userdata']['name'], $page->display(false));

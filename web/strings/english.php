@@ -137,6 +137,8 @@ function get_english() {
         'CONFIRMATION_ERROR_TOKEN_MISMATCH_BODY' => 'Please check if the link is correct',
         'CONFIRMATION_SUCCESS_TITLE' => 'Confirmation successful',
         'CONFIRMATION_SUCCESS_BODY' => 'You can now log in',
+        'LOGIN_ERROR_NOT_CONFIRMED_TITLE' => 'Login failed',
+        'LOGIN_ERROR_NOT_CONFIRMED_BODY' => 'Your account has not been activated. Please check your inbox',
 
         # Login
         'LOGIN_ERROR_ALREADY_LOGGED_IN_TITLE' => 'Already logged in',

@@ -138,6 +138,9 @@ function get_german() {
         'CONFIRMATION_ERROR_TOKEN_MISMATCH_BODY' => 'Schau nach ob der Link richtig funktioniert',
         'CONFIRMATION_SUCCESS_TITLE' => 'Bestätigung Abgeschlossen',
         'CONFIRMATION_SUCCESS_BODY' => 'Du kannst dich jetzt anmelden',
+        'LOGIN_ERROR_NOT_CONFIRMED_TITLE' => 'Anmeldung fehlgeschlagen',
+        'LOGIN_ERROR_NOT_CONFIRMED_BODY' => 'Dein Benutzerkonto wurde noch nicht aktiviert. ' .
+                                            'Schau in deinem Email Postfach nach',
 
         # Login
         'LOGIN_ERROR_ALREADY_LOGGED_IN_TITLE' => 'Bereits angemeldet',

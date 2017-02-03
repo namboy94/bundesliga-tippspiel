@@ -75,7 +75,9 @@ class Page {
 
     }
 
-    public function display() {
+    public function display($echo=true) {
+
+        $html = '';
 
         array_push($this->body, $this->footer);
         array_push($this->body, '</div>');
@@ -83,8 +85,13 @@ class Page {
 
         $this->header->echo();
         foreach ($this->body as $body_element) {
-            echo $body_element;
+            $html .= $body_element;
         }
+
+        if ($echo) {
+            echo $html;
+        }
+        return $html;
     }
 
 }
