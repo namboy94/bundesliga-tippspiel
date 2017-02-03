@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/password_reset.php" afterPath="$PROJECT_DIR$/web/password_reset.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/profile.php" afterPath="$PROJECT_DIR$/web/profile.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/signup.php" afterPath="$PROJECT_DIR$/web/signup.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,7 +28,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="profile.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/profile.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="396">
@@ -87,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="signup.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="signup.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/signup.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="39" column="30" lean-forward="false" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
+            <state relative-caret-position="288">
+              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -217,12 +216,12 @@
         <option value="$PROJECT_DIR$/web/php/gets.php" />
         <option value="$PROJECT_DIR$/web/php/session.php" />
         <option value="$PROJECT_DIR$/web/templates/form.php" />
-        <option value="$PROJECT_DIR$/web/signup.php" />
         <option value="$PROJECT_DIR$/web/index.php" />
         <option value="$PROJECT_DIR$/web/strings/german.php" />
         <option value="$PROJECT_DIR$/web/match.php" />
         <option value="$PROJECT_DIR$/web/password_reset.php" />
         <option value="$PROJECT_DIR$/web/profile.php" />
+        <option value="$PROJECT_DIR$/web/signup.php" />
       </list>
     </option>
   </component>
@@ -665,14 +664,7 @@
       <workItem from="1486031513000" duration="6120000" />
       <workItem from="1486043730491" duration="6667000" />
       <workItem from="1486056069019" duration="4747000" />
-      <workItem from="1486118066746" duration="10642000" />
-    </task>
-    <task id="LOCAL-00058" summary="Write script to fill database information.">
-      <created>1485166115343</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1485166115344</updated>
+      <workItem from="1486118066746" duration="10943000" />
     </task>
     <task id="LOCAL-00059" summary="Add license to db script">
       <created>1485166335673</created>
@@ -1010,11 +1002,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486130472928</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="Refactor profile reset page">
+      <created>1486130739579</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1486130739579</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="210525000" />
+    <option name="totallyTimeSpent" value="210826000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -1052,7 +1051,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="true" />
-    <MESSAGE value="Fix release build step" />
     <MESSAGE value="Fix showing already bet bets" />
     <MESSAGE value="Add missing header titles" />
     <MESSAGE value="Add server-side check for invalid numbers in bets" />
@@ -1077,7 +1075,8 @@
     <MESSAGE value="Fix login for unconfirmed users" />
     <MESSAGE value="Refactor match page" />
     <MESSAGE value="Refactor password reset page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor password reset page" />
+    <MESSAGE value="Refactor profile reset page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor profile reset page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1491,14 +1490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/signup.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="39" column="30" lean-forward="false" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/password_reset.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -1511,6 +1502,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="38" column="72" lean-forward="false" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/signup.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
