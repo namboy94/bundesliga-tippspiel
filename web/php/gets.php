@@ -37,11 +37,15 @@ function processGlobalGets() {
  */
 function processDismissableMessages() {
 
+    $result = '';
+
     foreach(array('error', 'warning', 'info', 'success') as $dismissable) {
+
         if (isset($_SESSION[$dismissable])) {
-            DismissableMessage::fromArray($_SESSION[$dismissable])->echo();
+            $result .= DismissableMessage::fromArray($_SESSION[$dismissable])->render();
             unset($_SESSION[$dismissable]);
         }
     }
 
+    return $result;
 }
