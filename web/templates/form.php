@@ -162,3 +162,33 @@ class ConfirmationButton extends HtmlGenerator {
         return $html;
     }
 }
+
+/**
+ * @return Form: A Login Form
+ */
+function generateLoginForm() {
+    return new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
+        new FormTextEntry('@$LOGIN_EMAIL_TITLE', 'login_email', 'text',
+            '@$LOGIN_EMAIL_PLACEHOLDER', 'login_email_id'),
+        new FormTextEntry('@$LOGIN_PASSWORD_TITLE', 'login_password', 'password',
+            '@$LOGIN_PASSWORD_PLACEHOLDER', 'login_password_id'),
+        new ConfirmationButton('@$LOGIN_SUBMIT_TITLE')
+    ));
+}
+
+/**
+ * @return Form: A Registration Form
+ */
+function generateRegistrationForm() {
+    return new Form('@$REGISTER_SECTION_TITLE', 'actions/register.php', array(
+        new FormTextEntry('@$REGISTER_EMAIL_TITLE', 'register_email', 'text',
+            '@$REGISTER_EMAIL_PLACEHOLDER', 'reg_email'),
+        new FormTextEntry('@$REGISTER_USERNAME_TITLE', 'register_username', 'text',
+            '@$REGISTER_USERNAME_PLACEHOLDER', 'reg_username'),
+        new FormTextEntry('@$REGISTER_PASSWORD_TITLE', 'register_password', 'password',
+            '@$REGISTER_PASSWORD_PLACEHOLDER', 'reg_password'),
+        new FormTextEntry('@$REGISTER_PASSWORD_REPEAT_TITLE', 'register_password_repeat', 'password',
+            '@$REGISTER_PASSWORD_REPEAT_PLACEHOLDER', 'reg_password_repeat'),
+        new ConfirmationButton('@$REGISTER_SUBMIT_TITLE')
+    ));
+}

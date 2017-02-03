@@ -34,14 +34,7 @@ if ($page->logged_in) {
     $page->addGeneratorBodyElement(new BetForm(-1, true));
 }
 else {
-    $login_form = new Form('@$LOGIN_SECTION_TITLE', 'actions/login.php', array(
-        new FormTextEntry('@$LOGIN_EMAIL_TITLE', 'login_email', 'text',
-            '@$LOGIN_EMAIL_PLACEHOLDER', 'login_email_id'),
-        new FormTextEntry('@$LOGIN_PASSWORD_TITLE', 'login_password', 'password',
-            '@$LOGIN_PASSWORD_PLACEHOLDER', 'login_password_id'),
-        new ConfirmationButton('@$LOGIN_SUBMIT_TITLE')
-    ));
-    $page->addGeneratorBodyElement($login_form);
+    $page->addGeneratorBodyElement(generateLoginForm());
     $page->addStringBodyElement('<h5>@$OR_SIGN_UP_TEXT</h5>');
 }
 
