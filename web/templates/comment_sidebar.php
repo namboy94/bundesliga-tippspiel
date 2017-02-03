@@ -17,13 +17,16 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once 'php/page.php';
-$page = new Page('@$ABOUT_TITLE', 'about.php', '@$ABOUT_JUMBO', array(), false);
+include_once dirname(__FILE__) . '/generator.php';
 
-$about_content = file_get_contents('resources/text/impressum.' . $_SESSION['language']);
-$content_layout_start = '<div class="container"><div class="row"><div class="col-sm-1"></div><div class="col-sm-10">';
-$content_layout_end = '</div><div class="col-sm-1"></div></div></div>';
 
-$page->addStringBodyElement($content_layout_start . $about_content . $content_layout_end);
+class CommentSidebar extends HtmlGenerator {
 
-$page->display();
+    /**
+     * Renders the HTML string
+     * @return string: The generated HTML content
+     */
+    public function render() {
+        // TODO: Implement render() method.
+    }
+}

@@ -25,7 +25,7 @@ include_once dirname(__FILE__) . '/../templates/header.php';
 include_once dirname(__FILE__) . '/../templates/title_jumbotron.php';
 include_once dirname(__FILE__) . '/../templates/comment_sidebar.php';
 
-abstract class Page {
+class Page {
 
     private $header;
     private $body;
@@ -36,7 +36,7 @@ abstract class Page {
 
         initializeSession();
         processGlobalGets();
-        $this->dictionary = new Dictionary($_SESSION['language']);
+        $this->dictionary = new Dictionary();
 
         if ($login_required) {
             redirectInvalidUser();
@@ -44,19 +44,19 @@ abstract class Page {
 
         $this->header = new Header($title);
         $this->body = array('<body>',
-                            generateDefaultHeaderNavbar($filename)->render(),
-                            new TitleJumboTron($jumbo_title),
+                            generateDefaultHeaderNavbar($filename)->renderHtml(),
+                            (new TitleJumboTron($jumbo_title))->renderHtml(),
                             processDismissableMessages(),
-                            new CommentSidebar(),
+                            (new CommentSidebar())->renderHtml(),
                             '<div id="page-content-wrapper">');
         foreach ($body_elements as $body_element) {
-            array_push($this->body, $body_element->render());
+            array_push($this->body, $body_element->renderHtml());
         }
-        $this->footer = generateFooter($filename)->renderWithContainer();
+        $this->footer = generateFooter($filename)->renderHtmlWithContainer();
     }
 
     public function addGeneratorBodyElement($element, $position=null) {
-        $this->addStringBodyElement($element->render(), $position);
+        $this->addStringBodyElement($element->renderHtml(), $position);
     }
 
     public function addStringBodyElement($element, $position=null) {

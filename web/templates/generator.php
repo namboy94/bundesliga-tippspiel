@@ -44,8 +44,7 @@ abstract class HtmlGenerator {
      * @return void
      */
     public function echo() {
-        $dictionary = new Dictionary($_SESSION['language']);
-        echo $dictionary->translate($this->render());
+        echo $this->renderHtml();
     }
 
     /**
@@ -59,6 +58,15 @@ abstract class HtmlGenerator {
      * Renders the HTML string
      * @return string: The generated HTML content
      */
-    public abstract function render();
+    protected abstract function render();
+
+    /**
+     * Renders the HTML string while translating any string values
+     * @return string: The generated, translated HTML content
+     */
+    public function renderHtml() {
+        $dictionary = new Dictionary();
+        return $dictionary->translate($this->render());
+    }
 
 }

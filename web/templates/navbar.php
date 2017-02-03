@@ -113,6 +113,15 @@ class NavBar extends HtmlGenerator {
     }
 
     /**
+     * Renders the HTML content of the Navbar, but with a container div wrapped around it
+     * Additionally, all string resources are automatically replaced with the current translation
+     * @return string: The rendered HTML
+     */
+    public function renderHtmlWithContainer() {
+        return '<div class="container">' . $this->renderHtml() . '</div>';
+    }
+
+    /**
      * Directly prints the HTML content with a container wrapped around it.
      * @return void
      */
