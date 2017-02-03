@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/web/templates/CommentBar.php" afterPath="$PROJECT_DIR$/web/templates/comment_sidebar.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/simple-sidebar.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/about.php" afterPath="$PROJECT_DIR$/web/about.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/php/page.php" afterPath="$PROJECT_DIR$/web/php/page.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/strings/dictionary.php" afterPath="$PROJECT_DIR$/web/strings/dictionary.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/generator.php" afterPath="$PROJECT_DIR$/web/templates/generator.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/navbar.php" afterPath="$PROJECT_DIR$/web/templates/navbar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/html/header.html" afterPath="$PROJECT_DIR$/web/templates/html/header.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,8 +23,8 @@
       <file leaf-file-name="page.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/php/page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="302">
+              <caret line="50" column="49" lean-forward="false" selection-start-line="50" selection-start-column="49" selection-end-line="50" selection-end-column="49" />
               <folding>
                 <element signature="e#6#791#0#PHP" expanded="true" />
               </folding>
@@ -35,30 +32,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navbar.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
+      <file leaf-file-name="simple-sidebar.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/css/simple-sidebar.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-522">
-              <caret line="116" column="97" lean-forward="false" selection-start-line="116" selection-start-column="97" selection-end-line="116" selection-end-column="97" />
+            <state relative-caret-position="450">
+              <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="session.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/php/session.php">
+      <file leaf-file-name="navbar.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1977">
+            <state relative-caret-position="-4461">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1485973495536" expanded="true" signature="2136:2193" ph="SELECT user_... users" />
-                <marker date="1485973495536" expanded="true" signature="2582:2615" ph="SELECT * FRO... sessions" />
-                <marker date="1485973495536" expanded="true" signature="2687:2733" ph="INSERT INTO sessions... " />
-                <marker date="1485973495536" expanded="true" signature="2817:2855" ph="UPDATE sessi... " />
-                <marker date="1485973495536" expanded="true" signature="3483:3536" ph="SELECT passw... users" />
-                <marker date="1485973495536" expanded="true" signature="3916:3953" ph="SELECT token... sessions" />
-                <marker date="1485973495536" expanded="true" signature="4337:4380" ph="DELETE FROM " />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -95,42 +84,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gets.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/php/gets.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="about.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="about.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/about.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
-              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dictionary.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/strings/dictionary.php">
+      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/templates/header.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-15">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/php/index.php">
+      <file leaf-file-name="header.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/templates/html/header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="370">
+              <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="matchdb.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/php/matchdb.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1486056065960" expanded="true" signature="1177:1243" ph="SELECT MIN(m... matches" />
+                <marker date="1486056065960" expanded="true" signature="1516:1554" ph="SELECT * FRO... matches" />
+                <marker date="1486056065960" expanded="true" signature="1735:1754" ph="SELECT * FRO... teams" />
+                <marker date="1486056065960" expanded="true" signature="2766:2801" ph="SELECT user_... users" />
+                <marker date="1486056065960" expanded="true" signature="2866:2912" ph="SELECT * FRO... leaderboard" />
+                <marker date="1486056065960" expanded="true" signature="3376:3408" ph="SELECT * FRO... matches" />
+                <marker date="1486056065960" expanded="true" signature="3839:3869" ph="SELECT * FRO... teams" />
+                <marker date="1486056065960" expanded="true" signature="3933:3963" ph="SELECT * FRO... teams" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -208,7 +206,6 @@
         <option value="$PROJECT_DIR$/web/css/custom-common.css" />
         <option value="$PROJECT_DIR$/web/css/custom-default.css" />
         <option value="$PROJECT_DIR$/web/css/custom-hacker.css" />
-        <option value="$PROJECT_DIR$/web/templates/html/header.html" />
         <option value="$PROJECT_DIR$/web/templates/html/betform_small_element.html" />
         <option value="$PROJECT_DIR$/web/bets.php" />
         <option value="$PROJECT_DIR$/web/php/matchdb.php" />
@@ -227,8 +224,9 @@
         <option value="$PROJECT_DIR$/web/templates/comment_sidebar.php" />
         <option value="$PROJECT_DIR$/web/templates/generator.php" />
         <option value="$PROJECT_DIR$/web/templates/navbar.php" />
-        <option value="$PROJECT_DIR$/web/php/page.php" />
         <option value="$PROJECT_DIR$/web/about.php" />
+        <option value="$PROJECT_DIR$/web/php/page.php" />
+        <option value="$PROJECT_DIR$/web/templates/html/header.html" />
       </list>
     </option>
   </component>
@@ -338,25 +336,11 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="strings">
+            <PATH_ELEMENT USER_OBJECT="templates">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="bundesliga-tippspiel">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="web">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="php">
+            <PATH_ELEMENT USER_OBJECT="html">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -578,19 +562,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web/css" />
+      <recent name="$PROJECT_DIR$/web/actions" />
+      <recent name="$PROJECT_DIR$/scripts" />
+      <recent name="$PROJECT_DIR$/web/templates/html" />
+      <recent name="$PROJECT_DIR$/web/resources/images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web/resources/images/logos" />
       <recent name="$PROJECT_DIR$/web/resources/text" />
       <recent name="$PROJECT_DIR$/scripts" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/web/actions" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/web/actions" />
-      <recent name="$PROJECT_DIR$/scripts" />
-      <recent name="$PROJECT_DIR$/web/templates/html" />
-      <recent name="$PROJECT_DIR$/web/resources/images" />
-      <recent name="$PROJECT_DIR$/web/scripts" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.php">
@@ -711,14 +695,7 @@
       <workItem from="1486031513000" duration="6120000" />
       <workItem from="1486043730491" duration="6667000" />
       <workItem from="1486056069019" duration="4747000" />
-      <workItem from="1486118066746" duration="3458000" />
-    </task>
-    <task id="LOCAL-00050" summary="Rewrite about.php">
-      <created>1485039286628</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1485039286628</updated>
+      <workItem from="1486118066746" duration="3890000" />
     </task>
     <task id="LOCAL-00051" summary="Completely redid the registration handling">
       <created>1485045814449</created>
@@ -1056,11 +1033,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486120557396</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="Transform about page to use new page class">
+      <created>1486121545201</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1486121545201</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203341000" />
+    <option name="totallyTimeSpent" value="203773000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -1098,7 +1082,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="true" />
-    <MESSAGE value="Implement profile page with functionality to change password" />
     <MESSAGE value="Write logic of password reser" />
     <MESSAGE value="Fix bet updating script" />
     <MESSAGE value="Fix updating leaderboard" />
@@ -1123,20 +1106,14 @@
     <MESSAGE value="Version bump to 0.2.0" />
     <MESSAGE value="Add try/catch to database update scripts" />
     <MESSAGE value="Add generic page class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add generic page class" />
+    <MESSAGE value="Transform about page to use new page class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Transform about page to use new page class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/templates/form.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/actions/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1243,21 +1220,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/html/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="32" column="54" lean-forward="false" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/html/betform_full_element.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -1293,14 +1255,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/php/matchdb.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2088">
-          <caret line="132" column="12" lean-forward="false" selection-start-line="132" selection-start-column="12" selection-end-line="132" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -1512,28 +1466,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
+    <entry file="file://$PROJECT_DIR$/web/about.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-522">
-          <caret line="116" column="97" lean-forward="false" selection-start-line="116" selection-start-column="97" selection-end-line="116" selection-end-column="97" />
+        <state relative-caret-position="234">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/php/matchdb.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1486056065960" expanded="true" signature="1177:1243" ph="SELECT MIN(m... matches" />
+            <marker date="1486056065960" expanded="true" signature="1516:1554" ph="SELECT * FRO... matches" />
+            <marker date="1486056065960" expanded="true" signature="1735:1754" ph="SELECT * FRO... teams" />
+            <marker date="1486056065960" expanded="true" signature="2766:2801" ph="SELECT user_... users" />
+            <marker date="1486056065960" expanded="true" signature="2866:2912" ph="SELECT * FRO... leaderboard" />
+            <marker date="1486056065960" expanded="true" signature="3376:3408" ph="SELECT * FRO... matches" />
+            <marker date="1486056065960" expanded="true" signature="3839:3869" ph="SELECT * FRO... teams" />
+            <marker date="1486056065960" expanded="true" signature="3933:3963" ph="SELECT * FRO... teams" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/php/page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="302">
+          <caret line="50" column="49" lean-forward="false" selection-start-line="50" selection-start-column="49" selection-end-line="50" selection-end-column="49" />
           <folding>
             <element signature="e#6#791#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/about.php">
+    <entry file="file://$PROJECT_DIR$/web/css/simple-sidebar.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="450">
+          <caret line="25" column="18" lean-forward="true" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/navbar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4461">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/html/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
           <folding />
         </state>
       </provider>
