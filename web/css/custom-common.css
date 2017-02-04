@@ -39,3 +39,19 @@ html,body {
     width: 20px;
     height: 20px;
 }
+
+.jumbotron {
+    margin-bottom: 0;
+}
+
+.comments {
+    background: orange;
+    height: 60em;
+    border-bottom-right-radius: 10px;
+}
+
+.comment-list {
+    background: darkorange;
+    height: 44em;
+    overflow: auto;
+}
