@@ -21,10 +21,20 @@ include_once dirname(__FILE__) . '/generator.php';
 include_once dirname(__FILE__) . '/../php/matchdb.php';
 
 
+/**
+ * Class MatchEvents is a class that models a match event table
+ */
 class MatchEvents extends HtmlGenerator {
 
+    /**
+     * @var array: The goals that have been scored so far
+     */
     private $goals;
 
+    /**
+     * MatchEvents constructor.
+     * @param $match_id int: The match's match ID
+     */
     public function __construct($match_id) {
         $this->goals = getGoals($match_id);
         $this->template = dirname(__FILE__) . '/html/match_events.html';
@@ -48,19 +58,44 @@ class MatchEvents extends HtmlGenerator {
     }
 }
 
-class MatchEvent extends HtmlGenerator {
+/**
+ * Class GoalEvent is a class that models a Goal Event list item
+ */
+class GoalEvent extends HtmlGenerator {
 
-    private $minute;
+    /**
+     * @var int: The minute in which the event took place
+     */
+    public $minute;
+
+    /**
+     * @var int: The points of the home team after the event took place
+     */
     private $team_one_score;
+
+    /**
+     * @var string: The name of the scorer
+     */
     private $scorer;
+
+    /**
+     * @var int: The points of the away team after the event took place
+     */
     private $team_two_score;
 
+    /**
+     * GoalEvent constructor.
+     * @param $minute         int:    The minute of the event
+     * @param $scorer         string: The scorer of the goal
+     * @param $team_one_score int:    The home team's score
+     * @param $team_two_score int:    The away team's score
+     */
     public function __construct($minute, $scorer, $team_one_score, $team_two_score) {
         $this->minute = $minute;
         $this->scorer = $scorer;
         $this->team_one_score = $team_one_score;
         $this->team_two_score = $team_two_score;
-        $this->template = dirname(__FILE__) . '/html/match_event.html';
+        $this->template = dirname(__FILE__) . '/html/goal_event.html';
     }
 
     /**
