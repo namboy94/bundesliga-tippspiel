@@ -1,3 +1,5 @@
+V 0.4.1:
+  - Fixed error preventing match page to load
 V 0.4.0:
   - Basic Live-ticker functionality
   - Protection from XSS Attacks

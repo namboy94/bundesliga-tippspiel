@@ -50,7 +50,7 @@ class MatchEvents extends HtmlGenerator {
         $events = '';
         foreach($this->goals as $goal) {
             $events .=
-                (new MatchEvent($goal['minute'], $goal['scorer'], $goal['team_one_score'], $goal['team_two_score']))
+                (new GoalEvent($goal['minute'], $goal['scorer'], $goal['team_one_score'], $goal['team_two_score']))
                     ->render();
         }
 
