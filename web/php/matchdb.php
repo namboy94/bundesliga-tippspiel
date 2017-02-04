@@ -143,6 +143,6 @@ function hasMatchStarted($match) {
  */
 function getCurrentScore($match_id) {
     $db = new Database();
-    return
-        $db->query('SELECT MAX(minute), team_one_score, team_two_score WHERE match_id=?', 'i', array($match_id), true);
+    return $db->query('SELECT MAX(minute), team_one_score, team_two_score FROM goals WHERE match_id=?',
+        'i', array($match_id), true);
 }
