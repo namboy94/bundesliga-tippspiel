@@ -15,23 +15,4 @@
     You should have received a copy of the GNU General Public License
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<form class="form-horizontal" action="actions/comment.php" method="post" style="margin: 1em">
-    <fieldset>
-        <div class="form-group">
-            <input class="form-control"
-                   placeholder="@$YOUR_COMMENT_HERE_TEXT"
-                   type="text"
-                   id="new_comment"
-                   name="new_comment">
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <button type="submit" class="btn btn-primary">@$COMMENT_SUBMIT_BUTTON</button>
-            </div>
-        </div>
-    </fieldset>
-</form>
-
-<ul class="comment-list">
-    @COMMENTS
-</ul>
+<li>@CONTENT (@USER)</li>

@@ -18,6 +18,7 @@
 */
 
 include_once dirname(__FILE__) . '/generator.php';
+include_once dirname(__FILE__) . '/../php/database.php';
 
 
 /**
@@ -25,6 +26,9 @@ include_once dirname(__FILE__) . '/generator.php';
  */
 class CommentSidebar extends HtmlGenerator {
 
+    /**
+     * CommentSidebar constructor.
+     */
     public function __construct() {
         $this->template = dirname(__FILE__) . '/html/comment_sidebar.html';
     }
@@ -34,7 +38,52 @@ class CommentSidebar extends HtmlGenerator {
      * @return string: The generated HTML content
      */
     public function render() {
+        $db = new Database();
         $html = $this->loadTemplate();
+
+        $comments = $db->query('SELECT comments.content AS content, comments.created AS created, comments.last_modified 
+                                AS last_modified, users.username AS username FROM comments JOIN users
+                                ON comments.user=users.user_id ORDER BY comments.created DESC',
+                               '', array(), true);
+        $comment_html = '';
+
+        foreach ($comments as $comment) {
+            $comment_html .= (new Comment($comment))->renderHtml();
+        }
+
+        $html = str_replace('@COMMENTS', $comment_html, $html);
+        return $html;
+    }
+}
+
+/**
+ * Class Comment is a class that models a single comment
+ */
+class Comment extends HtmlGenerator {
+
+    /**
+     * @var array: The comment data
+     */
+    private $comment;
+
+    /**
+     * CommentSidebar constructor.
+     * @param $comment array: The comment data
+     */
+    public function __construct($comment) {
+        $this->template = dirname(__FILE__) . '/html/comment.html';
+        $this->comment = $comment;
+    }
+
+    /**
+     * Renders the HTML string
+     * @return string: The generated HTML content
+     */
+    protected function render() {
+
+        $html = $this->loadTemplate();
+        $html = str_replace('@CONTENT', $this->comment['content'], $html);
+        $html = str_replace('@USER', $this->comment['username'], $html);
         return $html;
     }
 }
