@@ -1,5 +1,4 @@
-<?php
-/*  Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
+<!-- Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
 
     This file is part of bundesliga-tippspiel.
 
@@ -15,26 +14,12 @@
 
     You should have received a copy of the GNU General Public License
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-*/
+-->
 
-include_once dirname(__FILE__) . '/generator.php';
-
-
-/**
- * Class CommentSidebar is a class that renders the comment sidebar
- */
-class CommentSidebar extends HtmlGenerator {
-
-    public function __construct() {
-        $this->template = dirname(__FILE__) . '/html/comment_sidebar';
-    }
-
-    /**
-     * Renders the HTML string
-     * @return string: The generated HTML content
-     */
-    public function render() {
-        $html = $this->loadTemplate();
-        return $html;
-    }
-}
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            Test
+        </li>
+    </ul>
+</div>

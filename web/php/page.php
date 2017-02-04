@@ -79,11 +79,11 @@ class Page {
         $this->body = array('<body>',
                             generateDefaultHeaderNavbar($filename)->renderHtml(),
                             (new TitleJumboTron($jumbo_title))->renderHtml(),
-                            processDismissableMessages()
+                            processDismissableMessages(),
                             // Comment Sidebar
-                            //(new CommentSidebar())->renderHtml(),
-                            //'<div id="wrapper">',
-                            //'<div id="page-content-wrapper">'
+                            '<div id="wrapper">',
+                            (new CommentSidebar())->renderHtml(),
+                            '<div id="page-content-wrapper">'
                             );
 
         foreach ($body_elements as $body_element) {
