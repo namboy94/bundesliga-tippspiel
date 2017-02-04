@@ -19,6 +19,7 @@
 
 include_once 'php/page.php';
 include_once 'php/matchdb.php';
+include_once 'templates/match_events.php';
 include_once 'templates/dismissable_message.php';
 
 $match = null;
@@ -50,6 +51,8 @@ else {
     }
 }
 
+$events = new MatchEvents($match['id']);
+
 $page = new Page($title, 'match.php', $title, array(), false);
 
 $page->addStringBodyElement('<div class="row">');
@@ -64,5 +67,11 @@ $page->addStringBodyElement('<div class="col-sm-2"></div></div></div></div>');
 
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_two_logo . '"></div>');
 $page->addStringBodyElement('</div>');
+
+$page->addStringBodyElement('<div class="row"><div class="col-sm-3"></div><div class="col-sm-6">');
+$page->addGeneratorBodyElement($events);
+$page->addStringBodyElement('</div><div class="col-sm-3"></div></div>');
+
+
 
 $page->display();

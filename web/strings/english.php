@@ -96,6 +96,12 @@ function get_english() {
         'INVALID_BET_VALUE_TOO_HIGH_TITLE' => 'Input value too high',
         'INVALID_BET_VALUE_TOO_HIGH_BODY' => 'Please enter a value between 0 and 1000',
 
+        # match.php
+        'MATCH_EVENTS_MINUTE' => 'Minute',
+        'MATCH_EVENTS_SCORER' => 'Scorer',
+        'MATCH_EVENTS_TEAM_ONE_SCORE' => 'Home',
+        'MATCH_EVENTS_TEAM_TWO_SCORE' => 'Away',
+
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Leaderboard',
         'LEADERBOARD_TABLE_TITLE' => 'Leaderboard',
