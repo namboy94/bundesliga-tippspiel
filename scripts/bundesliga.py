@@ -115,9 +115,9 @@ def update_db_goals(data, db):
         owngoals = len(list(filter(lambda x: x[1] == True, player_goals)))
 
         stmt = db.cursor()
-                stmt.execute("REPLACE INTO scorers (id, name, goals, penalties, owngoals)"\
-                             "VALUES (%s, %s, %s, %s, %s);",
-                             (player_id, player_name, goals, penalties, owngoals))
+        stmt.execute("REPLACE INTO scorers (id, name, goals, penalties, owngoals)"\
+                     "VALUES (%s, %s, %s, %s, %s);",
+                     (player_id, player_name, goals, penalties, owngoals))
 
     db.commit()
 
