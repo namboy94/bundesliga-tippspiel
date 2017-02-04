@@ -26,7 +26,7 @@ include_once dirname(__FILE__) . '/generator.php';
 class CommentSidebar extends HtmlGenerator {
 
     public function __construct() {
-        $this->template = dirname(__FILE__) . '/html/comment_sidebar';
+        $this->template = dirname(__FILE__) . '/html/comment_sidebar.html';
     }
 
     /**
