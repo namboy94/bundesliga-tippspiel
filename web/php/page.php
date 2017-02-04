@@ -79,12 +79,17 @@ class Page {
         $this->body = array('<body>',
                             generateDefaultHeaderNavbar($filename)->renderHtml(),
                             (new TitleJumboTron($jumbo_title))->renderHtml(),
-                            processDismissableMessages()
-                            // Comment Sidebar
-                            //(new CommentSidebar())->renderHtml(),
-                            //'<div id="wrapper">',
-                            //'<div id="page-content-wrapper">'
-                            );
+                            '<div class="row">');
+
+        if ($this->logged_in) {
+            $this->addStringBodyElement('<div class="col-sm-3 comments">');
+            $this->addGeneratorBodyElement(new CommentSidebar());
+            $this->addStringBodyElement('</div><div class="col-sm-9">');
+        }
+        else {
+            $this->addStringBodyElement('<div class="col-sm-12">');
+        }
+        $this->addStringBodyElement(processDismissableMessages());
 
         foreach ($body_elements as $body_element) {
             array_push($this->body, $body_element->renderHtml());
@@ -126,7 +131,7 @@ class Page {
         $html = '';
 
         array_push($this->body, $this->footer->renderHtmlWithContainer());
-        array_push($this->body, '</div>');
+        array_push($this->body, '</div></div>');
         array_push($this->body, '</body>');
 
         $this->header->echo();

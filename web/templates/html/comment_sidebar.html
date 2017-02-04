@@ -15,31 +15,23 @@
     You should have received a copy of the GNU General Public License
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<form class="form-horizontal" action="actions/bet.php" method="post">
-    <legend class="text-center">
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-1">
-                <a href="@PREV_URL">@PREV_ARROW</a>
-            </div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-6">@TITLE</div>
-            <div class="col-sm-1"></div>
-            <div class="col-sm-1">
-                <a href="@NEXT_URL">@NEXT_ARROW</a>
-            </div>
-            <div class="col-sm-1"></div>
-        </div>
-    </legend>
+<form class="form-horizontal" action="actions/comment.php" method="post" style="margin: 1em">
     <fieldset>
-        <ul class="list-group">
-            @ELEMENTS
-        </ul>
-        <hr>
         <div class="form-group">
-            <div class="col-lg-12 text-center">
-                <button type="submit" class="btn btn-primary">@SUBMIT</button>
+            <input class="form-control"
+                   placeholder="@$YOUR_COMMENT_HERE_TEXT"
+                   type="text"
+                   id="new_comment"
+                   name="new_comment">
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">@$COMMENT_SUBMIT_BUTTON</button>
             </div>
         </div>
     </fieldset>
 </form>
+
+<ul class="comment-list">
+    @COMMENTS
+</ul>

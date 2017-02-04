@@ -170,6 +170,16 @@ function get_german() {
             '<p>@TEMPORARY_PASSWORD</p>' .
             '<p>Bitte ändere dieses Passwort zeitnah auf der Profilseite</p>',
 
+        # Comments
+        'COMMENT_ERROR_NOT_LOGGED_IN_TITLE' => 'Nicht angemeldet',
+        'COMMENT_ERROR_NOT_LOGGED_IN_BODY' => 'Du musst angemeldet sein um kommentieren zu können',
+        'COMMENT_ERROR_NO_CONTENT_BODY_TITLE' => 'Kein Inhalt',
+        'COMMENT_ERROR_NO_CONTENT_BODY_BODY' => 'Es konnte kein Kommentar erstellt werden',
+        'COMMENT_ERROR_EMPTY_TITLE' => 'Kommentar leer',
+        'COMMENT_ERROR_EMPTY_BODY' => 'Es kann kein leeres Kommentar erstellt werden',
+        'YOUR_COMMENT_HERE_TEXT' => 'Kommentar',
+        'COMMENT_SUBMIT_BUTTON' => 'Schicken',
+
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Passwort ändern',
         'PROFILE_PASSWORD_CHANGE_CURRENT_LABEL' => 'Derzeitiges Passwort',
