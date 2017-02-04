@@ -22,10 +22,12 @@ include_once 'php/matchdb.php';
 include_once 'templates/dismissable_message.php';
 
 $match = null;
+$score = null;
 if (isset($_GET['match_id'])) {
     $match = getMatch($_GET['match_id']);
+    $score = getCurrentScore($_GET['match_id']);
 }
-if ($match === null) {
+if ($match === null || $score == null) {
     (new DismissableMessage('error', '@$MATCH_NOT_FOUND_ERROR_TITLE', '@$MATCH_NOT_FOUND_ERROR_BODY'))
         ->show('index.php');
 }
@@ -42,9 +44,9 @@ $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src
 
 $page->addStringBodyElement('<div class="col-sm-6"><div class="jumbotron"><div class="row">');
 $page->addStringBodyElement('<div class="col-sm-2"></div>');
-$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $match['team_one_ft'] . '</h1></div>');
+$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $score['team_one_score'] . '</h1></div>');
 $page->addStringBodyElement('<div class="col-sm-4"></div>');
-$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $match['team_two_ft'] . '</h1></div>');
+$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $score['team_two_score'] . '</h1></div>');
 $page->addStringBodyElement('<div class="col-sm-2"></div></div></div></div>');
 
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_two_logo . '"></div>');
