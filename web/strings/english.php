@@ -168,6 +168,16 @@ function get_english() {
                                        '<p>@TEMPORARY_PASSWORD</p>' .
                                        '<p>Please change the password as soon as possible using the profile page</p>',
 
+        # Comments
+        'COMMENT_ERROR_NOT_LOGGED_IN_TITLE' => 'Not logged in',
+        'COMMENT_ERROR_NOT_LOGGED_IN_BODY' => 'You need to be logged in to comment',
+        'COMMENT_ERROR_NO_CONTENT_BODY_TITLE' => 'No Content',
+        'COMMENT_ERROR_NO_CONTENT_BODY_BODY' => 'Could not create a new comment',
+        'COMMENT_ERROR_EMPTY_TITLE' => 'Comment field empty',
+        'COMMENT_ERROR_EMPTY_BODY' => 'You can not leave an empty comment',
+        'YOUR_COMMENT_HERE_TEXT' => 'Your comment here',
+        'COMMENT_SUBMIT_BUTTON' => 'Submit',
+
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Change Password',
         'PROFILE_PASSWORD_CHANGE_CURRENT_LABEL' => 'Current Password',

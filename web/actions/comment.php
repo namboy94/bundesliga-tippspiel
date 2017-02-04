@@ -31,12 +31,16 @@ elseif (!isset($_POST['new_comment'])) {
     (new DismissableMessage('error', '@$COMMENT_ERROR_NO_CONTENT_TITLE',
         '@$COMMENT_ERROR_NO_CONTENT_BODY'))->show('../bets.php');
 }
+elseif ($_POST['new_comment'] === '') {
+    (new DismissableMessage('error', '@$COMMENT_ERROR_EMPTY_TITLE',
+        '@$COMMENT_ERROR_EMPTY_BODY'))->show('../bets.php');
+}
 else {
 
     $db = new Database();
 
     $user_id = $_SESSION['id'];
-    $content = $_POST['new_comment'];
+    $content = htmlspecialchars($_POST['new_comment']);
     $time = time();
 
     $comment_id = (int)$db->query('SELECT MAX(id) AS id FROM comments')->fetch_assoc()['id'] + 1;

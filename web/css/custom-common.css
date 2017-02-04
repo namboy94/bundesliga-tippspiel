@@ -52,6 +52,8 @@ html,body {
 
 .comment-list {
     background: darkorange;
-    height: 44em;
+    height: 50em;
     overflow: auto;
+    border-radius: 10px;
+    word-break: break-all;
 }
