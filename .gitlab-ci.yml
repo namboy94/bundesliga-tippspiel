@@ -23,6 +23,7 @@ deploy_demo_page:
     - develop
   script:
     - rsync -av web/ /var/www/demo.tippspiel.krumreyh.com/public_html --delete-after
+    - rsync -av scripts/ /var/www/tippspiel.krumreyh.com/scripts --delete-after
 
 create_gitlab_release:
   stage: release

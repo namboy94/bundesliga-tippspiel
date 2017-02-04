@@ -25,14 +25,45 @@ include_once dirname(__FILE__) . '/../templates/header.php';
 include_once dirname(__FILE__) . '/../templates/title_jumbotron.php';
 include_once dirname(__FILE__) . '/../templates/comment_sidebar.php';
 
+/**
+ * Class Page is a class that offers a unified framework of sorts to display an HTML page using strings
+ * an HtmlGenerator objects
+ */
 class Page {
 
+    /**
+     * @var Header: The header object generated for this page
+     */
     private $header;
+
+    /**
+     * @var array: The string elements in the body of the page
+     */
     private $body;
+
+    /**
+     * @var NavBar: The footer Navbar at the bottom of the page
+     */
     private $footer;
+
+    /**
+     * @var Dictionary: The currently used dictionary for string replacements
+     */
     public $dictionary;
+
+    /**
+     * @var bool: State variable that is set to true whenever the user is logged in
+     */
     public $logged_in;
 
+    /**
+     * Page constructor.
+     * @param $title          string:  The title of the page
+     * @param $filename       string:  The page's filename
+     * @param $jumbo_title    string:  The jumbotron title
+     * @param $body_elements  array:   The initial body elements of the page
+     * @param $login_required boolean: Can be set to true to redirct non-authenticated users to index.php
+     */
     public function __construct($title, $filename, $jumbo_title, $body_elements, $login_required=false) {
 
         initializeSession();
@@ -49,6 +80,7 @@ class Page {
                             generateDefaultHeaderNavbar($filename)->renderHtml(),
                             (new TitleJumboTron($jumbo_title))->renderHtml(),
                             processDismissableMessages()
+                            // Comment Sidebar
                             //(new CommentSidebar())->renderHtml(),
                             //'<div id="wrapper">',
                             //'<div id="page-content-wrapper">'
@@ -57,13 +89,23 @@ class Page {
         foreach ($body_elements as $body_element) {
             array_push($this->body, $body_element->renderHtml());
         }
-        $this->footer = generateFooter($filename)->renderHtmlWithContainer();
+        $this->footer = generateFooter($filename);
     }
 
+    /**
+     * Adds a HtmlGenerator to the body
+     * @param $element  HtmlGenerator: The generator object to add
+     * @param $position int:           Can be specified to but the element at a specific position
+     */
     public function addGeneratorBodyElement($element, $position=null) {
         $this->addStringBodyElement($element->renderHtml(), $position);
     }
 
+    /**
+     * Adds a string to the body
+     * @param $element  string: The string to add
+     * @param $position int:    Can be specified to but the element at a specific position
+     */
     public function addStringBodyElement($element, $position=null) {
         $translated = $this->dictionary->translate($element);
         if ($position === null) {
@@ -72,14 +114,18 @@ class Page {
         else {
             array_splice($this->body, $position, 0, $translated);
         }
-
     }
 
+    /**
+     * Displays the page
+     * @param $echo boolean: Can be set to false to not echo the page
+     * @return      string:  The page content HTML
+     */
     public function display($echo=true) {
 
         $html = '';
 
-        array_push($this->body, $this->footer);
+        array_push($this->body, $this->footer->renderHtmlWithContainer());
         array_push($this->body, '</div>');
         array_push($this->body, '</body>');
 
@@ -93,5 +139,4 @@ class Page {
         }
         return $html;
     }
-
 }

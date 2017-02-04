@@ -96,6 +96,12 @@ function get_german() {
         'INVALID_BET_VALUE_TOO_HIGH_TITLE' => 'Eingegebener Wert ist zu hoch',
         'INVALID_BET_VALUE_TOO_HIGH_BODY' => 'Bitte gebe einen Wert zwischen 0 und 1000 ein',
 
+        # match.php
+        'MATCH_EVENTS_MINUTE' => 'Minute',
+        'MATCH_EVENTS_SCORER' => 'Torschütze',
+        'MATCH_EVENTS_TEAM_ONE_SCORE' => 'Heim',
+        'MATCH_EVENTS_TEAM_TWO_SCORE' => 'Auswärts',
+
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Rangliste',
         'LEADERBOARD_TABLE_TITLE' => 'Rangliste',

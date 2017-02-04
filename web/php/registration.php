@@ -60,6 +60,9 @@ function createNewUser($email, $username, $password) {
 
     $db = new Database();
 
+    $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+
     $id = calculateNextId();
     $hash = password_hash($password, PASSWORD_BCRYPT);
     $confirmation_string = password_hash($email, PASSWORD_BCRYPT);

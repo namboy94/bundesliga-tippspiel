@@ -46,6 +46,7 @@ def update_db(username, password):
 
     update_db_teams(data, db)
     update_db_matches(data, db)
+    update_db_goals(data, db)
     db.close()
 
 def update_db_teams(data, db):
@@ -72,6 +73,66 @@ def update_db_teams(data, db):
 
     if committed:
         db.commit()
+
+def update_db_goals(data, db):
+
+    players = []
+
+    for day in data:
+        for match in day:
+
+            match_id = match["MatchID"]
+            goals = match["Goals"]
+
+            for goal in goals:
+                
+
+                goal_id = goal["GoalID"]
+                player_id = goal["GoalGetterID"];
+                team_one_score = goal["ScoreTeam1"]
+                team_two_score = goal["ScoreTeam2"]
+                minute = goal["MatchMinute"]
+                penalty = goal["IsPenalty"]
+                owngoal = goal["IsOwnGoal"]
+
+                invalid = False
+                params = (goal_id, match_id, player_id, team_one_score, team_two_score, minute, penalty, owngoal)
+                for param in params:
+                    if param is None:
+                        invalid = True
+                if invalid:
+                    continue
+
+                players.append((goal["GoalGetterID"], goal["GoalGetterName"]))
+                stmt = db.cursor()
+                stmt.execute("REPLACE INTO goals (id, match_id, scorer, team_one_score, team_two_score, minute, penalty, owngoal)"\
+                             "VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
+                             params)
+
+    db.commit()
+    goaldata = get_goal_data(db)
+
+    for player in players:
+
+        player_id = player[0]
+
+        if player_id == 0:
+            player_name = "Unknown"
+        else:
+            player_name = player[1]
+
+        player_goals = goaldata[player_id]
+
+        goals = len(player_goals)
+        penalties = len(list(filter(lambda x: x[0] == True, player_goals)))
+        owngoals = len(list(filter(lambda x: x[1] == True, player_goals)))
+
+        stmt = db.cursor()
+        stmt.execute("REPLACE INTO scorers (id, name, goals, penalties, owngoals)"\
+                     "VALUES (%s, %s, %s, %s, %s);",
+                     (player_id, player_name, goals, penalties, owngoals))
+
+    db.commit()
 
 
 def update_db_matches(data, db):
@@ -130,7 +191,6 @@ def update_db_matches(data, db):
                       "VALUES (%s, %s, %s, %s, %s, "\
                       "%s, %s, %s, %s, %s, %s, %s, %s);"
 
-
             elif current_data[match_id] != last_update:
                 sql = "UPDATE matches SET id=%s, matchday=%s, city=%s, "\
                       "stadium=%s, matchtime=%s, finished=%s, team_one=%s, "\
@@ -168,6 +228,19 @@ def get_current_teams(db):
         team_ids.append(team[0])
 
     return team_ids
+
+def get_goal_data(db):
+    stmt = db.cursor()
+    stmt.execute("SELECT scorer, penalty, owngoal FROM goals")
+    current_data = stmt.fetchall()
+
+    goals = {}
+    for goal in current_data:
+        goals[goal[0]] = []
+    for goal in current_data:
+        goals[goal[0]].append((goal[1], goal[2]))
+
+    return goals
 
 
 def connect_db(username, password):

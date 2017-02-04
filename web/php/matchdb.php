@@ -135,3 +135,23 @@ function hasMatchStarted($match) {
     $current_time = time();
     return $current_time > $start_time;
 }
+
+/**
+ * Fetches data about the current score of a match
+ * @param $match_id int:   The match id to check for
+ * @return          array: The current scores in an array
+ */
+function getCurrentScore($match_id) {
+    $db = new Database();
+    return $db->query('SELECT MAX(minute), team_one_score, team_two_score FROM goals WHERE match_id=?',
+        'i', array($match_id), true)[0];
+}
+
+
+function getGoals($match_id) {
+    $db = new Database();
+    return $db->query('SELECT goals.minute AS minute, goals.team_one_score AS team_one_score, 
+                       goals.team_two_score AS team_two_score, goals.penalty AS penalty, goals.owngoal AS owngoal,
+                       scorers.name as scorer FROM goals JOIN scorers ON goals.scorer=scorers.id WHERE match_id=?',
+        'i', array($match_id), true);
+}
