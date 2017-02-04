@@ -85,7 +85,7 @@ def update_db_goals(data, db):
             goals = match["Goals"]
 
             for goal in goals:
-                players.append((goal["GoalGetterID"], goal["GoalGetterName"]))
+                
 
                 goal_id = goal["GoalID"]
                 player_id = goal["GoalGetterID"];
@@ -95,10 +95,19 @@ def update_db_goals(data, db):
                 penalty = goal["IsPenalty"]
                 owngoal = goal["IsOwnGoal"]
 
+                invalid = False
+                params = (goal_id, match_id, player_id, team_one_score, team_two_score, minute, penalty, owngoal)
+                for param in params:
+                    if param is None:
+                        invalid = True
+                if invalid:
+                    continue
+
+                players.append((goal["GoalGetterID"], goal["GoalGetterName"]))
                 stmt = db.cursor()
                 stmt.execute("REPLACE INTO goals (id, match_id, scorer, team_one_score, team_two_score, minute, penalty, owngoal)"\
                              "VALUES (%s, %s, %s, %s, %s, %s, %s, %s);",
-                             (goal_id, match_id, player_id, team_one_score, team_two_score, minute, penalty, owngoal))
+                             params)
 
     db.commit()
     goaldata = get_goal_data(db)
