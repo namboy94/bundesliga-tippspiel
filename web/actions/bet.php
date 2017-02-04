@@ -33,9 +33,10 @@ foreach($matches as $match) {
         (new DismissableMessage('error', '@$INVALID_BET_VALUE_TOO_HIGH_TITLE',
             '@$INVALID_BET_VALUE_TOO_HIGH_BODY'))->show('../bets.php');
     }
-
     if ($_POST[$match['team_one']] == null || $_POST[$match['team_two']] == null) {
-        echo 'NULL';
+        continue;
+    }
+    if (!is_int($_POST[$match['team_one']]) || !is_int($_POST[$match['team_two']])) {
         continue;
     }
 
