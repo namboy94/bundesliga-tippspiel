@@ -115,7 +115,11 @@ def update_db_goals(data, db):
     for player in players:
 
         player_id = player[0]
-        player_name = player[1]
+
+        if player_id == 0:
+            player_name = "Unknown"
+        else:
+            player_name = player[1]
 
         player_goals = goaldata[player_id]
 
