@@ -22,12 +22,10 @@ include_once 'php/matchdb.php';
 include_once 'templates/dismissable_message.php';
 
 $match = null;
-$score = null;
 if (isset($_GET['match_id'])) {
     $match = getMatch($_GET['match_id']);
-    $score = getCurrentScore($_GET['match_id']);
 }
-if ($match === null || $score == null) {
+if ($match === null) {
     (new DismissableMessage('error', '@$MATCH_NOT_FOUND_ERROR_TITLE', '@$MATCH_NOT_FOUND_ERROR_BODY'))
         ->show('index.php');
 }
@@ -37,6 +35,21 @@ $title = $teams['team_one']['name'] . ' vs. ' . $teams['team_two']['name'];
 $team_one_logo = 'resources/images/logos/' . $teams['team_one']['id'] . '.gif';
 $team_two_logo = 'resources/images/logos/' . $teams['team_two']['id'] . '.gif';
 
+if (!hasMatchStarted($match)) {
+    $team_one_score = '-';
+    $team_two_score = '-';
+}
+else {
+    $team_one_score = $match['team_one_ft'];
+    $team_two_score = $match['team_two_ft'];
+
+    if ((int)$team_one_score === -1 || (int)$team_two_score === -1) {
+        $score = getCurrentScore($match['id']);
+        $team_one_score = $score['team_one_score'];
+        $team_two_score = $score['team_two_score'];
+    }
+}
+
 $page = new Page($title, 'match.php', $title, array(), false);
 
 $page->addStringBodyElement('<div class="row">');
@@ -44,9 +57,9 @@ $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src
 
 $page->addStringBodyElement('<div class="col-sm-6"><div class="jumbotron"><div class="row">');
 $page->addStringBodyElement('<div class="col-sm-2"></div>');
-$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $score['team_one_score'] . '</h1></div>');
+$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $team_one_score . '</h1></div>');
 $page->addStringBodyElement('<div class="col-sm-4"></div>');
-$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $score['team_two_score'] . '</h1></div>');
+$page->addStringBodyElement('<div class="col-sm-2"><h1>' . $team_two_score . '</h1></div>');
 $page->addStringBodyElement('<div class="col-sm-2"></div></div></div></div>');
 
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_two_logo . '"></div>');
