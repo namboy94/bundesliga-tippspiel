@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/custom-common.css" afterPath="$PROJECT_DIR$/web/css/custom-common.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/php/page.php" afterPath="$PROJECT_DIR$/web/php/page.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/html/comment.html" afterPath="$PROJECT_DIR$/web/templates/html/comment.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/templates/html/comment_sidebar.html" afterPath="$PROJECT_DIR$/web/templates/html/comment_sidebar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/comment.php" afterPath="$PROJECT_DIR$/web/actions/comment.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +21,8 @@
       <file leaf-file-name="bet.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="364">
+              <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
               <folding>
                 <marker date="1486281016075" expanded="true" signature="2347:2413" ph="UPDATE bets " />
                 <marker date="1486281016075" expanded="true" signature="2588:2672" ph="INSERT INTO bets... " />
@@ -34,11 +31,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom-common.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="comment.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/actions/comment.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="29" column="99" lean-forward="true" selection-start-line="29" selection-start-column="99" selection-end-line="29" selection-end-column="99" />
+              <folding>
+                <element signature="e#6#791#0#PHP" expanded="true" />
+                <marker date="1486296105875" expanded="true" signature="1642:1648" ph="..." />
+                <marker date="1486296105875" expanded="true" signature="2492:2526" ph="SELECT MAX(i... comments" />
+                <marker date="1486296105875" expanded="true" signature="2577:2664" ph="INSERT INTO comments... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="custom-common.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/css/custom-common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="607">
-              <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+            <state relative-caret-position="499">
+              <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,7 +60,7 @@
         <entry file="file://$PROJECT_DIR$/web/php/page.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="427">
-              <caret line="137" column="65" lean-forward="true" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
+              <caret line="137" column="65" lean-forward="false" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
               <folding>
                 <element signature="e#6#791#0#PHP" expanded="true" />
               </folding>
@@ -76,16 +88,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="leaderboard_user.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/templates/html/leaderboard_user.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="22" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="comment.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/html/comment.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -100,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/web/templates/html/comment_sidebar.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="679">
-              <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
               </folding>
@@ -211,7 +213,6 @@
         <option value="$PROJECT_DIR$/web/templates/html/betform_full_element.html" />
         <option value="$PROJECT_DIR$/web/templates/html/betform_small_element.html" />
         <option value="$PROJECT_DIR$/web/templates/comment_sidebar.php" />
-        <option value="$PROJECT_DIR$/web/actions/comment.php" />
         <option value="$PROJECT_DIR$/web/strings/english.php" />
         <option value="$PROJECT_DIR$/web/strings/german.php" />
         <option value="$PROJECT_DIR$/web/resources/version" />
@@ -222,6 +223,7 @@
         <option value="$PROJECT_DIR$/web/templates/html/comment.html" />
         <option value="$PROJECT_DIR$/web/templates/html/comment_sidebar.html" />
         <option value="$PROJECT_DIR$/web/css/custom-common.css" />
+        <option value="$PROJECT_DIR$/web/actions/comment.php" />
       </list>
     </option>
   </component>
@@ -507,7 +509,7 @@
     <property name="js.eslint.eslintPackage" value="" />
     <property name="last_opened_file_path" value="/usr/lib64/php" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -647,20 +649,6 @@
       <workItem from="1486209595046" duration="5692000" />
       <workItem from="1486220417491" duration="4009000" />
       <workItem from="1486227456103" duration="2915000" />
-    </task>
-    <task id="LOCAL-00077" summary="Fix updating leaderboard">
-      <created>1485872776528</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1485872776528</updated>
-    </task>
-    <task id="LOCAL-00078" summary="Made website somewhat presentable">
-      <created>1485949379480</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1485949379482</updated>
     </task>
     <task id="LOCAL-00079" summary="Add icons to bet page">
       <created>1485956289091</created>
@@ -991,11 +979,25 @@
       <option name="project" value="LOCAL" />
       <updated>1486282936346</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="Better comments layout">
+      <created>1486290188407</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1486290188407</updated>
+    </task>
+    <task id="LOCAL-00127" summary="Add support for specific tags in comments">
+      <created>1486295236654</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1486295236654</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="241621000" />
+    <option name="totallyTimeSpent" value="244084000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="0" width="2566" height="1307" extended-state="6" />
@@ -1033,8 +1035,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="true" />
-    <MESSAGE value="Transform about page to use new page class" />
-    <MESSAGE value="Add simple sidebar CSS." />
     <MESSAGE value="Fix template loading behaviour" />
     <MESSAGE value="Redid bets page to use new page framework" />
     <MESSAGE value="Use page class with more pages" />
@@ -1058,7 +1058,9 @@
     <MESSAGE value="Complete working comments mechanics" />
     <MESSAGE value="Merge branch 'develop'&#10;&#10;# Conflicts:&#10;#&#9;CHANGELOG&#10;#&#9;web/resources/version&#10;" />
     <MESSAGE value="Try fixing layout of comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Try fixing layout of comments" />
+    <MESSAGE value="Better comments layout" />
+    <MESSAGE value="Add support for specific tags in comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add support for specific tags in comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1306,13 +1308,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/comment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="42" column="54" lean-forward="false" selection-start-line="42" selection-start-column="54" selection-end-line="42" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/strings/english.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
@@ -1403,17 +1398,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding>
-            <marker date="1486281016075" expanded="true" signature="2347:2413" ph="UPDATE bets " />
-            <marker date="1486281016075" expanded="true" signature="2588:2672" ph="INSERT INTO bets... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/css/custom-default.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1441,7 +1425,7 @@
     <entry file="file://$PROJECT_DIR$/web/php/page.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="427">
-          <caret line="137" column="65" lean-forward="true" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
+          <caret line="137" column="65" lean-forward="false" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
           <folding>
             <element signature="e#6#791#0#PHP" expanded="true" />
           </folding>
@@ -1467,7 +1451,7 @@
     <entry file="file://$PROJECT_DIR$/web/templates/html/comment_sidebar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="679">
-          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
           </folding>
@@ -1476,9 +1460,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/css/custom-common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+        <state relative-caret-position="499">
+          <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/actions/bet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+          <folding>
+            <marker date="1486281016075" expanded="true" signature="2347:2413" ph="UPDATE bets " />
+            <marker date="1486281016075" expanded="true" signature="2588:2672" ph="INSERT INTO bets... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/actions/comment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="29" column="99" lean-forward="true" selection-start-line="29" selection-start-column="99" selection-end-line="29" selection-end-column="99" />
+          <folding>
+            <element signature="e#6#791#0#PHP" expanded="true" />
+            <marker date="1486296105875" expanded="true" signature="1642:1648" ph="..." />
+            <marker date="1486296105875" expanded="true" signature="2492:2526" ph="SELECT MAX(i... comments" />
+            <marker date="1486296105875" expanded="true" signature="2577:2664" ph="INSERT INTO comments... " />
+          </folding>
         </state>
       </provider>
     </entry>

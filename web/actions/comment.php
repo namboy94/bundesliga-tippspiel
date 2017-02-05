@@ -21,6 +21,29 @@ include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
+function formatContent($content) {
+
+    $colors = array('red', 'blue', 'yellow', 'green', 'white');
+
+    foreach($colors as $color) {
+        $content = str_replace('@' . strtoupper($color), '@' . strtolower($color), $content);
+        $content = str_replace('<' . strtolower($color) . '>', '@' . strtoupper($color), $content);
+    }
+    $content = htmlspecialchars($content);
+    $content = preg_replace('#&lt;(/?(?:small|strong|i|b))&gt;#', '<\1>', $content);
+
+    foreach($colors as $color) {
+        $content = str_replace('@' . strtolower($color), '@' . strtoupper($color), $content);
+        $content = str_replace('@' . strtoupper($color), '<span style="color:' . strtolower($color) . '; ">', $content);
+    }
+
+    return $content;
+}
+
+function replaceColorTag($content, $color) {
+
+}
+
 initializeSession();
 
 if (!isLoggedIn()) {
@@ -40,8 +63,8 @@ else {
     $db = new Database();
 
     $user_id = $_SESSION['id'];
-    $content = htmlspecialchars($_POST['new_comment']);
-    $content = preg_replace('#&lt;(/?(?:small|strong|i|b))&gt;#', '<\1>', $content);
+    $content = formatContent($_POST['new_comment']);
+
     $time = time();
 
     $comment_id = (int)$db->query('SELECT MAX(id) AS id FROM comments')->fetch_assoc()['id'] + 1;
