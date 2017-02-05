@@ -43,7 +43,7 @@ class MatchUserBets extends HtmlGenerator {
 
         $bets_html = '';
         foreach ($this->bets as $bet) {
-            $bets_html .= (new MatchUserBet($bet))->renderHtml();
+            $bets_html .= (new MatchUserBet($bet))->render();
         }
         $html = str_replace('@ELEMENTS', $bets_html, $html);
 

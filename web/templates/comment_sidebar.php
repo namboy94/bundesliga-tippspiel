@@ -48,7 +48,7 @@ class CommentSidebar extends HtmlGenerator {
         $comment_html = '';
 
         foreach ($comments as $comment) {
-            $comment_html .= (new Comment($comment))->renderHtml();
+            $comment_html .= (new Comment($comment))->render();
         }
 
         $html = str_replace('@COMMENTS', $comment_html, $html);

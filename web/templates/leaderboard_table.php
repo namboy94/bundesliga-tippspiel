@@ -52,8 +52,15 @@ class LeaderboardTable extends HtmlGenerator {
         $elements = '';
         $position = 1;
         foreach($leaderboard as $user) {
-            $elements .=
-                (new LeaderboardUser($position, $user['username'], $user['points'], $this->username))->render();
+
+            switch($position) {
+                case 1:                   $background = 'bg-success'; break;
+                case count($leaderboard): $background = 'bg-danger'; break;
+                default:                  $background = 'bg-default';
+            }
+
+            $element = new LeaderboardUser($position, $user['username'], $user['points'], $this->username, $background);
+            $elements .= $element->render();
             $position += 1;
         }
 
@@ -82,19 +89,24 @@ class LeaderboardUser extends HtmlGenerator {
     private $points;
 
     /**
+     * @var string: The background class to use
+     */
+    private $background;
+
+    /**
      * LeaderboardUser constructor.
      * @param $position    int:    The position of the entry
      * @param $username    string: The username of the entry
      * @param $points      int:    The points of the entry
      * @param $active_user string: The currently active user, which defines if this entry is selected or not
+     * @param $background  string: The background class
      */
-    public function __construct($position, $username, $points, $active_user) {
+    public function __construct($position, $username, $points, $active_user, $background) {
         $this->position = $position;
         $this->username = $username;
         $this->points = $points;
-
-        $this->template = dirname(__FILE__) .
-            ($username === $active_user ? '/html/leaderboard_active_user.html' : '/html/leaderboard_user.html');
+        $this->background = ($username === $active_user ? 'bg-info' : $background);
+        $this->template = dirname(__FILE__) . '/html/leaderboard_user.html';
     }
 
     /**
@@ -106,6 +118,7 @@ class LeaderboardUser extends HtmlGenerator {
         $html = str_replace('@POSITION', $this->position, $html);
         $html = str_replace('@USERNAME', $this->username, $html);
         $html = str_replace('@POINTS', $this->points, $html);
+        $html = str_replace('@BACKGROUND', $this->background, $html);
         return $html;
     }
 }
