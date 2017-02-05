@@ -33,7 +33,7 @@ if ($match === null) {
 }
 
 $teams = getTeamsForMatch($match);
-$title = $teams['team_one']['name'] . ' vs. ' . $teams['team_two']['name'];
+$title = $teams['team_one']['shortname'] . ' vs. ' . $teams['team_two']['shortname'];
 $team_one_logo = 'resources/images/logos/' . $teams['team_one']['id'] . '.gif';
 $team_two_logo = 'resources/images/logos/' . $teams['team_two']['id'] . '.gif';
 
