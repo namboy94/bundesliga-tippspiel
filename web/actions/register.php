@@ -64,7 +64,7 @@ elseif (strlen($password) < 8) {
         '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY'))->show('../signup.php');
 }
 else {
-    $registration = register($email, $username, $password);
+    $registration = register($email, $username, $password, $_SERVER['REMOTE_ADDR']);
 
     if ($registration['status']) {
 

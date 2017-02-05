@@ -76,7 +76,7 @@ $page->addGeneratorBodyElement($events);
 $page->addStringBodyElement('</div><div class="col-sm-3"></div></div>');
 
 $page->addStringBodyElement('<hr><div class="row"><div class="col-sm-2"></div><div class="col-sm-8">');
-$page->addGeneratorBodyElement(new MatchUserBets($match['id']));
+$page->addGeneratorBodyElement(new MatchUserBets($match['id'], $match_started));
 $page->addStringBodyElement('</div><div class="col-sm-2"></div></div>');
 
 $page->display();
