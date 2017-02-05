@@ -52,3 +52,29 @@ function renderComment($content) {
 function colors() {
     return array('red', 'blue', 'yellow', 'green', 'white');
 }
+
+/**
+ * @return array: Defines the tags that are available for custom formatting
+ */
+function tags() {
+    return array('b', 'i', 'strong', 'small');
+}
+
+/**
+ * Checks if a string has visible content
+ * @param $content string: The content to check
+ * @return         bool:   true, if visible content exists, else false
+ */
+function hasVisibleContent($content) {
+    $temp = $content;
+    foreach (colors() as $color) {
+        $temp = str_replace('<' . $color . '>', '', $temp);
+        $temp = str_replace('</' . $color . '>', '', $temp);
+    }
+    foreach (tags() as $tag) {
+        $temp = str_replace('<' . $tag . '>', '', $temp);
+        $temp = str_replace('</' . $tag . '>', '', $temp);
+    }
+    $temp = str_replace(' ', '', $temp);
+    return strlen($temp) > 0;
+}
