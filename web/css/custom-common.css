@@ -47,7 +47,7 @@ html,body {
 .comments {
     height: 50em;
     border-bottom-left-radius: 10px;
-
+    background: orange;
 }
 
 .comment-list {

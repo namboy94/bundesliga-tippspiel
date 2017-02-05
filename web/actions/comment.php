@@ -30,6 +30,7 @@ function formatContent($content) {
 
     $colors = array('red', 'blue', 'yellow', 'green', 'white');
 
+
     foreach($colors as $color) {
         $content = str_replace('@' . strtoupper($color), '@' . strtolower($color), $content);
         $content = str_replace('<' . strtolower($color) . '>', '@' . strtoupper($color), $content);
