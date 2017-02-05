@@ -44,11 +44,6 @@ function register($email, $username, $password, $initial_ip) {
                      'error_title' => '@$REGISTER_ERROR_EMAIL_USED_TITLE',
                      'error_body' => '@$REGISTER_ERROR_EMAIL_USED_BODY');
     }
-    elseif (ipRegistrationLimitReached($initial_ip)) {
-        return array('status' => false,
-                     'error_title' => '@$REGISTER_ERROR_IP_LIMIT_TITLE',
-                     'error_body' => '@$REGISTER_ERROR_IP_LIMIT_BODY');
-    }
     else {
         return array('status' => true,
                      'token' => createNewUser($email, $username, $password, $initial_ip));
@@ -192,14 +187,4 @@ function generateRandomString($length) {
                 ceil($length / strlen($x)))),
         1,
         $length);
-}
-
-/**
- * Checks if the registrations from one IP address has exceeded 10
- * @param $ip_address string:  The IP address to check
- * @return            boolean: true if reached, else false
- */
-function ipRegistrationLimitReached($ip_address) {
-    $db = new Database();
-    return $db->query('SELECT * FROM users WHERE initial_ip=?', 's', array($ip_address)) > 10;
 }

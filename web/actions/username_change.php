@@ -44,7 +44,7 @@ elseif (strlen($new_name) > 60) {
 }
 else {
     $_SESSION['userdata']['name'] = $new_name;
-    $db->queryWrite('UPDATE users SET username=? WHERE user_id=?', 'si', array($new_name, $user_id));
+    $db->queryWrite('UPDATE users SET username=? WHERE user_id=?', 'si', array(htmlspecialchars($new_name), $user_id));
     (new DismissableMessage('success', '@$USERNAME_CHANGE_SUCCESS_TITLE',
         '@$USERNAME_CHANGE_SUCCESS_BODY'))->show('../profile.php');
 }
