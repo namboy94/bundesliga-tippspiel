@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dae292da-2690-430c-8601-891e620a1555" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/actions/username_change.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/comment.php" afterPath="$PROJECT_DIR$/web/actions/comment.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/custom-common.css" afterPath="$PROJECT_DIR$/web/css/custom-common.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/profile.php" afterPath="$PROJECT_DIR$/web/profile.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/actions/username_change.php" afterPath="$PROJECT_DIR$/web/actions/username_change.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -84,11 +81,11 @@
       <file leaf-file-name="username_change.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/actions/username_change.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="716">
-              <caret line="49" column="1" lean-forward="true" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+            <state relative-caret-position="992">
+              <caret line="48" column="46" lean-forward="false" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
               <folding>
-                <marker date="1486306010538" expanded="true" signature="1217:1253" ph="SELECT * FRO... users" />
-                <marker date="1486306010538" expanded="true" signature="1839:1882" ph="UPDATE users... " />
+                <marker date="1486306258951" expanded="true" signature="1217:1253" ph="SELECT * FRO... users" />
+                <marker date="1486306258951" expanded="true" signature="1888:1931" ph="UPDATE users... " />
               </folding>
             </state>
           </provider>
@@ -685,13 +682,6 @@
       <workItem from="1486220417491" duration="4009000" />
       <workItem from="1486227456103" duration="2915000" />
     </task>
-    <task id="LOCAL-00089" summary="Start work on a match page">
-      <created>1486034521817</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1486034521818</updated>
-    </task>
     <task id="LOCAL-00090" summary="Smarter way to handle custom css.">
       <created>1486044101029</created>
       <option name="number" value="00090" />
@@ -1028,15 +1018,22 @@
       <option name="project" value="LOCAL" />
       <updated>1486304515634</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="Add logic for username changes">
+      <created>1486306022466</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1486306022466</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="253713000" />
+    <option name="totallyTimeSpent" value="253991000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="0" width="2566" height="1307" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1046,7 +1043,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917705" sideWeight="0.4984375" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1928512" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1928512" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1070,7 +1067,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="true" />
-    <MESSAGE value="Add scripts syncing to develop build phase" />
     <MESSAGE value="Fix wrong indent in bundesliga script" />
     <MESSAGE value="Fix bundesliga script breaking on wrong data" />
     <MESSAGE value="Handle unknown goal scorers" />
@@ -1095,7 +1091,8 @@
     <MESSAGE value="Fix short names" />
     <MESSAGE value="Fix error in database script" />
     <MESSAGE value="Change terminal theme colors of comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change terminal theme colors of comments" />
+    <MESSAGE value="Add logic for username changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add logic for username changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1518,11 +1515,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/actions/username_change.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
-          <caret line="49" column="1" lean-forward="true" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="1" />
+        <state relative-caret-position="992">
+          <caret line="48" column="46" lean-forward="false" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
           <folding>
-            <marker date="1486306010538" expanded="true" signature="1217:1253" ph="SELECT * FRO... users" />
-            <marker date="1486306010538" expanded="true" signature="1839:1882" ph="UPDATE users... " />
+            <marker date="1486306258951" expanded="true" signature="1217:1253" ph="SELECT * FRO... users" />
+            <marker date="1486306258951" expanded="true" signature="1888:1931" ph="UPDATE users... " />
           </folding>
         </state>
       </provider>

@@ -39,12 +39,15 @@ if ($username_exists) {
 }
 elseif ($new_name === "") {
     (new DismissableMessage('error', '@$USERNAME_CHANGE_EMPTY_TITLE',
-        '@$USERNAME_CHANGE_EMPTY_BODY'))->show('../signup.php');
+        '@$USERNAME_CHANGE_EMPTY_BODY'))->show('../profile.php');
 }
 elseif (strlen($new_name) > 60) {
     (new DismissableMessage('error', '@$USERNAME_CHANGE_TOO_LONG_TITLE',
-        '@$USERNAME_CHANGE_TOO_LONG_BODY'))->show('../signup.php');
+        '@$USERNAME_CHANGE_TOO_LONG_BODY'))->show('../profile.php');
 }
 else {
+    $_SESSION['userdata']['name'] = $new_name;
     $db->queryWrite('UPDATE users SET username=? WHERE user_id=?', 'si', array($new_name, $user_id));
+    (new DismissableMessage('success', '@$USERNAME_CHANGE_SUCCESS_TITLE',
+        '@$USERNAME_CHANGE_SUCCESS_BODY'))->show('../profile.php');
 }
