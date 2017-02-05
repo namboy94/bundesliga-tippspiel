@@ -1,3 +1,8 @@
+V 0.6.0:
+  - Comments layout improvements
+  - Bet data on match page
+  - Highlighting on leaderboard
+  - Fixed layout bounds
 V 0.5.0:
   - Added comments
 V 0.4.1:
