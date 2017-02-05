@@ -18,22 +18,26 @@
 <form class="form-horizontal" action="actions/comment.php" method="post" style="margin: 1em">
     <fieldset>
         <div class="form-group">
-            <div class="col-sm-10">
-                <input class="form-control"
-                       placeholder="@$YOUR_COMMENT_HERE_TEXT"
-                       type="text"
-                       id="new_comment"
-                       name="new_comment">
-            </div>
-            <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary">@$COMMENT_SUBMIT_BUTTON</button>
+            <div class="row">
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-primary">@$COMMENT_SUBMIT_BUTTON</button>
+                </div>
+                <div class="col-sm-9">
+                    <input class="form-control"
+                           placeholder="@$YOUR_COMMENT_HERE_TEXT"
+                           type="text"
+                           id="new_comment"
+                           name="new_comment">
+                </div>
             </div>
         </div>
     </fieldset>
 </form>
 
-<table class="table .table-striped">
-    <tbody>
-        @COMMENTS
-    </tbody>
-</table>
+<div class="comment-list">
+    <table class="table .table-striped">
+        <tbody>
+            @COMMENTS
+        </tbody>
+    </table>
+</div>

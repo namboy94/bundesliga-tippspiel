@@ -79,7 +79,7 @@ class Page {
         $this->body = array('<body>',
                             generateDefaultHeaderNavbar($filename)->renderHtml(),
                             (new TitleJumboTron($jumbo_title))->renderHtml(),
-                            '<div class="row">');
+                            '<div class="container-fluid"><div class="row">');
 
         if ($this->logged_in) {
             $this->addStringBodyElement('<div class="col-sm-9">');
@@ -135,7 +135,7 @@ class Page {
             $this->addStringBodyElement('</div>');
         }
 
-        $this->addStringBodyElement('</div></div></body>');
+        $this->addStringBodyElement('</div></div></div></body>');
 
         $html = '';
 
