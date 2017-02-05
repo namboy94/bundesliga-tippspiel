@@ -21,6 +21,11 @@ include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
+/**
+ * Formats the content of a content to avoid XSS vulnerabilities, but allows certain formatting tags
+ * @param $content string: The content of the comment
+ * @return         string: The formatted content
+ */
 function formatContent($content) {
 
     $colors = array('red', 'blue', 'yellow', 'green', 'white');
@@ -38,10 +43,6 @@ function formatContent($content) {
     }
 
     return $content;
-}
-
-function replaceColorTag($content, $color) {
-
 }
 
 initializeSession();

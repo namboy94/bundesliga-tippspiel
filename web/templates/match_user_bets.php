@@ -20,10 +20,20 @@
 include_once dirname(__FILE__) . '/generator.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 
+/**
+ * Class MatchUserBets is a class that models a table of user bets for a specific match
+ */
 class MatchUserBets extends HtmlGenerator {
 
+    /**
+     * @var array: The match's bet data
+     */
     private $bets;
 
+    /**
+     * MatchUserBets constructor.
+     * @param $match_id int: The match ID
+     */
     public function __construct($match_id) {
         $this->template = dirname(__FILE__) . '/html/match_user_bets_table.html';
 
@@ -51,10 +61,20 @@ class MatchUserBets extends HtmlGenerator {
     }
 }
 
+/**
+ * Class MatchUserBet is a class that models a single entry in the match user bets table
+ */
 class MatchUserBet extends HtmlGenerator {
 
+    /**
+     * @var array: The specific bet to display
+     */
     private $bet;
 
+    /**
+     * MatchUserBet constructor.
+     * @param $bet array: The bet
+     */
     public function __construct($bet) {
         $this->template = dirname(__FILE__) . '/html/match_user_bets_element.html';
         $this->bet = $bet;
