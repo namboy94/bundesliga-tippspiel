@@ -26,6 +26,11 @@ initializeSession();
 
 $dictionary = new Dictionary($_SESSION['language']);
 
+if (!verifyCaptcha($_POST['g-recaptcha-response'])) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_NO_RECAPTCHA_TITLE',
+        '@$REGISTER_ERROR_NO_RECAPTCHA_BODY'))->show('../password_reset.php');
+}
+
 $email = $_POST['reset_email'];
 $temporary_password = resetPassword($email);
 

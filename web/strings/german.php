@@ -133,6 +133,8 @@ function get_german() {
                                                  'Bitte wähle einen anderen Benutzernamen',
         'REGISTER_ERROR_EMAIL_USED_TITLE' => 'Email bereits verwendet',
         'REGISTER_ERROR_EMAIL_USED_BODY' => 'Diese Email wird berets verwendet',
+        'REGISTER_ERROR_NO_RECAPTCHA_TITLE' => 'ReCaptcha fehlgeschlagen',
+        'REGISTER_ERROR_NO_RECAPTCHA_BODY' => 'Bitte clicke den ReCaptcha Knopf',
         'CONFIRMATION_EMAIL_SENDER' => 'Bundesliga Tippspiel',
         'CONFIRMATION_EMAIL_TITLE' => 'Registrierung - Bestatigung',
         'CONFIRMATION_EMAIL_BODY' => '<h2>Bestätigung</h2><p>Herzlich willkommen beim Bundesliga Tippspiel!</p>' .

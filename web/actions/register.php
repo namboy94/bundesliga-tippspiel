@@ -31,7 +31,11 @@ $repeat_password = $_POST["register_password_repeat"];
 $dictionary = new Dictionary($_SESSION['language']);
 
 
-if ($email === "") {
+if (!verifyCaptcha($_POST['g-recaptcha-response'])) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_NO_RECAPTCHA_TITLE',
+        '@$REGISTER_ERROR_NO_RECAPTCHA_BODY'))->show('../signup.php');
+}
+elseif ($email === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_EMAIL_TITLE',
         '@$REGISTER_ERROR_NO_EMAIL_BODY'))->show('../signup.php');
 }

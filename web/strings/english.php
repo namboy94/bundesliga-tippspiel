@@ -132,6 +132,8 @@ function get_english() {
         'REGISTER_ERROR_USERNAME_EXISTS_BODY' => 'Please choose a different username',
         'REGISTER_ERROR_EMAIL_USED_TITLE' => 'Email already in use',
         'REGISTER_ERROR_EMAIL_USED_BODY' => 'This email is already bound to an account',
+        'REGISTER_ERROR_NO_RECAPTCHA_TITLE' => 'ReCaptcha Failed',
+        'REGISTER_ERROR_NO_RECAPTCHA_BODY' => 'Please press the ReCaptcha button again',
         'CONFIRMATION_EMAIL_SENDER' => 'Bundesliga Betting Game',
         'CONFIRMATION_EMAIL_TITLE' => 'Registration Confirmation',
         'CONFIRMATION_EMAIL_BODY' => '<h2>Confirmation</h2><p>Welcome to the Bundesliga Betting Game!</p>' .

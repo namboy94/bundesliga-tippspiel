@@ -188,3 +188,27 @@ function generateRandomString($length) {
         1,
         $length);
 }
+
+/**
+ * Verifies a captcha
+ * @param $captcha_content string:  The captcha POST key
+ * @return                 boolean: true if verified, else false
+ */
+function verifyCaptcha($captcha_content) {
+    $secret_key = file_get_contents(dirname(__FILE__) . '/../../secrets/recaptcha_key');
+
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $params = 'secret=' . $secret_key . '&response=' . $captcha_content . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+
+
+    $curl = curl_init($url);
+    curl_setopt( $curl, CURLOPT_POST, 1);
+    curl_setopt( $curl, CURLOPT_POSTFIELDS, $params);
+    curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt( $curl, CURLOPT_HEADER, 0);
+    curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+
+    $response = curl_exec($curl);
+    $data = json_decode($response);
+    return $data->success;
+}
