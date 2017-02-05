@@ -101,6 +101,10 @@ function get_german() {
         'MATCH_EVENTS_SCORER' => 'Torschütze',
         'MATCH_EVENTS_TEAM_ONE_SCORE' => 'Heim',
         'MATCH_EVENTS_TEAM_TWO_SCORE' => 'Auswärts',
+        'MATCH_BETS_USERNAME' => 'Nutzer',
+        'MATCH_BETS_TEAM_ONE' => 'Heim',
+        'MATCH_BETS_TEAM_TWO' => 'Auswärts',
+        'MATCH_BETS_POINTS' => 'Punkte',
 
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Rangliste',

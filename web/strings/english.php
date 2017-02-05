@@ -101,6 +101,10 @@ function get_english() {
         'MATCH_EVENTS_SCORER' => 'Scorer',
         'MATCH_EVENTS_TEAM_ONE_SCORE' => 'Home',
         'MATCH_EVENTS_TEAM_TWO_SCORE' => 'Away',
+        'MATCH_BETS_USERNAME' => 'User',
+        'MATCH_BETS_TEAM_ONE' => 'Home',
+        'MATCH_BETS_TEAM_TWO' => 'Away',
+        'MATCH_BETS_POINTS' => 'Points',
 
         # leaderboard.php
         'LEADERBOARD_JUMBO' => 'Leaderboard',

@@ -48,7 +48,7 @@ class CommentSidebar extends HtmlGenerator {
         $comment_html = '';
 
         foreach ($comments as $comment) {
-            $comment_html .= (new Comment($comment))->renderHtml();
+            $comment_html .= (new Comment($comment))->render();
         }
 
         $html = str_replace('@COMMENTS', $comment_html, $html);
@@ -84,6 +84,14 @@ class Comment extends HtmlGenerator {
         $html = $this->loadTemplate();
         $html = str_replace('@CONTENT', $this->comment['content'], $html);
         $html = str_replace('@USER', $this->comment['username'], $html);
+
+        $timestamp = date('Y-m-d:h-i-s', $this->comment['last_modified']);
+        if ($this->comment['last_modified'] !== $this->comment['created']) {
+            $timestamp .= '*';
+        }
+
+        $html = str_replace('@DATE', $timestamp, $html);
+
         return $html;
     }
 }
