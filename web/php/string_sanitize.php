@@ -26,7 +26,9 @@ function sanitizeComment($content) {
 
     foreach(colors() as $color) {
         $content = str_replace('@' . strtoupper($color), '@' . strtolower($color), $content);
+        $content = str_replace('#' . strtoupper($color), '#' . strtolower($color), $content);
         $content = str_replace('<' . strtolower($color) . '>', '@' . strtoupper($color), $content);
+        $content = str_replace('</' . strtolower($color) . '>', '#' . strtoupper($color), $content);
     }
     $content = htmlspecialchars($content);
     return $content;
@@ -38,10 +40,23 @@ function sanitizeComment($content) {
  * @return         string: The rendered comment
  */
 function renderComment($content) {
-    $content = preg_replace('#&lt;(/?(?:small|strong|i|b))&gt;#', '<\1>', $content);
+
+    $tags = '';
+    $i = 0;
+    foreach (tags() as $tag) {
+        $tags .= $tag;
+        if ($i < count(tags()) - 1) {
+            $tags .= '|';
+        }
+        $i += 1;
+    }
+
+    $content = preg_replace('#&lt;(/?(?:' . $tags . '))&gt;#', '<\1>', $content);
     foreach(colors() as $color) {
         $content = str_replace('@' . strtolower($color), '@' . strtoupper($color), $content);
+        $content = str_replace('#' . strtolower($color), '#' . strtoupper($color), $content);
         $content = str_replace('@' . strtoupper($color), '<span style="color:' . strtolower($color) . '; ">', $content);
+        $content = str_replace('#' . strtoupper($color), '</span>', $content);
     }
     return $content;
 }
