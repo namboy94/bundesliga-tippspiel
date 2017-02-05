@@ -164,6 +164,27 @@ class ConfirmationButton extends HtmlGenerator {
 }
 
 /**
+ * Class ReCaptcha is a class that models a ReCaptcha
+ */
+class ReCaptcha extends HtmlGenerator {
+
+    /**
+     * ReCaptcha constructor.
+     */
+    public function __construct() {
+        $this->template = dirname(__FILE__) . '/html/recaptcha.html';
+    }
+
+    /**
+     * Renders the HTML string
+     * @return string: The generated HTML content
+     */
+    protected function render() {
+        return $this->loadTemplate();
+    }
+}
+
+/**
  * @return Form: A Login Form
  */
 function generateLoginForm() {
@@ -189,6 +210,7 @@ function generateRegistrationForm() {
             '@$REGISTER_PASSWORD_PLACEHOLDER', 'reg_password'),
         new FormTextEntry('@$REGISTER_PASSWORD_REPEAT_TITLE', 'register_password_repeat', 'password',
             '@$REGISTER_PASSWORD_REPEAT_PLACEHOLDER', 'reg_password_repeat'),
-        new ConfirmationButton('@$REGISTER_SUBMIT_TITLE')
+        new ConfirmationButton('@$REGISTER_SUBMIT_TITLE'),
+        new ReCaptcha()
     ));
 }

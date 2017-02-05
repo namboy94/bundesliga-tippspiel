@@ -152,6 +152,7 @@ function getGoals($match_id) {
     $db = new Database();
     return $db->query('SELECT goals.minute AS minute, goals.team_one_score AS team_one_score, 
                        goals.team_two_score AS team_two_score, goals.penalty AS penalty, goals.owngoal AS owngoal,
-                       scorers.name as scorer FROM goals JOIN scorers ON goals.scorer=scorers.id WHERE match_id=?',
+                       scorers.name as scorer FROM goals JOIN scorers ON goals.scorer=scorers.id WHERE match_id=?
+                       ORDER BY goals.minute ASC',
         'i', array($match_id), true);
 }

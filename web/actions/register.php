@@ -31,7 +31,11 @@ $repeat_password = $_POST["register_password_repeat"];
 $dictionary = new Dictionary($_SESSION['language']);
 
 
-if ($email === "") {
+if (!verifyCaptcha($_POST['g-recaptcha-response'])) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_NO_RECAPTCHA_TITLE',
+        '@$REGISTER_ERROR_NO_RECAPTCHA_BODY'))->show('../signup.php');
+}
+elseif ($email === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_EMAIL_TITLE',
         '@$REGISTER_ERROR_NO_EMAIL_BODY'))->show('../signup.php');
 }
@@ -47,6 +51,10 @@ elseif (strlen($username) > 60) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_TOO_LONG_TITLE',
         '@$REGISTER_ERROR_USERNAME_TOO_LONG_BODY'))->show('../signup.php');
 }
+elseif (usernameExists($username)) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_EXISTS_TITLE',
+        '@$REGISTER_ERROR_USERNAME_EXISTS_BODY'))->show('../signup.php');
+}
 elseif ($password === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_PASSWORD_TITLE',
         '@$REGISTER_ERROR_NO_PASSWORD_BODY'))->show('../signup.php');
@@ -60,7 +68,7 @@ elseif (strlen($password) < 8) {
         '@$REGISTER_ERROR_PASSWORD_TOO_SHORT_BODY'))->show('../signup.php');
 }
 else {
-    $registration = register($email, $username, $password);
+    $registration = register($email, $username, $password, $_SERVER['REMOTE_ADDR']);
 
     if ($registration['status']) {
 

@@ -24,7 +24,8 @@ $page = new Page('@$PASSWORD_RESET_TITLE', 'password_reset.php', '@$PASSWORD_RES
 
 $reset_form = new Form('@$PASSWORD_RESET_FORM_TITLE', 'actions/password_reset.php', array(
     new FormTextEntry('@$PASSWORD_RESET_EMAIL_TITLE', 'reset_email', 'text', 'email@example.com', 'email'),
-    new ConfirmationButton('@$PASSWORD_RESET_FORM_BUTTON')
+    new ConfirmationButton('@$PASSWORD_RESET_FORM_BUTTON'),
+    new ReCaptcha()
 ));
 
 $page->addStringBodyElement('<div class="row"><div class="col-sm-3"></div><div class="col-sm-6">');

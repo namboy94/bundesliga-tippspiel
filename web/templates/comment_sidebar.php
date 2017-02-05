@@ -19,6 +19,7 @@
 
 include_once dirname(__FILE__) . '/generator.php';
 include_once dirname(__FILE__) . '/../php/database.php';
+include_once dirname(__FILE__) . '/../php/string_sanitize.php';
 
 
 /**
@@ -82,7 +83,7 @@ class Comment extends HtmlGenerator {
     protected function render() {
 
         $html = $this->loadTemplate();
-        $html = str_replace('@CONTENT', $this->comment['content'], $html);
+        $html = str_replace('@CONTENT', renderComment($this->comment['content']), $html);
         $html = str_replace('@USER', $this->comment['username'], $html);
 
         $timestamp = date('Y-m-d:h-i-s', $this->comment['last_modified']);

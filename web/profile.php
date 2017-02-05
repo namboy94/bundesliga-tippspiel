@@ -34,8 +34,18 @@ $reset_form = new Form('@$PROFILE_PASSWORD_CHANGE_TITLE', 'actions/password_chan
     )
 );
 
-$page->addStringBodyElement('<div class="row"><div class="col-lg-3"></div><div class="col-lg-6">');
+$rename_form = new Form('@$PROFILE_USERNAME_CHANGE_TITLE', 'actions/username_change.php',
+    array(
+        new FormTextEntry('@$PROFILE_NEW_USERNAME_LABEL',
+            'new name', 'text', '********', 'new_name'),
+        new ConfirmationButton('@$PROFILE_USERNAME_CHANGE_SUBMIT')
+    )
+);
+
+$page->addStringBodyElement('<div class="row"><div class="col-lg-1"></div><div class="col-lg-4">');
 $page->addGeneratorBodyElement($reset_form);
-$page->addStringBodyElement('</div><div class="col-lg-3"></div></div>');
+$page->addStringBodyElement('</div><div class="col-lg-2"></div><div class="col-lg-4">');
+$page->addGeneratorBodyElement($rename_form);
+$page->addStringBodyElement('</div><div class="col-lg-1"></div></div>');
 
 echo str_replace('@$PROFILE_JUMBO', $_SESSION['userdata']['name'], $page->display(false));

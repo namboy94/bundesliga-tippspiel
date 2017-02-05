@@ -33,7 +33,7 @@ if ($match === null) {
 }
 
 $teams = getTeamsForMatch($match);
-$title = $teams['team_one']['name'] . ' vs. ' . $teams['team_two']['name'];
+$title = $teams['team_one']['shortname'] . ' vs. ' . $teams['team_two']['shortname'];
 $team_one_logo = 'resources/images/logos/' . $teams['team_one']['id'] . '.gif';
 $team_two_logo = 'resources/images/logos/' . $teams['team_two']['id'] . '.gif';
 
@@ -56,7 +56,7 @@ else {
 
 $events = new MatchEvents($match['id']);
 
-$page = new Page($title, 'match.php', $title, array(), false);
+$page = new Page($title, 'match.php?match_id="' . $match['id'] . '"', $title, array(), false);
 
 $page->addStringBodyElement('<div class="row">');
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_one_logo . '"></div>');
@@ -76,7 +76,7 @@ $page->addGeneratorBodyElement($events);
 $page->addStringBodyElement('</div><div class="col-sm-3"></div></div>');
 
 $page->addStringBodyElement('<hr><div class="row"><div class="col-sm-2"></div><div class="col-sm-8">');
-$page->addGeneratorBodyElement(new MatchUserBets($match['id']));
+$page->addGeneratorBodyElement(new MatchUserBets($match['id'], $match_started));
 $page->addStringBodyElement('</div><div class="col-sm-2"></div></div>');
 
 $page->display();

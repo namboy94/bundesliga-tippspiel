@@ -19,31 +19,8 @@
 
 include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/database.php';
+include_once dirname(__FILE__) . '/../php/string_sanitize.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
-
-/**
- * Formats the content of a content to avoid XSS vulnerabilities, but allows certain formatting tags
- * @param $content string: The content of the comment
- * @return         string: The formatted content
- */
-function formatContent($content) {
-
-    $colors = array('red', 'blue', 'yellow', 'green', 'white');
-
-    foreach($colors as $color) {
-        $content = str_replace('@' . strtoupper($color), '@' . strtolower($color), $content);
-        $content = str_replace('<' . strtolower($color) . '>', '@' . strtoupper($color), $content);
-    }
-    $content = htmlspecialchars($content);
-    $content = preg_replace('#&lt;(/?(?:small|strong|i|b))&gt;#', '<\1>', $content);
-
-    foreach($colors as $color) {
-        $content = str_replace('@' . strtolower($color), '@' . strtoupper($color), $content);
-        $content = str_replace('@' . strtoupper($color), '<span style="color:' . strtolower($color) . '; ">', $content);
-    }
-
-    return $content;
-}
 
 initializeSession();
 
@@ -55,7 +32,7 @@ elseif (!isset($_POST['new_comment'])) {
     (new DismissableMessage('error', '@$COMMENT_ERROR_NO_CONTENT_TITLE',
         '@$COMMENT_ERROR_NO_CONTENT_BODY'))->show('../bets.php');
 }
-elseif ($_POST['new_comment'] === '') {
+elseif ($_POST['new_comment'] === '' || !hasVisibleContent($_POST['new_comment'])) {
     (new DismissableMessage('error', '@$COMMENT_ERROR_EMPTY_TITLE',
         '@$COMMENT_ERROR_EMPTY_BODY'))->show('../bets.php');
 }
@@ -64,10 +41,14 @@ else {
     $db = new Database();
 
     $user_id = $_SESSION['id'];
-    $content = formatContent($_POST['new_comment']);
+    $content = sanitizeComment($_POST['new_comment']);
+
+    if (strlen($content) > 255) {
+        (new DismissableMessage('error', '@$COMMENT_ERROR_TOO_LONG_TITLE',
+            '@$COMMENT_ERROR_TOO_LONG_BODY'))->show('../bets.php');
+    }
 
     $time = time();
-
     $comment_id = (int)$db->query('SELECT MAX(id) AS id FROM comments')->fetch_assoc()['id'] + 1;
 
     $db->queryWrite('INSERT INTO comments (id, user, created, last_modified, content) VALUES (?, ?, ?, ?, ?)',

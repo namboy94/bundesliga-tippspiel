@@ -1,3 +1,8 @@
+V 0.7.0:
+  - Implement ReCaptcha
+  - Implement IP Address logging during registration
+  - Fix comment formatting issues
+  - Fix changing usernames
 V 0.6.0:
   - Comments layout improvements
   - Bet data on match page

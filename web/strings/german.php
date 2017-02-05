@@ -133,6 +133,8 @@ function get_german() {
                                                  'Bitte wähle einen anderen Benutzernamen',
         'REGISTER_ERROR_EMAIL_USED_TITLE' => 'Email bereits verwendet',
         'REGISTER_ERROR_EMAIL_USED_BODY' => 'Diese Email wird berets verwendet',
+        'REGISTER_ERROR_NO_RECAPTCHA_TITLE' => 'ReCaptcha fehlgeschlagen',
+        'REGISTER_ERROR_NO_RECAPTCHA_BODY' => 'Bitte clicke den ReCaptcha Knopf',
         'CONFIRMATION_EMAIL_SENDER' => 'Bundesliga Tippspiel',
         'CONFIRMATION_EMAIL_TITLE' => 'Registrierung - Bestatigung',
         'CONFIRMATION_EMAIL_BODY' => '<h2>Bestätigung</h2><p>Herzlich willkommen beim Bundesliga Tippspiel!</p>' .
@@ -181,6 +183,8 @@ function get_german() {
         'COMMENT_ERROR_NO_CONTENT_BODY_BODY' => 'Es konnte kein Kommentar erstellt werden',
         'COMMENT_ERROR_EMPTY_TITLE' => 'Kommentar leer',
         'COMMENT_ERROR_EMPTY_BODY' => 'Es kann kein leeres Kommentar erstellt werden',
+        'COMMENT_ERROR_TOO_LONG_TITLE' => 'Kommentar zu lang',
+        'COMMENT_ERROR_TOO_LONG_BODY' => 'Das Limit für Kommentare ist 255 Zeichen',
         'YOUR_COMMENT_HERE_TEXT' => 'Kommentar',
         'COMMENT_SUBMIT_BUTTON' => 'Schicken',
 
@@ -197,6 +201,17 @@ function get_german() {
         'PASSWORD_CHANGE_MISMATCH_TITLE' => 'Passwörter stimmen nicht überein',
         'PASSWORD_CHANGE_MISMATCH_BODY' => 'Bitte stell sicher dass die Passwörter dieselben sind',
         'PASSWORD_CHANGE_SUCCESS_TITLE' => 'Passwort geändert',
-        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Melde dich ab jetzt mit deinem neuen Passwort an.'
+        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Melde dich ab jetzt mit deinem neuen Passwort an.',
+        'PROFILE_USERNAME_CHANGE_TITLE' => 'Benutzernamen ändern',
+        'PROFILE_NEW_USERNAME_LABEL' => 'Neuer Benutzername',
+        'PROFILE_USERNAME_CHANGE_SUBMIT' => 'Bestätigen',
+        'USERNAME_CHANGE_NAME_TAKEN_TITLE' => 'Benutzername bereits vergeben',
+        'USERNAME_CHANGE_NAME_TAKEN_BODY' => 'Bitte wähle einen anderen Nutzernamen',
+        'USERNAME_CHANGE_EMPTY_TITLE' => 'Benutzername ist leer',
+        'USERNAME_CHANGE_EMPTY_BODY' => 'Der Benutzername darf nicht leer sein',
+        'USERNAME_CHANGE_TOO_LONG_TITLE' => "Benutzername zu lang",
+        'USERNAME_CHANGE_TOO_LONG_BODY' => "Verwende bitte einen Nutzernamen mit weniger als 60 Zeichen",
+        'USERNAME_CHANGE_SUCCESS_TITLE' => "Benutzername erfolgreich verändert",
+        'USERNAME_CHANGE_SUCCESS_BODY' => ''
     );
 }

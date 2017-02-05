@@ -132,6 +132,8 @@ function get_english() {
         'REGISTER_ERROR_USERNAME_EXISTS_BODY' => 'Please choose a different username',
         'REGISTER_ERROR_EMAIL_USED_TITLE' => 'Email already in use',
         'REGISTER_ERROR_EMAIL_USED_BODY' => 'This email is already bound to an account',
+        'REGISTER_ERROR_NO_RECAPTCHA_TITLE' => 'ReCaptcha Failed',
+        'REGISTER_ERROR_NO_RECAPTCHA_BODY' => 'Please press the ReCaptcha button again',
         'CONFIRMATION_EMAIL_SENDER' => 'Bundesliga Betting Game',
         'CONFIRMATION_EMAIL_TITLE' => 'Registration Confirmation',
         'CONFIRMATION_EMAIL_BODY' => '<h2>Confirmation</h2><p>Welcome to the Bundesliga Betting Game!</p>' .
@@ -179,6 +181,8 @@ function get_english() {
         'COMMENT_ERROR_NO_CONTENT_BODY_BODY' => 'Could not create a new comment',
         'COMMENT_ERROR_EMPTY_TITLE' => 'Comment field empty',
         'COMMENT_ERROR_EMPTY_BODY' => 'You can not leave an empty comment',
+        'COMMENT_ERROR_TOO_LONG_TITLE' => 'Comment too long',
+        'COMMENT_ERROR_TOO_LONG_BODY' => 'The comment limit is 255 characters',
         'YOUR_COMMENT_HERE_TEXT' => 'Your comment here',
         'COMMENT_SUBMIT_BUTTON' => 'Submit',
 
@@ -195,7 +199,18 @@ function get_english() {
         'PASSWORD_CHANGE_MISMATCH_TITLE' => 'Passwords do not match',
         'PASSWORD_CHANGE_MISMATCH_BODY' => 'Please make sure that your entry is correct',
         'PASSWORD_CHANGE_SUCCESS_TITLE' => 'Password changed',
-        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Please log in using your new password in the future'
+        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Please log in using your new password in the future',
+        'PROFILE_USERNAME_CHANGE_TITLE' => 'Change Username',
+        'PROFILE_NEW_USERNAME_LABEL' => 'New Username',
+        'PROFILE_USERNAME_CHANGE_SUBMIT' => 'Confirm',
+        'USERNAME_CHANGE_NAME_TAKEN_TITLE' => 'Username already taken',
+        'USERNAME_CHANGE_NAME_TAKEN_BODY' => 'Please choose a different username',
+        'USERNAME_CHANGE_EMPTY_TITLE' => 'Username is empty',
+        'USERNAME_CHANGE_EMPTY_BODY' => 'The username can not be empty',
+        'USERNAME_CHANGE_TOO_LONG_TITLE' => "Username too long",
+        'USERNAME_CHANGE_TOO_LONG_BODY' => "Please enter a username with less than 60 characters",
+        'USERNAME_CHANGE_SUCCESS_TITLE' => "Username successfully changed",
+        'USERNAME_CHANGE_SUCCESS_BODY' => ''
 
 );
 }

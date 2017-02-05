@@ -23,15 +23,16 @@ session_start();
 
 /**
  * Handles the registration of a new user
- * @param $email    string: The email address of the user
- * @param $username string: The username
- * @param $password string: The password
- * @return          array:  an array detailing the status of the method.
+ * @param $email      string: The email address of the user
+ * @param $username   string: The username
+ * @param $password   string: The password
+ * @param $initial_ip string: The initial IP address
+ * @return array :  an array detailing the status of the method.
  *                          'status': true if succeeded, else false
  *                          'error_title'/'error_body': An error message detailing what went wrong
  *                          'token': Provided when registration was successful
  */
-function register($email, $username, $password) {
+function register($email, $username, $password, $initial_ip) {
 
     if (usernameExists($username)) {
         return array('status' => false,
@@ -45,18 +46,19 @@ function register($email, $username, $password) {
     }
     else {
         return array('status' => true,
-                     'token' => createNewUser($email, $username, $password));
+                     'token' => createNewUser($email, $username, $password, $initial_ip));
     }
 }
 
 /**
  * Creates a new user in the database
- * @param $email    string: The email address
- * @param $username string: The Username
- * @param $password string: The password (which will be hashed using BCrypt)
- * @return          string: The confirmation token
+ * @param $email      string: The email address
+ * @param $username   string: The Username
+ * @param $password   string: The password (which will be hashed using BCrypt)
+ * @param $ip_address string: The initial IP address
+ * @return            string: The confirmation token
  */
-function createNewUser($email, $username, $password) {
+function createNewUser($email, $username, $password, $ip_address) {
 
     $db = new Database();
 
@@ -67,8 +69,9 @@ function createNewUser($email, $username, $password) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
     $confirmation_string = password_hash($email, PASSWORD_BCRYPT);
 
-    $db->queryWrite('INSERT INTO users (user_id, email_address, username, password_hash, confirmation) ' .
-                    'VALUES (?, ?, ?, ?, ?)', 'issss', array($id, $email, $username, $hash, $confirmation_string));
+    $db->queryWrite('INSERT INTO users (user_id, email_address, username, password_hash, confirmation, initial_ip) ' .
+                    'VALUES (?, ?, ?, ?, ?, ?)', 'isssss',
+        array($id, $email, $username, $hash, $confirmation_string, $ip_address));
 
     return $confirmation_string;
 }
@@ -184,4 +187,28 @@ function generateRandomString($length) {
                 ceil($length / strlen($x)))),
         1,
         $length);
+}
+
+/**
+ * Verifies a captcha
+ * @param $captcha_content string:  The captcha POST key
+ * @return                 boolean: true if verified, else false
+ */
+function verifyCaptcha($captcha_content) {
+    $secret_key = file_get_contents(dirname(__FILE__) . '/../../secrets/recaptcha_key');
+
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $params = 'secret=' . $secret_key . '&response=' . $captcha_content . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+
+
+    $curl = curl_init($url);
+    curl_setopt( $curl, CURLOPT_POST, 1);
+    curl_setopt( $curl, CURLOPT_POSTFIELDS, $params);
+    curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt( $curl, CURLOPT_HEADER, 0);
+    curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+
+    $response = curl_exec($curl);
+    $data = json_decode($response);
+    return $data->success;
 }

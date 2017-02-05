@@ -18,6 +18,7 @@
 */
 
 include_once dirname(__FILE__) . '/generator.php';
+include_once dirname(__FILE__) . '/../php/matchdb.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 
 /**
@@ -31,11 +32,18 @@ class MatchUserBets extends HtmlGenerator {
     private $bets;
 
     /**
-     * MatchUserBets constructor.
-     * @param $match_id int: The match ID
+     * @var boolean: Is set to true when the game has already started
      */
-    public function __construct($match_id) {
+    private $started;
+
+    /**
+     * MatchUserBets constructor.
+     * @param $match_id int:     The match ID
+     * @param $started  boolean: Specifies if the game has already started
+     */
+    public function __construct($match_id, $started) {
         $this->template = dirname(__FILE__) . '/html/match_user_bets_table.html';
+        $this->started = $started;
 
         $db = new Database();
         $this->bets = $db->query('SELECT users.username AS username, bets.team_one AS team_one, 
@@ -53,7 +61,11 @@ class MatchUserBets extends HtmlGenerator {
 
         $bets_html = '';
         foreach ($this->bets as $bet) {
-            $bets_html .= (new MatchUserBet($bet))->render();
+            $userbet = new MatchUserBet($bet);
+            if ($this->started) {
+                $userbet->changeTemplateFile(dirname(__FILE__) . '/html/match_user_bets_element_started.html');
+            }
+            $bets_html .= $userbet->render();
         }
         $html = str_replace('@ELEMENTS', $bets_html, $html);
 
@@ -87,8 +99,9 @@ class MatchUserBet extends HtmlGenerator {
     protected function render() {
         $html = $this->loadTemplate();
         $html = str_replace('@NAME', $this->bet['username'], $html);
-        if ((int)$this->bet['points'] === -1 || (string)$this->bet['team_one'] == '' ||
-            (string)$this->bet['team_one'] == '' || (string)$this->bet['points'] == '') {
+        if ((string)$this->bet['team_one'] == '' ||
+            (string)$this->bet['team_one'] == '' ||
+            (string)$this->bet['points'] == '') {
 
             $html = str_replace('@POINTS', '-', $html);
             $html = str_replace('@TEAM_ONE', '-', $html);
@@ -97,7 +110,13 @@ class MatchUserBet extends HtmlGenerator {
         else {
             $html = str_replace('@TEAM_ONE', $this->bet['team_one'], $html);
             $html = str_replace('@TEAM_TWO', $this->bet['team_two'], $html);
-            $html = str_replace('@POINTS', $this->bet['points'], $html);
+
+            if ((int)$this->bet['points'] === -1) {
+                $html = str_replace('@POINTS', '-', $html);
+            }
+            else {
+                $html = str_replace('@POINTS', $this->bet['points'], $html);
+            }
         }
 
         $points = (int)$this->bet['points'];
