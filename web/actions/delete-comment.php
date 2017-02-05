@@ -1,3 +1,4 @@
+<?php
 /*  Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
 
     This file is part of bundesliga-tippspiel.
@@ -16,61 +17,21 @@
     along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-.readable {
-    font-family: 'Bungee Shade', cursive;
+include_once dirname(__FILE__) . '/../php/session.php';
+include_once dirname(__FILE__) . '/../php/database.php';
+include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
+
+initializeSession();
+redirectInvalidUser('../index.php');
+
+if (!isset($_GET['comment'])) {
+    (new DismissableMessage('error', '@$BET_DELETE_FAILED_NO_COMMENT_TITLE',
+        '@$BET_DELETE_FAILED_NO_COMMENT_BODY'))->show('../index.php');
 }
-
-.readable-bg {
-    border-radius: 10px;
-    padding-bottom: 10px;
-}
-
-.navbar {
-    margin-bottom: 0;
-}
-
-html,body {
-    height: 100%
-}
-
-.logo-image {
-    max-width: 20px;
-    max-height: 20px;
-    width: 20px;
-    height: 20px;
-}
-
-.jumbotron {
-    margin-bottom: 0;
-}
-
-.comments {
-    height: 50em;
-    border-bottom-left-radius: 10px;
-    background: orange;
-}
-
-.comment-list {
-    overflow: auto;
-    height: 43em;
-
-}
-
-.comment {
-    -moz-word-break: break-all;
-    -ms-word-break: break-all;
-    word-break: break-all;
-    word-break: break-word;
-
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    hyphens:auto;
-}
-
-.main-content {
-    margin-top: 20px;
-}
-
-.deleted-comment {
-    background: gray;
+else {
+    $db = new Database();
+    $db->queryWrite('UPDATE comments SET content=?, user=?, last_modified=? WHERE user=? AND id=?', 'siiii',
+        array('@$DELETED_COMMENT_MESSAGE', -1, time(), $_SESSION['id'], (int)$_GET['comment']));
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
 }

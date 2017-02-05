@@ -188,6 +188,8 @@ function get_english() {
         'YOUR_COMMENT_HERE_TEXT' => 'Your comment here',
         'COMMENT_SUBMIT_BUTTON' => 'Submit',
         'DELETE_COMMENT_BUTTON' => 'Delete',
+        'DELETED_COMMENT_USER' => 'Deleted',
+        'DELETED_COMMENT_MESSAGE' => 'Deleted',
 
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Change Password',

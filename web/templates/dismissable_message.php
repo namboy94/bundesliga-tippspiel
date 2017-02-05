@@ -100,7 +100,12 @@ class DismissableMessage extends HtmlGenerator {
      * Redirects to the specified target and stores itself in the session to be displayed
      * @param $target
      */
-    public function show($target) {
+    public function show($target=null) {
+
+        if ($target == null) {
+            $target = $_SERVER["HTTP_REFERER"];
+        }
+
         $_SESSION[$this->message_type] = $this->toArray();
         header('Location: ' . $target);
         exit();

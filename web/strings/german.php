@@ -190,6 +190,8 @@ function get_german() {
         'YOUR_COMMENT_HERE_TEXT' => 'Kommentar',
         'COMMENT_SUBMIT_BUTTON' => 'Schicken',
         'DELETE_COMMENT_BUTTON' => 'Löschen',
+        'DELETED_COMMENT_USER' => 'Gelöscht',
+        'DELETED_COMMENT_MESSAGE' => 'Gelöscht',
 
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Passwort ändern',
