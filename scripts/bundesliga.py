@@ -64,6 +64,8 @@ def update_db_teams(data, db):
 
         if not team["TeamId"] in current_data:
 
+            shortname = team["ShortName"] if team["ShortName"] != "" else team["TeamName"]
+
             stmt = db.cursor()
             stmt.execute("INSERT INTO teams (id, name, shortname, icon)"\
                          "VALUES (%s, %s, %s, %s);",
