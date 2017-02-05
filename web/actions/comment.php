@@ -23,6 +23,7 @@ include_once dirname(__FILE__) . '/../php/string_sanitize.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 initializeSession();
+$db = new Database();
 
 if (!isLoggedIn()) {
     (new DismissableMessage('error', '@$COMMENT_ERROR_NOT_LOGGED_IN_TITLE',
@@ -36,10 +37,12 @@ elseif ($_POST['new_comment'] === '' || !hasVisibleContent($_POST['new_comment']
     (new DismissableMessage('error', '@$COMMENT_ERROR_EMPTY_TITLE',
         '@$COMMENT_ERROR_EMPTY_BODY'))->show('../bets.php');
 }
+elseif ($db->query('SELECT MAX(created) as created FROM comments WHERE user=?', 'i', array($_SESSION['id']))
+        ->fetch_assoc()['created'] + 10 > time()) {
+    (new DismissableMessage('error', '@$COMMENT_ERROR_RECENT_ACTIVITY_TITLE',
+        '@$COMMENT_ERROR_RECENT_ACTIVITY_BODY'))->show('../bets.php');
+}
 else {
-
-    $db = new Database();
-
     $user_id = $_SESSION['id'];
     $content = sanitizeComment($_POST['new_comment']);
 

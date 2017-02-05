@@ -44,7 +44,7 @@ class CommentSidebar extends HtmlGenerator {
 
         $comments = $db->query('SELECT comments.content AS content, comments.created AS created, comments.last_modified 
                                 AS last_modified, users.username AS username FROM comments JOIN users
-                                ON comments.user=users.user_id ORDER BY comments.created DESC',
+                                ON comments.user=users.user_id ORDER BY comments.created DESC LIMIT 100',
                                '', array(), true);
         $comment_html = '';
 
