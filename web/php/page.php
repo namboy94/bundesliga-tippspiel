@@ -68,7 +68,6 @@ class Page {
 
         initializeSession();
         processGlobalGets();
-        redirectBannedIp();
         $this->dictionary = new Dictionary();
         $this->logged_in = isLoggedIn();
 

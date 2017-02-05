@@ -21,8 +21,6 @@ include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/registration.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
-redirectBannedIp();
-
 $username = $_GET['username'];
 $confirmation_token = $_GET['confirmation'];
 
