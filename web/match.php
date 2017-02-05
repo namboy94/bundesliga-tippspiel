@@ -20,6 +20,7 @@
 include_once 'php/page.php';
 include_once 'php/matchdb.php';
 include_once 'templates/match_events.php';
+include_once 'templates/match_user_bets.php';
 include_once 'templates/dismissable_message.php';
 
 $match = null;
@@ -36,7 +37,9 @@ $title = $teams['team_one']['name'] . ' vs. ' . $teams['team_two']['name'];
 $team_one_logo = 'resources/images/logos/' . $teams['team_one']['id'] . '.gif';
 $team_two_logo = 'resources/images/logos/' . $teams['team_two']['id'] . '.gif';
 
-if (!hasMatchStarted($match)) {
+$match_started = hasMatchStarted($match);
+
+if (!$match_started) {
     $team_one_score = '-';
     $team_two_score = '-';
 }
@@ -72,6 +75,8 @@ $page->addStringBodyElement('<div class="row"><div class="col-sm-3"></div><div c
 $page->addGeneratorBodyElement($events);
 $page->addStringBodyElement('</div><div class="col-sm-3"></div></div>');
 
-
+$page->addStringBodyElement('<hr><div class="row"><div class="col-sm-2"></div><div class="col-sm-8">');
+$page->addGeneratorBodyElement(new MatchUserBets($match['id']));
+$page->addStringBodyElement('</div><div class="col-sm-2"></div></div>');
 
 $page->display();
