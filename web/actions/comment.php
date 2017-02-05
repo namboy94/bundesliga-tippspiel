@@ -52,10 +52,12 @@ else {
     }
 
     $time = time();
+    $ip_address = $_SERVER["REMOTE_ADDR"];
     $comment_id = (int)$db->query('SELECT MAX(id) AS id FROM comments')->fetch_assoc()['id'] + 1;
 
-    $db->queryWrite('INSERT INTO comments (id, user, created, last_modified, content) VALUES (?, ?, ?, ?, ?)',
-        'iiiis', array($comment_id, $user_id, $time, $time, $content));
+    $db->queryWrite('INSERT INTO comments (id, user, created, last_modified, content, ip_address)
+                     VALUES (?, ?, ?, ?, ?, ?)',
+                    'iiiiss', array($comment_id, $user_id, $time, $time, $content, $ip_address));
 
 }
 

@@ -42,9 +42,11 @@ class CommentSidebar extends HtmlGenerator {
         $db = new Database();
         $html = $this->loadTemplate();
 
-        $comments = $db->query('SELECT comments.content AS content, comments.created AS created, comments.last_modified 
-                                AS last_modified, users.username AS username FROM comments JOIN users
-                                ON comments.user=users.user_id ORDER BY comments.created DESC LIMIT 100',
+        $comments = $db->query('SELECT comments.id AS comment_id, comments.content AS content,
+                                comments.created AS created, comments.last_modified AS last_modified, 
+                                users.username AS username, users.user_id AS user_id
+                                FROM comments JOIN users ON comments.user=users.user_id 
+                                ORDER BY comments.created DESC LIMIT 100',
                                '', array(), true);
         $comment_html = '';
 
@@ -72,7 +74,14 @@ class Comment extends HtmlGenerator {
      * @param $comment array: The comment data
      */
     public function __construct($comment) {
-        $this->template = dirname(__FILE__) . '/html/comment.html';
+
+        $user_id = $_SESSION['id'];
+        if ((int)$user_id === (int)$comment['user_id']) {
+            $this->template = dirname(__FILE__) . '/html/user_owned_comment.html';
+        }
+        else {
+            $this->template = dirname(__FILE__) . '/html/comment.html';
+        }
         $this->comment = $comment;
     }
 
@@ -85,6 +94,7 @@ class Comment extends HtmlGenerator {
         $html = $this->loadTemplate();
         $html = str_replace('@CONTENT', renderComment($this->comment['content']), $html);
         $html = str_replace('@USER', $this->comment['username'], $html);
+        $html = str_replace('@COMMENT_ID', $this->comment['comment_id'], $html);
 
         $timestamp = date('Y-m-d:h-i-s', $this->comment['last_modified']);
         if ($this->comment['last_modified'] !== $this->comment['created']) {

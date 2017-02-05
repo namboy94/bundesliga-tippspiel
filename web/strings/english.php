@@ -187,6 +187,7 @@ function get_english() {
         'COMMENT_ERROR_RECENT_ACTIVITY_BODY' => 'Please wait for up to 10 seconds before commenting again',
         'YOUR_COMMENT_HERE_TEXT' => 'Your comment here',
         'COMMENT_SUBMIT_BUTTON' => 'Submit',
+        'DELETE_COMMENT_BUTTON' => 'Delete',
 
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Change Password',

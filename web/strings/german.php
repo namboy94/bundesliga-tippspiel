@@ -189,6 +189,7 @@ function get_german() {
         'COMMENT_ERROR_RECENT_ACTIVITY_BODY' => 'Bitte warte bis zu 10 Sekunden um wieder kommentieren zu können',
         'YOUR_COMMENT_HERE_TEXT' => 'Kommentar',
         'COMMENT_SUBMIT_BUTTON' => 'Schicken',
+        'DELETE_COMMENT_BUTTON' => 'Löschen',
 
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Passwort ändern',
