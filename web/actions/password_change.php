@@ -22,6 +22,7 @@ include_once dirname(__FILE__) . '/../php/registration.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 initializeSession();
+redirectBannedIp();
 redirectInvalidUser('../index.html');
 
 $email = $_SESSION['userdata']['email'];

@@ -157,3 +157,31 @@ function redirectInvalidUser($target='index.php') {
             ->show($target);
     }
 }
+
+/**
+ * Redirects a banned IP address
+ */
+function redirectBannedIp() {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $banned_ips = explode(',', trim(file_get_contents(dirname(__FILE__) . '/../resources/banned_ips')));
+
+    $banned = false;
+    foreach ($banned_ips as $banned_ip) {
+        if (strcmp($ip, $banned_ip)) {
+            $banned = true;
+        }
+        else {
+            echo '<p>' . $ip . '</p>';
+            echo '<p>' . $banned_ip . '</p>';
+        }
+    }
+
+    //print_r($banned_ips);
+    //echo $ip;
+    //echo $banned;
+
+    if ($banned) {
+        header('Location: https://google.com');
+        exit();
+    }
+}

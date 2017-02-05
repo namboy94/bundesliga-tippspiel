@@ -21,6 +21,7 @@ include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 initializeSession();
+redirectBannedIp();
 
 $email = $_POST["login_email"];
 $password = $_POST["login_password"];

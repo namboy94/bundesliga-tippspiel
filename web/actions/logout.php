@@ -20,6 +20,7 @@
 include_once dirname(__FILE__) . '/../php/session.php';
 
 initializeSession();
+redirectBannedIp();
 redirectInvalidUser('../index.html');
 
 logOut();

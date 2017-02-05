@@ -21,8 +21,10 @@ include_once dirname(__FILE__) . '/../php/matchdb.php';
 include_once dirname(__FILE__) . '/../php/session.php';
 include_once dirname(__FILE__) . '/../php/database.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
+
 initializeSession();
 redirectInvalidUser('../index.html');
+redirectBannedIp();
 
 $previous_bets = $_SESSION['current_bets'];
 $teams = $_SESSION['current_teams'];

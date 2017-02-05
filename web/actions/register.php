@@ -23,6 +23,7 @@ include_once dirname(__FILE__) . '/../strings/dictionary.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 initializeSession();
+redirectBannedIp();
 
 $email = $_POST["register_email"];
 $username = $_POST["register_username"];

@@ -23,6 +23,7 @@ include_once dirname(__FILE__) . '/../php/string_sanitize.php';
 include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 
 initializeSession();
+redirectBannedIp();
 
 if (!isLoggedIn()) {
     (new DismissableMessage('error', '@$COMMENT_ERROR_NOT_LOGGED_IN_TITLE',
