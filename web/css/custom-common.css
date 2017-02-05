@@ -45,30 +45,18 @@ html,body {
 }
 
 .comments {
-    background: orange;
     height: 50em;
     border-bottom-left-radius: 10px;
-    /*padding-right:4em;*/
 
 }
 
 .comment-list {
     overflow: auto;
     height: 43em;
-    /*
-
-    border-radius: 10px;*/
-
-    /*
-    max-width: 100%;
-    overflow-x: hidden;
-
-*/
 
 }
 
 .comment {
-
     -moz-word-break: break-all;
     -ms-word-break: break-all;
     word-break: break-all;
@@ -77,5 +65,8 @@ html,body {
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     hyphens:auto;
+}
 
+.main-content {
+    margin-top: 20px;
 }

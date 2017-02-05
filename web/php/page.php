@@ -82,10 +82,10 @@ class Page {
                             '<div class="container-fluid"><div class="row">');
 
         if ($this->logged_in) {
-            $this->addStringBodyElement('<div class="col-sm-9">');
+            $this->addStringBodyElement('<div class="col-sm-9 main-content">');
         }
         else {
-            $this->addStringBodyElement('<div class="col-sm-12">');
+            $this->addStringBodyElement('<div class="col-sm-12 main-content">');
         }
         $this->addStringBodyElement(processDismissableMessages());
 
