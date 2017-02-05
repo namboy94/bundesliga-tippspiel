@@ -195,7 +195,18 @@ function get_english() {
         'PASSWORD_CHANGE_MISMATCH_TITLE' => 'Passwords do not match',
         'PASSWORD_CHANGE_MISMATCH_BODY' => 'Please make sure that your entry is correct',
         'PASSWORD_CHANGE_SUCCESS_TITLE' => 'Password changed',
-        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Please log in using your new password in the future'
+        'PASSWORD_CHANGE_SUCCESS_BODY' => 'Please log in using your new password in the future',
+        'PROFILE_USERNAME_CHANGE_TITLE' => 'Change Username',
+        'PROFILE_NEW_USERNAME_LABEL' => 'New Username',
+        'PROFILE_USERNAME_CHANGE_SUBMIT' => 'Confirm',
+        'USERNAME_CHANGE_NAME_TAKEN_TITLE' => 'Username already taken',
+        'USERNAME_CHANGE_NAME_TAKEN_BODY' => 'Please choose a different username',
+        'USERNAME_CHANGE_EMPTY_TITLE' => 'Username is empty',
+        'USERNAME_CHANGE_EMPTY_BODY' => 'The username can not be empty',
+        'USERNAME_CHANGE_TOO_LONG_TITLE' => "Username too long",
+        'USERNAME_CHANGE_TOO_LONG_BODY' => "Please enter a username with less than 60 characters",
+        'USERNAME_CHANGE_SUCCESS_TITLE' => "Username successfully changed",
+        'USERNAME_CHANGE_SUCCESS_BODY' => ''
 
 );
 }

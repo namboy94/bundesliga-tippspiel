@@ -30,10 +30,7 @@ $new_name = $_POST['new_name'];
 
 $db = new Database();
 
-$username_exists = $db->query('SELECT * FROM users WHERE username=?', 's', array($new_name))->num_rows > 0;
-
-
-if ($username_exists) {
+if (usernameExists($new_name)) {
     (new DismissableMessage('error', '@$USERNAME_CHANGE_NAME_TAKEN_TITLE', '@$USERNAME_CHANGE_NAME_TAKEN_BODY'))
         ->show('../profile.php');
 }

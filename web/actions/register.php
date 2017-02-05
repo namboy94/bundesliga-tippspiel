@@ -47,6 +47,10 @@ elseif (strlen($username) > 60) {
     (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_TOO_LONG_TITLE',
         '@$REGISTER_ERROR_USERNAME_TOO_LONG_BODY'))->show('../signup.php');
 }
+elseif (usernameExists($username)) {
+    (new DismissableMessage('error', '@$REGISTER_ERROR_USERNAME_EXISTS_TITLE',
+        '@$REGISTER_ERROR_USERNAME_EXISTS_BODY'))->show('../signup.php');
+}
 elseif ($password === "") {
     (new DismissableMessage('error', '@$REGISTER_ERROR_NO_PASSWORD_TITLE',
         '@$REGISTER_ERROR_NO_PASSWORD_BODY'))->show('../signup.php');
