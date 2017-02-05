@@ -181,6 +181,8 @@ function get_german() {
         'COMMENT_ERROR_NO_CONTENT_BODY_BODY' => 'Es konnte kein Kommentar erstellt werden',
         'COMMENT_ERROR_EMPTY_TITLE' => 'Kommentar leer',
         'COMMENT_ERROR_EMPTY_BODY' => 'Es kann kein leeres Kommentar erstellt werden',
+        'COMMENT_ERROR_TOO_LONG_TITLE' => 'Kommentar zu lang',
+        'COMMENT_ERROR_TOO_LONG_BODY' => 'Das Limit für Kommentare ist 255 Zeichen',
         'YOUR_COMMENT_HERE_TEXT' => 'Kommentar',
         'COMMENT_SUBMIT_BUTTON' => 'Schicken',
 

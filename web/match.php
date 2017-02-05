@@ -56,7 +56,7 @@ else {
 
 $events = new MatchEvents($match['id']);
 
-$page = new Page($title, 'match.php', $title, array(), false);
+$page = new Page($title, 'match.php?match_id="' . $match['id'] . '"', $title, array(), false);
 
 $page->addStringBodyElement('<div class="row">');
 $page->addStringBodyElement('<div class="col-sm-3"><img class="center-block" src="' . $team_one_logo . '"></div>');

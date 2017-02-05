@@ -179,6 +179,8 @@ function get_english() {
         'COMMENT_ERROR_NO_CONTENT_BODY_BODY' => 'Could not create a new comment',
         'COMMENT_ERROR_EMPTY_TITLE' => 'Comment field empty',
         'COMMENT_ERROR_EMPTY_BODY' => 'You can not leave an empty comment',
+        'COMMENT_ERROR_TOO_LONG_TITLE' => 'Comment too long',
+        'COMMENT_ERROR_TOO_LONG_BODY' => 'The comment limit is 255 characters',
         'YOUR_COMMENT_HERE_TEXT' => 'Your comment here',
         'COMMENT_SUBMIT_BUTTON' => 'Submit',
 
