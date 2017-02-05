@@ -41,6 +41,7 @@ else {
 
     $user_id = $_SESSION['id'];
     $content = htmlspecialchars($_POST['new_comment']);
+    $content = preg_replace('#&lt;(/?(?:small|strong|i|b))&gt;#', '<\1>', $content);
     $time = time();
 
     $comment_id = (int)$db->query('SELECT MAX(id) AS id FROM comments')->fetch_assoc()['id'] + 1;
