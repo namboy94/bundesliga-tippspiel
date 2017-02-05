@@ -46,14 +46,25 @@ html,body {
 
 .comments {
     background: orange;
-    height: 60em;
-    border-bottom-right-radius: 10px;
+    /*height: 60em;*/
+    border-bottom-left-radius: 10px;
+    /*padding-right:4em;*/
+
 }
 
 .comment-list {
     background: darkorange;
-    height: 50em;
+    /*height: 50em;
     overflow: auto;
-    border-radius: 10px;
-    word-break: break-all;
+    border-radius: 10px;*/
+
+    /*
+    max-width: 100%;
+    overflow-x: hidden;
+*/
+
+}
+
+.comment {
+
 }

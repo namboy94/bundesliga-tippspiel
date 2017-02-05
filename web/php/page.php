@@ -82,9 +82,7 @@ class Page {
                             '<div class="row">');
 
         if ($this->logged_in) {
-            $this->addStringBodyElement('<div class="col-sm-3 comments">');
-            $this->addGeneratorBodyElement(new CommentSidebar());
-            $this->addStringBodyElement('</div><div class="col-sm-9">');
+            $this->addStringBodyElement('<div class="col-sm-9">');
         }
         else {
             $this->addStringBodyElement('<div class="col-sm-12">');
@@ -128,11 +126,18 @@ class Page {
      */
     public function display($echo=true) {
 
-        $html = '';
+        $this->addGeneratorBodyElement($this->footer);
+        $this->addStringBodyElement('</div>');
 
-        array_push($this->body, $this->footer->renderHtmlWithContainer());
-        array_push($this->body, '</div></div>');
-        array_push($this->body, '</body>');
+        if ($this->logged_in) {
+            $this->addStringBodyElement('<div class="col-sm-3 comments">');
+            $this->addGeneratorBodyElement(new CommentSidebar());
+            $this->addStringBodyElement('</div>');
+        }
+
+        $this->addStringBodyElement('</div></div></body>');
+
+        $html = '';
 
         $this->header->echo();
         foreach ($this->body as $body_element) {

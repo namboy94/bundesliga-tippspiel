@@ -24,7 +24,6 @@ include_once 'templates/betform.php';
 
 $page = new Page('@$HOME_TITLE', 'index.php', '@$HOME_JUMBO', array(), false);
 
-$page->addStringBodyElement('<div class="container">');
 $page->addStringBodyElement('<div class="row">');
 $page->addStringBodyElement('<div class="col-sm-' . ($page->logged_in ? '6' : '8') . ' text-center">' .
                             '@$HOME_WELCOME_TEXT</div>');
@@ -38,6 +37,6 @@ else {
     $page->addStringBodyElement('<h5>@$OR_SIGN_UP_TEXT</h5>');
 }
 
-$page->addStringBodyElement('</div></div></div>');
+$page->addStringBodyElement('</div></div>');
 
 $page->display();
