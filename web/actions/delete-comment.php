@@ -30,8 +30,9 @@ if (!isset($_GET['comment'])) {
 }
 else {
     $db = new Database();
-    $db->queryWrite('UPDATE comments SET content=?, user=?, last_modified=? WHERE user=? AND id=?', 'siiii',
-        array('@$DELETED_COMMENT_MESSAGE', -1, time(), $_SESSION['id'], (int)$_GET['comment']));
+    //$db->queryWrite('UPDATE comments SET content=?, user=?, last_modified=? WHERE user=? AND id=?', 'siiii',
+    //    array('@$DELETED_COMMENT_MESSAGE', -1, time(), $_SESSION['id'], (int)$_GET['comment']));
+    $db->queryWrite('DELETE FROM comments WHERE user=? AND id=?', 'ii', array($_SESSION['id'], (int)$_GET['comment']));
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit();
 }
