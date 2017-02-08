@@ -39,35 +39,32 @@ foreach($matches as $match) {
     if (hasMatchStarted($match)) {
         continue;
     }
+    elseif ($_POST[$match['team_one']] == null || $_POST[$match['team_two']] == null) {
+        continue;
+    }
 
-    $team_one = $_POST[$match['team_one']];
-    $team_two = $_POST[$match['team_two']];
+    $team_one = (int)$_POST[$match['team_one']];
+    $team_two = (int)$_POST[$match['team_two']];
 
     if ($team_one < 0 || $team_two < 0) {
         (new DismissableMessage('error', '@$INVALID_BET_VALUE_NEGATIVE_NUMBER_TITLE',
             '@$INVALID_BET_VALUE_NEGATIVE_NUMBER_BODY'))->show('../bets.php');
     }
-    if ($team_one > 1000 || $team_two > 1000) {
+    elseif ($team_one > 1000 || $team_two > 1000) {
         (new DismissableMessage('error', '@$INVALID_BET_VALUE_TOO_HIGH_TITLE',
             '@$INVALID_BET_VALUE_TOO_HIGH_BODY'))->show('../bets.php');
     }
-    if ($_POST[$match['team_one']] == null || $_POST[$match['team_two']] == null) {
-        continue;
-    }
-    if (!is_int($_POST[$match['team_one']]) || !is_int($_POST[$match['team_two']])) {
-        continue;
-    }
-
-    if (isset($previous_bets[$match['id']])) {
-        $args = array($_POST[$match['team_one']], $_POST[$match['team_two']], $_SESSION['id'], $match['id']);
-        $db->queryWrite('UPDATE bets SET team_one=?, team_two=? WHERE user=? AND match_id=?', 'iiii', $args);
-    }
     else {
-        $args = array($_SESSION['id'], $match['id'], $_POST[$match['team_one']], $_POST[$match['team_two']], -1);
-        $db->queryWrite('INSERT INTO bets (user, match_id, team_one, team_two, points) VALUES (?, ?, ?, ?, ?)',
-            'iiiii', $args);
+        if (isset($previous_bets[$match['id']])) {
+            $args = array($_POST[$match['team_one']], $_POST[$match['team_two']], $_SESSION['id'], $match['id']);
+            $db->queryWrite('UPDATE bets SET team_one=?, team_two=? WHERE user=? AND match_id=?', 'iiii', $args);
+        }
+        else {
+            $args = array($_SESSION['id'], $match['id'], $_POST[$match['team_one']], $_POST[$match['team_two']], -1);
+            $db->queryWrite('INSERT INTO bets (user, match_id, team_one, team_two, points) VALUES (?, ?, ?, ?, ?)',
+                'iiiii', $args);
+        }
     }
-
 }
 
 (new DismissableMessage('success', '@$BETS_UPDATED_TITLE', '@$BETS_UPDATED_BODY'))->show('../bets.php');
