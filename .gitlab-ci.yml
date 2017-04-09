@@ -1,5 +1,6 @@
 stages:
   - mirror
+  - test
   - deploy
   - release
   - docstats
@@ -20,6 +21,15 @@ github_mirror:
     - git checkout develop
     - git pull
     - git push git@github.com:namboy94/bundesliga-tippspiel.git develop -f
+
+checkstyle:
+  stage: test
+  tags:
+    - linux-buildserver
+  script:
+    - git clone https://github.com/PHPCheckstyle/phpcheckstyle.git
+    - cd phpcheckstyle
+    - php run.php --src ../web
 
 deploy_page:
   stage: deploy
