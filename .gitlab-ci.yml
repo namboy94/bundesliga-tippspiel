@@ -77,7 +77,7 @@ upload_release_to_github:
     - git clone https://gitlab.namibsun.net/namboy94/changelog-reader.git
     - python changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
     - python github-release-uploader/github-release-uploader.py namboy94 bundesliga-tippspiel $GITHUB_ACCESS_TOKEN
-      $(python3 setup.py -V) current_changelog artifacts -b master
+      $(cat web/resources/version) current_changelog artifacts -b master
       
 gitstats:
   stage: docstats
