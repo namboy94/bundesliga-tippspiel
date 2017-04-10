@@ -1,3 +1,6 @@
+V 0.7.1:
+  - Created Logo for the project
+  - Integrated logo in the layout
 V 0.7.0:
   - Implement ReCaptcha
   - Implement IP Address logging during registration
