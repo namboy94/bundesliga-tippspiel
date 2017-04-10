@@ -25,10 +25,14 @@ include_once dirname(__FILE__) . '/../templates/dismissable_message.php';
 function processGlobalGets() {
 
     if (isset($_GET['theme'])) {
-        $_SESSION['theme'] = $_GET['theme'];
+        if (validateThemes($_GET['theme'])) {
+            $_SESSION['theme'] = $_GET['theme'];
+        }
     }
     if (isset($_GET['language'])) {
-        $_SESSION['language'] = $_GET['language'];
+        if (validateLanguages($_GET['language'])) {
+            $_SESSION['language'] = $_GET['language'];
+        }
     }
 }
 
@@ -48,4 +52,12 @@ function processDismissableMessages() {
     }
 
     return $result;
+}
+
+function validateLanguages($language) {
+    return in_array($language, array("de", "en"));
+}
+
+function validateThemes($theme) {
+    return in_array($theme, array("default", "terminal"));
 }

@@ -1,9 +1,35 @@
 stages:
+  - mirror
+  - test
   - deploy
   - release
+  - docstats
+  - finalize
 
 variables:
   GITLAB_ACCESS_TOKEN: "$GITLAB_ACCESS_TOKEN"
+  GITHUB_OAUTH_TOKEN: "$GITHUB_ACCESS_TOKEN"
+
+github_mirror:
+  stage: mirror
+  tags:
+    - linux-buildserver
+  script:
+    - git checkout master
+    - git pull
+    - git push git@github.com:namboy94/bundesliga-tippspiel.git master -f
+    - git checkout develop
+    - git pull
+    - git push git@github.com:namboy94/bundesliga-tippspiel.git develop -f
+
+checkstyle:
+  stage: test
+  tags:
+    - linux-buildserver
+  script:
+    - git clone https://github.com/PHPCheckstyle/phpcheckstyle.git
+    - cd phpcheckstyle
+    # - php run.php --src ../web
 
 deploy_page:
   stage: deploy
@@ -38,3 +64,45 @@ create_gitlab_release:
     - python changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
     - python gitlab-release-uploader/gitlab-release-uploader.py namboy94 bundesliga-tippspiel $GITLAB_ACCESS_TOKEN
       $(cat web/resources/version) current_changelog artifacts -b master -u https://gitlab.namibsun.net
+      
+upload_release_to_github:
+  stage: release
+  only:
+    - master
+  tags:
+    - linux-buildserver
+  script:
+    - mkdir -p artifacts
+    - git clone https://gitlab.namibsun.net/namboy94/github-release-uploader.git
+    - git clone https://gitlab.namibsun.net/namboy94/changelog-reader.git
+    - python changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
+    - python github-release-uploader/github-release-uploader.py namboy94 bundesliga-tippspiel $GITHUB_ACCESS_TOKEN
+      $(python3 setup.py -V) current_changelog artifacts -b master
+      
+gitstats:
+  stage: docstats
+  only:
+    - master
+    - develop
+  tags:
+    - linux-buildserver
+  script:
+    - gitstats . gitstats
+    - rsync -av gitstats/ /var/www/gitstats.namibsun.net/public_html/gitstats/bundesliga-tippspiel --delete-before
+    - git_stats generate
+    - rsync -av git_stats/ /var/www/gitstats.namibsun.net/public_html/git_stats/bundesliga-tippspiel --delete-before
+
+update_html_pages:
+  stage: finalize
+  when: always
+  tags:
+    - linux-buildserver
+  script:
+    - git clone https://gitlab.namibsun.net/namboy94/html-index-generator.git
+    - cd html-index-generator
+    - python html-index-generator.py /var/www/coverage.namibsun.net/public_html
+      /var/www/coverage.namibsun.net/public_html/index.html
+    - python html-index-generator.py /var/www/docs.namibsun.net/public_html
+      /var/www/docs.namibsun.net/public_html/index.html
+    - python html-index-generator.py /var/www/gitstats.namibsun.net/public_html
+      /var/www/gitstats.namibsun.net/public_html/index.html

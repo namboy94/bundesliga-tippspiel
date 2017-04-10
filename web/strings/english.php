@@ -183,8 +183,13 @@ function get_english() {
         'COMMENT_ERROR_EMPTY_BODY' => 'You can not leave an empty comment',
         'COMMENT_ERROR_TOO_LONG_TITLE' => 'Comment too long',
         'COMMENT_ERROR_TOO_LONG_BODY' => 'The comment limit is 255 characters',
+        'COMMENT_ERROR_RECENT_ACTIVITY_TITLE' => 'Commenting to often',
+        'COMMENT_ERROR_RECENT_ACTIVITY_BODY' => 'Please wait for up to 10 seconds before commenting again',
         'YOUR_COMMENT_HERE_TEXT' => 'Your comment here',
         'COMMENT_SUBMIT_BUTTON' => 'Submit',
+        'DELETE_COMMENT_BUTTON' => 'Delete',
+        'DELETED_COMMENT_USER' => 'Deleted',
+        'DELETED_COMMENT_MESSAGE' => 'Deleted',
 
         # Profile Page
         'PROFILE_PASSWORD_CHANGE_TITLE' => 'Change Password',
