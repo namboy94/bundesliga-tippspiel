@@ -29,7 +29,7 @@ checkstyle:
   script:
     - git clone https://github.com/PHPCheckstyle/phpcheckstyle.git
     - cd phpcheckstyle
-    - # php run.php --src ../web
+    # - php run.php --src ../web
 
 deploy_page:
   stage: deploy
