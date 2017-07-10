@@ -1,0 +1,5 @@
+{
+  "require": {
+    "namboy94/welwitschi-auth": "dev-master"
+  }
+}
