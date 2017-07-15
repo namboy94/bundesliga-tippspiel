@@ -8,5 +8,10 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "phpcheckstyle/phpcheckstyle": "*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
   }
 }
