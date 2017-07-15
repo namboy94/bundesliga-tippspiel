@@ -1,3 +1,5 @@
-.idea/*
-composer.lock
+.idea/
+style-report/
 vendor/
+composer.lock
+coverage/
