@@ -1,11 +1,9 @@
 <?php
 
 namespace bundesliga_tippspiel;
-use chameleon\HtmlElement;
 use chameleon\HtmlTemplate;
 use chameleon\LoginForm;
 use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
