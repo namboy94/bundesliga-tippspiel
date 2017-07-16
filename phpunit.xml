@@ -1,7 +1,8 @@
 <phpunit>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
+            <directory suffix=".php">src/pages</directory>
+            <directory suffix=".php">src/defaults</directory>
         </whitelist>
     </filter>
 </phpunit>
