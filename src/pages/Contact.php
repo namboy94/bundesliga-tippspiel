@@ -19,6 +19,10 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon_bootstrap\Col;
+use chameleon\HtmlTemplate;
+use chameleon_bootstrap\Container;
+use chameleon_bootstrap\Row;
 
 
 /**
@@ -32,11 +36,23 @@ class Contact extends Page {
 	 * Contact constructor.
 	 */
 	public function __construct() {
+
+		$dividerOne = new Col([], 1);
+		$dividerTwo = new Col([], 2);
+		$admin = new HtmlTemplate(__DIR__ . "/templates/contact_admin.html",
+			$this->dictionary);
+		$source = new HtmlTemplate(__DIR__ . "/templates/contact_source.html",
+			$this->dictionary);
+
+		$box = new Container([new Row([
+			$dividerOne, $admin, $dividerTwo, $source, $dividerOne
+		])]);
+
 		parent::__construct(
 			"@{CONTACT_TITLE}",
 			"@{CONTACT_JUMBO_TITLE}",
 			"contact.php",
-			[]);
+			[$box]);
 	}
 
 }
