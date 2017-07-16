@@ -79,7 +79,7 @@ class Page extends HtmlTemplate {
 			"tippspiel_bundesliga"
 		);
 		$this->authenticator = new Authenticator($this->db);
-		$this->user = $this->getUser();
+		$this->user = $this->_getUser();
 
 		$header = new DefaultHeader($title);
 		$navbar = new DefaultNavbar($pageFile, $this->isUserLoggedIn());
@@ -111,7 +111,7 @@ class Page extends HtmlTemplate {
 	 * Retrieves the current user, provided there is a User to retrieve
 	 * @return null|User: The User of this page or null.
 	 */
-	private function getUser() : ? User {
+	private function _getUser() : ? User {
 		if (isset($_SESSION["user_id"])) {
 			return $this->authenticator->getUserFromId($_SESSION["user_id"]);
 		} else {
