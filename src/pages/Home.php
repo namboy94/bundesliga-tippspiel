@@ -19,9 +19,11 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon\Html;
 use chameleon\HtmlTemplate;
 use chameleon\LoginForm;
 use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
@@ -46,12 +48,13 @@ class Home extends Page {
 
 		$login = new LoginForm($this->dictionary,
 			"@{HOME_LOGIN_TITLE}", "actions/login.php");
+		$registerMessage = new Html("@{HOME_REGISTER_MESSAGE}");
 
 		$summaryCol = new Col([$summary], 8, ["text-center"]);
-		$loginCol = new Col([$login], 4, ["text-center"]);
+		$loginCol = new Col([$login, $registerMessage], 4, ["text-center"]);
 
 		$content = [
-			new Row([$summaryCol, $loginCol])
+			new Container([new Row([$summaryCol, $loginCol])])
 		];
 
 		parent::__construct(

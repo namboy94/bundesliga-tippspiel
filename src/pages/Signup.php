@@ -19,6 +19,12 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon\Html;
+use chameleon\LoginForm;
+use chameleon\SignupForm;
+use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
+use chameleon_bootstrap\Row;
 
 
 /**
@@ -32,11 +38,38 @@ class Signup extends Page {
 	 * Signup constructor.
 	 */
 	public function __construct() {
+
+		$register = new SignupForm(
+			$this->dictionary,
+			"@{SIGNUP_REGISTER_FORM_TITLE}",
+			"actions/signup.php",
+			"6LegcBQUAAAAAOFRbqARHxlbnpfIM3Po0ijzIA1M"
+		);
+
+		$login = new LoginForm(
+			$this->dictionary,
+			"@{SIGNUP_LOGIN_FORM_TITLE}",
+			"actions/login.php"
+		);
+		$forgot_password = new Html("@{SIGNUP_FORGOT_PASSWORD_MESSAGE}");
+
+		$registerCol = new Col([$register], 5);
+		$loginCol = new Col([$login, $forgot_password], 5);
+		$divider = new Col([], 2);
+
+		$box = new Container([new Row([
+			$registerCol, $divider, $loginCol
+		])]);
+
 		parent::__construct(
 			"@{SIGNUP_TITLE}",
 			"@{SIGNUP_JUMBO_TITLE}",
 			"signup.php",
-			[]);
-	}
+			[$box]
+		);
 
+		$header = new DefaultHeader("@{SIGNUP_TITLE}", true);
+		$this->addInnerTemplate("HEADER", $header);
+
+	}
 }
