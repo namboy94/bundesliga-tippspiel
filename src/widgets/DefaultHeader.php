@@ -12,6 +12,7 @@ use chameleon_widgets\BootstrapStyleSheet;
 use chameleon_widgets\GoogleAnalyticsScript;
 use chameleon_widgets\Header;
 use chameleon_widgets\ReCaptchaScript;
+use chameleon_widgets\Stylesheet;
 
 class DefaultHeader extends Header {
 
@@ -29,9 +30,11 @@ class DefaultHeader extends Header {
 
 		parent::__construct(
 			new DefaultDictionary(),
-			$title, __DIR__ . "/../resources/favicon.png", $scripts,
-			[new BootstrapStyleSheet()], []);
-
+			$title,
+			"resources/favicon.png",
+			$scripts,
+			[new BootstrapStyleSheet(), new Stylesheet("css/custom.css")],
+			[]
+		);
 	}
-
 }

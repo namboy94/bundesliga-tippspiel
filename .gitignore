@@ -3,3 +3,4 @@ style-report/
 vendor/
 composer.lock
 coverage/
+DB_PASS.secret

@@ -3,6 +3,8 @@
 namespace bundesliga_tippspiel;
 
 
+use chameleon_widgets\Div;
+
 class Home extends Page {
 
 	public function __construct() {
@@ -13,8 +15,18 @@ class Home extends Page {
 		parent::__construct(
 			"@{HOME_TITLE}",
 			"@{HOME_NAVBAR_TITLE}",
-			$jumboTitle
+			$jumboTitle,
+			"index.php",
+			$content
 		);
-	}
 
+		$box = new Div("a", ["row"]);
+		$content = new Div("a", ["col-sm-12 main-content"]);
+
+
+
+		$content = [];
+
+
+	}
 }
