@@ -1,6 +1,7 @@
 <?php
 
 namespace bundesliga_tippspiel;
+use chameleon\Dictionary;
 use chameleon\HtmlTemplate;
 use chameleon_bootstrap\Col;
 use welwitschi\Authenticator;
@@ -19,6 +20,11 @@ class Page extends HtmlTemplate {
 	 * @var mysqli: The Database connection
 	 */
 	protected $db;
+
+	/**
+	 * @var Dictionary: The dictionary used for translations
+	 */
+	protected $dictionary;
 
 	/**
 	 * @var Authenticator: The User Authenticator
@@ -43,8 +49,9 @@ class Page extends HtmlTemplate {
 								string $jumboTitle,
 								string $pageFile,
 								array $content) {
-		$dictionary = new DefaultDictionary();
-		parent::__construct(__DIR__ . "/templates/page.html", $dictionary);
+		$this->dictionary = new DefaultDictionary();
+		parent::__construct(
+			__DIR__ . "/templates/page.html", $this->dictionary);
 
 		// Initialize Authenticator and Database Connections
 		$this->db = new mysqli(
