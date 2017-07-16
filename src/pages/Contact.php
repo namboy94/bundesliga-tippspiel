@@ -21,7 +21,22 @@
 namespace bundesliga_tippspiel;
 
 
-class Contact
-{
+/**
+ * Class Contact
+ * The Contact Page
+ * @package bundesliga_tippspiel
+ */
+class Contact extends Page {
+
+	/**
+	 * Contact constructor.
+	 */
+	public function __construct() {
+		parent::__construct(
+			"@{CONTACT_TITLE}",
+			"@{CONTACT_JUMBO_TITLE}",
+			"contact.php",
+			[]);
+	}
 
 }

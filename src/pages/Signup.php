@@ -21,7 +21,22 @@
 namespace bundesliga_tippspiel;
 
 
-class Signup
-{
+/**
+ * Class Signup
+ * The Signup page which enables a user to log in or register
+ * @package bundesliga_tippspiel
+ */
+class Signup extends Page {
+
+	/**
+	 * Signup constructor.
+	 */
+	public function __construct() {
+		parent::__construct(
+			"@{SIGNUP_TITLE}",
+			"@{SIGNUP_JUMBO_TITLE}",
+			"signup.php",
+			[]);
+	}
 
 }

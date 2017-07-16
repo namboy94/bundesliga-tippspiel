@@ -84,6 +84,9 @@ class Page extends HtmlTemplate {
 		$header = new DefaultHeader($title);
 		$navbar = new DefaultNavbar($pageFile, $this->isUserLoggedIn());
 		$jumbotron = new DefaultJumbotron($jumboTitle);
+		$footer = new DefaultFooter($pageFile);
+
+		array_push($content, $footer);
 
 		$colSize = $this->isUserLoggedIn() ? 9 : 12;
 		$wrapper = new Col($content, $colSize, ["main-content"]);

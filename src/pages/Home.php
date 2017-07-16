@@ -51,8 +51,7 @@ class Home extends Page {
 		$loginCol = new Col([$login], 4, ["text-center"]);
 
 		$content = [
-			new Row([$summaryCol, $loginCol]),
-			new DefaultFooter("index.php")
+			new Row([$summaryCol, $loginCol])
 		];
 
 		parent::__construct(

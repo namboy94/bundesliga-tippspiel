@@ -17,3 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
+
+namespace bundesliga_tippspiel;
+require __DIR__ . '/../vendor/autoload.php';
+
+session_start();
+session_set_cookie_params(86400);
+
+(new Contact())->display("en");

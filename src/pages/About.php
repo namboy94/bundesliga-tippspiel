@@ -21,7 +21,22 @@
 namespace bundesliga_tippspiel;
 
 
-class About
-{
+/**
+ * Class About
+ * The About/Impressum Page
+ * @package bundesliga_tippspiel
+ */
+class About extends Page {
+
+	/**
+	 * About constructor.
+	 */
+	public function __construct() {
+		parent::__construct(
+			"@{ABOUT_TITLE}",
+			"@{ABOUT_JUMBO_TITLE}",
+			"about.php",
+			[]);
+	}
 
 }
