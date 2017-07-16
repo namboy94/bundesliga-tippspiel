@@ -1,6 +1,11 @@
 <?php
 
 namespace bundesliga_tippspiel;
+use chameleon\HtmlElement;
+use chameleon\HtmlTemplate;
+use chameleon\LoginForm;
+use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
@@ -19,7 +24,20 @@ class Home extends Page {
 		$jumboTitle = $this->isUserLoggedIn() ?
 			$this->user->username : "@{HOME_JUMBO_TITLE}";
 
-		$content = [new Row(null)];
+
+		$summary = new HtmlTemplate(__DIR__ . "/templates/home_summary.html",
+			$this->dictionary);
+
+		$login = new LoginForm($this->dictionary,
+			"@{HOME_LOGIN_TITLE}", "actions/login.php");
+
+		$summaryCol = new Col([$summary], 8, ["text-center"]);
+		$loginCol = new Col([$login], 4, ["text-center"]);
+
+		$content = [
+			new Row([$summaryCol, $loginCol]),
+			new DefaultFooter("index.php")
+		];
 
 		parent::__construct(
 			"@{HOME_TITLE}",

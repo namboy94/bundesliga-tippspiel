@@ -26,5 +26,6 @@ class DefaultJumbotron extends TitleJumboTron {
 			new DefaultDictionary(),
 			$title,
 			"resources/images/grass.jpg");
+		$this->changeTemplate(__DIR__ . "/templates/default_jumbotron.html");
 	}
 }

@@ -51,22 +51,21 @@ class Page extends HtmlTemplate {
 			"localhost",
 			"tippspiel",
 			file_get_contents(__DIR__ . "/../../DB_PASS.secret"),
-			"tippspiel_bundesliga");
+			"tippspiel_bundesliga"
+		);
 		$this->authenticator = new Authenticator($this->db);
 		$this->user = $this->getUser();
 
 		$header = new DefaultHeader($title);
 		$navbar = new DefaultNavbar($pageFile, $this->isUserLoggedIn());
 		$jumbotron = new DefaultJumbotron($jumboTitle);
-		$footer = new DefaultFooter($pageFile);
 
 		$colSize = $this->isUserLoggedIn() ? 9 : 12;
-		$wrapper = new Col($content, $colSize);
+		$wrapper = new Col($content, $colSize, ["main-content"]);
 
 		$this->addInnerTemplates([
 			"HEADER" => $header,
 			"NAVBAR" => $navbar,
-			"FOOTER" => $footer,
 			"JUMBOTRON" => $jumbotron,
 			"BODY" => $wrapper
 		]);
