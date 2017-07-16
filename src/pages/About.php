@@ -19,6 +19,10 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon\Html;
+use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
+use chameleon_bootstrap\Row;
 
 
 /**
@@ -32,11 +36,20 @@ class About extends Page {
 	 * About constructor.
 	 */
 	public function __construct() {
+
+		$container = new Container(
+			[new Row(
+				[new Col(
+					[new Html(
+						"@{ABOUT_TEXT}")],
+					10)]
+			)]
+		);
 		parent::__construct(
 			"@{ABOUT_TITLE}",
 			"@{ABOUT_JUMBO_TITLE}",
 			"about.php",
-			[]);
+			[$container]);
 	}
 
 }
