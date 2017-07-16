@@ -7,22 +7,30 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_widgets\Footer;
-use chameleon_widgets\Hyperlink;
-use chameleon_widgets\NavbarButton;
+use chameleon\Footer;
+use chameleon\Hyperlink;
+use chameleon\NavbarButton;
 
 
+/**
+ * Class DefaultFooter
+ * The default footer at the bottom of the page
+ * @package bundesliga_tippspiel
+ */
 class DefaultFooter extends Footer {
 
-	public function __construct(string $pageName) {
+	/**
+	 * DefaultFooter constructor.
+	 * @param string $pageFile: The page's file name
+	 */
+	public function __construct(string $pageFile) {
 
 		$dict = new DefaultDictionary();
-		$authorSelected = $pageName === "contact.php";
 
 		$authorButton = new NavbarButton(
 			$dict,
 			new Hyperlink("© Hermann Krumrey 2017", "contact.php"),
-			$authorSelected
+			$pageFile === "contact.php"
 		);
 
 		$version = file_get_contents(__DIR__ . "/../../version");

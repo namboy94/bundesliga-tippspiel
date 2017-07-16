@@ -47,7 +47,7 @@ class DefaultHeader extends Header {
 		parent::__construct(
 			new DefaultDictionary(),
 			$title,
-			"resources/favicon.png",
+			"resources/images/favicon.png",
 			$scripts,
 			$styleSheets
 		);

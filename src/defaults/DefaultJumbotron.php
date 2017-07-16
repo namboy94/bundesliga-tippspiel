@@ -7,16 +7,24 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_widgets\TitleJumboTron;
+use chameleon\TitleJumboTron;
 
 
+/**
+ * Class DefaultJumbotron
+ * The Default Jumbotron to display on the top of the page
+ * @package bundesliga_tippspiel
+ */
 class DefaultJumbotron extends TitleJumboTron {
 
+	/**
+	 * DefaultJumbotron constructor.
+	 * @param string $title: The title of the Jumbotron
+	 */
 	public function __construct(string $title) {
 		parent::__construct(
 			new DefaultDictionary(),
 			$title,
-			"resources/grass.jpg");
+			"resources/images/grass.jpg");
 	}
-
 }

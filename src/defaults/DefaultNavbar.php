@@ -80,7 +80,7 @@ class DefaultNavbar extends Navbar {
 			new Hyperlink("@{NAVBAR_TITLE}", "index.php"),
 			$leftElements,
 			$rightElements,
-			new NavbarLogo("resources/favicon.png", "index.php")
+			new NavbarLogo("resources/images/favicon.png", "index.php")
 		);
 	}
 }
