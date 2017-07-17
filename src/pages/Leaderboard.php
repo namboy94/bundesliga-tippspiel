@@ -19,45 +19,27 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_bootstrap\Col;
-use chameleon\HtmlTemplate;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
 
 
 /**
- * Class Contact
- * The Contact Page
+ * Class Leaderboard
+ * Models a Leaderboard of all users
  * @package bundesliga_tippspiel
  */
-class Contact extends Page {
+class Leaderboard extends Page {
 
 	/**
-	 * Contact constructor.
+	 * Leaderboard constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{CONTACT_TITLE}",
-			"@{CONTACT_JUMBO_TITLE}",
-			"contact.php");
+			"@{LEADERBOARD_TITLE}",
+			"@{LEADERBOARD_JUMBO_TITLE}",
+			"leaderboard.php",
+			[]
+		);
+		$leaderboard = new LeaderboardTable($this->dictionary, $this->user);
+		$this->
 	}
 
-	/**
-	 * @return array: The content of this page
-	 */
-	protected function setContent(): array {
-
-		$dividerOne = new Col([], 1);
-		$dividerTwo = new Col([], 2);
-		$admin = new HtmlTemplate(__DIR__ . "/templates/contact_admin.html",
-			$this->dictionary);
-		$source = new HtmlTemplate(__DIR__ . "/templates/contact_source.html",
-			$this->dictionary);
-
-		$box = new Container([new Row([
-			$dividerOne, $admin, $dividerTwo, $source, $dividerOne
-		])]);
-
-		return [$box];
-	}
 }

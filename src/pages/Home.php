@@ -38,11 +38,21 @@ class Home extends Page {
 	 * Home constructor.
 	 */
 	public function __construct() {
-
+		parent::__construct(
+			"@{HOME_TITLE}",
+			"",
+			"index.php"
+		);
 		$jumboTitle = $this->isUserLoggedIn() ?
 			$this->user->username : "@{HOME_JUMBO_TITLE}";
+		$jumbotron = new DefaultJumbotron($jumboTitle);
+		$this->addInnerTemplate("JUMBOTRON", $jumbotron);
+	}
 
-
+	/**
+	 * @return array: Sets the content of the page
+	 */
+	protected function setContent(): array {
 		$summary = new HtmlTemplate(__DIR__ . "/templates/home_summary.html",
 			$this->dictionary);
 
@@ -53,15 +63,8 @@ class Home extends Page {
 		$summaryCol = new Col([$summary], 8, ["text-center"]);
 		$loginCol = new Col([$login, $registerMessage], 4, ["text-center"]);
 
-		$content = [
+		return [
 			new Container([new Row([$summaryCol, $loginCol])])
 		];
-
-		parent::__construct(
-			"@{HOME_TITLE}",
-			$jumboTitle,
-			"index.php",
-			$content
-		);
 	}
 }

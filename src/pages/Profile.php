@@ -19,45 +19,26 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_bootstrap\Col;
-use chameleon\HtmlTemplate;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
+use chameleon\Html;
 
 
 /**
- * Class Contact
- * The Contact Page
+ * Class Profile
+ * A Profile page which allows users to manage their accounts
  * @package bundesliga_tippspiel
  */
-class Contact extends Page {
+class Profile extends Page {
 
 	/**
-	 * Contact constructor.
+	 * Profile constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{CONTACT_TITLE}",
-			"@{CONTACT_JUMBO_TITLE}",
-			"contact.php");
+			"@{PROFILE_TITLE}",
+			"@{PROFILE_JUMBO_TITLE}",
+			"profile.php",
+			[]
+		);
 	}
 
-	/**
-	 * @return array: The content of this page
-	 */
-	protected function setContent(): array {
-
-		$dividerOne = new Col([], 1);
-		$dividerTwo = new Col([], 2);
-		$admin = new HtmlTemplate(__DIR__ . "/templates/contact_admin.html",
-			$this->dictionary);
-		$source = new HtmlTemplate(__DIR__ . "/templates/contact_source.html",
-			$this->dictionary);
-
-		$box = new Container([new Row([
-			$dividerOne, $admin, $dividerTwo, $source, $dividerOne
-		])]);
-
-		return [$box];
-	}
 }

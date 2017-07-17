@@ -38,7 +38,21 @@ class Signup extends Page {
 	 * Signup constructor.
 	 */
 	public function __construct() {
+		parent::__construct(
+			"@{SIGNUP_TITLE}",
+			"@{SIGNUP_JUMBO_TITLE}",
+			"signup.php"
+		);
 
+		$header = new DefaultHeader("@{SIGNUP_TITLE}", true);
+		$this->addInnerTemplate("HEADER", $header);
+
+	}
+
+	/**
+	 * @return array: Sets the content of the page
+	 */
+	protected function setContent(): array {
 		$register = new SignupForm(
 			$this->dictionary,
 			"@{SIGNUP_REGISTER_FORM_TITLE}",
@@ -61,15 +75,6 @@ class Signup extends Page {
 			$registerCol, $divider, $loginCol
 		])]);
 
-		parent::__construct(
-			"@{SIGNUP_TITLE}",
-			"@{SIGNUP_JUMBO_TITLE}",
-			"signup.php",
-			[$box]
-		);
-
-		$header = new DefaultHeader("@{SIGNUP_TITLE}", true);
-		$this->addInnerTemplate("HEADER", $header);
-
+		return [$box];
 	}
 }

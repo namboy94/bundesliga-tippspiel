@@ -33,7 +33,7 @@ use mysqli;
  * A template for all other pages in this project
  * @package bundesliga_tippspiel
  */
-class Page extends HtmlTemplate {
+abstract class Page extends HtmlTemplate {
 
 	/**
 	 * @var mysqli: The Database connection
@@ -61,13 +61,10 @@ class Page extends HtmlTemplate {
 	 * @param string $title : The title of the page (in the header)
 	 * @param string $jumboTitle : The title on the page's Jumbotron
 	 * @param string $pageFile : The page's file name
-	 * @param array $content : The content to be displayed. Will be provided
-	 *                        by the subclasses
 	 */
 	public function __construct(string $title,
 								string $jumboTitle,
-								string $pageFile,
-								array $content) {
+								string $pageFile) {
 		$this->dictionary = new DefaultDictionary();
 		parent::__construct(
 			__DIR__ . "/templates/page.html", $this->dictionary);
@@ -82,9 +79,10 @@ class Page extends HtmlTemplate {
 		$jumbotron = new DefaultJumbotron($jumboTitle);
 		$footer = new DefaultFooter($pageFile);
 
-		array_push($content, $footer);
-
 		$colSize = $this->isUserLoggedIn() ? 9 : 12;
+
+		$content = $this->setContent();
+		array_push($content, $footer);
 		$wrapper = new Col($content, $colSize, ["main-content"]);
 
 		$this->addInnerTemplates([
@@ -95,6 +93,11 @@ class Page extends HtmlTemplate {
 			"BODY" => $wrapper
 		]);
 	}
+
+	/**
+	 * @return array: Sets the content of the page
+	 */
+	protected abstract function setContent() : array;
 
 	/**
 	 * Checks if the user is logged in.
@@ -108,7 +111,7 @@ class Page extends HtmlTemplate {
 	 * Retrieves the current user, provided there is a User to retrieve
 	 * @return null|User: The User of this page or null.
 	 */
-	private function _getUser() : ? User {
+	protected function _getUser() : ? User {
 		if (isset($_SESSION["user_id"])) {
 			return $this->authenticator->getUserFromId($_SESSION["user_id"]);
 		} else {

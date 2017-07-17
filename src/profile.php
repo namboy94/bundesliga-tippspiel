@@ -19,40 +19,7 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Html;
-use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
+require __DIR__ . '/../vendor/autoload.php';
 
-
-/**
- * Class About
- * The About/Impressum Page
- * @package bundesliga_tippspiel
- */
-class About extends Page {
-
-	/**
-	 * About constructor.
-	 */
-	public function __construct() {
-		parent::__construct(
-			"@{ABOUT_TITLE}",
-			"@{ABOUT_JUMBO_TITLE}",
-			"about.php");
-	}
-
-	/**
-	 * @return array: The content of this page
-	 */
-	protected function setContent(): array {
-		return [new Container(
-			[new Row(
-				[new Col(
-					[new Html(
-						"@{ABOUT_TEXT}")],
-					10)]
-			)]
-		)];
-	}
-}
+Functions::initializeSession();
+(new Profile())->display("en");

@@ -34,7 +34,19 @@ class Forgot extends Page {
 	 * Forgot constructor.
 	 */
 	public function __construct() {
+		parent::__construct(
+			"@{FORGOT_TITLE}",
+			"{FORGOT_JUMBO_TITLE}",
+			"forgot.php"
+		);
+		$header = new DefaultHeader("@{FORGOT_TITLE}", true);
+		$this->addInnerTemplate("HEADER", $header);
+	}
 
+	/**
+	 * @return array: Sets the content of the page
+	 */
+	protected function setContent(): array {
 		$form = new ForgottenPasswordForm(
 			$this->dictionary,
 			"@{FORGOT_FORM_TITLE}",
@@ -44,15 +56,6 @@ class Forgot extends Page {
 
 		$box = new Container([new Row([$form])]);
 
-		parent::__construct(
-			"@{FORGOT_TITLE}",
-			"{FORGOT_JUMBO_TITLE}",
-			"forgot.php",
-			[$box]
-		);
-
-		$header = new DefaultHeader("@{FORGOT_TITLE}", true);
-		$this->addInnerTemplate("HEADER", $header);
+		return [$box];
 	}
-
 }
