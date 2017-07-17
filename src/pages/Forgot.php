@@ -39,7 +39,7 @@ class Forgot extends Page {
 			$this->dictionary,
 			"@{FORGOT_FORM_TITLE}",
 			"actions/password_reset.php",
-			"6LegcBQUAAAAAOFRbqARHxlbnpfIM3Po0ijzIA1M"
+			Functions::getRecaptchaSiteKey()
 		);
 
 		$box = new Container([new Row([$form])]);

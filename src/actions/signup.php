@@ -20,6 +20,7 @@
 
 namespace bundesliga_tippspiel;
 require __DIR__ . '/../../vendor/autoload.php';
+use chameleon\FormReCaptcha;
 use ErrorException;
 use chameleon\SignupForm;
 use welwitschi\Authenticator;
@@ -39,12 +40,22 @@ try {
 	$email = $_POST[SignupForm::$email];
 	$password = $_POST[SignupForm::$password];
 	$passwordRepeat = $_POST[SignupForm::$passwordRepeat];
+	$captcha = $_POST[FormReCaptcha::$recaptchaPostKey];
 
 	if ($password !== $passwordRepeat) {
 		$_SESSION["message"] = [
 			"type" => "danger",
 			"title" => "@{SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_TITLE}",
 			"body" => "@{SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_BODY}"
+		];
+
+		// Check Captcha in production but not on localhost
+	} elseif ($_SERVER["SERVER_NAME"] !== "localhost"
+		&& !Functions::verifyCaptcha($captcha)) {
+		$_SESSION["message"] = [
+			"type" => "danger",
+			"title" => "@{SIGNUP_FAILED_RECAPTCHA_MESSAGE_TITLE}",
+			"body" => "@{SIGNUP_FAILED_RECAPTCHA_MESSAGE_BODY}"
 		];
 
 	} elseif ($auth->createUser($username, $email, $password)) {

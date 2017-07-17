@@ -4,3 +4,4 @@ vendor/
 composer.lock
 coverage/
 DB_PASS.secret
+RECAPTCHA_SITE_KEY.secret

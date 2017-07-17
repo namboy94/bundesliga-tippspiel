@@ -48,4 +48,37 @@ class Functions {
 		session_start();
 		session_set_cookie_params(86400);
 	}
+
+	/**
+	 * Verifies a captcha
+	 * @param $captcha_content string: The captcha POST key
+	 * @return bool: true if verified, else false
+	 */
+	public static function verifyCaptcha(string $captcha_content) {
+		$secret_key = file_get_contents(
+			__DIR__ . "/../../RECAPTCHA_SITE_KEY.secret");
+
+		$url = 'https://www.google.com/recaptcha/api/siteverify';
+		$params = 'secret=' . $secret_key .
+			'&response=' . $captcha_content .
+			'&remoteip=' . $_SERVER['REMOTE_ADDR'];
+
+		$curl = curl_init($url);
+		curl_setopt( $curl, CURLOPT_POST, 1);
+		curl_setopt( $curl, CURLOPT_POSTFIELDS, $params);
+		curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt( $curl, CURLOPT_HEADER, 0);
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+
+		$response = curl_exec($curl);
+		$data = json_decode($response);
+		return (bool)$data->success;
+	}
+
+	/**
+	 * @return string: The site's recaptcha site key
+	 */
+	public static function getRecaptchaSiteKey() : string {
+		return "6LefYikUAAAAAMrA5hQAtIzAqyWnFOSnBjrVSUyr";
+	}
 }
