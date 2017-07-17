@@ -19,6 +19,11 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon\ChangePasswordForm;
+use chameleon\ChangeUsernameForm;
+use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
+use chameleon_bootstrap\Row;
 
 
 /**
@@ -37,6 +42,8 @@ class Profile extends Page {
 			"@{PROFILE_JUMBO_TITLE}",
 			"profile.php"
 		);
+		$jumbotron = new DefaultJumbotron($this->user->username);
+		$this->addInnerTemplate("JUMBOTRON", $jumbotron);
 	}
 
 	/**
@@ -44,6 +51,27 @@ class Profile extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-		return [];
+
+		$passwordChange = new ChangePasswordForm(
+			$this->dictionary,
+			"@{PROFILE_CHANGE_PASSWORD_FORM_TITLE}",
+			"actions/password_change.php"
+		);
+
+		$usernameChange = new ChangeUsernameForm(
+			$this->dictionary,
+			"@{PROFILE_CHANGE_USERNAME_FORM_TITLE}",
+			"actions/change_username.php"
+		);
+
+		$content = [
+			new Col([], 1),
+			new Col([$passwordChange], 4),
+			new Col([], 2),
+			new Col([$usernameChange], 4),
+			new Col([], 1)
+		];
+
+		return [new Container([new Row($content)])];
 	}
 }

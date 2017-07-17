@@ -69,7 +69,7 @@ class DefaultNavbar extends Navbar {
 
 		$leaderboard = new NavbarButton(
 			$dict,
-			new Hyperlink("@{NAVBAR_LEARBOARD_TITLE}", "leaderboard.php"),
+			new Hyperlink("@{NAVBAR_LEADERBOARD_TITLE}", "leaderboard.php"),
 			$pageFile === "leaderboard.php"
 		);
 
