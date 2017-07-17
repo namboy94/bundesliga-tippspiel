@@ -21,24 +21,32 @@
 namespace bundesliga_tippspiel;
 require __DIR__ . '/../../vendor/autoload.php';
 use chameleon\LoginForm;
+use ErrorException;
 use welwitschi\Authenticator;
 
 Functions::initializeSession();
 
-$username = $_POST[LoginForm::$username];
-$password = $_POST[LoginForm::$password];
+// Make ErrorException catch everything
+set_error_handler(function($errno, $errstr, $errfile, $errline ){
+	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
+try {
+	$username = $_POST[LoginForm::$username];
+	$password = $_POST[LoginForm::$password];
 
-$auth = new Authenticator(Functions::getMysqli());
-$user = $auth->getUserFromUsername($username);
+	$auth = new Authenticator(Functions::getMysqli());
+	$user = $auth->getUserFromUsername($username);
 
-if ($user !== null && $user->login($password)) {
-	header('Location: ../index.php');
-} else {
-	$_SESSION["message"] = [
-		"type" => "danger",
-		"title" => "@{LOGIN_FAILED_MESSAGE_TITLE}",
-		"body" => "@{LOGIN_FAILED_MESSAGE_BODY}"
-	];
-	header('Location: ../signup.php');
+	if ($user !== null && $user->login($password)) {
+		header('Location: ../index.php');
+	} else {
+		$_SESSION["message"] = [
+			"type" => "danger",
+			"title" => "@{LOGIN_FAILED_MESSAGE_TITLE}",
+			"body" => "@{LOGIN_FAILED_MESSAGE_BODY}"
+		];
+		header('Location: ../signup.php');
+	}
+} catch (ErrorException $e) {
+	echo "Oops... Something broke on our end, sorry!";
 }
-
