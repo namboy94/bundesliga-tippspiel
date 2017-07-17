@@ -36,8 +36,15 @@ class Bets extends Page {
 		parent::__construct(
 			"@{BETS_TITLE}",
 			"@{BETS_JUMBO_TITLE}",
-			"bets.php",
-			[]
+			"bets.php"
 		);
+	}
+
+	/**
+	 * Sets the content of the page
+	 * @return array: The Page content
+	 */
+	protected function setContent(): array {
+		return [];
 	}
 }

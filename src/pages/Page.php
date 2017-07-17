@@ -23,6 +23,7 @@ use chameleon\Dictionary;
 use chameleon\DismissableMessage;
 use chameleon\HtmlTemplate;
 use chameleon_bootstrap\Col;
+use cheetah\SchemaCreator;
 use welwitschi\Authenticator;
 use welwitschi\User;
 use mysqli;
@@ -71,6 +72,7 @@ abstract class Page extends HtmlTemplate {
 
 		// Initialize Authenticator and Database Connections
 		$this->db = Functions::getMysqli();
+		new SchemaCreator($this->db);
 		$this->authenticator = new Authenticator($this->db);
 		$this->user = $this->_getUser();
 
@@ -95,7 +97,8 @@ abstract class Page extends HtmlTemplate {
 	}
 
 	/**
-	 * @return array: Sets the content of the page
+	 * Sets the content of the page
+	 * @return array: The Page content
 	 */
 	protected abstract function setContent() : array;
 

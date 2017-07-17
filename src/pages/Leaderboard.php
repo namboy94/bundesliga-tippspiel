@@ -35,11 +35,16 @@ class Leaderboard extends Page {
 		parent::__construct(
 			"@{LEADERBOARD_TITLE}",
 			"@{LEADERBOARD_JUMBO_TITLE}",
-			"leaderboard.php",
-			[]
+			"leaderboard.php"
 		);
-		$leaderboard = new LeaderboardTable($this->dictionary, $this->user);
-		$this->
 	}
 
+	/**
+	 * Sets the content of the page
+	 * @return array: The Page content
+	 */
+	protected function setContent(): array {
+		$leaderboard = new LeaderboardTable($this->dictionary, $this->user);
+		return [$leaderboard];
+	}
 }

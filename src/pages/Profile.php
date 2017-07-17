@@ -19,7 +19,6 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Html;
 
 
 /**
@@ -36,9 +35,15 @@ class Profile extends Page {
 		parent::__construct(
 			"@{PROFILE_TITLE}",
 			"@{PROFILE_JUMBO_TITLE}",
-			"profile.php",
-			[]
+			"profile.php"
 		);
 	}
 
+	/**
+	 * Sets the content of the page
+	 * @return array: The Page content
+	 */
+	protected function setContent(): array {
+		return [];
+	}
 }

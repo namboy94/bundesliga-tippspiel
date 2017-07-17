@@ -43,7 +43,8 @@ class About extends Page {
 	}
 
 	/**
-	 * @return array: The content of this page
+	 * Sets the content of the page
+	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
 		return [new Container(

@@ -50,7 +50,8 @@ class Signup extends Page {
 	}
 
 	/**
-	 * @return array: Sets the content of the page
+	 * Sets the content of the page
+	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
 		$register = new SignupForm(
