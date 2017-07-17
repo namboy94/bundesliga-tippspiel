@@ -19,6 +19,7 @@
  */
 
 namespace bundesliga_tippspiel;
+use ErrorException;
 use mysqli;
 
 
