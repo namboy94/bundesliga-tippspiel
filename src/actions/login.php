@@ -19,7 +19,26 @@
  */
 
 namespace bundesliga_tippspiel;
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
+use chameleon\LoginForm;
+use welwitschi\Authenticator;
 
 Functions::initializeSession();
-(new About())->display("en");
+
+$username = $_POST[LoginForm::$username];
+$password = $_POST[LoginForm::$password];
+
+$auth = new Authenticator(Functions::getMysqli());
+$user = $auth->getUserFromUsername($username);
+
+if ($user !== null && $user->login($password)) {
+	header('Location: ../index.php');
+} else {
+	$_SESSION["message"] = [
+		"type" => "danger",
+		"title" => "@{LOGIN_FAILED_MESSAGE_TITLE}",
+		"body" => "@{LOGIN_FAILED_MESSAGE_BODY}"
+	];
+	header('Location: ../signup.php');
+}
+

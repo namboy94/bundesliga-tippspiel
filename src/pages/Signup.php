@@ -51,10 +51,10 @@ class Signup extends Page {
 			"@{SIGNUP_LOGIN_FORM_TITLE}",
 			"actions/login.php"
 		);
-		$forgot_password = new Html("@{SIGNUP_FORGOT_PASSWORD_MESSAGE}");
+		$forgotPassword = new Html("@{SIGNUP_FORGOT_PASSWORD_MESSAGE}");
 
 		$registerCol = new Col([$register], 5);
-		$loginCol = new Col([$login, $forgot_password], 5);
+		$loginCol = new Col([$login, $forgotPassword], 5);
 		$divider = new Col([], 2);
 
 		$box = new Container([new Row([

@@ -20,6 +20,7 @@
 
 namespace bundesliga_tippspiel;
 use chameleon\Dictionary;
+use chameleon\DismissableMessage;
 use chameleon\HtmlTemplate;
 use chameleon_bootstrap\Col;
 use welwitschi\Authenticator;
@@ -57,10 +58,10 @@ class Page extends HtmlTemplate {
 
 	/**
 	 * Page constructor.
-	 * @param string $title: The title of the page (in the header)
-	 * @param string $jumboTitle: The title on the page's Jumbotron
-	 * @param string $pageFile: The page's file name
-	 * @param array $content: The content to be displayed. Will be provided
+	 * @param string $title : The title of the page (in the header)
+	 * @param string $jumboTitle : The title on the page's Jumbotron
+	 * @param string $pageFile : The page's file name
+	 * @param array $content : The content to be displayed. Will be provided
 	 *                        by the subclasses
 	 */
 	public function __construct(string $title,
@@ -72,12 +73,7 @@ class Page extends HtmlTemplate {
 			__DIR__ . "/templates/page.html", $this->dictionary);
 
 		// Initialize Authenticator and Database Connections
-		$this->db = new mysqli(
-			"localhost",
-			"tippspiel",
-			file_get_contents(__DIR__ . "/../../DB_PASS.secret"),
-			"tippspiel_bundesliga"
-		);
+		$this->db = Functions::getMysqli();
 		$this->authenticator = new Authenticator($this->db);
 		$this->user = $this->_getUser();
 
@@ -94,6 +90,7 @@ class Page extends HtmlTemplate {
 		$this->addInnerTemplates([
 			"HEADER" => $header,
 			"NAVBAR" => $navbar,
+			"MESSAGE" => $this->_checkForDismissableMessage(),
 			"JUMBOTRON" => $jumbotron,
 			"BODY" => $wrapper
 		]);
@@ -114,6 +111,28 @@ class Page extends HtmlTemplate {
 	private function _getUser() : ? User {
 		if (isset($_SESSION["user_id"])) {
 			return $this->authenticator->getUserFromId($_SESSION["user_id"]);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Checks the $_SESSION variable for dismissable message information
+	 * @return DismissableMessage|null: The Dismissable Message or null
+	 */
+	private function _checkForDismissableMessage() : ? DismissableMessage {
+
+		if (isset($_SESSION["message"])) {
+
+			$message = $_SESSION["message"];
+			unset($_SESSION["message"]);
+			return new DismissableMessage(
+				$this->dictionary,
+				$message["type"],
+				$message["title"],
+				$message["body"]
+			);
+
 		} else {
 			return null;
 		}

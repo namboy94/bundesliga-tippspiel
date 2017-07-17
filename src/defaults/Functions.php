@@ -19,7 +19,33 @@
  */
 
 namespace bundesliga_tippspiel;
-require __DIR__ . '/../vendor/autoload.php';
+use mysqli;
 
-Functions::initializeSession();
-(new About())->display("en");
+
+/**
+ * Class Functions
+ * Class that contains various helpful functions
+ * @package bundesliga_tippspiel
+ */
+class Functions {
+
+	/**
+	 * @return mysqli: The MySQL Database connection
+	 */
+	public static function getMysqli(): mysqli {
+		return new mysqli(
+			"localhost",
+			"tippspiel",
+			rtrim(file_get_contents(__DIR__ . "/../../DB_PASS.secret")),
+			"tippspiel_bundesliga"
+		);
+	}
+
+	/**
+	 * Initializes a session and sets the lifetime of the cookies
+	 */
+	public static function initializeSession() {
+		session_start();
+		session_set_cookie_params(86400);
+	}
+}
