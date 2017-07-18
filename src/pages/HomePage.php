@@ -64,8 +64,6 @@ class HomePage extends Page {
 		$summaryCol = new Col([$summary], 8, ["text-center"]);
 		$loginCol = new Col([$login, $registerMessage], 4, ["text-center"]);
 
-		return [
-			new Container([new Row([$summaryCol, $loginCol])])
-		];
+		return [new Row([$summaryCol, $loginCol])];
 	}
 }

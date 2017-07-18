@@ -80,6 +80,6 @@ class ProfilePage extends Page {
 			new Col([], 1)
 		];
 
-		return [new Container([new Row($content)])];
+		return [new Row($content)];
 	}
 }

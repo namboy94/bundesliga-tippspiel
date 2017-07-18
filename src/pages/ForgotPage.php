@@ -54,9 +54,6 @@ class ForgotPage extends Page {
 			"actions/password_reset.php",
 			Functions::getRecaptchaSiteKey()
 		);
-
-		$box = new Container([new Row([$form])]);
-
-		return [$box];
+		return [new Row([$form])];
 	}
 }

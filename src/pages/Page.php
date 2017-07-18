@@ -22,6 +22,7 @@ namespace bundesliga_tippspiel;
 use chameleon\Dictionary;
 use chameleon\DismissableMessage;
 use chameleon\HtmlTemplate;
+use chameleon\HtmlTemplateCollection;
 use chameleon_bootstrap\Col;
 use cheetah\SchemaCreator;
 use welwitschi\Authenticator;
@@ -82,17 +83,22 @@ abstract class Page extends HtmlTemplate {
 		$footer = new DefaultFooter($pageFile);
 
 		$colSize = $this->isUserLoggedIn() ? 9 : 12;
-
 		$content = $this->setContent();
 		array_push($content, $footer);
 		$wrapper = new Col($content, $colSize, ["main-content"]);
+
+		if ($this->isUserLoggedIn()) {
+			$commentBar = new CommentBar($this->dictionary);
+			$this->addCollectionFromArray("BODY", [$wrapper, $commentBar]);
+		} else {
+			$this->addInnerTemplate("BODY", $wrapper);
+		}
 
 		$this->addInnerTemplates([
 			"HEADER" => $header,
 			"NAVBAR" => $navbar,
 			"MESSAGE" => $this->_checkForDismissableMessage(),
-			"JUMBOTRON" => $jumbotron,
-			"BODY" => $wrapper
+			"JUMBOTRON" => $jumbotron
 		]);
 	}
 

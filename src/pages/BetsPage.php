@@ -50,11 +50,8 @@ class BetsPage extends Page {
 	protected function setContent(): array {
 
 		$matchday = isset($_GET["matchday"]) ? (int)$_GET["matchday"] : null;
-
-
 		$form = new MatchdayBetForm($this->dictionary, $this->user, $matchday);
-		$box = new Container([new Row([new Col([$form], 12)])]);
 
-		return [$box];
+		return [new Row([new Col([$form], 12)])];
 	}
 }

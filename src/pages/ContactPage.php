@@ -55,10 +55,9 @@ class ContactPage extends Page {
 		$source = new HtmlTemplate(__DIR__ . "/templates/contact_source.html",
 			$this->dictionary);
 
-		$box = new Container([new Row([
+		$box = new Row([
 			$dividerOne, $admin, $dividerTwo, $source, $dividerOne
-		])]);
-
+		]);
 		return [$box];
 	}
 }

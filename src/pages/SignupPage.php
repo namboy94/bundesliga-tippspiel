@@ -72,9 +72,9 @@ class SignupPage extends Page {
 		$loginCol = new Col([$login, $forgotPassword], 5);
 		$divider = new Col([], 2);
 
-		$box = new Container([new Row([
+		$box = new Row([
 			$registerCol, $divider, $loginCol
-		])]);
+		]);
 
 		return [$box];
 	}

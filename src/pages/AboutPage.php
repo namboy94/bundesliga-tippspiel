@@ -47,13 +47,6 @@ class AboutPage extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-		return [new Container(
-			[new Row(
-				[new Col(
-					[new Html(
-						"@{ABOUT_TEXT}")],
-					10)]
-			)]
-		)];
+		return [new Row([new Col([new Html("@{ABOUT_TEXT}")], 10)])];
 	}
 }
