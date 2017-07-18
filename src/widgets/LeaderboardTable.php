@@ -7,8 +7,19 @@ use cheetah\LeaderBoard;
 use welwitschi\User;
 
 
+/**
+ * Class LeaderboardTable
+ * Displays a Table of users sorted by their points in the betting game
+ * @package bundesliga_tippspiel
+ */
 class LeaderboardTable extends HtmlTemplate {
 
+	/**
+	 * LeaderboardTable constructor.
+	 * @param Dictionary|null $dictionary: DIctionary used for translation
+	 * @param User $activeUser: The active user, who will be marked in
+	 *                          the ranking table
+	 */
 	public function __construct(
 		? Dictionary $dictionary,
 		User $activeUser
@@ -28,9 +39,9 @@ class LeaderboardTable extends HtmlTemplate {
 
 			if ($user->id === $activeUser->id) {
 				$colorClass = "info";
-			} elseif ($position == 1) {
+			} elseif ($position === 1) {
 				$colorClass = "success";
-			} elseif ($position == count($ranking)) {
+			} elseif ($position === count($ranking)) {
 				$colorClass = "danger";
 			} else {
 				$colorClass = "default";

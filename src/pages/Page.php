@@ -114,7 +114,7 @@ abstract class Page extends HtmlTemplate {
 	 * Retrieves the current user, provided there is a User to retrieve
 	 * @return null|User: The User of this page or null.
 	 */
-	protected function _getUser() : ? User {
+	private function _getUser() : ? User {
 		if (isset($_SESSION["user_id"])) {
 			return $this->authenticator->getUserFromId($_SESSION["user_id"]);
 		} else {

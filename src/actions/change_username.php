@@ -28,7 +28,7 @@ use ErrorException;
 /**
  * Changes the username of a logged in user
  */
-function change_username() {
+function changeUsername() {
 
 	Functions::initializeSession();
 
@@ -77,7 +77,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline) {
 	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 try {
-	change_username();
+	changeUsername();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
 	throw $e;

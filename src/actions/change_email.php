@@ -28,11 +28,14 @@ use ErrorException;
 /**
  * Changes the email address of a logged in user
  */
-function change_email() {
+function changeEmail() {
 
 	Functions::initializeSession();
 
-	// We re-use the ChangeUsernameForm
+	/**
+	 * We re-use the ChangeUsernameForm
+	 * @SuppressWarnings checkUnusedVariables
+	 */
 	$newEmail = $_POST[ChangeUsernameForm::$newUsername];
 
 	if (isset($_SESSION["user_id"])) {
@@ -78,7 +81,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline) {
 	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 try {
-	change_email();
+	changeEmail();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
 	throw $e;

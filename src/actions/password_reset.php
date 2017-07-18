@@ -35,11 +35,14 @@ use ErrorException;
  * still tell the user that the password reset was a suggest to make it
  * harder to tell which email addresses have accounts on our website
  */
-function password_reset() {
+function passwordReset() {
 
 	Functions::initializeSession();
 
 	$email = $_POST[ForgottenPasswordForm::$email];
+	/**
+	 * @SuppressWarnings checkUnusedVariables
+	 */
 	$recaptcha = $_POST[FormReCaptcha::$recaptchaPostKey];
 
 	if ($_SERVER["SERVER_NAME"] !== "localhost"
@@ -80,7 +83,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline) {
 	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 try {
-	password_reset();
+	passwordReset();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
 	throw $e;

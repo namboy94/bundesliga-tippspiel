@@ -19,7 +19,6 @@
  */
 
 namespace bundesliga_tippspiel;
-use ErrorException;
 use mysqli;
 
 
@@ -52,24 +51,24 @@ class Functions {
 
 	/**
 	 * Verifies a captcha
-	 * @param $captcha_content string: The captcha POST key
+	 * @param $captchaContent string: The captcha POST key
 	 * @return bool: true if verified, else false
 	 */
-	public static function verifyCaptcha(string $captcha_content) {
-		$secret_key = file_get_contents(
+	public static function verifyCaptcha(string $captchaContent) {
+		$secretKey = file_get_contents(
 			__DIR__ . "/../../RECAPTCHA_SITE_KEY.secret");
 
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
-		$params = 'secret=' . $secret_key .
-			'&response=' . $captcha_content .
+		$params = 'secret=' . $secretKey .
+			'&response=' . $captchaContent .
 			'&remoteip=' . $_SERVER['REMOTE_ADDR'];
 
 		$curl = curl_init($url);
-		curl_setopt( $curl, CURLOPT_POST, 1);
-		curl_setopt( $curl, CURLOPT_POSTFIELDS, $params);
-		curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt( $curl, CURLOPT_HEADER, 0);
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
 		$response = curl_exec($curl);
 		$data = json_decode($response);

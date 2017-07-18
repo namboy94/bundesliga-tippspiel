@@ -28,7 +28,7 @@ use ErrorException;
 /**
  * Change The Password of a logged in user
  */
-function change_password() {
+function changePassword() {
 
 	Functions::initializeSession();
 
@@ -77,7 +77,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline) {
 	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 try {
-	change_password();
+	changePassword();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
 	throw $e;

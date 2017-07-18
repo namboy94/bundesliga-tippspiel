@@ -40,6 +40,9 @@ function signup() {
 	$email = $_POST[SignupForm::$email];
 	$password = $_POST[SignupForm::$password];
 	$passwordRepeat = $_POST[SignupForm::$passwordRepeat];
+	/**
+	 * @SuppressWarnings checkUnusedVariables
+	 */
 	$captcha = $_POST[FormReCaptcha::$recaptchaPostKey];
 
 	if ($password !== $passwordRepeat) {
