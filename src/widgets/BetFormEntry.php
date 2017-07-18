@@ -23,8 +23,11 @@ class BetFormEntry extends HtmlTemplate {
 	 * BetFormEntry constructor.
 	 * @param Match $match: The match to display
 	 * @param Bet|null $bet: Optionally provides previous bet data
+	 * @param bool $small: Indicates if this orm will be small or not
 	 */
-	public function __construct(Match $match, ? Bet $bet) {
+	public function __construct(
+		Match $match, ? Bet $bet, bool $small = false) {
+
 		parent::__construct(__DIR__ . "/templates/bet_form_entry.html", null);
 
 		$disabled = $match->finished ? "disabled" : "";
@@ -36,17 +39,31 @@ class BetFormEntry extends HtmlTemplate {
 			$awayDefault = "";
 		}
 
+		if ($small) {
+			$inputSize = 2;
+			$nameSize = 4;
+			$homeName = $match->homeTeam->shortname;
+			$awayName = $match->awayTeam->shortname;
+		} else {
+			$inputSize = 1;
+			$nameSize = 5;
+			$homeName = $match->homeTeam->name;
+			$awayName = $match->awayTeam->name;
+		}
+
 		$this->bindParams([
 			"HOME_ID" => $match->homeTeam->id,
 			"AWAY_ID" => $match->awayTeam->id,
-			"HOME_NAME" => $match->homeTeam->name,
-			"AWAY_NAME" => $match->awayTeam->name,
+			"HOME_NAME" => $homeName,
+			"AWAY_NAME" => $awayName,
 			"HOME_ICON" => $match->homeTeam->icon,
 			"AWAY_ICON" => $match->awayTeam->icon,
 			"MATCH_ID" => $match->id,
 			"DISABLED" => $disabled,
 			"HOME_DEFAULT" => $homeDefault,
-			"AWAY_DEFAULT" => $awayDefault
+			"AWAY_DEFAULT" => $awayDefault,
+			"INPUT_SIZE" => $inputSize,
+			"NAME_SIZE" => $nameSize
 		]);
 	}
 }

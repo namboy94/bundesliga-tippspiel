@@ -36,15 +36,17 @@ class MatchdayBetForm extends Form {
 
 	/**
 	 * MatchdayBetForm constructor.
-	 * @param Dictionary|null $dictionary: Dictionary used in translation
-	 * @param User $user: The user accessing this form
+	 * @param Dictionary|null $dictionary : Dictionary used in translation
+	 * @param User $user : The user accessing this form
 	 * @param int|null $matchDay: The matchday to display
+	 * @param bool $small: Indicates if the form will be displayed small or not
 	 * @SuppressWarnings docBlocks
 	 */
 	public function __construct(
 		? Dictionary $dictionary,
 		User $user,
-		? int $matchDay = null
+		? int $matchDay = null,
+		bool $small = false
 	) {
 
 		$db = Functions::getMysqli();
@@ -59,7 +61,7 @@ class MatchdayBetForm extends Form {
 			/** @noinspection PhpParamsInspection */
 			array_push($formElements,
 				new BetFormEntry($match, Bet::fromMatchAndUserId(
-					$db, $match->id, $user->id)
+					$db, $match->id, $user->id), $small
 				)
 			);
 		}

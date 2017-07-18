@@ -1,18 +1,18 @@
 <li class="list-group-item">
     <div class="row">
         <a href="match.php?match_id=#{MATCH_ID}">
-            <div class="col-sm-5 text-center">
+            <div class="col-sm-#{NAME_SIZE} text-center">
                 <h5>#{HOME_NAME} <span><img class="logo-image" src="#{HOME_ICON}"></span></h5>
             </div>
         </a>
-        <div class="col-sm-1">
+        <div class="col-sm-#{INPUT_SIZE}">
             <input class="form-control" id="#{HOME_ID}" min="0" max="999" #{DISABLED} value="#{HOME_DEFAULT}" name="#{HOME_ID}" type="number">
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-#{INPUT_SIZE}">
             <input class="form-control" id="#{AWAY_ID}" min="0" max="999" #{DISABLED} value="#{AWAY_DEFAULT}" name="#{AWAY_ID}" type="number">
         </div>
         <a href="match.php?match_id=#{MATCH_ID}">
-            <div class="col-sm-5 text-center">
+            <div class="col-sm-#{NAME_SIZE} text-center">
                 <h5>#{AWAY_NAME} <span><img class="logo-image" src="#{AWAY_ICON}"></span></h5>
             </div>
         </a>
