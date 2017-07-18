@@ -18,19 +18,19 @@
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel;
+namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
+use bundesliga_tippspiel\Functions;
 use chameleon\LoginForm;
 use ErrorException;
 use welwitschi\Authenticator;
 
 Functions::initializeSession();
 
-// Make ErrorException catch everything
-set_error_handler(function($errno, $errstr, $errfile, $errline ){
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-try {
+/**
+ * Logs a user in
+ */
+function login() {
 	$username = $_POST[LoginForm::$username];
 	$password = $_POST[LoginForm::$password];
 
@@ -47,6 +47,15 @@ try {
 		];
 		header('Location: ../signup.php');
 	}
+}
+
+// Make ErrorException catch everything
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
+try {
+	login();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
+	throw $e;
 }

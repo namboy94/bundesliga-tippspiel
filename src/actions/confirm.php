@@ -18,19 +18,18 @@
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel;
+namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
 use welwitschi\Authenticator;
 use ErrorException;
+use bundesliga_tippspiel\Functions;
 
 Functions::initializeSession();
 
-// Make ErrorException catch everything
-set_error_handler(function($errno, $errstr, $errfile, $errline ){
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-try {
-
+/**
+ * Confirms a newly created user
+ */
+function confirm() {
 	$auth = new Authenticator(Functions::getMysqli());
 
 	$id = $_GET["id"];
@@ -51,7 +50,15 @@ try {
 		];
 	}
 	header("Location: ../index.php");
+}
 
+// Make ErrorException catch everything
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
+try {
+	confirm();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
+	throw $e;
 }

@@ -18,8 +18,10 @@
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel;
+namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
+use bundesliga_tippspiel\Functions;
+use bundesliga_tippspiel\DefaultDictionary;
 use chameleon\FormReCaptcha;
 use ErrorException;
 use chameleon\SignupForm;
@@ -27,12 +29,10 @@ use welwitschi\Authenticator;
 
 Functions::initializeSession();
 
-// Make ErrorException catch everything
-set_error_handler(function($errno, $errstr, $errfile, $errline ){
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-try {
-
+/**
+ * Signs a user up
+ */
+function signup() {
 	$auth = new Authenticator(Functions::getMysqli());
 	$dict = new DefaultDictionary();
 
@@ -86,7 +86,15 @@ try {
 	}
 
 	header('Location: ../signup.php');
+}
 
+// Make ErrorException catch everything
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
+try {
+	signup();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
+	throw $e;
 }
