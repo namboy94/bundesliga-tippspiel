@@ -19,33 +19,27 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\ChangePasswordForm;
-use chameleon\ChangeUsernameForm;
+use chameleon\Html;
 use chameleon_bootstrap\Col;
 use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
 /**
- * Class Profile
- * A Profile page which allows users to manage their accounts
+ * Class About
+ * The About/Impressum Page
  * @package bundesliga_tippspiel
  */
-class Profile extends Page {
+class AboutPage extends Page {
 
 	/**
-	 * Profile constructor.
+	 * About constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{PROFILE_TITLE}",
-			"@{PROFILE_JUMBO_TITLE}",
-			"profile.php"
-		);
-		$jumbotron = new DefaultJumbotron(
-			$this->user->username . "<br>" . $this->user->email
-		);
-		$this->addInnerTemplate("JUMBOTRON", $jumbotron);
+			"@{ABOUT_TITLE}",
+			"@{ABOUT_JUMBO_TITLE}",
+			"about.php");
 	}
 
 	/**
@@ -53,33 +47,13 @@ class Profile extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-
-		$passwordChange = new ChangePasswordForm(
-			$this->dictionary,
-			"@{PROFILE_CHANGE_PASSWORD_FORM_TITLE}",
-			"actions/change_password.php"
-		);
-
-		$usernameChange = new ChangeUsernameForm(
-			$this->dictionary,
-			"@{PROFILE_CHANGE_USERNAME_FORM_TITLE}",
-			"actions/change_username.php"
-		);
-
-		$emailChange = new ChangeUsernameForm(
-			$this->dictionary,
-			"@{PROFILE_CHANGE_EMAIL_FORM_TITLE}",
-			"actions/change_email.php"
-		);
-
-		$content = [
-			new Col([], 1),
-			new Col([$passwordChange], 4),
-			new Col([], 2),
-			new Col([$usernameChange, $emailChange], 4),
-			new Col([], 1)
-		];
-
-		return [new Container([new Row($content)])];
+		return [new Container(
+			[new Row(
+				[new Col(
+					[new Html(
+						"@{ABOUT_TEXT}")],
+					10)]
+			)]
+		)];
 	}
 }

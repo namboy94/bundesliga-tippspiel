@@ -19,27 +19,23 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
 
 
 /**
- * Class Bets
- * The Bets page, displaying the current matchday's bets with buttons
- * to the next and previous matchdays
+ * Class Leaderboard
+ * Models a Leaderboard of all users
  * @package bundesliga_tippspiel
  */
-class Bets extends Page {
+class LeaderboardPage extends Page {
 
 	/**
-	 * Bets constructor.
+	 * Leaderboard constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{BETS_TITLE}",
-			"@{BETS_JUMBO_TITLE}",
-			"bets.php"
+			"@{LEADERBOARD_TITLE}",
+			"@{LEADERBOARD_JUMBO_TITLE}",
+			"leaderboard.php"
 		);
 	}
 
@@ -48,13 +44,7 @@ class Bets extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-
-		$matchday = isset($_GET["matchday"]) ? (int)$_GET["matchday"] : null;
-
-
-		$form = new MatchdayBetForm($this->dictionary, $this->user, $matchday);
-		$box = new Container([new Row([new Col([$form], 12)])]);
-
-		return [$box];
+		$leaderboard = new LeaderboardTable($this->dictionary, $this->user);
+		return [$leaderboard];
 	}
 }

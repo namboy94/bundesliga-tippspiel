@@ -17,26 +17,30 @@
  * You should have received a copy of the GNU General Public License
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace bundesliga_tippspiel;
+use chameleon\ForgottenPasswordForm;
+use chameleon_bootstrap\Container;
+use chameleon_bootstrap\Row;
 
 
 /**
- * Class Leaderboard
- * Models a Leaderboard of all users
+ * Class Forgot
+ * The Forgotten Password Page
  * @package bundesliga_tippspiel
  */
-class Leaderboard extends Page {
+class ForgotPage extends Page {
 
 	/**
-	 * Leaderboard constructor.
+	 * Forgot constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{LEADERBOARD_TITLE}",
-			"@{LEADERBOARD_JUMBO_TITLE}",
-			"leaderboard.php"
+			"@{FORGOT_TITLE}",
+			"{FORGOT_JUMBO_TITLE}",
+			"forgot.php"
 		);
+		$header = new DefaultHeader("@{FORGOT_TITLE}", true);
+		$this->addInnerTemplate("HEADER", $header);
 	}
 
 	/**
@@ -44,7 +48,15 @@ class Leaderboard extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-		$leaderboard = new LeaderboardTable($this->dictionary, $this->user);
-		return [$leaderboard];
+		$form = new ForgottenPasswordForm(
+			$this->dictionary,
+			"@{FORGOT_FORM_TITLE}",
+			"actions/password_reset.php",
+			Functions::getRecaptchaSiteKey()
+		);
+
+		$box = new Container([new Row([$form])]);
+
+		return [$box];
 	}
 }

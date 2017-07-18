@@ -19,27 +19,33 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon\ChangePasswordForm;
+use chameleon\ChangeUsernameForm;
 use chameleon_bootstrap\Col;
-use chameleon\HtmlTemplate;
 use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
 /**
- * Class Contact
- * The Contact Page
+ * Class Profile
+ * A Profile page which allows users to manage their accounts
  * @package bundesliga_tippspiel
  */
-class Contact extends Page {
+class ProfilePage extends Page {
 
 	/**
-	 * Contact constructor.
+	 * Profile constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{CONTACT_TITLE}",
-			"@{CONTACT_JUMBO_TITLE}",
-			"contact.php");
+			"@{PROFILE_TITLE}",
+			"@{PROFILE_JUMBO_TITLE}",
+			"profile.php"
+		);
+		$jumbotron = new DefaultJumbotron(
+			$this->user->username . "<br>" . $this->user->email
+		);
+		$this->addInnerTemplate("JUMBOTRON", $jumbotron);
 	}
 
 	/**
@@ -48,17 +54,32 @@ class Contact extends Page {
 	 */
 	protected function setContent(): array {
 
-		$dividerOne = new Col([], 1);
-		$dividerTwo = new Col([], 2);
-		$admin = new HtmlTemplate(__DIR__ . "/templates/contact_admin.html",
-			$this->dictionary);
-		$source = new HtmlTemplate(__DIR__ . "/templates/contact_source.html",
-			$this->dictionary);
+		$passwordChange = new ChangePasswordForm(
+			$this->dictionary,
+			"@{PROFILE_CHANGE_PASSWORD_FORM_TITLE}",
+			"actions/change_password.php"
+		);
 
-		$box = new Container([new Row([
-			$dividerOne, $admin, $dividerTwo, $source, $dividerOne
-		])]);
+		$usernameChange = new ChangeUsernameForm(
+			$this->dictionary,
+			"@{PROFILE_CHANGE_USERNAME_FORM_TITLE}",
+			"actions/change_username.php"
+		);
 
-		return [$box];
+		$emailChange = new ChangeUsernameForm(
+			$this->dictionary,
+			"@{PROFILE_CHANGE_EMAIL_FORM_TITLE}",
+			"actions/change_email.php"
+		);
+
+		$content = [
+			new Col([], 1),
+			new Col([$passwordChange], 4),
+			new Col([], 2),
+			new Col([$usernameChange, $emailChange], 4),
+			new Col([], 1)
+		];
+
+		return [new Container([new Row($content)])];
 	}
 }

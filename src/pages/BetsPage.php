@@ -19,34 +19,28 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Html;
-use chameleon\HtmlTemplate;
-use chameleon\LoginForm;
 use chameleon_bootstrap\Col;
 use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
 /**
- * Class Home
- * The Home Page available when calling index.php
+ * Class Bets
+ * The Bets page, displaying the current matchday's bets with buttons
+ * to the next and previous matchdays
  * @package bundesliga_tippspiel
  */
-class Home extends Page {
+class BetsPage extends Page {
 
 	/**
-	 * Home constructor.
+	 * Bets constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{HOME_TITLE}",
-			"",
-			"index.php"
+			"@{BETS_TITLE}",
+			"@{BETS_JUMBO_TITLE}",
+			"bets.php"
 		);
-		$jumboTitle = $this->isUserLoggedIn() ?
-			$this->user->username : "@{HOME_JUMBO_TITLE}";
-		$jumbotron = new DefaultJumbotron($jumboTitle);
-		$this->addInnerTemplate("JUMBOTRON", $jumbotron);
 	}
 
 	/**
@@ -54,18 +48,13 @@ class Home extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-		$summary = new HtmlTemplate(__DIR__ . "/templates/home_summary.html",
-			$this->dictionary);
 
-		$login = new LoginForm($this->dictionary,
-			"@{HOME_LOGIN_TITLE}", "actions/login.php");
-		$registerMessage = new Html("@{HOME_REGISTER_MESSAGE}");
+		$matchday = isset($_GET["matchday"]) ? (int)$_GET["matchday"] : null;
 
-		$summaryCol = new Col([$summary], 8, ["text-center"]);
-		$loginCol = new Col([$login, $registerMessage], 4, ["text-center"]);
 
-		return [
-			new Container([new Row([$summaryCol, $loginCol])])
-		];
+		$form = new MatchdayBetForm($this->dictionary, $this->user, $matchday);
+		$box = new Container([new Row([new Col([$form], 12)])]);
+
+		return [$box];
 	}
 }

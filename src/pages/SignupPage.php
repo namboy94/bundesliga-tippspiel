@@ -32,7 +32,7 @@ use chameleon_bootstrap\Row;
  * The Signup page which enables a user to log in or register
  * @package bundesliga_tippspiel
  */
-class Signup extends Page {
+class SignupPage extends Page {
 
 	/**
 	 * Signup constructor.

@@ -17,30 +17,29 @@
  * You should have received a copy of the GNU General Public License
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace bundesliga_tippspiel;
-use chameleon\ForgottenPasswordForm;
+use chameleon_bootstrap\Col;
+use chameleon\HtmlTemplate;
 use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
 /**
- * Class Forgot
- * The Forgotten Password Page
+ * Class Contact
+ * The Contact Page
  * @package bundesliga_tippspiel
  */
-class Forgot extends Page {
+class ContactPage extends Page {
 
 	/**
-	 * Forgot constructor.
+	 * Contact constructor.
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{FORGOT_TITLE}",
-			"{FORGOT_JUMBO_TITLE}",
-			"forgot.php"
-		);
-		$header = new DefaultHeader("@{FORGOT_TITLE}", true);
-		$this->addInnerTemplate("HEADER", $header);
+			"@{CONTACT_TITLE}",
+			"@{CONTACT_JUMBO_TITLE}",
+			"contact.php");
 	}
 
 	/**
@@ -48,14 +47,17 @@ class Forgot extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-		$form = new ForgottenPasswordForm(
-			$this->dictionary,
-			"@{FORGOT_FORM_TITLE}",
-			"actions/password_reset.php",
-			Functions::getRecaptchaSiteKey()
-		);
 
-		$box = new Container([new Row([$form])]);
+		$dividerOne = new Col([], 1);
+		$dividerTwo = new Col([], 2);
+		$admin = new HtmlTemplate(__DIR__ . "/templates/contact_admin.html",
+			$this->dictionary);
+		$source = new HtmlTemplate(__DIR__ . "/templates/contact_source.html",
+			$this->dictionary);
+
+		$box = new Container([new Row([
+			$dividerOne, $admin, $dividerTwo, $source, $dividerOne
+		])]);
 
 		return [$box];
 	}
