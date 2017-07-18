@@ -1,0 +1,12 @@
+{
+  "LOGIN_FAILED_MESSAGE_TITLE": "Anmeldung fehlgeschlagen",
+  "LOGIN_FAILED_MESSAGE_BODY": "Stelle sicher dass der Nutzername und das Password korrekt eingegeben wurden",
+  "RESET_PASSWORD_SUCCESS_TITLE": "Passwort Zurückgesetzt",
+  "RESET_PASSWORD_SUCCESS_BODY": "Sehe in deinem Email-Postfach nach deinem temporären Passwort nach",
+  "EMAIL_CHANGE_SUCCESS_TITLE": "Email Adresse geändert",
+  "EMAIL_CHANGE_SUCCESS_BODY": "Deine Email Adressee wurde erfolgreich geändert!",
+  "USERNAME_CHANGE_SUCCESS_TITLE": "Nutzername geändert",
+  "USERNAME_CHANGE_SUCCESS_BODY": "Dein Nutzername wurde erfolgreich geändert",
+  "PASSWORD_CHANGE_SUCCESS_TITLE": "Passwort geändert",
+  "PASSWORD_CHANGE_SUCCESS_BODY": "Dein Passwort wurde erfolgreich geändert!"
+}

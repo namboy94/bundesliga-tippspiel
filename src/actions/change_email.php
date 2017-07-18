@@ -21,7 +21,7 @@
 namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
 use bundesliga_tippspiel\Functions;
-use chameleon\ChangeUsernameForm;
+use chameleon\ChangeEmailForm;
 use welwitschi\Authenticator;
 use ErrorException;
 
@@ -36,7 +36,7 @@ function changeEmail() {
 	 * We re-use the ChangeUsernameForm
 	 * @SuppressWarnings checkUnusedVariables
 	 */
-	$newEmail = $_POST[ChangeUsernameForm::$newUsername];
+	$newEmail = $_POST[ChangeEmailForm::$newEmail];
 
 	if (isset($_SESSION["user_id"])) {
 		$auth = new Authenticator(Functions::getMysqli());

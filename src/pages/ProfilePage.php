@@ -21,8 +21,8 @@
 namespace bundesliga_tippspiel;
 use chameleon\ChangePasswordForm;
 use chameleon\ChangeUsernameForm;
+use chameleon\ChangeEmailForm;
 use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
 
@@ -66,7 +66,7 @@ class ProfilePage extends Page {
 			"actions/change_username.php"
 		);
 
-		$emailChange = new ChangeUsernameForm(
+		$emailChange = new ChangeEmailForm(
 			$this->dictionary,
 			"@{PROFILE_CHANGE_EMAIL_FORM_TITLE}",
 			"actions/change_email.php"

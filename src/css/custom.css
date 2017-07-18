@@ -43,19 +43,15 @@ html,body {
 }
 
 .comments {
-    background: #F1F1D4;
-}
-
-.comments {
     height: 50em;
     border-bottom-left-radius: 10px;
-    background: #F1F1D4;
+    background: #F1F1F4;
 }
 
 .comment-list {
     overflow: auto;
     height: 43em;
-
+    background: #F1F1D4;
 }
 
 .comment {
