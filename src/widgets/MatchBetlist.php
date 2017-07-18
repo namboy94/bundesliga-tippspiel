@@ -41,6 +41,7 @@ class MatchBetlist extends HtmlTemplate {
 	 * @param Dictionary|null $dictionary: The dictionary to use
 	 * @param Match $match: The match to display the user bets for
 	 * @param User $activeUser: The user that called this page
+	 * @SuppressWarnings docBlocks
 	 */
 	public function __construct(
 		? Dictionary $dictionary, Match $match, User $activeUser

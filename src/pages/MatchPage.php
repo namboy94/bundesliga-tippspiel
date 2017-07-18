@@ -7,8 +7,6 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
 use cheetah\Match;
 
 
@@ -19,6 +17,9 @@ use cheetah\Match;
  */
 class MatchPage extends Page {
 
+	/**
+	 * @var Match|null: The match to display
+	 */
 	private $match;
 
 	/**
@@ -42,6 +43,7 @@ class MatchPage extends Page {
 	/**
 	 * Sets the content of the page
 	 * @return array: The Page content
+	 * @SuppressWarnings docBlocks
 	 */
 	protected function setContent(): array {
 
@@ -51,7 +53,18 @@ class MatchPage extends Page {
 		if ($this->match === null) {
 			return [];
 		} else {
-			return [new Container([new Row([])])];
+
+			/** @noinspection PhpParamsInspection */
+			$logoScore =
+				new MatchLogoScoreHeader($this->dictionary, $this->match);
+			/** @noinspection PhpParamsInspection */
+			$matchGoals =
+				new MatchGoalList($this->dictionary, $this->match);
+			/** @noinspection PhpParamsInspection */
+			$matchBets =
+				new MatchBetlist($this->dictionary, $this->match, $this->user);
+
+			return [$logoScore, $matchGoals, $matchBets];
 		}
 	}
 }
