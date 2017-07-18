@@ -55,7 +55,7 @@ class Profile extends Page {
 		$passwordChange = new ChangePasswordForm(
 			$this->dictionary,
 			"@{PROFILE_CHANGE_PASSWORD_FORM_TITLE}",
-			"actions/password_change.php"
+			"actions/change_password.php"
 		);
 
 		$usernameChange = new ChangeUsernameForm(
