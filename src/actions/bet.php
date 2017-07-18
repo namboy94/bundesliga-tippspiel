@@ -63,7 +63,7 @@ function bet() {
 				$homeScore = $_POST[$match->homeTeam->id];
 				$awayScore = $_POST[$match->awayTeam->id];
 
-				if ($homeScore === null || $awayScore === null) {
+				if ($homeScore === "" || $awayScore === "") {
 					continue;  // Skip unentered fields
 				}
 
