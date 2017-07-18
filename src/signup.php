@@ -22,4 +22,4 @@ namespace bundesliga_tippspiel;
 require __DIR__ . '/../vendor/autoload.php';
 
 Functions::initializeSession();
-(new SignupPage())->display("en");
+(new SignupPage())->display(Functions::getLanguage());

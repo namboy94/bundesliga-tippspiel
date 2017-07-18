@@ -81,4 +81,11 @@ class Functions {
 	public static function getRecaptchaSiteKey() : string {
 		return "6LefYikUAAAAAMrA5hQAtIzAqyWnFOSnBjrVSUyr";
 	}
+
+	/**
+	 * @return string: The currently active language
+	 */
+	public static function getLanguage() : string {
+		return "de";
+	}
 }

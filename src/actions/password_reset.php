@@ -63,9 +63,11 @@ function passwordReset() {
 		if ($user !== null) {
 			$password = $user->resetPassword();
 			mail($email,
-				$dict->translate("@{PASSWORD_RESET_EMAIL_TITLE}", "en"),
+				$dict->translate("@{PASSWORD_RESET_EMAIL_TITLE}",
+					Functions::getLanguage()),
 				$dict->translate("@{PASSWORD_RESET_EMAIL_BODY_START}\n\n" .
-					$password . "\n\n@{PASSWORD_RESET_EMAIL_BODY_END}", "en"));
+					$password . "\n\n@{PASSWORD_RESET_EMAIL_BODY_END}",
+					Functions::getLanguage()));
 		}
 
 		$_SESSION["message"] = [

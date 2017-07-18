@@ -70,9 +70,11 @@ function signup() {
 
 		mail(
 			$email,
-			$dict->translate("@{SIGNUP_EMAIL_TITLE}", "en"),
+			$dict->translate("@{SIGNUP_EMAIL_TITLE}",
+				Functions::getLanguage()),
 			$dict->translate("@{SIGNUP_EMAIL_BODY_START}\n\n" .
-				$confirmationUrl . "\n\n@{SIGNUP_EMAIL_BODY_END}", "en"));
+				$confirmationUrl . "\n\n@{SIGNUP_EMAIL_BODY_END}",
+				Functions::getLanguage()));
 
 		$_SESSION["message"] = [
 			"type" => "success",
