@@ -1,0 +1,29 @@
+<form class="form-horizontal" action="#{TARGET}" method="post">
+    <legend class="text-center">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1">
+                <a href="#{PREVIOUS_LINK}">#{LEFT_ARROW}</a>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6">#{TITLE}</div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-1">
+                <a href="#{NEXT_LINK}">#{RIGHT_ARROW}</a>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </legend>
+    <fieldset>
+        <ul class="list-group">
+            &{ELEMENTS}
+        </ul>
+        <input value="#{MATCHDAY_REFERRER}" name="matchday_referrer" hidden>
+        <hr>
+        <div class="form-group">
+            <div class="col-lg-12 text-center">
+                <button type="submit" class="btn btn-primary">@{MATCHDAY_BETFORM_CONFIRM_TITLE}</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

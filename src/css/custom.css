@@ -1,0 +1,74 @@
+/**
+ * Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
+ *
+ * This file is part of bundesliga_tippspiel.
+ *
+ * bundesliga_tippspiel is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * bundesliga_tippspiel is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.main-content {
+    margin-top: 20px;
+}
+
+.jumbo-bg {
+    border-radius: 10px;
+    padding-bottom: 10px;
+    background-color: #a2b97c;
+}
+
+.jumbo-text {
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+html,body {
+    height: 100%
+}
+
+.jumbotron {
+    margin-bottom: 0;
+}
+
+.comments {
+    background: orange;
+}
+
+.comments {
+    height: 50em;
+    border-bottom-left-radius: 10px;
+    background: orange;
+}
+
+.comment-list {
+    overflow: auto;
+    height: 43em;
+
+}
+
+.comment {
+    -moz-word-break: break-all;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens:auto;
+}
+
+.deleted-comment {
+    background: gray;
+}
