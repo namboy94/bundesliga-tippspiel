@@ -33,14 +33,23 @@ use welwitschi\User;
 class CommentBar extends HtmlTemplate {
 
 	/**
+	 * @var string: The content ID which acts as a key in the $_POST variable
+	 */
+	public static $contentId = "comment_content";
+
+	/**
 	 * CommentBar constructor.
 	 * @param Dictionary|null $dictionary: Dictionary used to translate
 	 * @param User $activeUser: The user that requsted the page
 	 */
 	public function __construct(
-		? Dictionary $dictionary,
-	    User $activeUser
+		? Dictionary $dictionary, User $activeUser
 	) {
+
+		parent::__construct(
+			__DIR__ . "/templates/comment_bar.html", $dictionary
+		);
+
 		$db = Functions::getMysqli();
 		$commentManager = new CommentManager($db);
 		$comments = $commentManager->getComments();
@@ -54,10 +63,7 @@ class CommentBar extends HtmlTemplate {
 		}
 
 		$this->addCollectionFromArray("COMMENTS", $commentFields);
-
-		parent::__construct(
-			__DIR__ . "/templates/comment_bar.html", $dictionary
-		);
+		$this->bindParam("CONTENT_ID", self::$contentId);
 	}
 
 }

@@ -41,6 +41,11 @@ class CommentField extends HtmlTemplate {
 	public function __construct(
 		? Dictionary $dictionary, User $user, Comment $comment
 	) {
+		// Check which template to use
+		$template = __DIR__ . "/templates/comment" .
+			(($user->id === $comment->user->id) ? "_editable" : "") . ".html";
+
+		parent::__construct($template, $dictionary);
 
 		$this->bindParams([
 			"USERNAME" => $user->username,
@@ -48,12 +53,6 @@ class CommentField extends HtmlTemplate {
 			"TIMESTAMP" => date('Y-m-d:h-i-s', $comment->timestamp),
 			"ID" => (string)$comment->id
 		]);
-
-		// Check which template to use
-		$template = __DIR__ . "/template/comment" .
-			(($user->id === $comment->user->id) ? "_editable" : "") . ".html";
-
-		parent::__construct($template, $dictionary);
 	}
 
 }

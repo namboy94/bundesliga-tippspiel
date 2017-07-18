@@ -19,12 +19,16 @@
  */
 
 namespace bundesliga_tippspiel_comments;
-
-
 use mysqli;
 use welwitschi\Authenticator;
 use welwitschi\User;
 
+
+/**
+ * Class Comment
+ * Models a Comment object that refers to a row in the database
+ * @package bundesliga_tippspiel_comments
+ */
 class Comment {
 
 	/**
@@ -51,7 +55,7 @@ class Comment {
 	 */
 	public static function fromRow(mysqli $db, array $row) {
 		$auth = new Authenticator($db);
-		$user = $auth->getUserFromId((int)$row["user"]);
+		$user = $auth->getUserFromId((int)$row["user_id"]);
 		return new Comment(
 			(int)$row["id"],
 			$user,

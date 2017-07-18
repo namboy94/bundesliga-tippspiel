@@ -45,7 +45,7 @@ class CommentManager {
 	public static function createCommentsTable(mysqli $db) {
 		$db->query(
 			"CREATE TABLE IF NOT EXISTS comments (" .
-			"    id INTEGER NOT NULL," .
+			"    id INTEGER NOT NULL AUTO_INCREMENT," .
 			"    user_id INTEGER NOT NULL," .
 			"    content VARCHAR(255) NOT NULL," .
 			"    timestamp INTEGER NOT NULL," .
@@ -87,8 +87,6 @@ class CommentManager {
 	 */
 	public function writeComment(User $user, string $content) : bool {
 		if ($user->isLoggedIn()) {
-			return false;
-		} else {
 
 			$content = htmlspecialchars($content); // XSS Protection :)
 			$timestamp = time();
@@ -97,10 +95,12 @@ class CommentManager {
 				"INSERT INTO comments (user_id, content, timestamp) " .
 				"VALUES (?, ?, ?);"
 			);
-			$stmt->bind_param("isi", $user->id, $content, $$timestamp);
+			$stmt->bind_param("isi", $user->id, $content, $timestamp);
 			$result = $stmt->execute();
-			$this->db->commit();
 			return $result !== false;
+
+		} else {
+			return false;
 		}
 	}
 

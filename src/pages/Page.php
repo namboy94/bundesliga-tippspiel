@@ -19,10 +19,10 @@
  */
 
 namespace bundesliga_tippspiel;
+use bundesliga_tippspiel_comments\CommentBar;
 use chameleon\Dictionary;
 use chameleon\DismissableMessage;
 use chameleon\HtmlTemplate;
-use chameleon\HtmlTemplateCollection;
 use chameleon_bootstrap\Col;
 use cheetah\SchemaCreator;
 use welwitschi\Authenticator;
@@ -88,7 +88,7 @@ abstract class Page extends HtmlTemplate {
 		$wrapper = new Col($content, $colSize, ["main-content"]);
 
 		if ($this->isUserLoggedIn()) {
-			$commentBar = new CommentBar($this->dictionary);
+			$commentBar = new CommentBar($this->dictionary, $this->user);
 			$this->addCollectionFromArray("BODY", [$wrapper, $commentBar]);
 		} else {
 			$this->addInnerTemplate("BODY", $wrapper);
