@@ -25,13 +25,14 @@ use welwitschi\Authenticator;
 use ErrorException;
 
 /**
- * Changes the username of a logged in user
+ * Changes the email address of a logged in user
  */
-function change_username() {
+function change_email() {
 
 	Functions::initializeSession();
 
-	$newUsername = $_POST[ChangeUsernameForm::$newUsername];
+	// We re-use the ChangeUsernameForm
+	$newEmail = $_POST[ChangeUsernameForm::$newUsername];
 
 	if (isset($_SESSION["user_id"])) {
 		$auth = new Authenticator(Functions::getMysqli());
@@ -40,22 +41,22 @@ function change_username() {
 			if (!$user->isLoggedIn()) {
 				$_SESSION["message"] = [
 					"type" => "danger",
-					"title" => "@{USERNAME_CHANGE_FAIL_LOGIN_AUTH_TITLE}",
-					"body" => "@{USERNAME_CHANGE_FAIL_LOGIN_AUTH_BODY}"
+					"title" => "@{EMAIL_CHANGE_FAIL_LOGIN_AUTH_TITLE}",
+					"body" => "@{EMAIL_CHANGE_FAIL_LOGIN_AUTH_BODY}"
 				];
 				header("Location: ../index.php");
-			} elseif ($user->changeUsername($newUsername)) {
+			} elseif ($user->changeEmail($newEmail)) {
 				$_SESSION["message"] = [
 					"type" => "success",
-					"title" => "@{USERNAME_CHANGE_SUCCESS_TITLE}",
-					"body" => "@{USERNAME_CHANGE_SUCCESS_BODY}"
+					"title" => "@{EMAIL_CHANGE_SUCCESS_TITLE}",
+					"body" => "@{EMAIL_CHANGE_SUCCESS_BODY}"
 				];
 				header("Location: ../profile.php");
 			} else {
 				$_SESSION["message"] = [
 					"type" => "danger",
-					"title" => "@{USERNAME_CHANGE_FAIL_DUPLICATE_TITLE}",
-					"body" => "@{USERNAME_CHANGE_FAIL_DUPLICATE_BODY}"
+					"title" => "@{EMAIL_CHANGE_FAIL_DUPLICATE_TITLE}",
+					"body" => "@{EMAIL_CHANGE_FAIL_DUPLICATE_BODY}"
 				];
 				header("Location: ../profile.php");
 			}
@@ -76,7 +77,7 @@ set_error_handler(function($errno, $errstr, $errfile, $errline ){
 	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 try {
-	change_username();
+	change_email();
 } catch (ErrorException $e) {
 	echo "Oops... Something broke on our end, sorry!";
 }

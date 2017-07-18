@@ -42,7 +42,9 @@ class Profile extends Page {
 			"@{PROFILE_JUMBO_TITLE}",
 			"profile.php"
 		);
-		$jumbotron = new DefaultJumbotron($this->user->username);
+		$jumbotron = new DefaultJumbotron(
+			$this->user->username . "<br>" . $this->user->email
+		);
 		$this->addInnerTemplate("JUMBOTRON", $jumbotron);
 	}
 
@@ -64,11 +66,17 @@ class Profile extends Page {
 			"actions/change_username.php"
 		);
 
+		$emailChange = new ChangeUsernameForm(
+			$this->dictionary,
+			"@{PROFILE_CHANGE_EMAIL_FORM_TITLE}",
+			"actions/change_email.php"
+		);
+
 		$content = [
 			new Col([], 1),
 			new Col([$passwordChange], 4),
 			new Col([], 2),
-			new Col([$usernameChange], 4),
+			new Col([$usernameChange, $emailChange], 4),
 			new Col([], 1)
 		];
 
