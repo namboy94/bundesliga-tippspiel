@@ -61,15 +61,18 @@ class HomePage extends Page {
 			"@{HOME_LOGIN_TITLE}", "actions/login.php");
 		$registerMessage = new Html("@{HOME_REGISTER_MESSAGE}");
 
-		$matchBets = new MatchdayBetForm($this->dictionary, $this->user, null, true);
+		if ($this->isUserLoggedIn()) {
 
-		$summaryCol = new Col([$summary], 6, ["text-center"]);
-		$loginCol = new Col([$login, $registerMessage], 4, ["text-center"]);
-		$matchBetCol = new Col([$matchBets], 6);
+			$matchBets = new MatchdayBetForm($this->dictionary,
+				$this->user, null, true);
 
-		if ($this->user->isLoggedIn()) {
+			$summaryCol = new Col([$summary], 6, ["text-center"]);
+			$matchBetCol = new Col([$matchBets], 6);
 			return [new Row([$summaryCol, $matchBetCol])];
 		} else {
+			$summaryCol = new Col([$summary], 8, ["text-center"]);
+			$loginCol = new Col(
+				[$login, $registerMessage], 4, ["text-center"]);
 			return [new Row([$summaryCol, $loginCol])];
 		}
 	}
