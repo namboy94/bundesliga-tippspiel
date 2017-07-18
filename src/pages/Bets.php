@@ -19,6 +19,9 @@
  */
 
 namespace bundesliga_tippspiel;
+use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
+use chameleon_bootstrap\Row;
 
 
 /**
@@ -45,6 +48,13 @@ class Bets extends Page {
 	 * @return array: The Page content
 	 */
 	protected function setContent(): array {
-		return [];
+
+		$matchday = isset($_GET["matchday"]) ? (int)$_GET["matchday"] : null;
+
+
+		$form = new MatchdayBetForm($this->dictionary, $this->user, $matchday);
+		$box = new Container([new Row([new Col([$form], 12)])]);
+
+		return [$box];
 	}
 }
