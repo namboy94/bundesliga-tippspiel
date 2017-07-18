@@ -82,7 +82,8 @@ class MatchdayBetForm extends Form {
 			"PREVIOUS_LINK" => $previous,
 			"NEXT_LINK" => $next,
 			"LEFT_ARROW" => $previousArrow,
-			"RIGHT_ARROW" => $nextArrow
+			"RIGHT_ARROW" => $nextArrow,
+			"MATCHDAY_REFERRER" => $matchDay
 		]);
 
 		$this->changeTemplate(__DIR__ . "/templates/matchday_bets.html");
