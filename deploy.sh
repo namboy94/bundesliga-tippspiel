@@ -1,6 +1,6 @@
 #!/bin/bash
 
-composer update
+composer update --no-dev
 
 echo $DB_PASS > DB_PASS.secret
 echo $RECAPTCHA_SITE_KEY > RECAPTCHA_SITE_KEY.secret
