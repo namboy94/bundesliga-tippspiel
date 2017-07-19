@@ -177,7 +177,7 @@ abstract class Page extends HtmlTemplate {
 			header("Location: index.php");
 			return "";
 		} else {
-			return parent::render(Functions::getLanguage());
+			return parent::render($language);
 		}
 	}
 
@@ -185,7 +185,7 @@ abstract class Page extends HtmlTemplate {
 	/**
 	 * Overrides the display method to automatically select the language
 	 */
-	public function display() {
-		parent::display(Functions::getLanguage());
+	public function displayPage() {
+		$this->display(Functions::getLanguage());
 	}
 }
