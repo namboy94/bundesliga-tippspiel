@@ -4,17 +4,33 @@
 
   "RESET_PASSWORD_SUCCESS_TITLE": "Passwort Zurückgesetzt",
   "RESET_PASSWORD_SUCCESS_BODY": "Sehe in deinem Email-Postfach nach deinem temporären Passwort nach",
+  "RESET_PASSWORD_ERROR_RECAPTCHA_TITLE": "Password Zurücksetzen fehlgeschlagen",
+  "RESET_PASSWORD_ERROR_RECAPTCHA_BODY": "Betätige bitte den ReCaptcha Knopf",
 
   "PASSWORD_CHANGE_SUCCESS_TITLE": "Passwort geändert",
   "PASSWORD_CHANGE_SUCCESS_BODY": "Dein Passwort wurde erfolgreich geändert!",
+  "PASSWORD_CHANGE_FAIL_PASSWORD_MATCH_TITLE": "Passwort nicht geändert",
+  "PASSWORD_CHANGE_FAIL_PASSWORD_MATCH_BODY" : "Die Passwörter stimmen nicht miteinander überein",
+  "PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_TITLE": "Passwort nicht geändert",
+  "PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_BODY": "Das Passwort muss mindestens 4 Zeichen lang sein",
+  "PASSWORD_CHANGE_FAIL_OLD_PASSWORD_TITLE": "Passwort nicht geändert",
+  "PASSWORD_CHANGE_FAIL_OLD_PASSWORD_BODY": "Das alte Passwort stimm nicht mit dem bisherigen Passwort überein",
 
   "EMAIL_CHANGE_SUCCESS_TITLE": "Email Adresse geändert",
   "EMAIL_CHANGE_SUCCESS_BODY": "Deine Email Adressee wurde erfolgreich geändert!",
+  "EMAIL_CHANGE_FAIL_LOGIN_AUTH_TITLE": "Email Adresse nicht geändert",
+  "EMAIL_CHANGE_FAIL_LOGIN_AUTH_BODY": "Du musst angemeldet sein um deine Email Adresse ändern zu können",
+  "EMAIL_CHANGE_FAIL_DUPLICATE_TITLE": "Email Adresse nicht geändert",
+  "EMAIL_CHANGE_FAIL_DUPLICATE_BODY": "Diese Email Adresse wird bereits verwendet",
 
   "USERNAME_CHANGE_SUCCESS_TITLE": "Nutzername geändert",
   "USERNAME_CHANGE_SUCCESS_BODY": "Dein Nutzername wurde erfolgreich geändert",
   "USERNAME_CHANGE_FAIL_USERNAME_TITLE": "Benutzername konnte nicht geändert werden",
-  "USERNAME_CHANGE_FAIL_USERNAME_BODY": "Dieser Nutzername ist nicht gültig",
+  "USERNAME_CHANGE_FAIL_USERNAME_BODY": "Der Benutzername muss zwischen 1 und 10 Zeichen lang sein",
+  "USERNAME_CHANGE_FAIL_LOGIN_AUTH_TITLE": "Benutzername konnte nicht geändert werden",
+  "USERNAME_CHANGE_FAIL_LOGIN_AUTH_BODY": "Du musst angemeldet sein um deinen Nutzernamen zu ändern",
+  "USERNAME_CHANGE_FAIL_DUPLICATE_TITLE": "Benutzername konnte nicht geändert werden",
+  "USERNAME_CHANGE_FAIL_DUPLICATE_BODY": "Dieser Benutzername wird bereits verwendet",
 
   "SIGNUP_SUCCESS_MESSAGE_TITLE": "Registrierung Erfolgreich",
   "SIGNUP_SUCCESS_MESSAGE_BODY": "Seh in deinem Email Postfach nach einer Bestätigungsemail und folge den enthaltenen Anweisungen",
@@ -22,8 +38,10 @@
   "SIGNUP_FAILED_MESSAGE_BODY": "Der angegebene Benutzername oder Email Adresse wurden bereits verwendet",
   "SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_TITLE": "Registrierung Fehlgeschlagen",
   "SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_BODY": "Die Passwörter stimmen nicht miteinander überein",
+  "SIGNUP_FAILED_PASSWORD_TOO_SHORT_TITLE": "Registrierung Fehlgeschlagen",
+  "SIGNUP_FAILED_PASSWORD_TOO_SHORT_BODY": "Das Passwort muss mindestend 4 Zeichen lang sein",
   "SIGNUP_FAILED_RECAPTCHA_MESSAGE_TITLE":  "Registrierung Fehlgeschlagen",
-  "SIGNUP_FAILED_RECAPTCHA_MESSAGE_BODY":  "Betätige bitte den ReCaptcha Knopf!",
+  "SIGNUP_FAILED_RECAPTCHA_MESSAGE_BODY":  "Betätige bitte den ReCaptcha Knopf",
   "SIGNUP_FAILED_USERNAME_TITLE": "Registrierung Fehlgeschlagen",
   "SIGNUP_FAILED_USERNAME_BODY": "Der Nutzername muss zwischen 1 und 10 Zeichen lang sein!",
 
@@ -32,5 +50,10 @@
   "BET_SUCCESS_WITH_ERRORS_TITLE": "Tippen erfolgreich",
   "BET_SUCCESS_WITH_ERRORS_BODY": "Es sind allerdings Fehler aufgetreten",
   "BET_SUCCESS_TITLE": "Tippen erfolgreich",
-  "BET_SUCCESS_BODY": "Deine Tipps wurden erfolgreich gespeichert"
+  "BET_SUCCESS_BODY": "Deine Tipps wurden erfolgreich gespeichert",
+
+  "CONFIRM_FAILED_MESSAGE_TITLE": "Bestätigung fehlgeschlagen",
+  "CONFIRM_FAILED_MESSAGE_BODY": "Der Aktivierungsschlüssel ist ungültig",
+  "CONFIRM_SUCCESS_MESSAGE_TITLE": "Bestätigung erfolgreich",
+  "CONFIRM_SUCCESS_MESSAGE_BODY": "Du kannst dich jetzt mit deinem Benutzernamen und Passwort anmelden"
 }

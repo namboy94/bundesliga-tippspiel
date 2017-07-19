@@ -52,7 +52,7 @@ function signup() {
 			"body" => "@{SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_BODY}"
 		];
 
-	} elseif (strlen($password) < 5) {
+	} elseif (strlen($password) < 4) {
 		$_SESSION["message"] = [
 			"type" => "danger",
 			"title" => "@{SIGNUP_FAILED_PASSWORD_TOO_SHORT_TITLE}",

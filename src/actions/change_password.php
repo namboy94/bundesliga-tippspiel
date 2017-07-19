@@ -44,7 +44,7 @@ function changePassword() {
 		];
 		header("Location: ../profile.php");
 
-	} elseif (strlen($newPassword) < 5) {
+	} elseif (strlen($newPassword) < 4) {
 		$_SESSION["message"] = [
 			"type" => "danger",
 			"title" => "@{PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_TITLE}",
