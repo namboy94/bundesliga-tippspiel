@@ -2,19 +2,15 @@
     <form class="form-horizontal" action="actions/comment.php" method="post" style="margin: 1em">
         <fieldset>
             <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-primary">@{COMMENT_SUBMIT_BUTTON_TITLE}</button>
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" placeholder="@{COMMENT_PLACEHOLDER}" id="#{CONTENT_ID}" name="#{CONTENT_ID}" type="text">
-                    </div>
+                <div class="row container-fluid">
+                    <input class="form-control" placeholder="@{COMMENT_PLACEHOLDER}" id="#{CONTENT_ID}" name="#{CONTENT_ID}" type="text">
+                    <button type="submit" class="btn btn-primary comment_submit">@{COMMENT_SUBMIT_BUTTON_TITLE}</button>
                 </div>
             </div>
         </fieldset>
     </form>
     <div class="comment-list">
-        <table class="table .table-striped">
+        <table class="table .table-striped" border="1">
             <tbody>
                 &{COMMENTS}
             </tbody>

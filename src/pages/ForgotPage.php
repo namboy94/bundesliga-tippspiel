@@ -19,6 +19,7 @@
  */
 namespace bundesliga_tippspiel;
 use chameleon\ForgottenPasswordForm;
+use chameleon_bootstrap\Col;
 use chameleon_bootstrap\Container;
 use chameleon_bootstrap\Row;
 
@@ -36,9 +37,11 @@ class ForgotPage extends Page {
 	public function __construct() {
 		parent::__construct(
 			"@{FORGOT_TITLE}",
-			"{FORGOT_JUMBO_TITLE}",
+			"@{FORGOT_JUMBO_TITLE}",
 			"forgot.php"
 		);
+
+		// Enable Recaptcha
 		$header = new DefaultHeader("@{FORGOT_TITLE}", true);
 		$this->addInnerTemplate("HEADER", $header);
 	}
@@ -54,6 +57,8 @@ class ForgotPage extends Page {
 			"actions/password_reset.php",
 			Functions::getRecaptchaSiteKey()
 		);
-		return [new Row([$form])];
+		$wrapper = new Col([$form], 6);
+		$div = new Col([], 3);
+		return [new Row([$div, $wrapper, $div])];
 	}
 }

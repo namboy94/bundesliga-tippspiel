@@ -55,7 +55,9 @@ class DefaultFooter extends Footer {
 			$dict,
 			new Hyperlink("@{FOOTER_TITLE}", "about.php"),
 			[$authorButton],
-			[$sourceButton]);
+			[$sourceButton],
+			true
+		);
 	}
 
 }

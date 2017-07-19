@@ -24,6 +24,7 @@ use chameleon\Dictionary;
 use chameleon\DismissableMessage;
 use chameleon\HtmlTemplate;
 use chameleon_bootstrap\Col;
+use chameleon_bootstrap\Container;
 use cheetah\SchemaCreator;
 use welwitschi\Authenticator;
 use welwitschi\User;
@@ -84,12 +85,12 @@ abstract class Page extends HtmlTemplate {
 
 		$colSize = $this->isUserLoggedIn() ? 9 : 12;
 		$content = $this->setContent();
-		array_push($content, $footer);
-		$wrapper = new Col($content, $colSize, ["main-content"]);
+		$content = new Container($content, true);
+		$wrapper = new Col([$content], $colSize, ["main-content"]);
 
 		if ($this->isUserLoggedIn()) {
 			$commentBar = new CommentBar($this->dictionary, $this->user);
-			$this->addCollectionFromArray("BODY", [$wrapper, $commentBar]);
+			$this->addCollectionFromArray("BODY", [$commentBar, $wrapper]);
 		} else {
 			$this->addInnerTemplate("BODY", $wrapper);
 		}
@@ -98,7 +99,8 @@ abstract class Page extends HtmlTemplate {
 			"HEADER" => $header,
 			"NAVBAR" => $navbar,
 			"MESSAGE" => $this->_checkForDismissableMessage(),
-			"JUMBOTRON" => $jumbotron
+			"JUMBOTRON" => $jumbotron,
+			"FOOTER" => $footer
 		]);
 	}
 

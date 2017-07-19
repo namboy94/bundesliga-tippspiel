@@ -49,7 +49,9 @@ class DefaultHeader extends Header {
 
 		$styleSheets = [
 			new BootstrapStyleSheet(),
-			new Stylesheet("css/custom.css")
+			new Stylesheet("css/custom.css"),
+			new Stylesheet("css/champlates.css"),
+			new Stylesheet("css/comments.css")
 		];
 
 		if ($useRecaptcha) {

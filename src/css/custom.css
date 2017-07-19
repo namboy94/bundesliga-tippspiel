@@ -34,37 +34,23 @@
     margin-bottom: 0;
 }
 
+/*
 html,body {
     height: 100%
+}*/
+
+.navbar-fixed-bottom {
+    background: #f8f8f8;
+}
+body {
+    margin-bottom: 50px;
 }
 
 .jumbotron {
     margin-bottom: 0;
 }
 
-.comments {
-    height: 50em;
-    border-bottom-left-radius: 10px;
-    background: #F1F1F4;
-}
-
-.comment-list {
-    overflow: auto;
-    height: 43em;
-    background: #F1F1D4;
-}
-
-.comment {
-    -moz-word-break: break-all;
-    -ms-word-break: break-all;
-    word-break: break-all;
-    word-break: break-word;
-
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    hyphens:auto;
-}
-
 .deleted-comment {
     background: gray;
 }
+

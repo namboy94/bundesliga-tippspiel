@@ -35,20 +35,21 @@ class CommentField extends HtmlTemplate {
 	/**
 	 * CommentField constructor.
 	 * @param Dictionary|null $dictionary: The dictionary to use
-	 * @param User $user: The user that is associated with this comment
+	 * @param User $activeUseruser: The user that is viewing this field
 	 * @param Comment $comment: The comment to display
 	 */
 	public function __construct(
-		? Dictionary $dictionary, User $user, Comment $comment
+		? Dictionary $dictionary, User $activeUser, Comment $comment
 	) {
 		// Check which template to use
 		$template = __DIR__ . "/templates/comment" .
-			(($user->id === $comment->user->id) ? "_editable" : "") . ".html";
+			(($activeUser->id === $comment->user->id)
+				? "_editable" : "") . ".html";
 
 		parent::__construct($template, $dictionary);
 
 		$this->bindParams([
-			"USERNAME" => $user->username,
+			"USERNAME" => $comment->user->username,
 			"CONTENT" => $comment->content,
 			"TIMESTAMP" => date('Y-m-d:h-i-s', $comment->timestamp),
 			"ID" => (string)$comment->id
