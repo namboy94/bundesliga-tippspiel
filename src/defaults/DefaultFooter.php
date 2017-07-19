@@ -22,6 +22,7 @@ namespace bundesliga_tippspiel;
 use chameleon\Footer;
 use chameleon\Hyperlink;
 use chameleon\NavbarButton;
+use chameleon\NavbarLogo;
 
 
 /**
@@ -51,11 +52,29 @@ class DefaultFooter extends Footer {
 			$dict, new Hyperlink($version, $gitlab), false
 		);
 
+		$champlatesLogo = new NavbarLogo(
+			"resources/images/logos/champlates.png",
+			"https://gitlab.namibsun.net/namboy94/champlates"
+		);
+		$cheetahBetsLogo = new NavbarLogo(
+			"resources/images/logos/cheetah-bets.png",
+			"https://gitlab.namibsun.net/namboy94/cheetah-bets"
+		);
+		$welwitschiAuthLogo = new NavbarLogo(
+			"resources/images/logos/welwitschi-auth.png",
+			"https://gitlab.namibsun.net/namboy94/welwitschi-auth"
+		);
+
 		parent::__construct(
 			$dict,
 			new Hyperlink("@{FOOTER_TITLE}", "about.php"),
 			[$authorButton],
-			[$sourceButton],
+			[
+				$champlatesLogo,
+				$cheetahBetsLogo,
+				$welwitschiAuthLogo,
+				$sourceButton
+			],
 			true
 		);
 	}
