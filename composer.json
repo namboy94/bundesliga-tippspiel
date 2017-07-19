@@ -1,8 +1,8 @@
 {
   "require": {
-    "namboy94/welwitschi-auth": "dev-develop",
-    "namboy94/cheetah-bets": "dev-develop",
-    "namboy94/champlates": "dev-develop",
+    "namboy94/welwitschi-auth": "dev-master",
+    "namboy94/cheetah-bets": "dev-master",
+    "namboy94/champlates": "dev-master",
     "ext-mysqli" : "*",
     "ext-curl": "*"
   },
