@@ -43,6 +43,15 @@ function changePassword() {
 			"body" => "@{PASSWORD_CHANGE_FAIL_PASSWORD_MATCH_BODY}"
 		];
 		header("Location: ../profile.php");
+
+	} elseif (strlen($newPassword) < 5) {
+		$_SESSION["message"] = [
+			"type" => "danger",
+			"title" => "@{PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_TITLE}",
+			"body" => "@{PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_BODY}"
+		];
+		header("Location: ../profile.php");
+
 	} elseif (isset($_SESSION["user_id"])) {
 		$auth = new Authenticator(Functions::getMysqli());
 		$user = $auth->getUserFromId($_SESSION["user_id"]);

@@ -58,7 +58,8 @@ class SignupPage extends Page {
 			$this->dictionary,
 			"@{SIGNUP_REGISTER_FORM_TITLE}",
 			"actions/signup.php",
-			Functions::getRecaptchaSiteKey()
+			Functions::getRecaptchaSiteKey(),
+			10
 		);
 
 		$login = new LoginForm(

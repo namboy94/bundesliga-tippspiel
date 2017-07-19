@@ -45,6 +45,15 @@ function changeUsername() {
 					"body" => "@{USERNAME_CHANGE_FAIL_LOGIN_AUTH_BODY}"
 				];
 				header("Location: ../index.php");
+
+			} elseif ($newUsername === "") {
+				$_SESSION["message"] = [
+					"type" => "danger",
+					"title" => "@{USERNAME_CHANGE_FAIL_USERNAME_TITLE}",
+					"body" => "@{USERNAME_CHANGE_FAIL_USERNAME_BODY}"
+				];
+				header("Location: ../profile.php");
+
 			} elseif ($user->changeUsername($newUsername)) {
 				$_SESSION["message"] = [
 					"type" => "success",

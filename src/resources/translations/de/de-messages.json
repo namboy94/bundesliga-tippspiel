@@ -1,12 +1,36 @@
 {
   "LOGIN_FAILED_MESSAGE_TITLE": "Anmeldung fehlgeschlagen",
   "LOGIN_FAILED_MESSAGE_BODY": "Stelle sicher dass der Nutzername und das Password korrekt eingegeben wurden",
+
   "RESET_PASSWORD_SUCCESS_TITLE": "Passwort Zurückgesetzt",
   "RESET_PASSWORD_SUCCESS_BODY": "Sehe in deinem Email-Postfach nach deinem temporären Passwort nach",
+
+  "PASSWORD_CHANGE_SUCCESS_TITLE": "Passwort geändert",
+  "PASSWORD_CHANGE_SUCCESS_BODY": "Dein Passwort wurde erfolgreich geändert!",
+
   "EMAIL_CHANGE_SUCCESS_TITLE": "Email Adresse geändert",
   "EMAIL_CHANGE_SUCCESS_BODY": "Deine Email Adressee wurde erfolgreich geändert!",
+
   "USERNAME_CHANGE_SUCCESS_TITLE": "Nutzername geändert",
   "USERNAME_CHANGE_SUCCESS_BODY": "Dein Nutzername wurde erfolgreich geändert",
-  "PASSWORD_CHANGE_SUCCESS_TITLE": "Passwort geändert",
-  "PASSWORD_CHANGE_SUCCESS_BODY": "Dein Passwort wurde erfolgreich geändert!"
+  "USERNAME_CHANGE_FAIL_USERNAME_TITLE": "Benutzername konnte nicht geändert werden",
+  "USERNAME_CHANGE_FAIL_USERNAME_BODY": "Dieser Nutzername ist nicht gültig",
+
+  "SIGNUP_SUCCESS_MESSAGE_TITLE": "Registrierung Erfolgreich",
+  "SIGNUP_SUCCESS_MESSAGE_BODY": "Seh in deinem Email Postfach nach einer Bestätigungsemail und folge den enthaltenen Anweisungen",
+  "SIGNUP_FAILED_MESSAGE_TITLE": "Registrierung Fehlgeschlagen",
+  "SIGNUP_FAILED_MESSAGE_BODY": "Der angegebene Benutzername oder Email Adresse wurden bereits verwendet",
+  "SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_TITLE": "Registrierung Fehlgeschlagen",
+  "SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_BODY": "Die Passwörter stimmen nicht miteinander überein",
+  "SIGNUP_FAILED_RECAPTCHA_MESSAGE_TITLE":  "Registrierung Fehlgeschlagen",
+  "SIGNUP_FAILED_RECAPTCHA_MESSAGE_BODY":  "Betätige bitte den ReCaptcha Knopf!",
+  "SIGNUP_FAILED_USERNAME_TITLE": "Registrierung Fehlgeschlagen",
+  "SIGNUP_FAILED_USERNAME_BODY": "Der Nutzername muss zwischen 1 und 10 Zeichen lang sein!",
+
+  "BET_FAIL_INVALID_MATCHDAY_TITLE": "Tippen fehlgeschlagen",
+  "BET_FAIL_INVALID_MATCHDAY_BODY": "Man kann nicht auf diesen Spieltag tippen",
+  "BET_SUCCESS_WITH_ERRORS_TITLE": "Tippen erfolgreich",
+  "BET_SUCCESS_WITH_ERRORS_BODY": "Es sind allerdings Fehler aufgetreten",
+  "BET_SUCCESS_TITLE": "Tippen erfolgreich",
+  "BET_SUCCESS_BODY": "Deine Tipps wurden erfolgreich gespeichert"
 }

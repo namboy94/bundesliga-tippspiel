@@ -52,6 +52,20 @@ function signup() {
 			"body" => "@{SIGNUP_FAILED_PASSWORD_MATCH_MESSAGE_BODY}"
 		];
 
+	} elseif (strlen($password) < 5) {
+		$_SESSION["message"] = [
+			"type" => "danger",
+			"title" => "@{SIGNUP_FAILED_PASSWORD_TOO_SHORT_TITLE}",
+			"body" => "@{SIGNUP_FAILED_PASSWORD_TOO_SHORT_BODY}"
+		];
+
+	} elseif ($username === "" || strlen($username) > 10) {
+		$_SESSION["message"] = [
+			"type" => "danger",
+			"title" => "@{SIGNUP_FAILED_USERNAME_TITLE}",
+			"body" => "@{SIGNUP_FAILED_USERNAME_BODY}"
+		];
+
 		// Check Captcha in production but not on localhost
 	} elseif ($_SERVER["SERVER_NAME"] !== "localhost"
 		&& !Functions::verifyCaptcha($captcha)) {
