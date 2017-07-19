@@ -46,7 +46,12 @@ class Functions {
 	 */
 	public static function initializeSession() {
 		session_start();
-		session_set_cookie_params(86400);
+		session_set_cookie_params(
+			86400,
+			null,
+			$_SERVER["SERVER_NAME"],
+			true,
+			true);
 	}
 
 	/**
