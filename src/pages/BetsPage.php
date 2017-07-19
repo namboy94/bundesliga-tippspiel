@@ -39,7 +39,8 @@ class BetsPage extends Page {
 		parent::__construct(
 			"@{BETS_TITLE}",
 			"@{BETS_JUMBO_TITLE}",
-			"bets.php"
+			"bets.php",
+			true
 		);
 	}
 

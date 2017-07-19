@@ -40,7 +40,8 @@ class ProfilePage extends Page {
 		parent::__construct(
 			"@{PROFILE_TITLE}",
 			"@{PROFILE_JUMBO_TITLE}",
-			"profile.php"
+			"profile.php",
+			true
 		);
 		$jumbotron = new DefaultJumbotron(
 			$this->user->username . "<br>" . $this->user->email

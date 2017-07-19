@@ -35,7 +35,8 @@ class LeaderboardPage extends Page {
 		parent::__construct(
 			"@{LEADERBOARD_TITLE}",
 			"@{LEADERBOARD_JUMBO_TITLE}",
-			"leaderboard.php"
+			"leaderboard.php",
+			true
 		);
 	}
 

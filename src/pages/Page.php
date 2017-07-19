@@ -60,23 +60,37 @@ abstract class Page extends HtmlTemplate {
 	protected $user;
 
 	/**
+	 * @var bool: Indicates if the page can only be seen by logged in users
+	 */
+	private $signInRequired;
+
+	/**
 	 * Page constructor.
 	 * @param string $title : The title of the page (in the header)
 	 * @param string $jumboTitle : The title on the page's Jumbotron
 	 * @param string $pageFile : The page's file name
+	 * @param bool $signInRequired: Indicates if the page requires users to be
+	 *                              signed in
 	 */
 	public function __construct(string $title,
 								string $jumboTitle,
-								string $pageFile) {
-		$this->dictionary = new DefaultDictionary();
-		parent::__construct(
-			__DIR__ . "/templates/page.html", $this->dictionary);
+								string $pageFile,
+								bool $signInRequired = false) {
 
 		// Initialize Authenticator and Database Connections
 		$this->db = Functions::getMysqli();
-		new SchemaCreator($this->db);
 		$this->authenticator = new Authenticator($this->db);
 		$this->user = $this->_getUser();
+
+		$this->signInRequired = $signInRequired;
+		if ($this->signInRequired && !$this->isUserLoggedIn()) {
+			return; // Don't even construct page if access denies
+		}
+		new SchemaCreator($this->db);
+
+		$this->dictionary = new DefaultDictionary();
+		parent::__construct(
+			__DIR__ . "/templates/page.html", $this->dictionary);
 
 		$header = new DefaultHeader($title);
 		$navbar = new DefaultNavbar($pageFile, $this->isUserLoggedIn());
@@ -150,5 +164,28 @@ abstract class Page extends HtmlTemplate {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Renders the page in the currently selected language.
+	 * Redirects to index.php if user is not logged in on protected page
+	 * @param $language: The language in which to render this page
+	 * @return string: The rendered HTML string
+	 */
+	public function render(string $language): string {
+		if ($this->signInRequired && !$this->isUserLoggedIn()) {
+			header("Location: index.php");
+			return "";
+		} else {
+			return parent::render(Functions::getLanguage());
+		}
+	}
+
+	/** @noinspection PhpSignatureMismatchDuringInheritanceInspection */
+	/**
+	 * Overrides the display method to automatically select the language
+	 */
+	public function display() {
+		parent::display(Functions::getLanguage());
 	}
 }

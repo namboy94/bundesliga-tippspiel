@@ -27,7 +27,7 @@ class MatchPage extends Page {
 	 */
 	public function __construct() {
 		parent::__construct(
-			"@{MATCH_TITLE}", "@{MATCH_JUMBO_TITLE}", "match.php"
+			"@{MATCH_TITLE}", "@{MATCH_JUMBO_TITLE}", "match.php", true
 		);
 
 		if ($this->match !== null) {
