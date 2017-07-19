@@ -1,4 +1,4 @@
-# Contributing to champlates
+# Contributing to bundesliga_tippspiel
 
 ## Copyright and Management
 

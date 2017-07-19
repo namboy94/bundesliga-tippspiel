@@ -68,7 +68,7 @@ upload_release_to_gitlab:
     - python gitlab-release-uploader/gitlab-release-uploader.py namboy94 bundesliga-tippspiel $GITLAB_ACCESS_TOKEN
       $(cat version) current_changelog artifacts -b master -u https://gitlab.namibsun.net
 
-deploy_webpage:
+deploy_develop_webpage:
   stage: deploy
   only:
     - master
@@ -76,6 +76,16 @@ deploy_webpage:
   tags:
     - linux-buildserver
   script:
+    - ./deploy.sh
+
+deploy_live_webpage:
+  stage: deploy
+  only:
+    - master
+  tags:
+    - linux-buildserver
+  script:
+    - export LIVE=1
     - ./deploy.sh
 
 gitstats:
