@@ -53,6 +53,7 @@ class ActionException extends Exception {
 	public function __construct(
 		string $messageIdentifier, string $messageType, string $redirect) {
 		$this->messageIdentifier = $messageIdentifier;
+		$this->messageType = $messageType;
 		$this->redirect = $redirect;
 		parent::__construct();
 	}

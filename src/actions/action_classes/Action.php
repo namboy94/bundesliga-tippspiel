@@ -19,6 +19,7 @@
  */
 
 namespace bundesliga_tippspiel_actions;
+use bundesliga_tippspiel\Functions;
 use Exception;
 
 
@@ -33,6 +34,8 @@ abstract class Action {
 	 * Action constructor.
 	 */
 	public function __construct() {
+		Functions::initializeSession();
+		$this->db = Functions::getMysqli();
 	}
 
 	/**
@@ -51,12 +54,10 @@ abstract class Action {
 	 * Exception will be re-thrown to be logged by the system
 	 * @throws Exception: The re-thrown unexpected Exception
 	 */
-	protected function execute() {
+	public function execute() {
 
 		try {
 			$this->defineBehaviour();
-			// If no header(Location...) was set beforehand, just return
-			// to the previous page
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 
 		} catch (ActionException $e) {
@@ -65,7 +66,9 @@ abstract class Action {
 
 		} catch (Exception $e) {
 			echo "Oops... Something broke on our end, sorry!";
+			$this->db->close();
 			throw $e;
 		}
+		$this->db->close();
 	}
 }

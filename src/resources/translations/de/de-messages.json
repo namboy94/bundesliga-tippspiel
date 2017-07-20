@@ -47,6 +47,10 @@
 
   "BET_FAIL_INVALID_MATCHDAY_TITLE": "Tippen fehlgeschlagen",
   "BET_FAIL_INVALID_MATCHDAY_BODY": "Man kann nicht auf diesen Spieltag tippen",
+  "BET_FAIL_INVALID_USER_TITLE": "Tippen fehlgeschlagen",
+  "BET_FAIL_INVALID_USER_BODY": "Nutzer existiert nicht",
+  "BET_FAIL_UNAUTHORIZED_TITLE": "Tippen fehlgeschlagen",
+  "BET_FAIL_UNAUTHORIZED_BODY": "Nutzer is nicht angemeldet",
   "BET_SUCCESS_WITH_ERRORS_TITLE": "Tippen erfolgreich",
   "BET_SUCCESS_WITH_ERRORS_BODY": "Es sind allerdings Fehler aufgetreten",
   "BET_SUCCESS_TITLE": "Tippen erfolgreich",
