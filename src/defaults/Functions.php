@@ -32,7 +32,12 @@ class Functions {
 	/**
 	 * @var string: The database to use
 	 */
-	public static $database = "tippspiel_bundesliga";
+	public static $dbdatabase = "tippspiel_bundesliga";
+
+	/**
+	 * @var string: The database user to use
+	 */
+	public static $dbusername = "tippspiel";
 
 	/**
 	 * @return mysqli: The MySQL Database connection
@@ -40,9 +45,9 @@ class Functions {
 	public static function getMysqli(): mysqli {
 		return new mysqli(
 			"localhost",
-			"tippspiel",
+			self::$dbusername,
 			rtrim(file_get_contents(__DIR__ . "/../../DB_PASS.secret")),
-			self::$database
+			self::$dbdatabase
 		);
 	}
 
