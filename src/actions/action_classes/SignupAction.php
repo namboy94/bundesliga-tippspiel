@@ -33,7 +33,7 @@ class SignupAction extends Action {
 	 * @param bool $authenticationRequired: Set to false since signup does
 	 *                                      not require login
 	 */
-	public function __construct($authenticationRequired = false){
+	public function __construct($authenticationRequired = false) {
 		parent::__construct($authenticationRequired);
 	}
 
@@ -42,7 +42,7 @@ class SignupAction extends Action {
 	 * @return void
 	 * @throws ActionException: An ActionExpression containing message data
 	 */
-	protected function defineBehaviour(){
+	protected function defineBehaviour() {
 
 	}
 

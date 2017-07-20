@@ -38,8 +38,8 @@ class ChangePasswordAction extends Action {
 	protected function defineBehaviour() {
 
 		foreach ([ChangePasswordForm::$oldPassword,
-					 ChangePasswordForm::$newPassword,
-					 ChangePasswordForm::$newPasswordRepeat] as $value) {
+					ChangePasswordForm::$newPassword,
+					ChangePasswordForm::$newPasswordRepeat] as $value) {
 			if (!isset($_POST[$value])) {
 				throw new DangerException("PASSWORD_CHANGE_FAIL_MISSING_INPUT",
 					"../profile.php");

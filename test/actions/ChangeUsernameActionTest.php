@@ -62,6 +62,9 @@ class ChangeUsernameActionTest extends TestClass {
 		$this->assertMessageId("USERNAME_CHANGE_FAIL_USERNAME");
 	}
 
+	/**
+	 * Tests changing the username to an existing username
+	 */
 	public function testDuplicateUsername() {
 		$_POST[ChangeUsernameForm::$newUsername] = "B";
 		(new ChangeUsernameAction())->execute();
@@ -69,6 +72,9 @@ class ChangeUsernameActionTest extends TestClass {
 		$this->assertMessageId("USERNAME_CHANGE_FAIL_DUPLICATE");
 	}
 
+	/**
+	 * Tests a successful username change
+	 */
 	public function testSuccessfulUsernameChange() {
 		$_POST[ChangeUsernameForm::$newUsername] = "C";
 		(new ChangeUsernameAction())->execute();
