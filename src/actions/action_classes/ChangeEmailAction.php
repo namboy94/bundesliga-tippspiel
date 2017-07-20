@@ -44,7 +44,7 @@ class ChangeEmailAction extends Action {
 		}
 
 		$newEmail = $_POST[ChangeEmailForm::$newEmail];
-		$auth = new Authenticator(Functions::getMysqli());
+		$auth = new Authenticator($this->db);
 		$user = $auth->getUserFromId($_SESSION["user_id"]);
 
 		if ($user->changeEmail($newEmail)) {

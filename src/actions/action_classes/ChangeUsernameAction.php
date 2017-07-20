@@ -50,7 +50,7 @@ class ChangeUsernameAction extends Action {
 				"../profile.php");
 		}
 
-		$auth = new Authenticator(Functions::getMysqli());
+		$auth = new Authenticator($this->db);
 		$user = $auth->getUserFromId($_SESSION["user_id"]);
 
 		if ($user->changeUsername($newUsername)) {

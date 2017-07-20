@@ -61,5 +61,8 @@
   "CONFIRM_FAILED_MESSAGE_TITLE": "Bestätigung fehlgeschlagen",
   "CONFIRM_FAILED_MESSAGE_BODY": "Der Aktivierungsschlüssel ist ungültig",
   "CONFIRM_SUCCESS_MESSAGE_TITLE": "Bestätigung erfolgreich",
-  "CONFIRM_SUCCESS_MESSAGE_BODY": "Du kannst dich jetzt mit deinem Benutzernamen und Passwort anmelden"
+  "CONFIRM_SUCCESS_MESSAGE_BODY": "Du kannst dich jetzt mit deinem Benutzernamen und Passwort anmelden",
+
+  "COMMENT_FAIL_NO_INPUT_TITLE": "Kommentieren fehlgeschlagen",
+  "COMMENT_FAIL_NO_INPUT_BODY": "Es wurde keine Nachricht zur Verfügung gestellt"
 }
