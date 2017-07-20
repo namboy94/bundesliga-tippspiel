@@ -74,7 +74,9 @@ class TestClass extends TestCase {
 		parent::setUpBeforeClass();
 
 		// Stuff needed to make this work
-		session_start();
+		if (!isset($_SESSION)) {
+			session_start();
+		}
 		Functions::$dbdatabase = "tippspiel_bundesliga_test";
 		Functions::$dbusername = "phpunit";
 		$_SERVER["SERVER_NAME"] = "local";
@@ -148,5 +150,24 @@ class TestClass extends TestCase {
 			getenv("TEST_DB_PASS"), // Uses environment variable
 			"tippspiel_bundesliga_test"
 		);
+	}
+
+	/**
+	 * Asserts that the title and body session variables are set correctly
+	 * @param string $messageId: The message id/prefix of the message IDs
+	 */
+	protected function assertMessageId(string $messageId) {
+		$this->assertStringStartsWith(
+			"@{" . $messageId, $_SESSION["message"]["title"]);
+		$this->assertStringStartsWith(
+			"@{" . $messageId, $_SESSION["message"]["body"]);
+	}
+
+	/**
+	 * Asserts the type of the message in the Session variable
+	 * @param string $status: The status to compare to
+	 */
+	protected function assertStatus(string $status) {
+		$this->assertEquals($_SESSION["message"]["type"], $status);
 	}
 }

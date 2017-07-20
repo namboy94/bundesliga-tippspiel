@@ -18,8 +18,8 @@
 
   "EMAIL_CHANGE_SUCCESS_TITLE": "Email Adresse geändert",
   "EMAIL_CHANGE_SUCCESS_BODY": "Deine Email Adressee wurde erfolgreich geändert!",
-  "EMAIL_CHANGE_FAIL_LOGIN_AUTH_TITLE": "Email Adresse nicht geändert",
-  "EMAIL_CHANGE_FAIL_LOGIN_AUTH_BODY": "Du musst angemeldet sein um deine Email Adresse ändern zu können",
+  "EMAIL_CHANGE_FAIL_AUTH_TITLE": "Email Adresse nicht geändert",
+  "EMAIL_CHANGE_FAIL_AUTH_BODY": "Du musst angemeldet sein um deine Email Adresse ändern zu können",
   "EMAIL_CHANGE_FAIL_DUPLICATE_TITLE": "Email Adresse nicht geändert",
   "EMAIL_CHANGE_FAIL_DUPLICATE_BODY": "Diese Email Adresse wird bereits verwendet",
 
