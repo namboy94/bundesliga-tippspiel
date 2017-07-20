@@ -41,7 +41,8 @@ class BetAction extends Action {
 	protected function defineBehaviour() {
 
 		$matchDay = $this->_getMatchday();
-		$user = $this->_getUser();
+		$auth = new Authenticator($this->db);
+		$user = $auth->getUserFromId($_SESSION["user_id"]);
 
 		$matches = Match::getAllForMatchday($this->db, $matchDay);
 		$betManager = new BetManager($this->db);
@@ -91,37 +92,6 @@ class BetAction extends Action {
 		}
 
 		return (int)$_POST["matchday_referrer"];
-	}
-
-	/**
-	 * Retrieves the User based on the POST variable
-	 * Also checks if the user is logged in or not. If not, a
-	 * DangerException is thrown
-	 * @return User: The retrieved User object
-	 * @throws DangerException: If either the POST variable is not set or the
-	 *                          user does not exist
-	 * @throws DangerException: If the user is not logged in
-	 */
-	private function _getUser() : User {
-
-		$error = new DangerException("BET_FAIL_INVALID_USER", "../index.php");
-
-		if (!isset($_SESSION["user_id"])) {
-			throw $error;
-		}
-
-		$auth = new Authenticator($this->db);
-		$user = $auth->getUserFromId($_SESSION["user_id"]);
-
-		if ($user === null) {
-			throw $error;
-
-		} elseif (!$user->isLoggedIn()) {
-			throw new DangerException("BET_FAIL_UNAUTHORIZED", "../index.php");
-
-		} else {
-			return $user;
-		}
 	}
 
 	/**

@@ -59,20 +59,20 @@ class ChangeEmailActionTest extends TestClass {
 
 		(new ChangeEmailAction())->execute();
 		$this->assertStatus("danger");
-		$this->assertMessageId("EMAIL_CHANGE_FAIL_AUTH");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
 
 		$_SESSION["user_id"] = -1;
 
 		(new ChangeEmailAction())->execute();
 		$this->assertStatus("danger");
-		$this->assertMessageId("EMAIL_CHANGE_FAIL_AUTH");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
 
 		$this->confirmedUserA->login("A");
 		$this->confirmedUserA->logout();
 
 		(new ChangeEmailAction())->execute();
 		$this->assertStatus("danger");
-		$this->assertMessageId("EMAIL_CHANGE_FAIL_AUTH");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
 
 	}
 

@@ -1,4 +1,7 @@
 {
+  "ACTION_FAIL_AUTH_TITLE": "Authentifizierung fehlgeschlagen",
+  "ACTION_FAIL_AUTH_BODY": "Du musst angemeldet sein um diese Aktion durchzuführen",
+
   "LOGIN_FAILED_MESSAGE_TITLE": "Anmeldung fehlgeschlagen",
   "LOGIN_FAILED_MESSAGE_BODY": "Stelle sicher dass der Nutzername und das Password korrekt eingegeben wurden",
 
@@ -18,8 +21,6 @@
 
   "EMAIL_CHANGE_SUCCESS_TITLE": "Email Adresse geändert",
   "EMAIL_CHANGE_SUCCESS_BODY": "Deine Email Adressee wurde erfolgreich geändert!",
-  "EMAIL_CHANGE_FAIL_AUTH_TITLE": "Email Adresse nicht geändert",
-  "EMAIL_CHANGE_FAIL_AUTH_BODY": "Du musst angemeldet sein um deine Email Adresse ändern zu können",
   "EMAIL_CHANGE_FAIL_DUPLICATE_TITLE": "Email Adresse nicht geändert",
   "EMAIL_CHANGE_FAIL_DUPLICATE_BODY": "Diese Email Adresse wird bereits verwendet",
 
@@ -47,10 +48,6 @@
 
   "BET_FAIL_INVALID_MATCHDAY_TITLE": "Tippen fehlgeschlagen",
   "BET_FAIL_INVALID_MATCHDAY_BODY": "Man kann nicht auf diesen Spieltag tippen",
-  "BET_FAIL_INVALID_USER_TITLE": "Tippen fehlgeschlagen",
-  "BET_FAIL_INVALID_USER_BODY": "Nutzer existiert nicht",
-  "BET_FAIL_UNAUTHORIZED_TITLE": "Tippen fehlgeschlagen",
-  "BET_FAIL_UNAUTHORIZED_BODY": "Nutzer is nicht angemeldet",
   "BET_SUCCESS_WITH_ERRORS_TITLE": "Tippen erfolgreich",
   "BET_SUCCESS_WITH_ERRORS_BODY": "Es sind allerdings Fehler aufgetreten",
   "BET_SUCCESS_TITLE": "Tippen erfolgreich",

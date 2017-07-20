@@ -80,6 +80,7 @@ class TestClass extends TestCase {
 		Functions::$dbdatabase = "tippspiel_bundesliga_test";
 		Functions::$dbusername = "phpunit";
 		$_SERVER["SERVER_NAME"] = "local";
+		$_SERVER["HTTP_REFERER"] = "local";
 
 		self::$db = self::getDb();
 

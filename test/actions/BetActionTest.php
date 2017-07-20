@@ -167,7 +167,7 @@ class BetActionTest extends TestClass {
 
 		(new BetAction())->execute();
 		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{BET_FAIL_INVALID_USER",
+		$this->assertStringStartsWith("@{ACTION_FAIL_AUTH",
 			$_SESSION["message"]["title"]);
 
 		$this->confirmedUserA->login("A");
@@ -175,13 +175,13 @@ class BetActionTest extends TestClass {
 
 		(new BetAction())->execute();
 		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{BET_FAIL_UNAUTHORIZED",
+		$this->assertStringStartsWith("@{ACTION_FAIL_AUTH",
 			$_SESSION["message"]["title"]);
 
 		$_SESSION["user_id"] = -1;
 		(new BetAction())->execute();
 		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{BET_FAIL_INVALID_USER",
+		$this->assertStringStartsWith("@{ACTION_FAIL_AUTH",
 			$_SESSION["message"]["title"]);
 	}
 }

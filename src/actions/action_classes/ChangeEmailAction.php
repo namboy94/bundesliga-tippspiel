@@ -39,21 +39,8 @@ class ChangeEmailAction extends Action {
 	protected function defineBehaviour() {
 
 		$newEmail = $_POST[ChangeEmailForm::$newEmail];
-
-		$authError = new DangerException(
-			"EMAIL_CHANGE_FAIL_AUTH", "../index.php");
-
-		if (!isset($_SESSION["user_id"])) {
-			throw $authError;
-		}
-
 		$auth = new Authenticator(Functions::getMysqli());
 		$user = $auth->getUserFromId($_SESSION["user_id"]);
-
-		if ($user === null || !$user->isLoggedIn()) {
-			throw $authError;
-		}
-
 
 		if ($user->changeEmail($newEmail)) {
 			throw new SuccessException(

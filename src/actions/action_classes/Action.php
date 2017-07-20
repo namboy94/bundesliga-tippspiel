@@ -21,6 +21,7 @@
 namespace bundesliga_tippspiel_actions;
 use bundesliga_tippspiel\Functions;
 use Exception;
+use welwitschi\Authenticator;
 
 
 /**
@@ -57,6 +58,7 @@ abstract class Action {
 	public function execute() {
 
 		try {
+			$this->userLoggedInCheck();
 			$this->defineBehaviour();
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 
@@ -70,5 +72,27 @@ abstract class Action {
 			throw $e;
 		}
 		$this->db->close();
+	}
+
+	/**
+	 * Makes sure that the user is logged in. If not, a
+	 * DangerException is thrown
+	 * @throws DangerException: When the user is not logged in
+	 */
+	protected function userLoggedInCheck() {
+
+		$authError = new DangerException(
+			"ACTION_FAIL_AUTH", $_SERVER["HTTP_REFERER"]);
+
+		if (!isset($_SESSION["user_id"])) {
+			throw $authError;
+		}
+
+		$auth = new Authenticator(Functions::getMysqli());
+		$user = $auth->getUserFromId($_SESSION["user_id"]);
+
+		if ($user === null || !$user->isLoggedIn()) {
+			throw $authError;
+		}
 	}
 }
