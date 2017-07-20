@@ -23,7 +23,6 @@ use cheetah\BetManager;
 use cheetah\Match;
 use cheetah\SeasonManager;
 use welwitschi\Authenticator;
-use welwitschi\User;
 
 /**
  * Class BetAction

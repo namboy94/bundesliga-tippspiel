@@ -38,6 +38,11 @@ class ChangeEmailAction extends Action {
 	 */
 	protected function defineBehaviour() {
 
+		if (!isset($_POST[ChangeEmailForm::$newEmail])) {
+			throw new DangerException("EMAIL_CHANGE_FAIL_NO_INPUT",
+				"../profile.html");
+		}
+
 		$newEmail = $_POST[ChangeEmailForm::$newEmail];
 		$auth = new Authenticator(Functions::getMysqli());
 		$user = $auth->getUserFromId($_SESSION["user_id"]);

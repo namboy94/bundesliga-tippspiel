@@ -19,47 +19,50 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-use bundesliga_tippspiel\Functions;
-use chameleon\ChangeUsernameForm;
-use welwitschi\Authenticator;
 
 
 /**
- * Class ChangeUsernameAction
- * Allows users to change their usernames
+ * Class SignupAction
+ * Handles the Signup for a user
  * @package bundesliga_tippspiel_actions
  */
-class ChangeUsernameAction extends Action {
+class SignupAction extends Action {
+
+	/**
+	 * SignupAction constructor.
+	 * @param bool $authenticationRequired: Set to false since signup does
+	 *                                      not require login
+	 */
+	public function __construct($authenticationRequired = false){
+		parent::__construct($authenticationRequired);
+	}
 
 	/**
 	 * Defines the behaviour of the Action
 	 * @return void
 	 * @throws ActionException: An ActionExpression containing message data
 	 */
-	protected function defineBehaviour() {
+	protected function defineBehaviour(){
 
-		if (!isset($_POST[ChangeUsernameForm::$newUsername])) {
-			throw new DangerException("USERNAME_CHANGE_FAIL_NO_INPUT",
-				"../profile.php");
+	}
+
+	/**
+	 * Validates a password
+	 * @param string $password: The password to validate
+	 * @param string $repeat: The password repeat/confirmation
+	 * @throws ActionException: If the password is invalid
+	 */
+	public static function validatePassword(string $password, string $repeat) {
+
+		$redirect = $_SERVER["HTTP_REFERER"];
+
+		if (strlen($password) < 4) {
+			throw new DangerException("PASSWORD_TOO_SHORT", $redirect);
+
+		} elseif ($password !== $repeat) {
+			throw new DangerException("PASSWORD_REPEAT_NO_MATCH_SHORT",
+				$redirect);
 		}
 
-		$newUsername = $_POST[ChangeUsernameForm::$newUsername];
-
-		if ($newUsername === "" || strlen($newUsername) > 10) {
-			throw new DangerException("USERNAME_CHANGE_FAIL_USERNAME",
-				"../profile.php");
-		}
-
-		$auth = new Authenticator(Functions::getMysqli());
-		$user = $auth->getUserFromId($_SESSION["user_id"]);
-
-		if ($user->changeUsername($newUsername)) {
-			throw new SuccessException("USERNAME_CHANGE_SUCCESS",
-				"../profile.php");
-
-		} else {
-			throw new DangerException("USERNAME_CHANGE_FAIL_DUPLICATE",
-				"../profile.php");
-		}
 	}
 }

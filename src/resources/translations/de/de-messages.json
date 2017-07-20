@@ -2,6 +2,11 @@
   "ACTION_FAIL_AUTH_TITLE": "Authentifizierung fehlgeschlagen",
   "ACTION_FAIL_AUTH_BODY": "Du musst angemeldet sein um diese Aktion durchzuführen",
 
+  "PASSWORD_TOO_SHORT_TITLE": "Passwort zu kurz",
+  "PASSWORD_TOO_SHORT_BODY": "Das Passwort muss mindestens 4 Zeichen lang sein",
+  "PASSWORD_REPEAT_NO_MATCH_SHORT_TITLE": "Passwörter stimmen nicht überein",
+  "PASSWORD_REPEAT_NO_MATCH_SHORT_BODY": "Die beiden Passwörte müssen identisch zueinander sein",
+
   "LOGIN_FAILED_MESSAGE_TITLE": "Anmeldung fehlgeschlagen",
   "LOGIN_FAILED_MESSAGE_BODY": "Stelle sicher dass der Nutzername und das Password korrekt eingegeben wurden",
 
@@ -12,24 +17,24 @@
 
   "PASSWORD_CHANGE_SUCCESS_TITLE": "Passwort geändert",
   "PASSWORD_CHANGE_SUCCESS_BODY": "Dein Passwort wurde erfolgreich geändert!",
-  "PASSWORD_CHANGE_FAIL_PASSWORD_MATCH_TITLE": "Passwort nicht geändert",
-  "PASSWORD_CHANGE_FAIL_PASSWORD_MATCH_BODY" : "Die Passwörter stimmen nicht miteinander überein",
-  "PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_TITLE": "Passwort nicht geändert",
-  "PASSWORD_CHANGE_FAIL_PASSWORD_LENGTH_BODY": "Das Passwort muss mindestens 4 Zeichen lang sein",
   "PASSWORD_CHANGE_FAIL_OLD_PASSWORD_TITLE": "Passwort nicht geändert",
   "PASSWORD_CHANGE_FAIL_OLD_PASSWORD_BODY": "Das alte Passwort stimm nicht mit dem bisherigen Passwort überein",
+  "PASSWORD_CHANGE_FAIL_MISSING_INPUT_TITLE": "Eingabe Fehlerhaft",
+  "PASSWORD_CHANGE_FAIL_MISSING_INPUT_BODY": "Es fehlen Angaben um den Passwortwechsel zu vollziehen",
 
   "EMAIL_CHANGE_SUCCESS_TITLE": "Email Adresse geändert",
   "EMAIL_CHANGE_SUCCESS_BODY": "Deine Email Adressee wurde erfolgreich geändert!",
   "EMAIL_CHANGE_FAIL_DUPLICATE_TITLE": "Email Adresse nicht geändert",
   "EMAIL_CHANGE_FAIL_DUPLICATE_BODY": "Diese Email Adresse wird bereits verwendet",
+  "EMAIL_CHANGE_FAIL_NO_INPUT_TITLE": "Keine neue Email Adresse angegeben",
+  "EMAIL_CHANGE_FAIL_NO_INPUT_BODY": "Bitte gebe eine Email Adresse an",
 
   "USERNAME_CHANGE_SUCCESS_TITLE": "Nutzername geändert",
   "USERNAME_CHANGE_SUCCESS_BODY": "Dein Nutzername wurde erfolgreich geändert",
   "USERNAME_CHANGE_FAIL_USERNAME_TITLE": "Benutzername konnte nicht geändert werden",
   "USERNAME_CHANGE_FAIL_USERNAME_BODY": "Der Benutzername muss zwischen 1 und 10 Zeichen lang sein",
-  "USERNAME_CHANGE_FAIL_LOGIN_AUTH_TITLE": "Benutzername konnte nicht geändert werden",
-  "USERNAME_CHANGE_FAIL_LOGIN_AUTH_BODY": "Du musst angemeldet sein um deinen Nutzernamen zu ändern",
+  "USERNAME_CHANGE_FAIL_NO_INPUT_TITLE": "Benutzername konnte nicht geändert werden",
+  "USERNAME_CHANGE_FAIL_NO_INPUT_BODY": "Es wurde kein neuer Nutzername zur Verfügung gestellt",
   "USERNAME_CHANGE_FAIL_DUPLICATE_TITLE": "Benutzername konnte nicht geändert werden",
   "USERNAME_CHANGE_FAIL_DUPLICATE_BODY": "Dieser Benutzername wird bereits verwendet",
 

@@ -33,10 +33,14 @@ abstract class Action {
 
 	/**
 	 * Action constructor.
+	 * @param bool $authenticationRequired: Can be set to false to allow
+	 *                                      user to use the action without
+	 *                                      being logged in.
 	 */
-	public function __construct() {
+	public function __construct(bool $authenticationRequired = true) {
 		Functions::initializeSession();
 		$this->db = Functions::getMysqli();
+		$this->authenticationRequired = $authenticationRequired;
 	}
 
 	/**
@@ -58,7 +62,9 @@ abstract class Action {
 	public function execute() {
 
 		try {
-			$this->userLoggedInCheck();
+			if ($this->authenticationRequired) {
+				$this->userLoggedInCheck();
+			}
 			$this->defineBehaviour();
 			header("Location: " . $_SERVER["HTTP_REFERER"]);
 

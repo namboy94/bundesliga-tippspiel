@@ -24,18 +24,18 @@ use chameleon\ChangeEmailForm;
 
 
 /**
- * Class BetActionTest
- * Test the Bet Action class
+ * Class ChangeEmailActionTest
+ * Test the ChangeEmailAction class
  */
 class ChangeEmailActionTest extends TestClass {
 
 	/**
-	 * Fetch data beforehand
-	 * @param bool $fetchMatchData: true
+	 * Dont' Fetch data beforehand
+	 * @param bool $fetchMatchData: false
 	 * @SuppressWarnings checkUnusedFunctionParameters
 	 */
 	public static function setUpBeforeClass(bool $fetchMatchData = false) {
-		parent::setUpBeforeClass(true);
+		parent::setUpBeforeClass($fetchMatchData);
 	}
 
 	/**
@@ -85,6 +85,15 @@ class ChangeEmailActionTest extends TestClass {
 		(new ChangeEmailAction())->execute();
 		$this->assertStatus("danger");
 		$this->assertMessageId("EMAIL_CHANGE_FAIL_DUPLICATE");
+	}
+
+	/**
+	 * Tries to change the email address without providing input
+	 */
+	public function testChangingWithoutInput() {
+		(new ChangeEmailAction())->execute();
+		$this->assertStatus("danger");
+		$this->assertMessageId("EMAIL_CHANGE_FAIL_NO_INPUT");
 	}
 
 }

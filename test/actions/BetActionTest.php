@@ -25,7 +25,7 @@ use cheetah\Match;
 
 /**
  * Class BetActionTest
- * Test the Bet Action class
+ * Tests the Bet Action class
  */
 class BetActionTest extends TestClass {
 
@@ -51,7 +51,7 @@ class BetActionTest extends TestClass {
 		$_POST["matchday_referrer"] = 34;
 
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "success");
+		$this->assertStatus("success");
 
 		foreach ($matches as $match) {
 			$bet = Bet::fromMatchAndUserId(
@@ -75,7 +75,7 @@ class BetActionTest extends TestClass {
 		$_POST[$match->awayTeam->id] = 2;
 
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "success");
+		$this->assertStatus("success");
 		$bet = Bet::fromMatchAndUserId(
 			self::$db, $match->id, $this->confirmedUserA->id);
 
@@ -91,15 +91,13 @@ class BetActionTest extends TestClass {
 	public function testInvalidMatchday() {
 		$_POST["matchday_referrer"] = 35;
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{BET_FAIL_INVALID_MATCHDAY",
-			$_SESSION["message"]["title"]);
+		$this->assertStatus("danger");
+		$this->assertMessageId("BET_FAIL_INVALID_MATCHDAY");
 
 		$_POST["matchday_referrer"] = 0;
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{BET_FAIL_INVALID_MATCHDAY",
-			$_SESSION["message"]["title"]);
+		$this->assertStatus("danger");
+		$this->assertMessageId("BET_FAIL_INVALID_MATCHDAY");
 	}
 
 	/**
@@ -114,13 +112,13 @@ class BetActionTest extends TestClass {
 		$_POST["matchday_referrer"] = 34;
 		(new BetAction())->execute();
 
-		$this->assertEquals($_SESSION["message"]["type"], "success");
+		$this->assertStatus("success");
 
 		$_POST[$match->homeTeam->id] = -1;
 		$_POST[$match->awayTeam->id] = 1;
 		(new BetAction())->execute();
 
-		$this->assertEquals($_SESSION["message"]["type"], "success");
+		$this->assertStatus("success");
 		$this->assertNull(Bet::fromMatchAndUserId(
 			self::$db, $match->id, $this->confirmedUserA->id));
 
@@ -128,7 +126,7 @@ class BetActionTest extends TestClass {
 		$_POST[$match->awayTeam->id] = "";
 		(new BetAction())->execute();
 
-		$this->assertEquals($_SESSION["message"]["type"], "success");
+		$this->assertStatus("success");
 		$this->assertNull(Bet::fromMatchAndUserId(
 			self::$db, $match->id, $this->confirmedUserA->id));
 
@@ -147,9 +145,8 @@ class BetActionTest extends TestClass {
 		$_POST["matchday_referrer"] = 33;
 
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "warning");
-		$this->assertStringStartsWith("@{BET_SUCCESS_WITH_ERRORS",
-			$_SESSION["message"]["title"]);
+		$this->assertStatus("warning");
+		$this->assertMessageId("BET_SUCCESS_WITH_ERRORS");
 
 		foreach ($matches as $match) {
 			$this->assertNull(Bet::fromMatchAndUserId(
@@ -166,22 +163,19 @@ class BetActionTest extends TestClass {
 		$_POST["matchday_referrer"] = 34;
 
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{ACTION_FAIL_AUTH",
-			$_SESSION["message"]["title"]);
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
 
 		$this->confirmedUserA->login("A");
 		$_SESSION["login_token"] = "A";
 
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{ACTION_FAIL_AUTH",
-			$_SESSION["message"]["title"]);
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
 
 		$_SESSION["user_id"] = -1;
 		(new BetAction())->execute();
-		$this->assertEquals($_SESSION["message"]["type"], "danger");
-		$this->assertStringStartsWith("@{ACTION_FAIL_AUTH",
-			$_SESSION["message"]["title"]);
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
 	}
 }
