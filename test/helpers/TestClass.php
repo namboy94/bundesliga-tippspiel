@@ -19,6 +19,7 @@
  */
 
 namespace bundesliga_tippspiel_tests;
+use bundesliga_tippspiel\Functions;
 use bundesliga_tippspiel_comments\CommentManager;
 use cheetah\BetManager;
 use cheetah\SchemaCreator;
@@ -39,16 +40,6 @@ class TestClass extends TestCase {
 	static protected $db;
 
 	/**
-	 * @var User: A confirmed user
-	 */
-	static protected $confirmedUserA;
-
-	/**
-	 * @var User: A unconfirmed user
-	 */
-	static protected $unConfirmedUserB;
-
-	/**
 	 * @var Authenticator: An authenticator
 	 */
 	static protected $authenticator;
@@ -64,12 +55,28 @@ class TestClass extends TestCase {
 	static protected $commentManager;
 
 	/**
+	 * @var User: A confirmed user
+	 */
+	protected $confirmedUserA;
+
+	/**
+	 * @var User: A unconfirmed user
+	 */
+	protected $unConfirmedUserB;
+
+
+	/**
 	 * Creates Databases and objects
 	 * @param bool $fetchMatchData: Set to true to fetch match data
 	 * @SuppressWarnings checkProhibitedFunctions
 	 */
 	public static function setUpBeforeClass(bool $fetchMatchData = false) {
 		parent::setUpBeforeClass();
+
+		// Stuff needed to make this work
+		session_start();
+		Functions::$database = "tippspiel_bundesliga_test";
+		$_SERVER["SERVER_NAME"] = "local";
 
 		self::$db = self::getDb();
 
@@ -78,18 +85,10 @@ class TestClass extends TestCase {
 		self::$betManager = new BetManager(self::$db);
 		new SchemaCreator(self::$db);
 
-		self::$authenticator->createUser("A", "A", "A");
-		self::$authenticator->createUser("B", "B", "B");
-		self::$confirmedUserA = self::$authenticator->getUserFromUsername("A");
-		self::$unConfirmedUserB =
-			self::$authenticator->getUserFromUsername("B");
-		self::$confirmedUserA->confirm(
-			self::$confirmedUserA->confirmationToken);
-
 		if ($fetchMatchData) {
 			exec("python vendor/namboy94/cheetah-bets/scripts/leaguegetter.py" .
 				" phpunit " . getenv("TEST_DB_PASS") .
-				" bundesliga_tippspiel_bets_test -s 2016");
+				" tippspiel_bundesliga_test -s 2016");
 
 			self::$db->query(
 				"UPDATE matches " .
@@ -114,12 +113,28 @@ class TestClass extends TestCase {
 	}
 
 	/**
-	 * Deletes content in database
+	 * Deletes content in database, creates users
 	 */
 	public function setUp() {
+
+		unset($_POST);
+		unset($_SESSION);
+
 		parent::setUp();
 		self::$db->query("DELETE FROM accounts;");
 		self::$db->commit();
+
+		self::$authenticator->createUser("A", "A", "A");
+		self::$authenticator->createUser("B", "B", "B");
+
+		$this->confirmedUserA = self::$authenticator->getUserFromUsername("A");
+		$this->unConfirmedUserB =
+			self::$authenticator->getUserFromUsername("B");
+		$this->confirmedUserA->confirm(
+			$this->confirmedUserA->getConfirmation());
+
+		$this->confirmedUserA->login("A");
+
 	}
 
 	/**
@@ -130,7 +145,7 @@ class TestClass extends TestCase {
 			"localhost",
 			"phpunit",
 			getenv("TEST_DB_PASS"), // Uses environment variable
-			"bundesliga_tippspiel_test"
+			"tippspiel_bundesliga_test"
 		);
 	}
 }

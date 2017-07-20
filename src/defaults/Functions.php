@@ -30,6 +30,11 @@ use mysqli;
 class Functions {
 
 	/**
+	 * @var string: The database to use
+	 */
+	public static $database = "tippspiel_bundesliga";
+
+	/**
 	 * @return mysqli: The MySQL Database connection
 	 */
 	public static function getMysqli(): mysqli {
@@ -37,7 +42,7 @@ class Functions {
 			"localhost",
 			"tippspiel",
 			rtrim(file_get_contents(__DIR__ . "/../../DB_PASS.secret")),
-			"tippspiel_bundesliga"
+			self::$database
 		);
 	}
 
@@ -45,13 +50,15 @@ class Functions {
 	 * Initializes a session and sets the lifetime of the cookies
 	 */
 	public static function initializeSession() {
-		session_start();
-		session_set_cookie_params(
-			86400,
-			null,
-			$_SERVER["SERVER_NAME"],
-			true,
-			true);
+		if (!isset($_SESSION)) {
+			session_start();
+			session_set_cookie_params(
+				86400,
+				null,
+				$_SERVER["SERVER_NAME"],
+				true,
+				true);
+		}
 	}
 
 	/**

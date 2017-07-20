@@ -113,12 +113,12 @@ class BetAction extends Action {
 		$auth = new Authenticator($this->db);
 		$user = $auth->getUserFromId($_SESSION["user_id"]);
 
-		if (!$user->isLoggedIn()) {
-			throw new DangerException("BET_FAIL_UNAUTHORIZED", "../index.php");
-		}
-
 		if ($user === null) {
 			throw $error;
+
+		} elseif (!$user->isLoggedIn()) {
+			throw new DangerException("BET_FAIL_UNAUTHORIZED", "../index.php");
+
 		} else {
 			return $user;
 		}

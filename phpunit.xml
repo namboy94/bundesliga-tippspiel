@@ -3,6 +3,10 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/pages</directory>
             <directory suffix=".php">src/defaults</directory>
+            <directory suffix=".php">src/actions/action_classes</directory>
+            <directory suffix=".php">src/actions/exceptions</directory>
+            <directory suffix=".php">src/comments</directory>
+            <directory suffix=".php">src/widgets</directory>
         </whitelist>
     </filter>
 </phpunit>

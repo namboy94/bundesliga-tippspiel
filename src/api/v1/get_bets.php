@@ -20,7 +20,7 @@ try {
 
 	$username = $data["username"];
 	$apiKey = $data["api_key"];
-	$matchday = (int)$data["matchday"];
+	// $matchday = (int)$data["matchday"];
 
 	$auth = new Authenticator(Functions::getMysqli());
 	$user = $auth->getUserFromUsername($username);
@@ -31,8 +31,9 @@ try {
 		echo json_encode(["status" => "error", "cause" => "invalid_key"]);
 	} else {
 
-		$betManager = new BetManager(Functions::getMysqli());
-		$bets = $betManager->getAllBetsForUser($user);
+		echo 1;
+		// $betManager = new BetManager(Functions::getMysqli());
+		// $bets = $betManager->getAllBetsForUser($user);
 
 	}
 
