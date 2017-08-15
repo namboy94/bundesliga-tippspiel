@@ -7,8 +7,8 @@
   "PASSWORD_REPEAT_NO_MATCH_SHORT_TITLE": "Passwörter stimmen nicht überein",
   "PASSWORD_REPEAT_NO_MATCH_SHORT_BODY": "Die beiden Passwörte müssen identisch zueinander sein",
 
-  "LOGIN_FAILED_MESSAGE_TITLE": "Anmeldung fehlgeschlagen",
-  "LOGIN_FAILED_MESSAGE_BODY": "Stelle sicher dass der Nutzername und das Password korrekt eingegeben wurden",
+  "LOGIN_FAILED_TITLE": "Anmeldung fehlgeschlagen",
+  "LOGIN_FAILED_BODY": "Stelle sicher dass der Nutzername und das Password korrekt eingegeben wurden",
 
   "RESET_PASSWORD_SUCCESS_TITLE": "Passwort Zurückgesetzt",
   "RESET_PASSWORD_SUCCESS_BODY": "Sehe in deinem Email-Postfach nach deinem temporären Passwort nach",
