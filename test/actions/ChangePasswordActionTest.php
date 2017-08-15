@@ -30,15 +30,6 @@ use chameleon\ChangePasswordForm;
 class ChangePasswordActionTest extends TestClass {
 
 	/**
-	 * Don't Fetch data beforehand
-	 * @param bool $fetchMatchData: false
-	 * @SuppressWarnings checkUnusedFunctionParameters
-	 */
-	public static function setUpBeforeClass(bool $fetchMatchData = false) {
-		parent::setUpBeforeClass($fetchMatchData);
-	}
-
-	/**
 	 * Tests changing the password without input
 	 */
 	public function testWithoutInput() {

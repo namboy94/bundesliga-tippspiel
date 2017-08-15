@@ -127,14 +127,38 @@ class CommentManager {
 			$stmt = $this->db->prepare(
 				"DELETE FROM comments WHERE id=? AND user_id=?;"
 			);
-			$stmt->bind_param("si", $commentId, $user->id);
+			$stmt->bind_param("ii", $commentId, $user->id);
 			$result = $stmt->execute();
 			$this->db->commit();
-			return $result !== false;
+
+			if ($this->getCommentById($commentId) !== null) {
+				return false;
+			} else {
+				return $result !== false;
+			}
 
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Retrieves a comment from the database based on its ID.
+	 * @param int $commentId: The Comment ID of the comment to fetch
+	 * @return Comment|null: The comment object or null if no comment with the
+	 *                       provided ID was found
+	 */
+	public function getCommentById(int $commentId) : ? Comment {
+		$stmt = $this->db->prepare("SELECT * FROM comments WHERE id=?;");
+		$stmt->bind_param("i", $commentId);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		if ($result->num_rows == 0) {
+			return null;
+		} else {
+			return Comment::fromRow(
+				$this->db, $result->fetch_array(MYSQLI_ASSOC)
+			);
+		}
+	}
 }

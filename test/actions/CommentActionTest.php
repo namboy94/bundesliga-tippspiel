@@ -30,15 +30,6 @@ use bundesliga_tippspiel_comments\CommentBar;
 class CommentActionTest extends TestClass {
 
 	/**
-	 * Don't Fetch data beforehand
-	 * @param bool $fetchMatchData: false
-	 * @SuppressWarnings checkUnusedFunctionParameters
-	 */
-	public static function setUpBeforeClass(bool $fetchMatchData = false) {
-		parent::setUpBeforeClass($fetchMatchData);
-	}
-
-	/**
 	 * Tests commenting without providing input
 	 */
 	public function testCommentingWithoutInput() {

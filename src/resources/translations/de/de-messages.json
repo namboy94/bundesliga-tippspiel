@@ -66,5 +66,7 @@
   "CONFIRM_SUCCESS_BODY": "Du kannst dich jetzt mit deinem Benutzernamen und Passwort anmelden",
 
   "COMMENT_FAIL_NO_INPUT_TITLE": "Kommentieren fehlgeschlagen",
-  "COMMENT_FAIL_NO_INPUT_BODY": "Es wurde keine Nachricht zur Verfügung gestellt"
+  "COMMENT_FAIL_NO_INPUT_BODY": "Es wurde kein Kommentartext zur Verfügung gestellt",
+  "COMMENT_DELETE_FAIL_TITLE": "Löschen des Kommentars fehlgeschlagen",
+  "COMMENT_DELETE_FAIL_BODY": "Du bist nicht dazu authorisiert diese Nachricht zu löschen."
 }

@@ -34,7 +34,7 @@ class BetActionTest extends TestClass {
 	 * @param bool $fetchMatchData: true
 	 * @SuppressWarnings checkUnusedFunctionParameters
 	 */
-	public static function setUpBeforeClass(bool $fetchMatchData = false) {
+	public static function setUpBeforeClass(bool $fetchMatchData = true) {
 		parent::setUpBeforeClass(true);
 	}
 

@@ -30,15 +30,6 @@ use chameleon\ChangeEmailForm;
 class ChangeEmailActionTest extends TestClass {
 
 	/**
-	 * Dont' Fetch data beforehand
-	 * @param bool $fetchMatchData: false
-	 * @SuppressWarnings checkUnusedFunctionParameters
-	 */
-	public static function setUpBeforeClass(bool $fetchMatchData = false) {
-		parent::setUpBeforeClass($fetchMatchData);
-	}
-
-	/**
 	 * Tests changing an email address
 	 * @SuppressWarnings checkUnusedVariables
 	 */

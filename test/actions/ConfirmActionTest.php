@@ -19,9 +19,7 @@
  */
 
 namespace bundesliga_tippspiel_tests;
-use bundesliga_tippspiel_actions\CommentAction;
 use bundesliga_tippspiel_actions\ConfirmAction;
-use bundesliga_tippspiel_comments\CommentBar;
 
 
 /**
@@ -29,15 +27,6 @@ use bundesliga_tippspiel_comments\CommentBar;
  * Tests the CommentAction class
  */
 class ConfirmActionTest extends TestClass {
-
-	/**
-	 * Don't Fetch data beforehand
-	 * @param bool $fetchMatchData: false
-	 * @SuppressWarnings checkUnusedFunctionParameters
-	 */
-	public static function setUpBeforeClass(bool $fetchMatchData = false) {
-		parent::setUpBeforeClass($fetchMatchData);
-	}
 
 	/**
 	 * Tests confirming a user
