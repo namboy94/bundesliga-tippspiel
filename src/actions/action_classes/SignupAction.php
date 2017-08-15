@@ -19,6 +19,11 @@
  */
 
 namespace bundesliga_tippspiel_actions;
+use bundesliga_tippspiel\DefaultDictionary;
+use bundesliga_tippspiel\Functions;
+use chameleon\FormReCaptcha;
+use chameleon\SignupForm;
+use welwitschi\Authenticator;
 
 
 /**
@@ -44,6 +49,60 @@ class SignupAction extends Action {
 	 */
 	protected function defineBehaviour() {
 
+		$auth = new Authenticator($this->db);
+		$dict = new DefaultDictionary();
+
+		$username = $_POST[SignupForm::$username];
+		$email = $_POST[SignupForm::$email];
+		$password = $_POST[SignupForm::$password];
+		$passwordRepeat = $_POST[SignupForm::$passwordRepeat];
+		$captcha = $_POST[FormReCaptcha::$recaptchaPostKey];
+
+		if ($password !== $passwordRepeat) {
+			throw new DangerException(
+				"SIGNUP_FAILED_PASSWORD_MATCH", "../signup.php");
+
+		} elseif (strlen($password) < 4) {
+			throw new DangerException(
+				"SIGNUP_FAILED_PASSWORD_TOO_SHORT", "../signup.php");
+
+		} elseif ($username === "" || strlen($username) > 10) {
+			throw new DangerException(
+				"SIGNUP_FAILED_USERNAME", "../signup.php");
+
+		} elseif ($_SERVER["SERVER_NAME"] !== "localhost"
+			&& $_SERVER["SERVER_NAME"] !== "local"
+			&& !Functions::verifyCaptcha($captcha)) {
+			// Check Captcha in production but not on localhost
+			// TODO Check how to unit test this
+
+			throw new DangerException(
+				"SIGNUP_FAILED_RECAPTCHA", "../signup.php");
+
+		} elseif ($auth->createUser($username, $email, $password)) {
+
+			$user = $auth->getUserFromUsername($username);
+
+			$server = $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"];
+			$confirmationUrl = "https://" . $server . "/actions/confirm.php";
+			$confirmationUrl .= "?id=". $user->id . "&token=";
+			$confirmationUrl .= $user->confirmationToken;
+
+			// Send an email to the user's email address with the confirmation
+			// URL
+			mail(
+				$email,
+				$dict->translate("@{SIGNUP_EMAIL_TITLE}",
+					Functions::getLanguage()),
+				$dict->translate("@{SIGNUP_EMAIL_BODY_START}\n\n" .
+					$confirmationUrl . "\n\n@{SIGNUP_EMAIL_BODY_END}",
+					Functions::getLanguage()));
+
+			throw new SuccessException("SIGNUP_SUCCESS", "../signup.php");
+
+		} else {
+			throw new DangerException("SIGNUP_FAILED", "../signup.php");
+		}
 	}
 
 	/**
