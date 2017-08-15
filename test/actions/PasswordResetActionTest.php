@@ -18,6 +18,30 @@
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel_actions;
-require __DIR__ . '/../../vendor/autoload.php';
-(new LogoutAction())->execute();
+namespace bundesliga_tippspiel_tests;
+use bundesliga_tippspiel_actions\PasswordResetAction;
+use chameleon\ForgottenPasswordForm;
+use chameleon\FormReCaptcha;
+
+/**
+ * Class PasswordResetActionTest
+ * Tests the PasswordResetAction class
+ */
+class PasswordResetActionTest extends TestClass {
+
+	/**
+	 * Tests resetting a password
+	 */
+	public function testResettingPassword() {
+
+		$oldHash = $this->confirmedUserA->pwHash;
+
+		$_POST[ForgottenPasswordForm::$email] = "A";
+		$_POST[FormReCaptcha::$recaptchaPostKey] = "";
+		(new PasswordResetAction())->execute();
+
+		$newHash = self::$authenticator->getUserFromEmailAddress("A")->pwHash;
+		$this->assertNotEquals($oldHash, $newHash);
+	}
+
+}
