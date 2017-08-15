@@ -58,10 +58,12 @@
   "BET_SUCCESS_TITLE": "Tippen erfolgreich",
   "BET_SUCCESS_BODY": "Deine Tipps wurden erfolgreich gespeichert",
 
-  "CONFIRM_FAILED_MESSAGE_TITLE": "Bestätigung fehlgeschlagen",
-  "CONFIRM_FAILED_MESSAGE_BODY": "Der Aktivierungsschlüssel ist ungültig",
-  "CONFIRM_SUCCESS_MESSAGE_TITLE": "Bestätigung erfolgreich",
-  "CONFIRM_SUCCESS_MESSAGE_BODY": "Du kannst dich jetzt mit deinem Benutzernamen und Passwort anmelden",
+  "CONFIRM_FAILED_TITLE": "Bestätigung fehlgeschlagen",
+  "CONFIRM_FAILED_BODY": "Der Aktivierungsschlüssel ist ungültig",
+  "CONFIRM_FAILED_NO_INPUT_TITLE": "Bestätigung fehlgeschlagen",
+  "CONFIRM_FAILED_NO_INPUT_BODY": "Kein Aktivierungsschlüssel angegeben",
+  "CONFIRM_SUCCESS_TITLE": "Bestätigung erfolgreich",
+  "CONFIRM_SUCCESS_BODY": "Du kannst dich jetzt mit deinem Benutzernamen und Passwort anmelden",
 
   "COMMENT_FAIL_NO_INPUT_TITLE": "Kommentieren fehlgeschlagen",
   "COMMENT_FAIL_NO_INPUT_BODY": "Es wurde keine Nachricht zur Verfügung gestellt"

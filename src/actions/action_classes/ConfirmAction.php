@@ -19,37 +19,48 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-
-
-use bundesliga_tippspiel_comments\CommentBar;
-use bundesliga_tippspiel_comments\CommentManager;
 use welwitschi\Authenticator;
 
+
 /**
- * Class CommentAction
- * Action that handles new comments
+ * Class ConfirmAction
+ * Enables the user to confirm their account
  * @package bundesliga_tippspiel_actions
  */
-class CommentAction extends Action {
+class ConfirmAction extends Action {
+
+	/**
+	 * ConfirmAction constructor.
+	 * @param bool $authenticationRequired: Set to false since confirming does
+	 *                                      not require login
+	 */
+	public function __construct($authenticationRequired = false) {
+		parent::__construct($authenticationRequired);
+	}
 
 	/**
 	 * Defines the behaviour of the Action
 	 * @return void
-	 * @throws ActionException: An ActionExpression containing message data
+	 * @throws ActionException: The message information
 	 */
 	protected function defineBehaviour() {
 
-		if (!isset($_POST[CommentBar::$contentId])) {
-			throw new DangerException("COMMENT_FAIL_NO_INPUT",
-				$_SERVER['HTTP_REFERER']);
+		if (!isset($_GET["id"]) || !isset($_GET["token"])) {
+			throw new DangerException("CONFIRM_FAILED_NO_INPUT",
+				"../index.php");
 		}
 
-		$content = $_POST[CommentBar::$contentId];
+		$id = $_GET["id"];
+		$token = $_GET["token"];
+
 		$auth = new Authenticator($this->db);
-		$user = $auth->getUserFromId($_SESSION["user_id"]);
-		$commentManager = new CommentManager($this->db);
+		$user = $auth->getUserFromId($id);
 
-		$commentManager->writeComment($user, $content);
+		if ($user === null || !$user->confirm($token)) {
+			throw new DangerException("CONFIRM_FAILED", "../index.php");
 
+		} else {
+			throw new SuccessException("CONFIRM_SUCCESS", "../index.php");
+		}
 	}
 }

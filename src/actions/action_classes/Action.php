@@ -56,7 +56,12 @@ abstract class Action {
 	 * be set to the previous page. This will however be ignored in case
 	 * a header location was previously set.
 	 * If an unexpected error occurs, the user will be informed and the
-	 * Exception will be re-thrown to be logged by the system
+	 * Exception will be re-thrown to be logged by the system.
+	 *
+	 * This method also checks if a user is authenticated for actions that
+	 * require user authentication, which can be set using the
+	 * authenticationRequired variable.
+	 *
 	 * @throws Exception: The re-thrown unexpected Exception
 	 */
 	public function execute() {

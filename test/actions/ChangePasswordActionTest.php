@@ -89,4 +89,32 @@ class ChangePasswordActionTest extends TestClass {
 		(new ChangePasswordAction())->execute();
 		$this->assertStatus("success");
 	}
+
+	/**
+	 * Tests changing a password as an unauthenticated user
+	 */
+	public function testChangingPasswordAsUnauthorizedUser() {
+
+		$this->confirmedUserA->logout();
+		$_POST[ChangePasswordForm::$oldPassword] = "A";
+		$_POST[ChangePasswordForm::$newPassword] = "BBBB";
+		$_POST[ChangePasswordForm::$newPasswordRepeat] = "BBBB";
+		(new ChangePasswordAction())->execute();
+
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
+
+		$this->unConfirmedUserB->confirm(
+			$this->unConfirmedUserB->confirmationToken);
+		$this->confirmedUserA->login("A");
+		$_SESSION["user_id"] = $this->unConfirmedUserB->id;
+
+		$_POST[ChangePasswordForm::$oldPassword] = "A";
+		$_POST[ChangePasswordForm::$newPassword] = "BBBB";
+		$_POST[ChangePasswordForm::$newPasswordRepeat] = "BBBB";
+		(new ChangePasswordAction())->execute();
+
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
+	}
 }

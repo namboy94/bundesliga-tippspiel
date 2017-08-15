@@ -60,4 +60,19 @@ class CommentActionTest extends TestClass {
 		$this->assertTrue(!isset($_SESSION["message"]));
 		$this->assertEquals(count(self::$commentManager->getComments()), 1);
 	}
+
+	/**
+	 * Tests placing comments as an unauthorized user
+	 */
+	public function testPlacingCommentWithoutAuthorization() {
+		$this->confirmedUserA->logout();
+
+		$this->assertEquals(count(self::$commentManager->getComments()), 0);
+		$_POST[CommentBar::$contentId] = "Hello World!";
+		(new CommentAction())->execute();
+
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
+		$this->assertEquals(count(self::$commentManager->getComments()), 0);
+	}
 }

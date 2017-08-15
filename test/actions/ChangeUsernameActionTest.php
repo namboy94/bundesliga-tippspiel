@@ -81,4 +81,29 @@ class ChangeUsernameActionTest extends TestClass {
 		$this->assertStatus("success");
 	}
 
+	/**
+	 * Tests if it is possible to change the username of another user.
+	 * Hint: This should not be possible
+	 */
+	public function testChangingOtherUsersUsername() {
+
+		$this->confirmedUserA->logout();
+
+		$_POST[ChangeUsernameForm::$newUsername] = "C";
+		(new ChangeUsernameAction())->execute();
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
+
+		$this->unConfirmedUserB->confirm(
+			$this->unConfirmedUserB->confirmationToken);
+		$this->confirmedUserA->login("A");
+		$_SESSION["user_id"] = $this->unConfirmedUserB->id;
+
+		$_POST[ChangeUsernameForm::$newUsername] = "C";
+		(new ChangeUsernameAction())->execute();
+		$this->assertStatus("danger");
+		$this->assertMessageId("ACTION_FAIL_AUTH");
+
+	}
+
 }

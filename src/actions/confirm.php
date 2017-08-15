@@ -20,45 +20,4 @@
 
 namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
-use welwitschi\Authenticator;
-use ErrorException;
-use bundesliga_tippspiel\Functions;
-
-Functions::initializeSession();
-
-/**
- * Confirms a newly created user
- */
-function confirm() {
-	$auth = new Authenticator(Functions::getMysqli());
-
-	$id = $_GET["id"];
-	$token = $_GET["token"];
-	$user = $auth->getUserFromId($id);
-
-	if ($user === null || !$user->confirm($token)) {
-		$_SESSION["message"] = [
-			"type" => "danger",
-			"title" => "@{CONFIRM_FAILED_MESSAGE_TITLE}",
-			"body" => "@{CONFIRM_FAILED_MESSAGE_BODY}"
-		];
-	} else {
-		$_SESSION["message"] = [
-			"type" => "success",
-			"title" => "@{CONFIRM_SUCCESS_MESSAGE_TITLE}",
-			"body" => "@{CONFIRM_SUCCESS_MESSAGE_BODY}"
-		];
-	}
-	header("Location: ../index.php");
-}
-
-// Make ErrorException catch everything
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-try {
-	confirm();
-} catch (ErrorException $e) {
-	echo "Oops... Something broke on our end, sorry!";
-	throw $e;
-}
+(new ConfirmAction())->execute();
