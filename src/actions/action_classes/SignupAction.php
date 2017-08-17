@@ -46,7 +46,6 @@ class SignupAction extends Action {
 	 * Defines the behaviour of the Action
 	 * @return void
 	 * @throws ActionException: An ActionExpression containing message data
-	 * @SuppressWarnings showTODOs
 	 */
 	protected function defineBehaviour() {
 
@@ -72,13 +71,13 @@ class SignupAction extends Action {
 				"SIGNUP_FAILED_USERNAME", "../signup.php");
 
 		} elseif ($_SERVER["SERVER_NAME"] !== "localhost"
-			&& $_SERVER["SERVER_NAME"] !== "local"
 			&& !Functions::verifyCaptcha($captcha)) {
 			// Check Captcha in production but not on localhost
-			// TODO Check how to unit test this
 
+			// @codeCoverageIgnoreStart
 			throw new DangerException(
 				"SIGNUP_FAILED_RECAPTCHA", "../signup.php");
+			// @codeCoverageIgnoreEnd
 
 		} elseif ($auth->createUser($username, $email, $password)) {
 

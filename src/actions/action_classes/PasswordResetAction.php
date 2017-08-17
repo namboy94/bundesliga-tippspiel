@@ -45,23 +45,23 @@ class PasswordResetAction extends Action {
 	 * Defines the behaviour of the Action
 	 * @return void
 	 * @throws ActionException: The message information
-	 * @SuppressWarnings showTODOs
 	 */
 	protected function defineBehaviour() {
 
 		$email = $_POST[ForgottenPasswordForm::$email];
 		$recaptcha = $_POST[FormReCaptcha::$recaptchaPostKey];
 
+
 		if ($_SERVER["SERVER_NAME"] !== "localhost"
-			&& $_SERVER["SERVER_NAME"] !== "local"
 			&& !Functions::verifyCaptcha($recaptcha)) {
 			// We only check for valid captchas on the production server,
 			// not on the development machine, since the ReCaptcha settings
-			// are not configured for `localhost` and `local`
+			// are not configured for `localhost`
 
-			// TODO Check how we can unit test this
+			// @codeCoverageIgnoreStart
 			throw new DangerException(
 				"RESET_PASSWORD_ERROR_RECAPTCHA", "../forgot.php");
+			// @codeCoverageIgnoreEnd
 
 		} else {
 
