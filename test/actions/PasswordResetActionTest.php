@@ -36,6 +36,9 @@ class PasswordResetActionTest extends TestClass {
 
 		$oldHash = $this->confirmedUserA->pwHash;
 
+		/**
+		 * @SuppressWarnings checkUnusedVariables
+		 */
 		$_POST[ForgottenPasswordForm::$email] = "A";
 		$_POST[FormReCaptcha::$recaptchaPostKey] = "";
 		(new PasswordResetAction())->execute();

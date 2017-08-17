@@ -46,6 +46,7 @@ class SignupAction extends Action {
 	 * Defines the behaviour of the Action
 	 * @return void
 	 * @throws ActionException: An ActionExpression containing message data
+	 * @SuppressWarnings showTODOs
 	 */
 	protected function defineBehaviour() {
 
@@ -85,7 +86,7 @@ class SignupAction extends Action {
 
 			$server = $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"];
 			$confirmationUrl = "https://" . $server . "/actions/confirm.php";
-			$confirmationUrl .= "?id=". $user->id . "&token=";
+			$confirmationUrl .= "?id=" . $user->id . "&token=";
 			$confirmationUrl .= $user->confirmationToken;
 
 			// Send an email to the user's email address with the confirmation

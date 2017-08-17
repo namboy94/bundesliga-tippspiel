@@ -45,6 +45,7 @@ class PasswordResetAction extends Action {
 	 * Defines the behaviour of the Action
 	 * @return void
 	 * @throws ActionException: The message information
+	 * @SuppressWarnings showTODOs
 	 */
 	protected function defineBehaviour() {
 
