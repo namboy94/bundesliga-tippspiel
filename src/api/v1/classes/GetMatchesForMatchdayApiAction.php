@@ -19,37 +19,44 @@
  */
 
 namespace bundesliga_tippspiel_api;
+use cheetah\Match;
+use cheetah\SeasonManager;
 
 /**
- * Class RequestApiKeyApiAction
- * Class that handles requesting a new API key for a user
+ * Class GetUserBetsForMatchdayApiAction
+ * This API Action allows the retrieval of bets for a given matchday
+ * for a single user. Includes information about the match and teams.
  * @package bundesliga_tippspiel_api
  */
-class RequestApiKeyApiAction extends ApiAction {
+class GetMatchesForMatchdayApiAction extends ApiAction {
 
 	/**
 	 * Defines the behaviour of the API Action
 	 * @return array: The returned JSON array data
-	 * @throws ApiException: To signify error cases
+	 * @throws ApiException: If the API Action could not be completed
+	 * @SuppressWarnings docBlocks
 	 */
 	protected function defineBehaviour(): array {
+		$seasonManager = new SeasonManager($this->db);
 
-		$username = $this->inputData["username"];
-		$password = $this->inputData["password"];
-		$user = $this->authenticator->getUserFromUsername($username);
-
-		if ($user === null) {
-			throw new ApiException("invalid_user");
-		} elseif (!$user->doesPasswordMatch($password)) {
-			throw new ApiException("credential_check_failed");
+		if (!isset($this->inputData["matchday"])) {
+			$matchday = $seasonManager->getCurrentMatchday();
 		} else {
-			$apiKey = $user->generateNewApiKey();
-			if ($apiKey === null) {
-				throw new ApiException("unconfirmed_user");
-			} else {
-				return ["key" => $apiKey];
-			}
+			$matchday = (int)$this->inputData["matchday"];
 		}
+
+		if ($matchday < 1 || $matchday > $seasonManager->getMaxMatchday()) {
+			throw new ApiException("invalid_matchday");
+		}
+
+		$matches = Match::getAllForMatchday($this->db, $matchday);
+
+		$result = [];
+		foreach ($matches as $match) {
+			/** @noinspection PhpUndefinedMethodInspection */
+			array_push($result, $match->toArray());
+		}
+		return ["data" => $result];
 	}
 
 	/**
@@ -57,6 +64,6 @@ class RequestApiKeyApiAction extends ApiAction {
 	 * @return array: A list of required JSON parameters
 	 */
 	public function defineRequiredParameters(): array {
-		return ["username", "password"];
+		return [];
 	}
 }

@@ -58,9 +58,9 @@ abstract class ApiAction {
 
 	/**
 	 * ApiAction constructor.
-	 * @param bool $authenticationRequired: See class variable
+	 * @param bool $authenticationRequired: See class variable description
 	 */
-	public function __construct(bool $authenticationRequired = false) {
+	public function __construct(bool $authenticationRequired = true) {
 		$this->authenticationRequired = $authenticationRequired;
 		$this->db = Functions::getMysqli();
 		$this->authenticator = new Authenticator($this->db);
@@ -96,6 +96,7 @@ abstract class ApiAction {
 
 		// Check for missing parameters
 		foreach ($this->defineRequiredParameters() as $param) {
+			// username and api_key are implicitly checked by the auth check
 			if (!isset($this->inputData[$param])) {
 				echo json_encode(
 					["status" => "error", "cause" => "missing_parameter"]
@@ -117,6 +118,7 @@ abstract class ApiAction {
 			}
 		}
 		echo json_encode($retval);
+		$this->db->close();
 	}
 
 	/**

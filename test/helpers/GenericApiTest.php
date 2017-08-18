@@ -1,9 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: hermann
- * Date: 8/18/17
- * Time: 1:15 AM
+ * Copyright Hermann Krumrey <hermann@krumreyh.com> 2017
+ *
+ * This file is part of bundesliga_tippspiel.
+ *
+ * bundesliga_tippspiel is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * bundesliga_tippspiel is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace bundesliga_tippspiel_tests;
@@ -32,6 +44,8 @@ abstract class GenericApiTest extends TestClass {
 	 * @param $apiAction: The API action to test
 	 * @param array $inputJson: The input JSON data
 	 * @return array: The result JSON array
+	 * @SuppressWarnings docBlocks
+	 * @SuppressWarnings checkProhibitedFunctions
 	 */
 	protected function executeApiAction($apiAction, array $inputJson) : array {
 
@@ -48,10 +62,11 @@ abstract class GenericApiTest extends TestClass {
 
 	/**
 	 * Deletes the temporary file if the test was not successful
-	 * @param Throwable $t: The thrown exception
+	 * @param Throwable $throwable: The thrown exception
+	 * @SuppressWarnings checkProhibitedFunctions
 	 */
-	public function onNotSuccessfulTest(Throwable $t) {
-		parent::onNotSuccessfulTest($t);
+	public function onNotSuccessfulTest(Throwable $throwable) {
+		parent::onNotSuccessfulTest($throwable);
 		if (is_file(ApiAction::$inputStream)) {
 			unlink(ApiAction::$inputStream);
 		}
@@ -59,6 +74,7 @@ abstract class GenericApiTest extends TestClass {
 
 	/**
 	 * Deletes the temporary JSON file
+	 * @SuppressWarnings checkProhibitedFunctions
 	 */
 	public function tearDown() {
 		parent::tearDown();
