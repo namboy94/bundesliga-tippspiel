@@ -66,4 +66,19 @@ class CommentActionTest extends TestClass {
 		$this->assertMessageId("ACTION_FAIL_AUTH");
 		$this->assertEquals(count(self::$commentManager->getComments()), 0);
 	}
+
+	/**
+	 * Tests placing an empty comment
+	 */
+	public function testEmptyComment() {
+
+		$this->assertEquals(count(self::$commentManager->getComments()), 0);
+		$_POST[CommentBar::$contentId] = "";
+		(new CommentAction())->execute();
+
+		$this->assertStatus("danger");
+		$this->assertMessageId("COMMENT_FAIL_EMPTY_INPUT");
+		$this->assertEquals(count(self::$commentManager->getComments()), 0);
+
+	}
 }

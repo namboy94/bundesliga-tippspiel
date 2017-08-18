@@ -35,7 +35,7 @@ class CommentField extends HtmlTemplate {
 	/**
 	 * CommentField constructor.
 	 * @param Dictionary|null $dictionary: The dictionary to use
-	 * @param User $activeUseruser: The user that is viewing this field
+	 * @param User $activeUser: The user that is viewing this field
 	 * @param Comment $comment: The comment to display
 	 */
 	public function __construct(
@@ -51,7 +51,7 @@ class CommentField extends HtmlTemplate {
 		$this->bindParams([
 			"USERNAME" => $comment->user->username,
 			"CONTENT" => $comment->content,
-			"TIMESTAMP" => date('Y-m-d:h-i-s', $comment->timestamp),
+			"TIMESTAMP" => date('Y-m-d:H-i-s', $comment->timestamp),
 			"ID" => (string)$comment->id
 		]);
 	}

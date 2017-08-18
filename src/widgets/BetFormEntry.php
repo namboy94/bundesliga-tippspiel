@@ -30,7 +30,7 @@ class BetFormEntry extends HtmlTemplate {
 
 		parent::__construct(__DIR__ . "/templates/bet_form_entry.html", null);
 
-		$disabled = $match->finished ? "disabled" : "";
+		$disabled = $match->hasStarted() ? "disabled" : "";
 		if ($bet !== null) {
 			$homeDefault = (string)$bet->homeScore;
 			$awayDefault = (string)$bet->awayScore;
