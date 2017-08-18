@@ -3,7 +3,7 @@
         <fieldset>
             <div class="form-group">
                 <div class="row container-fluid">
-                    <input class="form-control" placeholder="@{COMMENT_PLACEHOLDER}" id="#{CONTENT_ID}" name="#{CONTENT_ID}" type="text">
+                    <input class="form-control" placeholder="@{COMMENT_PLACEHOLDER}" id="#{CONTENT_ID}" name="#{CONTENT_ID}" type="text" pattern = ".*[^ ].*"> <!-- At least one char -->
                     <button type="submit" class="btn btn-primary comment_submit">@{COMMENT_SUBMIT_BUTTON_TITLE}</button>
                 </div>
             </div>

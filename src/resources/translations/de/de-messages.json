@@ -67,6 +67,8 @@
 
   "COMMENT_FAIL_NO_INPUT_TITLE": "Kommentieren fehlgeschlagen",
   "COMMENT_FAIL_NO_INPUT_BODY": "Es wurde kein Kommentartext zur Verfügung gestellt",
+  "COMMENT_FAIL_EMPTY_INPUT_TITLE": "Kommentar ist leer",
+  "COMMENT_FAIL_EMPTY_INPUT_BODY": "Ein Kommentar muss mindestens 1 Zeichen lang sein",
   "COMMENT_DELETE_FAIL_TITLE": "Löschen des Kommentars fehlgeschlagen",
   "COMMENT_DELETE_FAIL_BODY": "Du bist nicht dazu authorisiert diese Nachricht zu löschen."
 }

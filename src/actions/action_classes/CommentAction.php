@@ -45,6 +45,12 @@ class CommentAction extends Action {
 		}
 
 		$content = $_POST[CommentBar::$contentId];
+
+		if (strlen($content) < 1) {
+			throw new DangerException(
+				"COMMENT_FAIL_EMPTY_INPUT", $_SERVER['HTTP_REFERER']);
+		}
+
 		$auth = new Authenticator($this->db);
 		$user = $auth->getUserFromId($_SESSION["user_id"]);
 		$commentManager = new CommentManager($this->db);
