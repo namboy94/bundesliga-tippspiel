@@ -19,5 +19,32 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-require __DIR__ . '/../../vendor/autoload.php';
-(new BetAction())->execute();
+use bundesliga_tippspiel_comments\CommentManager;
+use welwitschi\Authenticator;
+
+/**
+ * Class DeleteCommentAction
+ * Enables the user to delete a comment
+ * @package bundesliga_tippspiel_actions
+ */
+class DeleteCommentAction extends Action {
+
+	/**
+	 * Defines the behaviour of the Action
+	 * @return void
+	 * @throws ActionException: The message information
+	 */
+	protected function defineBehaviour() {
+		$commentId = $_GET["comment"];
+		$auth = new Authenticator($this->db);
+		$user = $auth->getUserFromId($_SESSION["user_id"]);
+
+		$commentManager = new CommentManager($this->db);
+		$result = $commentManager->deleteCommentById($user, $commentId);
+
+		if (!$result) {
+			throw new DangerException("COMMENT_DELETE_FAIL",
+				$_SERVER["HTTP_REFERER"]);
+		}
+	}
+}

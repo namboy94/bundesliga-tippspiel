@@ -19,5 +19,24 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-require __DIR__ . '/../../vendor/autoload.php';
-(new BetAction())->execute();
+
+
+/**
+ * Class DangerException
+ * ActionException subclass that automatically sets
+ * the message type to 'danger'.
+ * @package bundesliga_tippspiel_actions
+ */
+class DangerException extends ActionException {
+
+	/**
+	 * DangerException constructor.
+	 * Overrides the standard ActionException constructor to automatically
+	 * set the message type to 'danger'
+	 * @param string $messageIdentifier: The identifier for the message
+	 * @param string $redirect: The site to redirect to
+	 */
+	public function __construct(string $messageIdentifier, string $redirect) {
+		parent::__construct($messageIdentifier, "danger", $redirect);
+	}
+}

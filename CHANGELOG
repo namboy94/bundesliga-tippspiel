@@ -1,3 +1,7 @@
+V 0.9.0:
+  - Implemented Simple API endpoints
+  - Switched to an object-oriented approach to APIs and Actions
+  - Implemented unit testing for APIs and Actions
 V 0.8.0:
   - Complete Rewrite of backend
 V 0.7.1:

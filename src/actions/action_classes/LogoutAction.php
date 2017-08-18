@@ -19,5 +19,30 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-require __DIR__ . '/../../vendor/autoload.php';
-(new BetAction())->execute();
+use welwitschi\Authenticator;
+
+/**
+ * Class LogoutAction
+ * Enables the user to log out
+ * @package bundesliga_tippspiel_actions
+ */
+class LogoutAction extends Action {
+
+	/**
+	 * Defines the behaviour of the Action
+	 * @return void
+	 * @throws ActionException: The message information
+	 */
+	protected function defineBehaviour() {
+
+		$auth = new Authenticator($this->db);
+		if (isset($_SESSION["user_id"])) {
+			$user = $auth->getUserFromId($_SESSION["user_id"]);
+			if ($user !== null && $user->isLoggedIn()) {
+				$user->logout();
+			}
+		}
+		header("Location: ../index.php");
+
+	}
+}

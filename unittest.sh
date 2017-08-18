@@ -5,7 +5,7 @@ if [ -z "$TEST_DB_PASS" ]; then
     exit 1
 fi
 
-vendor/bin/phpunit test --coverage-html=coverage
+vendor/bin/phpunit test --coverage-html=coverage --stderr
 
 if [ -z "$SHOW_COVERAGE" ]; then
     echo "Not Displaying Coverage"

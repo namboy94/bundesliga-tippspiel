@@ -20,33 +20,4 @@
 
 namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
-use bundesliga_tippspiel\Functions;
-use welwitschi\Authenticator;
-use ErrorException;
-
-Functions::initializeSession();
-
-/**
- * Logs a user out
- */
-function logout() {
-	$auth = new Authenticator(Functions::getMysqli());
-	if (isset($_SESSION["user_id"])) {
-		$user = $auth->getUserFromId($_SESSION["user_id"]);
-		if ($user !== null) {
-			$user->logout();
-		}
-	}
-	header("Location: ../index.php");
-}
-
-// Make ErrorException catch everything
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-try {
-	logout();
-} catch (ErrorException $e) {
-	echo "Oops... Something broke on our end, sorry!";
-	throw $e;
-}
+(new LogoutAction())->execute();

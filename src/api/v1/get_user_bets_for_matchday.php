@@ -18,6 +18,7 @@
  * along with bundesliga_tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel_actions;
-require __DIR__ . '/../../vendor/autoload.php';
-(new BetAction())->execute();
+namespace bundesliga_tippspiel_api;
+require __DIR__ . '/../../../vendor/autoload.php';
+
+(new GetUserBetsForMatchdayApiAction())->execute();

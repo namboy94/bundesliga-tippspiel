@@ -20,40 +20,4 @@
 
 namespace bundesliga_tippspiel_actions;
 require __DIR__ . '/../../vendor/autoload.php';
-use bundesliga_tippspiel\Functions;
-use bundesliga_tippspiel_comments\CommentManager;
-use ErrorException;
-use welwitschi\Authenticator;
-
-
-/**
- * Deletes a comment
- */
-function deleteComment() {
-
-	Functions::initializeSession();
-
-	$db = Functions::getMysqli();
-	$auth = new Authenticator($db);
-	$commentId = $_GET["comment"];
-
-	if (isset($_SESSION["user_id"])) {
-		$user = $auth->getUserFromId($_SESSION["user_id"]);
-		if ($user !== null && $user->isLoggedIn()) {
-			$commentManager = new CommentManager($db);
-			$commentManager->deleteCommentById($user, $commentId);
-		}
-	}
-	header('Location: ' . $_SERVER['HTTP_REFERER']);
-}
-
-// Make ErrorException catch everything
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
-try {
-	deleteComment();
-} catch (ErrorException $e) {
-	echo "Oops... Something broke on our end, sorry!";
-	throw $e;
-}
+(new DeleteCommentAction())->execute();

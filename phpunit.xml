@@ -3,6 +3,13 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/pages</directory>
             <directory suffix=".php">src/defaults</directory>
+            <directory suffix=".php">src/api/v1/classes</directory>
+            <directory suffix=".php">src/actions/action_classes</directory>
+            <directory suffix=".php">src/actions/exceptions</directory>
+            <directory suffix=".php">src/comments</directory>
+            <directory suffix=".php">src/widgets</directory>
+            <file>src/api/v1/ApiAction.php</file>
+            <file>src/api/v1/ApiException.php</file>
         </whitelist>
     </filter>
 </phpunit>

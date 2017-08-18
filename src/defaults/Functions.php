@@ -30,14 +30,24 @@ use mysqli;
 class Functions {
 
 	/**
+	 * @var string: The database to use
+	 */
+	public static $dbdatabase = "tippspiel_bundesliga";
+
+	/**
+	 * @var string: The database user to use
+	 */
+	public static $dbusername = "tippspiel";
+
+	/**
 	 * @return mysqli: The MySQL Database connection
 	 */
 	public static function getMysqli(): mysqli {
 		return new mysqli(
 			"localhost",
-			"tippspiel",
+			self::$dbusername,
 			rtrim(file_get_contents(__DIR__ . "/../../DB_PASS.secret")),
-			"tippspiel_bundesliga"
+			self::$dbdatabase
 		);
 	}
 
@@ -45,8 +55,15 @@ class Functions {
 	 * Initializes a session and sets the lifetime of the cookies
 	 */
 	public static function initializeSession() {
-		session_start();
-		session_set_cookie_params(86400);
+		if (!isset($_SESSION)) {
+			session_start();
+			session_set_cookie_params(
+				86400,
+				null,
+				$_SERVER["SERVER_NAME"],
+				true,
+				true);
+		}
 	}
 
 	/**
