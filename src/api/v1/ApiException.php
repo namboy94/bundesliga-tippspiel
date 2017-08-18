@@ -19,6 +19,35 @@
  */
 
 namespace bundesliga_tippspiel_api;
-require __DIR__ . '/../../../vendor/autoload.php';
+use Exception;
 
-(new RequestApiKeyApiAction())->execute();
+/**
+ * Class ApiException
+ * A specialized API Exception that can be used to communicate an error state
+ * @package bundesliga_tippspiel_api
+ */
+class ApiException extends Exception {
+
+	/**
+	 * @var string: The description of the error
+	 */
+	private $errorDescription;
+
+	/**
+	 * ApiException constructor.
+	 * @param string $errorDescription: The error description
+	 */
+	public function __construct(string $errorDescription) {
+		$this->errorDescription = $errorDescription;
+		parent::__construct();
+	}
+
+	/**
+	 * Turns the exception into a JSON response array
+	 * @return array: The JSON response array
+	 */
+	public function toArray() : array {
+		return ["status" => "error", "cause" => $this->errorDescription];
+	}
+
+}

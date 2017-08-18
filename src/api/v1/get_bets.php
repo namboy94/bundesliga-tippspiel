@@ -1,5 +1,6 @@
 <?php
 
+/*
 namespace bundesliga_tippspiel_api;
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -42,3 +43,4 @@ try {
 	echo json_encode(["status" => "error", "cause" => "exception"]);
 	throw $e;
 }
+*/
