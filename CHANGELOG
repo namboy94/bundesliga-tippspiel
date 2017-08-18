@@ -1,3 +1,8 @@
+V 0.9.1:
+  - Fixed empty comments
+  - Fixed match score display
+  - Fixed comment time displays
+  - Fixed disabling of bet inputs when match has started
 V 0.9.0:
   - Implemented Simple API endpoints
   - Switched to an object-oriented approach to APIs and Actions
