@@ -56,13 +56,8 @@ class Functions {
 	 */
 	public static function initializeSession() {
 		if (!isset($_SESSION)) {
+			ini_set('session.cookie_lifetime', 60 * 60 * 24 * 14);
 			session_start();
-			session_set_cookie_params(
-				86400,
-				null,
-				$_SERVER["SERVER_NAME"],
-				true,
-				true);
 		}
 	}
 
