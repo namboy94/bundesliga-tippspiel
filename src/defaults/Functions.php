@@ -58,6 +58,7 @@ class Functions {
 		if (!isset($_SESSION)) {
 			ini_set('session.cookie_lifetime', 60 * 60 * 24 * 14);
 			session_start();
+
 		}
 	}
 
