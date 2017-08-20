@@ -136,6 +136,11 @@ abstract class ApiAction {
 		$apiKey = $this->inputData["api_key"];
 
 		$user = $this->authenticator->getUserFromUsername($username);
-		return $user->verifyApiKey($apiKey);
+
+		if ($user === null) {
+			return false;
+		} else {
+			return $user->verifyApiKey($apiKey);
+		}
 	}
 }

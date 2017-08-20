@@ -1,3 +1,5 @@
+V 0.9.3:
+  - Fixed API crashes when using empty username
 V 0.9.2:
   - Added `authorize` API endpoint
 V 0.9.1:

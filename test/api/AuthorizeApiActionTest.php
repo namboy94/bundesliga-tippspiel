@@ -51,4 +51,17 @@ class AuthorizeApiActionTest extends GenericApiTest {
 		$this->assertEquals($result["status"], "error");
 	}
 
+	/**
+	 * Tests authenticating with empty username
+	 */
+	public function testWithEmptyUsername() {
+		$result = $this->executeApiAction(AuthorizeApiAction::class,
+			[
+				"username" => "A",
+				"api_key" => $this->confirmedUserA->generateNewApiKey()
+			]
+		);
+		$this->assertEquals($result["status"], "error");
+	}
+
 }
