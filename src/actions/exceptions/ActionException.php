@@ -76,4 +76,12 @@ class ActionException extends Exception {
 		header("Location: " . $this->redirect);
 	}
 
+	/**
+	 * Turns this Exception into an array
+	 * @return array: The array representation of the Exception
+	 */
+	public function toArray() : array {
+		return [$this->messageType, $this->messageIdentifier];
+	}
+
 }

@@ -110,7 +110,9 @@ abstract class ApiAction {
 		} else {
 			try {
 				$retval = $this->defineBehaviour();
-				$retval["status"] = "success";
+				if (!isset($retval["status"])) {
+					$retval["status"] = "success";
+				}
 			} catch (ApiException $e) {
 				$retval = $e->toArray();
 			} catch (ErrorException $e) {
