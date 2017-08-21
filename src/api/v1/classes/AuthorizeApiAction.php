@@ -21,7 +21,7 @@
 namespace bundesliga_tippspiel_api;
 
 /**
- * Class GetUserBetsForMatchdayApiAction
+ * Class AuthorizeApiAction
  * Simple API endpoint that checks if a username/api_key
  * combination is valid
  * @package bundesliga_tippspiel_api
