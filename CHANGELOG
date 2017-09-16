@@ -1,5 +1,5 @@
 V 0.10.2:
-  - Fixed redirect issue when logging in or out
+  - Add logo usage notice for Play Store copyright issue
 V 0.10.1:
   - Actually added accessibly API endpoint for placing bets
 V 0.10.0:
