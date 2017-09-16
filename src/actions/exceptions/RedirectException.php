@@ -19,29 +19,29 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-use welwitschi\Authenticator;
+
 
 /**
- * Class LogoutAction
- * Enables the user to log out
+ * Class RedirectException
+ * Simple class that allows redirecting to another page
  * @package bundesliga_tippspiel_actions
  */
-class LogoutAction extends Action {
+class RedirectException extends ActionException {
 
 	/**
-	 * Defines the behaviour of the Action
-	 * @return void
-	 * @throws ActionException: The message information
+	 * RedirectException constructor.
+	 * @param string $redirectLocation: The Location to redirect to
 	 */
-	protected function defineBehaviour() {
-
-		$auth = new Authenticator($this->db);
-		if (isset($_SESSION["user_id"])) {
-			$user = $auth->getUserFromId($_SESSION["user_id"]);
-			if ($user !== null && $user->isLoggedIn()) {
-				$user->logout();
-			}
-		}
-		throw new RedirectException("../index.php");
+	public function __construct(string $redirectLocation) {
+		parent::__construct("", "", $redirectLocation);
 	}
+
+	/**
+	 * Does not store a message in the session,
+	 * since this is a simple redirect
+	 */
+	public function storeMessageInSession() {
+		// NoOp
+	}
+
 }

@@ -57,7 +57,7 @@ class AuthorizeApiActionTest extends GenericApiTest {
 	public function testWithEmptyUsername() {
 		$result = $this->executeApiAction(AuthorizeApiAction::class,
 			[
-				"username" => "A",
+				"username" => "",
 				"api_key" => $this->confirmedUserA->generateNewApiKey()
 			]
 		);

@@ -53,7 +53,8 @@ class LoginAction extends Action {
 		$user = $auth->getUserFromUsername($username);
 
 		if ($user !== null && $user->login($password)) {
-			header('Location: ../index.php');
+			throw new RedirectException("../index.php");
+			// header('Location: ../index.php');
 		} else {
 			throw new DangerException("LOGIN_FAILED", "../signup.php");
 		}
