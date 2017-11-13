@@ -43,27 +43,27 @@ class PlaceBetsApiAction extends ApiAction {
 		$betManager = new BetManager($this->db);
 
 		// Make sure all bets are OK
-        foreach ($this->inputData["bets"] as $bet) {
-            if (!$this->_checkBetValidity($bet)) {
-                throw new ApiException("invalid_bet");
-            }
-        }
+		foreach ($this->inputData["bets"] as $bet) {
+			if (!$this->_checkBetValidity($bet)) {
+				throw new ApiException("invalid_bet");
+			}
+		}
 
 		$errors = false;
 		foreach ($this->inputData["bets"] as $bet) {
-            $homeScore = (int)$bet["home_score"];
-            $awayScore = (int)$bet["away_score"];
-            $matchId = (int)$bet["match_id"];
-            $match = Match::fromId($this->db, $matchId);
+			$homeScore = (int)$bet["home_score"];
+			$awayScore = (int)$bet["away_score"];
+			$matchId = (int)$bet["match_id"];
+			$match = Match::fromId($this->db, $matchId);
 
-            /** @noinspection PhpUndefinedMethodInspection */
-            if ($match->hasStarted()) {
-                $errors = true;  // Skip this bet
-            } else {
-                /** @noinspection PhpParamsInspection */
-                $errors = $errors || !$betManager->placeBetWithApiKey(
-                        $user, $apiKey, $match, $homeScore, $awayScore);
-            }
+			/** @noinspection PhpUndefinedMethodInspection */
+			if ($match->hasStarted()) {
+				$errors = true;  // Skip this bet
+			} else {
+				/** @noinspection PhpParamsInspection */
+				$errors = $errors || !$betManager->placeBetWithApiKey(
+					$user, $apiKey, $match, $homeScore, $awayScore);
+			}
 		}
 
 		$resultName = $errors ? "success_with_errors" : "success";

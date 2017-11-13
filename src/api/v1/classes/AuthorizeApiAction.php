@@ -35,8 +35,8 @@ class AuthorizeApiAction extends ApiAction {
 	 * @SuppressWarnings docBlocks
 	 */
 	protected function defineBehaviour(): array {
-	    // Yes, it's correct that this is empty.
-        // Just checks if it's authorized
+		// Yes, it's correct that this is empty.
+		// Just checks if it's authorized
 		return [];
 	}
 

@@ -22,6 +22,8 @@ on [develop.hk-tippspiel.com](https://develop.hk-tippspiel.com)
 All classes and methods are documented using DocBlock comments. Additional
 Documentation can be found in [doc](doc/).
 
+Documentation on the API can be found [here](doc/APISpec.md).
+
 ## Further Information
 
 * [Changelog](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/CHANGELOG)
