@@ -144,6 +144,31 @@ class PlaceBetApiActionTest extends GenericApiTest {
 		}
 	}
 
+    /**
+     * Tests placing an invalid bet among other valid bets
+     */
+    public function testPlacingInvalidBetAmongValidBets() {
+
+        $bets = [];
+        foreach ($this->matches34 as $match) {
+            array_push($bets, [
+                "home_score" => 1,
+                "away_score" => 2,
+                "match_id" => $match->id
+            ]);
+        }
+        $bets[17]["home_score"] = -1;
+
+        $result = $this->executeApiAction(PlaceBetsApiAction::class, [
+            "username" => "A",
+            "api_key" => $this->apiKey,
+            "bets" => $bets
+        ]);
+
+        $this->assertEquals($result["status"], "error");
+        $this->assertEquals($result["cause"], "invalid_bet");
+    }
+
 	/**
 	 * Tests placing bets on matches that have already started
 	 */
