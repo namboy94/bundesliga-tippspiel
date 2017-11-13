@@ -4,7 +4,7 @@
 |:----:|:-----:|
 |[![build status](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/badges/master/build.svg)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/commits/master)|[![build status](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/badges/develop/build.svg)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/commits/develop)|
 
-![Logo](web/resources/logo/logo-readme.png)
+![Logo](resources/logo/logo-readme.png)
 
 [Development Demo](https://demo.tippspiel.krumreyh.com)
 
