@@ -3,16 +3,14 @@ stages:
   - test
   - release
   - deploy
-  - docstats
-  - finalize
 
 variables:
-  PRODUCTION: "1"
+  PRODUCTION: "1"  # Tells script that it's running on the production instance
 
 github_mirror:
   stage: mirror
   tags:
-    - linux-buildserver
+    - github_namboy94_push
   script:
     - git checkout master
     - git pull
@@ -24,7 +22,8 @@ github_mirror:
 lint:
   stage: test
   tags:
-    - linux-buildserver
+    - php
+    - composer
   script:
     - composer update
     - ./lint.sh
@@ -32,7 +31,9 @@ lint:
 unittest:
   stage: test
   tags:
-    - linux-buildserver
+    - composer
+    - php
+    - coverage
   script:
     - echo $TEST_DB_PASS > DB_PASS.secret
     - composer update
@@ -45,13 +46,13 @@ upload_release_to_github:
   only:
     - master
   tags:
-    - linux-buildserver
+    - python
+    - linux
   script:
     - mkdir -p artifacts
-    - git clone https://gitlab.namibsun.net/namboy94/github-release-uploader.git
-    - git clone https://gitlab.namibsun.net/namboy94/changelog-reader.git
-    - python changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
-    - python github-release-uploader/github-release-uploader.py namboy94 bundesliga-tippspiel $GITHUB_ACCESS_TOKEN
+    - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
+    - python ci-scripts/src/changelog-reader/changelog-reader.py -c CHANGELOG -d current_changelog
+    - python ci-scripts/src/github-release-uploader/github-release-uploader.py namboy94 bundesliga-tippspiel $GITHUB_ACCESS_TOKEN
       $(cat version) current_changelog artifacts -b master
 
 upload_release_to_gitlab:
@@ -59,13 +60,13 @@ upload_release_to_gitlab:
   only:
     - master
   tags:
-    - linux-buildserver
+    - python
+    - linux
   script:
     - mkdir -p artifacts
-    - git clone https://gitlab.namibsun.net/namboy94/gitlab-release-uploader.git
-    - git clone https://gitlab.namibsun.net/namboy94/changelog-reader.git
-    - python changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
-    - python gitlab-release-uploader/gitlab-release-uploader.py namboy94 bundesliga-tippspiel $GITLAB_ACCESS_TOKEN
+    - git clone https://gitlab.namibsun.net/namboy94/ci-scripts.git
+    - python ci-scripts/src/changelog-reader/changelog-reader.py -c CHANGELOG -d  current_changelog
+    - python ci-scripts/src/gitlab-release-uploader/gitlab-release-uploader.py namboy94 bundesliga-tippspiel $GITLAB_ACCESS_TOKEN
       $(cat version) current_changelog artifacts -b master -u https://gitlab.namibsun.net
 
 deploy_develop_webpage:
@@ -74,7 +75,7 @@ deploy_develop_webpage:
     - master
     - develop
   tags:
-    - linux-buildserver
+    - bundesliga-tippspiel-develop
   script:
     - ./deploy.sh
 
@@ -83,35 +84,7 @@ deploy_live_webpage:
   only:
     - master
   tags:
-    - linux-buildserver
+    - bundesliga-tippspiel-live
   script:
     - export LIVE=1
     - ./deploy.sh
-
-gitstats:
-  stage: docstats
-  only:
-    - master
-    - develop
-  tags:
-    - linux-buildserver
-  script:
-    - gitstats . gitstats
-    - rsync -av gitstats/ /var/www/gitstats.namibsun.net/public_html/gitstats/bundesliga-tippspiel --delete-before
-    - git_stats generate
-    - rsync -av git_stats/ /var/www/gitstats.namibsun.net/public_html/git_stats/bundesliga-tippspiel --delete-before
-
-update_html_pages:
-  stage: finalize
-  when: always
-  tags:
-    - linux-buildserver
-  script:
-    - git clone https://gitlab.namibsun.net/namboy94/html-index-generator.git
-    - cd html-index-generator
-    - python html-index-generator.py /var/www/coverage.namibsun.net/public_html
-      /var/www/coverage.namibsun.net/public_html/index.html
-    - python html-index-generator.py /var/www/docs.namibsun.net/public_html
-      /var/www/docs.namibsun.net/public_html/index.html
-    - python html-index-generator.py /var/www/gitstats.namibsun.net/public_html
-      /var/www/gitstats.namibsun.net/public_html/index.html

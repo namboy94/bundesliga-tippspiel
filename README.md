@@ -27,6 +27,7 @@ Documentation on the API can be found [here](doc/APISpec.md).
 ## Further Information
 
 * [Changelog](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/CHANGELOG)
+* [License (GPLv3)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/LICENSE)
 * [Gitlab](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel)
 * [Github](https://github.com/namboy94/bundesliga-tippspiel)
 * [Git Statistics (gitstats)](https://gitstats.namibsun.net/gitstats/bundesliga-tippspiel/index.html)
