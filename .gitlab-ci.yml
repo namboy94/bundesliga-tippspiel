@@ -34,6 +34,7 @@ unittest:
     - composer
     - php
     - coverage
+    - bundesliga-tippspiel-test
   script:
     - echo $TEST_DB_PASS > DB_PASS.secret
     - composer update
