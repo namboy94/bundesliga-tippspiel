@@ -1,6 +1,0 @@
-The Logo for the website hk-tippspiel.com was created from scratch using
-inkscape by Hermann Krumrey<hermann @krumreyh.com>.
-
-The Android Application with the package name net.namibsun.hktipp, which is
-also developed by Hermann Krumrey has permission to use the logo in images on
-the play store and in the application itself.

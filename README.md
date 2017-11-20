@@ -4,7 +4,7 @@
 |:----:|:-----:|
 |[![build status](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/badges/master/build.svg)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/commits/master)|[![build status](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/badges/develop/build.svg)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/commits/develop)|
 
-![Logo](web/resources/logo/logo-readme.png)
+![Logo](resources/logo/logo-readme.png)
 
 [Development Demo](https://demo.tippspiel.krumreyh.com)
 
@@ -22,9 +22,12 @@ on [develop.hk-tippspiel.com](https://develop.hk-tippspiel.com)
 All classes and methods are documented using DocBlock comments. Additional
 Documentation can be found in [doc](doc/).
 
+Documentation on the API can be found [here](doc/APISpec.md).
+
 ## Further Information
 
 * [Changelog](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/CHANGELOG)
+* [License (GPLv3)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/LICENSE)
 * [Gitlab](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel)
 * [Github](https://github.com/namboy94/bundesliga-tippspiel)
 * [Git Statistics (gitstats)](https://gitstats.namibsun.net/gitstats/bundesliga-tippspiel/index.html)
