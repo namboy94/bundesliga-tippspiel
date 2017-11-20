@@ -19,10 +19,10 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Hyperlink;
-use chameleon\Navbar;
-use chameleon\NavbarButton;
-use chameleon\NavbarLogo;
+use champlates\Hyperlink;
+use champlates\Navbar;
+use champlates\NavbarButton;
+use champlates\NavbarLogo;
 
 
 /**

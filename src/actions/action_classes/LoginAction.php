@@ -19,7 +19,7 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-use chameleon\LoginForm;
+use champlates\LoginForm;
 use welwitschi\Authenticator;
 
 /**

@@ -20,8 +20,8 @@
 
 namespace bundesliga_tippspiel_tests;
 use bundesliga_tippspiel_actions\SignupAction;
-use chameleon\FormReCaptcha;
-use chameleon\SignupForm;
+use champlates\FormReCaptcha;
+use champlates\SignupForm;
 
 /**
  * Class SignupActionTest

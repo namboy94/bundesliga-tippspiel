@@ -20,7 +20,7 @@
 
 namespace bundesliga_tippspiel_actions;
 use bundesliga_tippspiel\Functions;
-use chameleon\ChangePasswordForm;
+use champlates\ChangePasswordForm;
 use welwitschi\Authenticator;
 
 

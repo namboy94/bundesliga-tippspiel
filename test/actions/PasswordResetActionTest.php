@@ -20,8 +20,8 @@
 
 namespace bundesliga_tippspiel_tests;
 use bundesliga_tippspiel_actions\PasswordResetAction;
-use chameleon\ForgottenPasswordForm;
-use chameleon\FormReCaptcha;
+use champlates\ForgottenPasswordForm;
+use champlates\FormReCaptcha;
 
 /**
  * Class PasswordResetActionTest

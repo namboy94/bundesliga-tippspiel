@@ -20,7 +20,7 @@
 
 namespace bundesliga_tippspiel_tests;
 use bundesliga_tippspiel_actions\ChangeEmailAction;
-use chameleon\ChangeEmailForm;
+use champlates\ChangeEmailForm;
 
 
 /**

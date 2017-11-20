@@ -20,11 +20,11 @@
 
 namespace bundesliga_tippspiel;
 use bundesliga_tippspiel_comments\CommentBar;
-use chameleon\Dictionary;
-use chameleon\DismissableMessage;
-use chameleon\HtmlTemplate;
-use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
+use champlates\Dictionary;
+use champlates\DismissableMessage;
+use champlates\HtmlTemplate;
+use champlates_bootstrap\Col;
+use champlates_bootstrap\Container;
 use cheetah\SchemaCreator;
 use welwitschi\Authenticator;
 use welwitschi\User;
