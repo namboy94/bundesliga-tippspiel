@@ -19,7 +19,7 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Dictionary;
+use champlates\Dictionary;
 
 
 /**

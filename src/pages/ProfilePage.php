@@ -19,11 +19,11 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\ChangePasswordForm;
-use chameleon\ChangeUsernameForm;
-use chameleon\ChangeEmailForm;
-use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Row;
+use champlates\ChangePasswordForm;
+use champlates\ChangeUsernameForm;
+use champlates\ChangeEmailForm;
+use champlates_bootstrap\Col;
+use champlates_bootstrap\Row;
 
 
 /**

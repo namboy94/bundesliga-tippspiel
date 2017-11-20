@@ -21,8 +21,8 @@
 namespace bundesliga_tippspiel_actions;
 use bundesliga_tippspiel\DefaultDictionary;
 use bundesliga_tippspiel\Functions;
-use chameleon\FormReCaptcha;
-use chameleon\SignupForm;
+use champlates\FormReCaptcha;
+use champlates\SignupForm;
 use welwitschi\Authenticator;
 
 

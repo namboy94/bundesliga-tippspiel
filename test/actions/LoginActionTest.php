@@ -20,7 +20,7 @@
 
 namespace bundesliga_tippspiel_tests;
 use bundesliga_tippspiel_actions\LoginAction;
-use chameleon\LoginForm;
+use champlates\LoginForm;
 
 /**
  * Class LoginActionTest

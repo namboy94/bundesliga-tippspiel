@@ -19,8 +19,8 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Dictionary;
-use chameleon\HtmlTemplate;
+use champlates\Dictionary;
+use champlates\HtmlTemplate;
 use cheetah\Goal;
 use cheetah\Match;
 

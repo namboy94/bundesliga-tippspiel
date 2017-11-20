@@ -19,9 +19,9 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
+use champlates_bootstrap\Col;
+use champlates_bootstrap\Container;
+use champlates_bootstrap\Row;
 
 
 /**

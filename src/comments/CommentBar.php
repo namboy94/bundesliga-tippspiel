@@ -20,8 +20,8 @@
 
 namespace bundesliga_tippspiel_comments;
 use bundesliga_tippspiel\Functions;
-use chameleon\Dictionary;
-use chameleon\HtmlTemplate;
+use champlates\Dictionary;
+use champlates\HtmlTemplate;
 use welwitschi\User;
 
 

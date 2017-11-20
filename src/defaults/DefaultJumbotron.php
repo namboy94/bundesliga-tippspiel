@@ -19,7 +19,7 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\TitleJumboTron;
+use champlates\TitleJumboTron;
 
 
 /**

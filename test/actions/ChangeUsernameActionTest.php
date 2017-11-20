@@ -20,7 +20,7 @@
 
 namespace bundesliga_tippspiel_tests;
 use bundesliga_tippspiel_actions\ChangeUsernameAction;
-use chameleon\ChangeUsernameForm;
+use champlates\ChangeUsernameForm;
 
 
 /**

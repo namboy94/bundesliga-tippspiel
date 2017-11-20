@@ -19,12 +19,12 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Html;
-use chameleon\LoginForm;
-use chameleon\SignupForm;
-use chameleon_bootstrap\Col;
-use chameleon_bootstrap\Container;
-use chameleon_bootstrap\Row;
+use champlates\Html;
+use champlates\LoginForm;
+use champlates\SignupForm;
+use champlates_bootstrap\Col;
+use champlates_bootstrap\Container;
+use champlates_bootstrap\Row;
 
 
 /**

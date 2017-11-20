@@ -19,7 +19,7 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\HtmlTemplate;
+use champlates\HtmlTemplate;
 use cheetah\Bet;
 use cheetah\Match;
 

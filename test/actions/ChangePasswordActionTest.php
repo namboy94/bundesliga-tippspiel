@@ -20,7 +20,7 @@
 
 namespace bundesliga_tippspiel_tests;
 use bundesliga_tippspiel_actions\ChangePasswordAction;
-use chameleon\ChangePasswordForm;
+use champlates\ChangePasswordForm;
 
 
 /**

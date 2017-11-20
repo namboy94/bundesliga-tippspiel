@@ -19,8 +19,8 @@
  */
 
 namespace bundesliga_tippspiel;
-use chameleon\Dictionary;
-use chameleon\Form;
+use champlates\Dictionary;
+use champlates\Form;
 use cheetah\Bet;
 use cheetah\Match;
 use cheetah\SeasonManager;
