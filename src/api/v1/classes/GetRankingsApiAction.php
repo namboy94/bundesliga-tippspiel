@@ -19,6 +19,8 @@
  */
 
 namespace bundesliga_tippspiel_api;
+use bundesliga_tippspiel\Functions;
+use cheetah\LeaderBoard;
 
 /**
  * Class GetRankingsApiAction
@@ -28,12 +30,32 @@ namespace bundesliga_tippspiel_api;
 class GetRankingsApiAction extends ApiAction {
 
 	/**
+	 * GetRankingsApiAction constructor.
+	 * This Constructor overrides the default API Action behaviour that
+	 * requires authentication.
+	 * @param bool $authenticationRequired: Set to false
+	 */
+	public function __construct($authenticationRequired = false) {
+		parent::__construct($authenticationRequired);
+	}
+
+	/**
 	 * Defines the behaviour of the API Action
 	 * @return array: The returned JSON array data
 	 * @throws ApiException: If the API Action could not be completed
 	 */
 	protected function defineBehaviour(): array {
-		return ["data" => ""];
+		$leaderBoard = new LeaderBoard(Functions::getMysqli());
+		$ranking = $leaderBoard->generateRanking();
+
+		$data = [];
+		foreach ($ranking as $position => $userData) {
+			$user = $userData[0]->username;
+			$points = $userData[1];
+			$data[$position] = ["username" => $user, "points" => $points];
+		}
+
+		return ["data" => $data];
 	}
 
 	/**
