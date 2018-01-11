@@ -22,6 +22,7 @@ namespace bundesliga_tippspiel;
 use champlates\Dictionary;
 use champlates\HtmlTemplate;
 use cheetah\Match;
+use cheetah\Team;
 
 
 /**
@@ -45,10 +46,18 @@ class MatchLogoScoreHeader extends HtmlTemplate {
 		);
 
 		$this->bindParams([
-			"HOME_ICON" => $match->homeTeam->icon,
-			"AWAY_ICON" => $match->awayTeam->icon,
+			"HOME_ICON" => match_logo($match->homeTeam),
+			"AWAY_ICON" => match_logo($match->awayTeam),
 			"HOME_SCORE" => $match->homeFtScore,
 			"AWAY_SCORE" => $match->awayFtScore
 		]);
 	}
+}
+
+function match_logo(Team $team): string {
+	$path = "resources/images/emblems/" . $team->id . ".svg";
+	if (!file_exists($path)) {
+		$path = str_replace(".svg", ".png", $path);
+	}
+	return $path;
 }

@@ -22,6 +22,7 @@ namespace bundesliga_tippspiel;
 use champlates\HtmlTemplate;
 use cheetah\Bet;
 use cheetah\Match;
+use cheetah\Team;
 
 
 /**
@@ -68,8 +69,8 @@ class BetFormEntry extends HtmlTemplate {
 			"AWAY_ID" => $match->awayTeam->id,
 			"HOME_NAME" => $homeName,
 			"AWAY_NAME" => $awayName,
-			"HOME_ICON" => $match->homeTeam->icon,
-			"AWAY_ICON" => $match->awayTeam->icon,
+			"HOME_ICON" => match_logo($match->homeTeam),
+			"AWAY_ICON" => match_logo($match->awayTeam),
 			"MATCH_ID" => $match->id,
 			"DISABLED" => $disabled,
 			"HOME_DEFAULT" => $homeDefault,
@@ -78,4 +79,12 @@ class BetFormEntry extends HtmlTemplate {
 			"NAME_SIZE" => $nameSize
 		]);
 	}
+}
+
+function match_logo(Team $team): string {
+	$path = "resources/images/emblems/" . $team->id . ".svg";
+	if (!file_exists($path)) {
+		$path = str_replace(".svg", ".png", $path);
+	}
+	return $path;
 }
