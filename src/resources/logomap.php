@@ -19,36 +19,17 @@
  */
 
 namespace bundesliga_tippspiel;
-use champlates\Dictionary;
-use champlates\HtmlTemplate;
-use cheetah\Match;
-
+use cheetah\Team;
 
 /**
- * Class MatchLogoScoreHeader
- * A Row that displays the Logos of both teams in a match as well as
- * the current score.
- * @package bundesliga_tippspiel
+ * Maps a team to its logo
+ * @param Team $team: The team
+ * @return string: The path to the logo
  */
-class MatchLogoScoreHeader extends HtmlTemplate {
-
-	/**
-	 * MatchLogoScoreHeader constructor.
-	 * @param Dictionary|null $dictionary: Dictionary used for translation
-	 * @param Match $match: The match to display
-	 */
-	public function __construct(
-		? Dictionary $dictionary, Match $match
-	) {
-		parent::__construct(
-			__DIR__ . "/templates/match_logo_score_header.html", $dictionary
-		);
-
-		$this->bindParams([
-			"HOME_ICON" => matchLogo($match->homeTeam),
-			"AWAY_ICON" => matchLogo($match->awayTeam),
-			"HOME_SCORE" => $match->homeFtScore,
-			"AWAY_SCORE" => $match->awayFtScore
-		]);
+function matchLogo(Team $team): string {
+	$path = "resources/images/emblems/" . $team->id . ".svg";
+	if (!file_exists($path)) {
+		$path = str_replace(".svg", ".png", $path);
 	}
+	return $path;
 }
