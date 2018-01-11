@@ -21,15 +21,3 @@
 namespace bundesliga_tippspiel;
 use cheetah\Team;
 
-/**
- * Maps a team to its logo
- * @param Team $team: The team
- * @return string: The path to the logo
- */
-function matchLogo(Team $team): string {
-	$path = "resources/images/emblems/" . $team->id . ".svg";
-	if (!file_exists($path)) {
-		$path = str_replace(".svg", ".png", $path);
-	}
-	return $path;
-}
