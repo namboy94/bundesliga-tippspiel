@@ -1,11 +1,10 @@
 #!/bin/bash
 
-composer update --no-dev
-
 echo $DB_PASS > DB_PASS.secret
 echo $RECAPTCHA_SITE_KEY > RECAPTCHA_SITE_KEY.secret
 
-if [ -z "$PRODUCTION" ]; then
+if [ -z "$PRODUCTION" ]; then  # NOT production
+    composer update
     if [ -z "$LIVE" ]; then
         rsync -av -e 'ssh -p 9022' --delete-after ./* gitlab-runner@develop.hk-tippspiel.com:/var/www/develop.hk-tippspiel.com/app
     else
@@ -13,6 +12,7 @@ if [ -z "$PRODUCTION" ]; then
     fi
 
 else
+    composer update --no-dev
     if [ -z "$LIVE" ]; then
         rsync -av --delete-after ./* /var/www/develop.hk-tippspiel.com/app
     else

@@ -35,14 +35,9 @@ class GetRankingsApiActionTest extends GenericApiTest {
 		$result = $this->executeApiAction(
 			GetRankingsApiAction::class, []
 		);
-		$this->assertEquals(
-			$result["data"], [
-				1 => [
-				"user" => $this->confirmedUserA->username,
-				"points" => 0
-				]
-			]
-		);
+
+		$first = $result["data"][1];
+		$this->assertEquals($first, ["username" => "A", "points" => 0]);
 		$this->assertEquals($result["status"], "success");
 	}
 }
