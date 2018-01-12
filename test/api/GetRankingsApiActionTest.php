@@ -1,3 +1,4 @@
+<?php
 /**
  * Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
  *
@@ -17,39 +18,26 @@
  * along with bundesliga-tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-.main-content {
-    margin-top: 20px;
-}
+namespace bundesliga_tippspiel_tests;
+use bundesliga_tippspiel_api\GetRankingsApiAction;
 
-.jumbo-bg {
-    border-radius: 10px;
-    padding-bottom: 10px;
-    background-color: #a2b97c;
-}
+/**
+ * Class GetRankingsApiActionTest
+ * @package bundesliga_tippspiel_tests
+ */
+class GetRankingsApiActionTest extends GenericApiTest {
 
-.jumbo-text {
-}
+	/**
+	 * Tests requesting the current ranking data
+	 */
+	public function testGettingRanking() {
 
-.navbar {
-    margin-bottom: 0;
-}
+		$result = $this->executeApiAction(
+			GetRankingsApiAction::class, []
+		);
 
-.navbar-fixed-bottom {
-    background: #f8f8f8;
-}
-body {
-    margin-bottom: 50px;
-}
-
-.jumbotron {
-    margin-bottom: 0;
-}
-
-.deleted-comment {
-    background: gray;
-}
-
-.logo-image {
-    width: 30px;
-    height: 30px;
+		$first = $result["data"][1];
+		$this->assertEquals($first, ["username" => "A", "points" => 0]);
+		$this->assertEquals($result["status"], "success");
+	}
 }

@@ -1,3 +1,4 @@
+<?php
 /**
  * Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
  *
@@ -17,39 +18,6 @@
  * along with bundesliga-tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-.main-content {
-    margin-top: 20px;
-}
+namespace bundesliga_tippspiel;
+use cheetah\Team;
 
-.jumbo-bg {
-    border-radius: 10px;
-    padding-bottom: 10px;
-    background-color: #a2b97c;
-}
-
-.jumbo-text {
-}
-
-.navbar {
-    margin-bottom: 0;
-}
-
-.navbar-fixed-bottom {
-    background: #f8f8f8;
-}
-body {
-    margin-bottom: 50px;
-}
-
-.jumbotron {
-    margin-bottom: 0;
-}
-
-.deleted-comment {
-    background: gray;
-}
-
-.logo-image {
-    width: 30px;
-    height: 30px;
-}

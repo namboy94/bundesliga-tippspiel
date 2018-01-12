@@ -45,8 +45,8 @@ class MatchLogoScoreHeader extends HtmlTemplate {
 		);
 
 		$this->bindParams([
-			"HOME_ICON" => $match->homeTeam->icon,
-			"AWAY_ICON" => $match->awayTeam->icon,
+			"HOME_ICON" => BetFormEntry::matchLogo($match->homeTeam),
+			"AWAY_ICON" => BetFormEntry::matchLogo($match->awayTeam),
 			"HOME_SCORE" => $match->homeFtScore,
 			"AWAY_SCORE" => $match->awayFtScore
 		]);

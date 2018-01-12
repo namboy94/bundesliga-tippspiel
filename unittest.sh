@@ -5,6 +5,7 @@ if [ -z "$TEST_DB_PASS" ]; then
     exit 1
 fi
 
+echo $TEST_DB_PASS > DB_PASS.secret
 vendor/bin/phpunit test --coverage-html=coverage --stderr
 
 if [ -z "$SHOW_COVERAGE" ]; then

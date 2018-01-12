@@ -25,3 +25,8 @@ To retrieve a user's bets for a given matchday, use the
 # Placing bets
 
 You can place bets using the [place_bets](api/place_bets.md) endpoint.
+
+# Retrieving leaderboard information
+
+It's possible to retrieve information on the current rankings with the
+[get_rankings](api/get_rankings.md) endpoint.

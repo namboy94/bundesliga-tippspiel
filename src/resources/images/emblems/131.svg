@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg width="420" height="420" viewBox="-105 -105 210 210" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <g fill="#52a600">
+      <path d="M 0,0 a 100,100 0 1,0 0,84.52365 a 91,91 0 1,1 0,-84.52365" transform="translate(0,-100) rotate(-65)"/>
+      <path d="M -25,-65 c -10,0 -29,2 -29,15 v 70 a 32,32 0 1,0 64,0 h -11 a 32,32 0 1,0 64,0 v -85 c -10,0 -29,2 -29,15 v 69 a 7.5,4.5 0 1,1 -15,0 v -67 c -10,0 -29,2 -29,15 v 52 a 7.5,4.5 0 1,1 -15,0"/>
+   </g>
+</svg>
