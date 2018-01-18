@@ -38,8 +38,8 @@ List of matches. A single match contains the following values:
 ```json
     {
     "id": INT,
-    "home_team": TEAM,
-    "away_team": TEAM,
+    "home_team": INT,
+    "away_team": INT,
     "home_ht_score": INT,
     "away_ht_score": INT,
     "home_ft_score": INT,
@@ -48,17 +48,5 @@ List of matches. A single match contains the following values:
     "kickoff": "YYYY-MM-DDThh:mm:ssZ",
     "finished": BOOL,
     "started": BOOL
-    }
-```
-
-A Team consists of the following values:
-
-```json
-    {
-    "id": INT,
-    "name": "VALUE",
-    "shortname": "VALUE",
-    "abbreviation": "VALUE",
-    "icon": "VALUE"
     }
 ```

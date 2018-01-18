@@ -59,7 +59,7 @@ class GetUserBetsForMatchdayApiAction extends ApiAction {
 		$response = [];
 		foreach ($bets as $bet) {
 			/** @noinspection PhpUndefinedMethodInspection */
-			array_push($response, $bet->toArray());
+			array_push($response, $bet->toJsonArray());
 		}
 		return ["data" => $response];
 
