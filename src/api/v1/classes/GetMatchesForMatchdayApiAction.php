@@ -54,7 +54,7 @@ class GetMatchesForMatchdayApiAction extends ApiAction {
 		$result = [];
 		foreach ($matches as $match) {
 			/** @noinspection PhpUndefinedMethodInspection */
-			array_push($result, $match->toJsonArray());
+			array_push($result, $match->toArray());
 		}
 		return ["data" => $result];
 	}

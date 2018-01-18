@@ -43,7 +43,7 @@ class GetGoalDataForMatchApiAction extends ApiAction {
 
 		foreach ($goals as $goal) {
 			/** @noinspection PhpUndefinedMethodInspection */
-			array_push($data, $goal->toJsonArray());
+			array_push($data, $goal->toArray());
 		}
 		return ["data" => $data];
 	}

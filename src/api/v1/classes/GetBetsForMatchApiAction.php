@@ -58,7 +58,7 @@ class GetBetsForMatchApiAction extends ApiAction {
 				/** @noinspection PhpUndefinedFieldInspection */
 				$bet = Bet::fromMatchAndUserId($db, $match->id, $user->id);
 				if ($bet !== null) {
-					$data[$user->username] = $bet->toJsonArray();
+					$data[$user->username] = $bet->toArray();
 				} else {
 					$data[$user->username] = null;
 				}

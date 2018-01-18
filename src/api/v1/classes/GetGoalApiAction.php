@@ -37,7 +37,7 @@ class GetGoalApiAction extends ApiAction {
 	protected function defineBehaviour(): array {
 		$goal = Goal::fromId(Functions::getMysqli(), $this->inputData["id"]);
 		if ($goal !== null) {
-			return ["data" => $goal->toJsonArray()];
+			return ["data" => $goal->toArray()];
 		} else {
 			throw new ApiException("ID not valid");
 		}
