@@ -23,6 +23,7 @@ use bundesliga_tippspiel\Functions;
 use cheetah\Goal;
 
 /**
+ * API endpoint for retriving all goals for a match
  * @package bundesliga_tippspiel_api
  */
 class GetGoalDataForMatchApiAction extends ApiAction {

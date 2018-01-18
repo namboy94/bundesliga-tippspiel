@@ -20,15 +20,14 @@
 
 namespace bundesliga_tippspiel_api;
 use bundesliga_tippspiel\Functions;
-use cheetah\Bet;
-use cheetah\Match;
-use welwitschi\Authenticator;
+use cheetah\Goal;
 
 /**
- * Class that provides an API endpoint for retrieving bets for a given match
+ * Class that provides an API endpoint that lets the API user retrieve a
+ * goal from the database
  * @package bundesliga_tippspiel_api
  */
-class GetBetsForMatchApiAction extends ApiAction {
+class GetGoalApiAction extends ApiAction {
 
 	/**
 	 * Defines the behaviour of the API Action
@@ -36,35 +35,12 @@ class GetBetsForMatchApiAction extends ApiAction {
 	 * @throws ApiException: If the API Action could not be completed
 	 */
 	protected function defineBehaviour(): array {
-
-		$db = Functions::getMysqli();
-		$match_id = $this->inputData["match_id"];
-		$auth = new Authenticator($db);
-		$activeUser = $auth->getUserFromUsername($this->inputData["username"]);
-		$users = $auth->getAllUsers();
-		$match = Match::fromId($db, $match_id);
-
-		$data = [];
-		// Map a user to a bet
-		// Users wit
-		foreach ($users as $user) {
-
-			/** @noinspection PhpUndefinedMethodInspection */
-			if ($user->id != $activeUser->id && !$match->hasStarted()) {
-				$data[$user->username] = null;
-				continue;
-			} else {
-				/** @noinspection PhpUndefinedFieldInspection */
-				$bet = Bet::fromMatchAndUserId($db, $match->id, $user->id);
-				if ($bet !== null) {
-					$data[$user->username] = $bet->toJsonArray();
-				} else {
-					$data[$user->username] = null;
-				}
-			}
+		$goal = Goal::fromId(Functions::getMysqli(), $this->inputData["id"]);
+		if ($goal != null) {
+			return ["data" => $goal->toJsonArray()];
+		} else {
+			throw new ApiException("ID not valid");
 		}
-		$db->close();
-		return ["data" => $data];
 	}
 
 	/**
@@ -72,6 +48,6 @@ class GetBetsForMatchApiAction extends ApiAction {
 	 * @return array: A list of required JSON parameters
 	 */
 	public function defineRequiredParameters(): array {
-		return ["match_id"];
+		return ["id"];
 	}
 }
