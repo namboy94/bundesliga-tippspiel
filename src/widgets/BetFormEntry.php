@@ -69,8 +69,8 @@ class BetFormEntry extends HtmlTemplate {
 			"AWAY_ID" => $match->awayTeam->id,
 			"HOME_NAME" => $homeName,
 			"AWAY_NAME" => $awayName,
-			"HOME_ICON" => $this->matchLogo($match->homeTeam),
-			"AWAY_ICON" => $this->matchLogo($match->awayTeam),
+			"HOME_ICON" => $match->homeTeam->icon,
+			"AWAY_ICON" => $match->awayTeam->icon,
 			"MATCH_ID" => $match->id,
 			"DISABLED" => $disabled,
 			"HOME_DEFAULT" => $homeDefault,
@@ -78,18 +78,5 @@ class BetFormEntry extends HtmlTemplate {
 			"INPUT_SIZE" => $inputSize,
 			"NAME_SIZE" => $nameSize
 		]);
-	}
-
-	/**
-	 * Maps a team to its logo
-	 * @param Team $team: The team
-	 * @return string: The path to the logo
-	 */
-	static function matchLogo(Team $team): string {
-		$path = "resources/images/emblems/" . $team->id . ".svg";
-		if (!file_exists($path)) {
-			$path = str_replace(".svg", ".png", $path);
-		}
-		return $path;
 	}
 }
