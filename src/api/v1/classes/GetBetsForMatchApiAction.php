@@ -34,15 +34,16 @@ class GetBetsForMatchApiAction extends ApiAction {
 	 * Defines the behaviour of the API Action
 	 * @return array: The returned JSON array data
 	 * @throws ApiException: If the API Action could not be completed
+	 * @SuppressWarnings docBlocks
 	 */
 	protected function defineBehaviour(): array {
 
 		$db = Functions::getMysqli();
-		$match_id = $this->inputData["match_id"];
+		$matchId = $this->inputData["match_id"];
 		$auth = new Authenticator($db);
 		$activeUser = $auth->getUserFromUsername($this->inputData["username"]);
 		$users = $auth->getAllUsers();
-		$match = Match::fromId($db, $match_id);
+		$match = Match::fromId($db, $matchId);
 
 		$data = [];
 		// Map a user to a bet
@@ -50,7 +51,7 @@ class GetBetsForMatchApiAction extends ApiAction {
 		foreach ($users as $user) {
 
 			/** @noinspection PhpUndefinedMethodInspection */
-			if ($user->id != $activeUser->id && !$match->hasStarted()) {
+			if ($user->id !== $activeUser->id && !$match->hasStarted()) {
 				$data[$user->username] = null;
 				continue;
 			} else {

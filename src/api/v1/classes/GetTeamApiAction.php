@@ -36,7 +36,7 @@ class GetTeamApiAction extends ApiAction {
 	 */
 	protected function defineBehaviour(): array {
 		$team = Team::fromId(Functions::getMysqli(), $this->inputData["id"]);
-		if ($team != null) {
+		if ($team !== null) {
 			return ["data" => $team->toJsonArray()];
 		} else {
 			throw new ApiException("ID not valid");

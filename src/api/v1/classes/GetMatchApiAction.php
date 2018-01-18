@@ -36,7 +36,7 @@ class GetMatchApiAction extends ApiAction {
 	 */
 	protected function defineBehaviour(): array {
 		$match = Bet::fromId(Functions::getMysqli(), $this->inputData["id"]);
-		if ($match != null) {
+		if ($match !== null) {
 			return ["data" => $match->toJsonArray()];
 		} else {
 			throw new ApiException("ID not valid");

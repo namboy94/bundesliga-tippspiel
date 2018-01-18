@@ -30,8 +30,9 @@ class GetGoalDataForMatchApiAction extends ApiAction {
 
 	/**
 	 * Defines the behaviour of the API Action
-	 * @return array: The returned JSON array data
 	 * @throws ApiException: If the API Action could not be completed
+	 * @returns array: The returned JSON array data
+	 * @SuppressWarnings docBlocks
 	 */
 	protected function defineBehaviour(): array {
 		$db = Functions::getMysqli();
@@ -44,7 +45,6 @@ class GetGoalDataForMatchApiAction extends ApiAction {
 			/** @noinspection PhpUndefinedMethodInspection */
 			array_push($data, $goal->toJsonArray());
 		}
-
 		return ["data" => $data];
 	}
 

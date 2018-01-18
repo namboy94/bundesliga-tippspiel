@@ -36,7 +36,7 @@ class GetPlayerApiAction extends ApiAction {
 	 */
 	protected function defineBehaviour(): array {
 		$player = Player::fromId(Functions::getMysqli(), $this->inputData["id"]);
-		if ($player != null) {
+		if ($player !== null) {
 			return ["data" => $player->toJsonArray()];
 		} else {
 			throw new ApiException("ID not valid");

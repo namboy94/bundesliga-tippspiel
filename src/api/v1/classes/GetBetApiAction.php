@@ -36,7 +36,7 @@ class GetBetApiAction extends ApiAction {
 	 */
 	protected function defineBehaviour(): array {
 		$bet = Bet::fromId(Functions::getMysqli(), $this->inputData["id"]);
-		if ($bet != null) {
+		if ($bet !== null) {
 			return ["data" => $bet->toJsonArray()];
 		} else {
 			throw new ApiException("ID not valid");
