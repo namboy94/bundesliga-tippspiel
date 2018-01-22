@@ -39,7 +39,7 @@ unittest:
     - echo $TEST_DB_PASS > DB_PASS.secret
     - composer update
     - ./unittest.sh
-    - rsync -av coverage/ /var/www/coverage.namibsun.net/public_html/bundesliga-tippspiel --delete-before
+    - rsync -av coverage/ /var/www/progstats.namibsun.net/public/coverage/bundesliga-tippspiel --delete-before
     - rm DB_PASS.secret
 
 upload_release_to_github:
