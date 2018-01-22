@@ -33,7 +33,7 @@ unittest:
   tags:
     - composer
     - php
-    - coverage
+    - progstats
     - bundesliga-tippspiel-test
   script:
     - echo $TEST_DB_PASS > DB_PASS.secret
