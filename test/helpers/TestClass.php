@@ -90,7 +90,7 @@ class TestClass extends TestCase {
 		new SchemaCreator(self::$db);
 
 		if ($fetchMatchData) {
-			exec("python vendor/namboy94/cheetah-bets/scripts/leaguegetter.py" .
+			exec("python3 vendor/namboy94/cheetah-bets/scripts/leaguegetter.py" .
 				" phpunit " . getenv("TEST_DB_PASS") .
 				" tippspiel_bundesliga_test -s 2016");
 
