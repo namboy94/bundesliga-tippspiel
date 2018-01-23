@@ -116,7 +116,11 @@ abstract class ApiAction {
 			} catch (ApiException $e) {
 				$retval = $e->toArray();
 			} catch (ErrorException $e) {
-				$retval = ["status" => "error", "cause" => "exception"];
+				$retval = [
+					"status" => "error",
+					"cause" => "exception",
+					"details" => $e->getMessage()
+				];
 			}
 		}
 		echo json_encode($retval);

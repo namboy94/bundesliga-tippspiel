@@ -74,9 +74,9 @@ class TestClass extends TestCase {
 		parent::setUpBeforeClass();
 
 		// Stuff needed to make this work
-		if (!isset($_SESSION)) {
-			session_start();
-		}
+		//if (!isset($_SESSION)) {
+			//session_start();
+		//}
 		Functions::$dbdatabase = "tippspiel_bundesliga_test";
 		Functions::$dbusername = "phpunit";
 		$_SERVER["SERVER_NAME"] = "localhost";
@@ -90,7 +90,7 @@ class TestClass extends TestCase {
 		new SchemaCreator(self::$db);
 
 		if ($fetchMatchData) {
-			exec("python vendor/namboy94/cheetah-bets/scripts/leaguegetter.py" .
+			exec("python3 vendor/namboy94/cheetah-bets/scripts/leaguegetter.py" .
 				" phpunit " . getenv("TEST_DB_PASS") .
 				" tippspiel_bundesliga_test -s 2016");
 

@@ -40,9 +40,7 @@ A Bet consists of the following values:
         "id": INT,
         "home_score": INT,
         "away_score": INT,
-        "match": MATCH
+        "match": INT,
+        "points": INT
     }
 ```
-
-Refer to [get_matches_for_matchday](get_matches_for_matchday.md) to see what a
-match consists of.

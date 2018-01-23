@@ -18,6 +18,7 @@
  * along with bundesliga-tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel;
-use cheetah\Team;
+namespace bundesliga_tippspiel_api;
+require __DIR__ . '/../../../vendor/autoload.php';
 
+(new GetBetsForMatchApiAction())->execute();
