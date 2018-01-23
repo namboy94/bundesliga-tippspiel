@@ -34,7 +34,7 @@ unittest:
     - composer
     - php
     - progstats
-    - bundesliga-tippspiel-test
+    - bundesliga-tippspiel-test-db
   script:
     - echo $TEST_DB_PASS > DB_PASS.secret
     - composer update
