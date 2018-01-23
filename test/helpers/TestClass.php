@@ -75,7 +75,7 @@ class TestClass extends TestCase {
 
 		// Stuff needed to make this work
 		if (!isset($_SESSION)) {
-			session_start();
+			//session_start();
 		}
 		Functions::$dbdatabase = "tippspiel_bundesliga_test";
 		Functions::$dbusername = "phpunit";
