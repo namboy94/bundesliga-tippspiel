@@ -74,9 +74,9 @@ class TestClass extends TestCase {
 		parent::setUpBeforeClass();
 
 		// Stuff needed to make this work
-		if (!isset($_SESSION)) {
+		//if (!isset($_SESSION)) {
 			//session_start();
-		}
+		//}
 		Functions::$dbdatabase = "tippspiel_bundesliga_test";
 		Functions::$dbusername = "phpunit";
 		$_SERVER["SERVER_NAME"] = "localhost";
