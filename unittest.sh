@@ -13,3 +13,4 @@ if [ -z "$SHOW_COVERAGE" ]; then
 else
     firefox coverage/index.html
 fi
+
