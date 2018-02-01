@@ -122,7 +122,7 @@ def get_next_match(user_id: int) -> Dict[str, str or int]:
     """
 
     response = requests.get(
-        "https://hk-tippspiel.com/api/v1/get_next_match.php?user="
+        "https://hk-tippspiel.com/api/v1/get_next_match_for_user.php?user="
         + str(user_id)
     ).text
     return json.loads(response)["data"]
