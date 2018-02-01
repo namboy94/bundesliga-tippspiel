@@ -17,10 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import time
 import json
+import bcrypt
 import requests
 import sqlite3
 from typing import Dict
+from datetime import datetime
 
 
 def initialize_database(database: sqlite3.Connection):
@@ -65,7 +68,7 @@ def verify(database: sqlite3.Connection, keystring: str, address: str) -> bool:
     if len(query) != 1:
         return False
     else:
-        key_hash = query[0][4]
+        key_hash = str(query[0][4])
 
         if verify_hash(key_hash, key):
             database.execute("UPDATE bundesliga_tippspiel_reminder "
@@ -84,7 +87,7 @@ def verify_hash(key_hash: str, key: str)-> bool:
     :param key: The key to check
     :return: True if the key matches, False otherwise
     """
-    return True  # TODO Implement
+    return bcrypt.checkpw(bytes(key), bytes(key_hash))
 
 
 # noinspection SqlResolve,SqlNoDataSourceInspection
@@ -122,26 +125,43 @@ def get_next_match(user_id: int) -> Dict[str, str or int]:
         "https://hk-tippspiel.com/api/v1/get_next_match.php?user="
         + str(user_id)
     ).text
-    return json.loads(response)
+    return json.loads(response)["data"]
 
 
+# noinspection SqlNoDataSourceInspection,SqlNoDataSourceInspection,SqlResolve
 def notification_required(database: sqlite3.Connection,
                           user_id: int,
-                          next_match: Dict[str, str or int]):
+                          next_match: Dict[str, str or int],
+                          warning_time: int):
+    """
+    Checks if it is required to remind a user for the next match
+    :param database: The database to use
+    :param user_id: The user's ID
+    :param next_match: the next match data
+    :param warning_time: The time limit until the reminder should be send
+    :return: True if a reminder must be sent, False otherwise
+    """
 
-    last_match = database.execute(
+    last_match_id = int(database.execute(
         "SELECT last_match "
         "FROM bundesliga_tippspiel_reminder "
         "WHERE user_id=?",
-        (user_id,)).fetchall()[0][0]
+        (user_id,)).fetchall()[0][0])
 
-    if next_match["id"] == last_match:
+    if next_match["id"] == last_match_id:
         return False
     else:
-        x = datetime.strptime("2018-05-12T13:30:00Z", "%Y-%m-%dT%H:%M:%SZ")
+        next_kickoff = datetime.strptime(
+            next_match["kickoff"],
+            "%Y-%m-%dT%H:%M:%SZ"
+        )
+        current = datetime.utcfromtimestamp(time.time())
+        delta = next_kickoff - current
+
+        return delta.seconds < warning_time
 
 
-
+# noinspection SqlResolve,SqlNoDataSourceInspection
 def acknowledge(database: sqlite3.Connection,
                 user_id: int,
                 match_id: Dict[str, str or int]):

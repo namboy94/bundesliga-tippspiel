@@ -22,7 +22,8 @@ import time
 from kudubot.entities.Message import Message
 from kudubot.services.BaseService import BaseService
 from bundesliga_tippspiel_reminder.database import \
-    initialize_database, verify, get_subscriptions, get_next_match
+    initialize_database, verify, get_subscriptions, get_next_match, \
+    notification_required, acknowledge
 
 
 class BundesligaTippspielReminderService(BaseService):
@@ -73,7 +74,7 @@ class BundesligaTippspielReminderService(BaseService):
         """
         key = message.message_body.split(" ")[1].strip()
 
-        if verify(self.connection.db, key):
+        if verify(self.connection.db, key, message.sender.address):
             self.reply(
                 "Registration Successful",
                 "Successfully registered for bundesliga-tippspiel reminders",
@@ -115,7 +116,9 @@ class BundesligaTippspielReminderService(BaseService):
                                         "https://hk-tippspiel.com/bets.php " \
                                         "to place your bets."
 
-                if notification_required(next_match, warning_time):
+                if notification_required(
+                        db, user_id, next_match, warning_time
+                ):
                     self.connection.send_message(Message(
                         "Bundesliga-Tippspiel",
                         notification_message,
@@ -123,6 +126,6 @@ class BundesligaTippspielReminderService(BaseService):
                         self.connection.user_contact
                     ))
 
-                    acknowledge(next_match)
+                    acknowledge(db, user_id, next_match["id"])
 
             time.sleep(60)
