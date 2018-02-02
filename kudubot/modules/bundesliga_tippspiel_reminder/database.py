@@ -99,7 +99,7 @@ def get_subscriptions(database: sqlite3.Connection) \
              {user_id: {username, address, warning_time, last_match}}
     """
     query = database.execute(
-        "SELECT * FROM bundesliga_tippspiel WHERE verified=0"
+        "SELECT * FROM bundesliga_tippspiel_reminder WHERE verified=0"
     ).fetchall()
 
     subscriptions = {}
