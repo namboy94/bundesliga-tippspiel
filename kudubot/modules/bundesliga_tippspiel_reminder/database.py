@@ -36,8 +36,8 @@ def initialize_database(database: sqlite3.Connection):
     # noinspection SqlNoDataSourceInspection,SqlDialectInspection
     database.execute("CREATE TABLE IF NOT EXISTS "
                      "bundesliga_tippspiel_reminder ("
-                     "    id INTEGER CONSTRAINT constraint_name PRIMARY KEY,"
-                     "    user_id INTEGER NOT NULL,"
+                     "    user_id INTEGER "
+                     "        CONSTRAINT constraint_name PRIMARY KEY,"
                      "    username VARCHAR(255) NOT NULL,"
                      "    address VARCHAR(255),"
                      "    key_hash VARCHAR(255) NOT NULL,"

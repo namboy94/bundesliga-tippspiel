@@ -18,40 +18,6 @@
  * along with bundesliga-tippspiel. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace bundesliga_tippspiel;
-use champlates_bootstrap\Col;
-use champlates_bootstrap\Row;
-
-
-/**
- * Class Bets
- * The Bets page, displaying the current matchday's bets with buttons
- * to the next and previous matchdays
- * @package bundesliga_tippspiel
- */
-class BetsPage extends Page {
-
-	/**
-	 * Bets constructor.
-	 */
-	public function __construct() {
-		parent::__construct(
-			"@{BETS_TITLE}",
-			"@{BETS_JUMBO_TITLE}",
-			"bets.php",
-			true
-		);
-	}
-
-	/**
-	 * Sets the content of the page
-	 * @return array: The Page content
-	 */
-	protected function setContent(): array {
-
-		$matchday = isset($_GET["matchday"]) ? (int)$_GET["matchday"] : null;
-		$form = new MatchdayBetForm($this->dictionary, $this->user, $matchday);
-
-		return [new Row([new Col([$form], 12)])];
-	}
-}
+namespace bundesliga_tippspiel_actions;
+require __DIR__ . '/../../vendor/autoload.php';
+(new RegisterReminderAction())->execute();

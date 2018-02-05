@@ -1,5 +1,21 @@
 #!/bin/bash
 
+if [ -z "$DB_PASS" ]; then
+    echo "Need to set DB_PASS"
+    exit 1
+fi
+
+if [ -z "$KUDUBOT_WHATSAPP_CONFIG" ]; then
+    echo "Need to set KUDUBOT_WHATSAPP_CONFIG"
+    exit 1
+fi
+
+if [ -z "$KUDUBOT_TELEGRAM_CONFIG" ]; then
+    echo "Need to set KUDUBOT_TELEGRAM_CONFIG"
+    exit 1
+fi
+
+
 echo $DB_PASS > DB_PASS.secret
 echo $RECAPTCHA_SITE_KEY > RECAPTCHA_SITE_KEY.secret
 echo $KUDUBOT_WHATSAPP_CONFIG > kudubot/connection_config/whatsapp.conf

@@ -19,7 +19,6 @@
  */
 
 namespace bundesliga_tippspiel;
-use champlates\Dictionary;
 use champlates\HtmlTemplate;
 
 

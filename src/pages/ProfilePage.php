@@ -22,6 +22,7 @@ namespace bundesliga_tippspiel;
 use champlates\ChangePasswordForm;
 use champlates\ChangeUsernameForm;
 use champlates\ChangeEmailForm;
+use champlates\Html;
 use champlates_bootstrap\Col;
 use champlates_bootstrap\Row;
 
@@ -73,9 +74,22 @@ class ProfilePage extends Page {
 			"actions/change_email.php"
 		);
 
+		/*
+		$kudubotWhatsappButton = new KudubotButton(
+			$this->user->id, "whatsapp"
+		);*/
+		$kudubotTelegramButton = new KudubotButton(
+			$this->user->id, "telegram"
+		);
+
+
 		$content = [
 			new Col([], 1),
-			new Col([$passwordChange], 4),
+			new Col([
+				$passwordChange,
+				$kudubotTelegramButton
+				//$kudubotWhatsappButton
+			], 4),
 			new Col([], 2),
 			new Col([$usernameChange, $emailChange], 4),
 			new Col([], 1)

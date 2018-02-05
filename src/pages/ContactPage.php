@@ -21,7 +21,6 @@
 namespace bundesliga_tippspiel;
 use champlates_bootstrap\Col;
 use champlates\HtmlTemplate;
-use champlates_bootstrap\Container;
 use champlates_bootstrap\Row;
 
 

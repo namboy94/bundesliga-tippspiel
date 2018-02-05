@@ -21,7 +21,6 @@
 namespace bundesliga_tippspiel;
 use champlates\ForgottenPasswordForm;
 use champlates_bootstrap\Col;
-use champlates_bootstrap\Container;
 use champlates_bootstrap\Row;
 
 
