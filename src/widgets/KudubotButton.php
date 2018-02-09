@@ -68,7 +68,8 @@ class KudubotButton extends HtmlTemplate {
 			"ACTION" => $action,
 			"CONNECTION" => $connection,
 			"STATE" => $state,
-			"LOGO" => $logo
+			"LOGO" => $logo,
+			"WARNING_TIME" => "600"
 		]);
 	}
 }

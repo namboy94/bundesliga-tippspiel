@@ -56,8 +56,8 @@ body {
 
 .kudubot-logo-button-inactive {
     opacity: 0.4;
-    height: 10px;
-    width: 10px;
+    height: 128px;
+    width: 128px;
 }
 
 .kudubot-logo-button-active {

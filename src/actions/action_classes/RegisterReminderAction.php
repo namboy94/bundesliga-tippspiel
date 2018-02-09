@@ -19,8 +19,9 @@
  */
 
 namespace bundesliga_tippspiel_actions;
-use function bundesliga_tippspiel_kudubot_communication\isValidConnection;
-use function bundesliga_tippspiel_kudubot_communication\register;
+use bundesliga_tippspiel\DefaultDictionary;
+use bundesliga_tippspiel\Functions;
+use bundesliga_tippspiel_kudubot_communication\KudubotCommunication;
 use welwitschi\Authenticator;
 
 /**
@@ -38,6 +39,8 @@ class RegisterReminderAction extends Action {
 	protected function defineBehaviour() {
 
 		$auth = new Authenticator($this->db);
+		$dict = new DefaultDictionary();
+
 		if (isset($_SESSION["user_id"])) {
 			$user = $auth->getUserFromId($_SESSION["user_id"]);
 			if ($user !== null && 
@@ -48,20 +51,49 @@ class RegisterReminderAction extends Action {
 				$warningTime = (int)$_GET["warning_time"];
 				$connection = $_GET["connection"];
 
-				if (!isValidConnection($connection)) {
-					throw new RedirectException("../index.php");
+
+				if (!KudubotCommunication::isValidConnection($connection)) {
+					throw new DangerException(
+						"KUDUBOT_REGISTRATION_INVALID_CONNECTION",
+						"../profile.php"
+					);
+					// thomas was here
 				} else {
-					$key = register(
+					$key = KudubotCommunication::register(
 						$user->id,
 						$user->username,
 						$connection,
 						$warningTime
 					);
-					throw new InfoException("$key", "../profile.php");
+
+					$address = "OK";
+					mail(
+						$user->email,
+						$dict->translate(
+							"@{KUDUBOT_REGISTRATION_EMAIL_TITLE}",
+							Functions::getLanguage()
+						),
+						$dict->translate(
+							"@{KUDUBOT_REGISTRATION_EMAIL_BODY_START}\n\n" .
+							"/register " . $key . "\n\n" .
+							"@{KUDUBOT_REGISTRATION_EMAIL_BODY_MIDDLE}\n\n" .
+							$address . "\n\n" .
+							"@{KUDUBOT_REGISTRATION_EMAIL_BODY_END}",
+							Functions::getLanguage()
+						)
+					);
+
+					throw new InfoException(
+						"KUDUBOT_REGISTRATION_EMAIL_NOTICE",
+						"../profile.php"
+					);
 				}
 
 			} else {
-				throw new RedirectException("../index.php");
+				throw new DangerException(
+					"KUDUBOT_REGISTRATION_AUTH_FAIL",
+					"../profile.php"
+				);
 			}
 		}
 	}

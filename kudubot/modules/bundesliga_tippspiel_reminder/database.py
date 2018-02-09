@@ -24,6 +24,9 @@ import requests
 import sqlite3
 from typing import Dict
 from datetime import datetime
+from kudubot.users.Contact import Contact
+from kudubot.users.AddressBook import AddressBook
+from bundesliga_tippspiel_reminder import domain
 
 
 def initialize_database(database: sqlite3.Connection):
@@ -39,7 +42,7 @@ def initialize_database(database: sqlite3.Connection):
                      "    user_id INTEGER "
                      "        CONSTRAINT constraint_name PRIMARY KEY,"
                      "    username VARCHAR(255) NOT NULL,"
-                     "    address VARCHAR(255),"
+                     "    contact_id INTEGER,"
                      "    key_hash VARCHAR(255) NOT NULL,"
                      "    verified BOOLEAN NOT NULL,"
                      "    warning_time INTEGER NOT NULL,"
@@ -49,12 +52,13 @@ def initialize_database(database: sqlite3.Connection):
 
 
 # noinspection SqlNoDataSourceInspection,SqlResolve
-def verify(database: sqlite3.Connection, keystring: str, address: str) -> bool:
+def verify(database: sqlite3.Connection, keystring: str, contact: Contact) \
+        -> bool:
     """
     Verifies the keystring provided by the user's message
     :param database: The database to use
     :param keystring: The key string to verify
-    :param address: The address of the person to verify
+    :param contact: The contact that sent the verification message
     :return: True if the verification was completed, False otherwise
     """
 
@@ -68,13 +72,14 @@ def verify(database: sqlite3.Connection, keystring: str, address: str) -> bool:
     if len(query) != 1:
         return False
     else:
-        key_hash = str(query[0][4])
+        key_hash = str(query[0][3])
 
         if verify_hash(key_hash, key):
             database.execute("UPDATE bundesliga_tippspiel_reminder "
                              "    SET verified=1, address=? "
                              "    WHERE user_id=?",
-                             (address, user_id))
+                             (contact.database_id, user_id))
+            database.commit()
             return True
         else:
             return False
@@ -87,7 +92,10 @@ def verify_hash(key_hash: str, key: str)-> bool:
     :param key: The key to check
     :return: True if the key matches, False otherwise
     """
-    return bcrypt.checkpw(bytes(key), bytes(key_hash))
+    return bcrypt.checkpw(
+        bytes(key, encoding="utf-8"),
+        bytes(key_hash, encoding="utf-8")
+    )
 
 
 # noinspection SqlResolve,SqlNoDataSourceInspection
@@ -99,16 +107,19 @@ def get_subscriptions(database: sqlite3.Connection) \
              {user_id: {username, address, warning_time, last_match}}
     """
     query = database.execute(
-        "SELECT * FROM bundesliga_tippspiel_reminder WHERE verified=0"
+        "SELECT * FROM bundesliga_tippspiel_reminder WHERE verified=1"
     ).fetchall()
 
     subscriptions = {}
+    address_book = AddressBook(database)
+
     for row in query:
-        subscriptions[int(row[1])] = {
-            "username": str(row[2]),
-            "address": str(row[3]),
-            "warning_time": int(row[6]),
-            "last_match": int(row[7])
+
+        subscriptions[int(row[0])] = {
+            "username": str(row[1]),
+            "contact": address_book.get_contact_for_id(int(row[2])),
+            "warning_time": int(row[5]),
+            "last_match": int(row[6])
         }
 
     return subscriptions
@@ -120,12 +131,10 @@ def get_next_match(user_id: int) -> Dict[str, str or int]:
     :param user_id: The ID of the user
     :return: The match data
     """
-
-    response = requests.get(
-        "https://hk-tippspiel.com/api/v1/get_next_match_for_user.php?user="
-        + str(user_id)
-    ).text
-    return json.loads(response)["data"]
+    api_url = "https://" + domain + "/api/v1/get_next_match_for_user.php?user="
+    api_url += str(user_id)
+    response = requests.get(api_url)
+    return json.loads(response.text)["data"]
 
 
 # noinspection SqlNoDataSourceInspection,SqlNoDataSourceInspection,SqlResolve

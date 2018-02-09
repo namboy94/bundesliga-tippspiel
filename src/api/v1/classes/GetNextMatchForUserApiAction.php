@@ -61,13 +61,14 @@ class GetNextMatchForUserApiAction extends ApiAction {
 		$last_bet = $result["kickoff"];
 
 		$stmt = $this->db->prepare(
-			"SELECT MIN(id) AS id, MIN(kickoff) AS kickoff " .
+			"SELECT MIN(kickoff) AS kickoff, MIN(id) AS id " .
 			"FROM matches WHERE kickoff > ?"
 		);
 		$stmt->bind_param("s", $last_bet);
 		$stmt->execute();
-		$match_id = $stmt->get_result()->fetch_array(MYSQLI_ASSOC)["id"];
-		$match = Match::fromId($this->db, $match_id);
+
+		$result= $stmt->get_result()->fetch_array(MYSQLI_ASSOC);
+		$match = Match::fromId($this->db, $result["id"]);
 
 		return ["data" => $match->toArray()];
 	}

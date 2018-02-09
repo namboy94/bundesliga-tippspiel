@@ -74,7 +74,7 @@ class BundesligaTippspielReminderService(BaseService):
         """
         key = message.message_body.split(" ")[1].strip()
 
-        if verify(self.connection.db, key, message.sender.address):
+        if verify(self.connection.db, key, message.sender):
             self.reply(
                 "Registration Successful",
                 "Successfully registered for bundesliga-tippspiel reminders",
@@ -100,15 +100,16 @@ class BundesligaTippspielReminderService(BaseService):
         while True:
 
             subscriptions = get_subscriptions(db)
+            print(subscriptions)
 
             for user_id in subscriptions:
 
                 subscription = subscriptions[user_id]
                 username = subscription["username"]
-                address = subscription["address"]
+                contact = subscription["contact"]
                 warning_time = subscription["warning_time"]
 
-                next_match = get_next_match(username)
+                next_match = get_next_match(user_id)
 
                 notification_message = "Reminder: " + username
                 notification_message += ", you still need to bet on the " \
@@ -122,10 +123,12 @@ class BundesligaTippspielReminderService(BaseService):
                     self.connection.send_message(Message(
                         "Bundesliga-Tippspiel",
                         notification_message,
-                        address,
+                        contact,
                         self.connection.user_contact
                     ))
 
                     acknowledge(db, user_id, next_match["id"])
+
+                self.connection.send_message(Message("Hi", "Hello", contact, self.connection.user_contact))
 
             time.sleep(60)

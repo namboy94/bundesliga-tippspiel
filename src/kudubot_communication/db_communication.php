@@ -102,7 +102,7 @@ class KudubotCommunication {
 			"INSERT OR REPLACE INTO bundesliga_tippspiel_reminder " .
 			"(user_id, username, address, key_hash," .
 			"verified, warning_time, last_match) " .
-			"VALUES (?, ?, NULL, ?, 0, ?, NULL)"
+			"VALUES (?, ?, NULL, ?, 0, ?, 0)"
 		);
 		$stmt->bindParam(1, $user_id, SQLITE3_INTEGER);
 		$stmt->bindParam(2, $username, SQLITE3_TEXT);
