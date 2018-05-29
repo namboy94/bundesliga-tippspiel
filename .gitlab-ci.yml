@@ -28,11 +28,11 @@ deploy_develop:
     - flask
   tags:
     - python3
-    - progstats
+    - bundesliga-tippspiel-develop
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
-    - rsync -av virtual /var/www/develop.hk-tippspiel.com/ --delete-after
-    - rsync -av tippspiel.wsgi /var/www/develop.hk-tippspiel.com/
+    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
+    - deploy-flask $BUNDESLIGA_TIPPSPIEL_DEVELOP_HOME
+
 
 deploy_production:
   stage: deploy
@@ -40,11 +40,10 @@ deploy_production:
     - master
   tags:
     - python3
-    - progstats
+    - bundesliga-tippspiel
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
-    - rsync -av virtual /var/www/hk-tippspiel.com/ --delete-after
-    - rsync -av tippspiel.wsgi /var/www/hk-tippspiel.com/
+    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
+    - deploy-flask $BUNDESLIGA_TIPPSPIEL_HOME
 
 release_upload:
   stage: release
