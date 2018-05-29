@@ -25,6 +25,7 @@ deploy_develop:
   stage: deploy
   only:
     - develop
+    - flask
   tags:
     - python3
     - progstats
