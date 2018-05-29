@@ -16,3 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
+
+from flask import Flask
+app = Flask(__name__)
+
+
+@app.route("/")
+def index():
+    return "Hello World!"

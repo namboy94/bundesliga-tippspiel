@@ -20,6 +20,30 @@ unittest:
     - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
     - python-unittest
 
+deploy_develop:
+  stage: deploy
+  only:
+    - develop
+  tags:
+    - python3
+    - progstats
+  script:
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - rsync -av virtual /var/www/develop.hk-tippspiel.com/ --delete-after
+    - rsync -av tippspiel.wsgi /var/www/develop.hk-tippspiel.com/
+
+deploy_production:
+  stage: deploy
+  only:
+    - master
+  tags:
+    - python3
+    - progstats
+  script:
+    - python3 -m venv virtual && source virtual/bin/activate && python setup.py install
+    - rsync -av virtual /var/www/hk-tippspiel.com/ --delete-after
+    - rsync -av tippspiel.wsgi /var/www/hk-tippspiel.com/
+
 release_upload:
   stage: release
   only:
