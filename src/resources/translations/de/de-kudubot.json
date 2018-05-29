@@ -1,9 +1,0 @@
-{
-  "KUDUBOT_REGISTRATION_INVALID_CONNECTION": "Diese Verbindung wird nicht unterstützt",
-  "KUDUBOT_REGISTRATION_EMAIL_TITLE": "Hk-Tippspiel Erinnerungen",
-  "KUDUBOT_REGISTRATION_EMAIL_BODY_START": "Vielen Dank dass du dich für Hk-Tippspiel Erinnerungen registriert hast. Um die Registrierung abzuschließen, schicke bitte die folgende Nachricht:",
-  "KUDUBOT_REGISTRATION_EMAIL_BODY_MIDDLE": "an die folgende Adresse:",
-  "KUDUBOT_REGISTRATION_EMAIL_BODY_END": "Nachdem diese Nachricht empfangen wurde, erhältst du Erinnerungen bevor die Spiele anfangen.",
-  "KUDUBOT_REGISTRATION_EMAIL_NOTICE": "Registrierung für Erinnerungen initiiert. Bitte sehe in deinem Email-Postfach nach.",
-  "KUDUBOT_REGISTRATION_AUTH_FAIL": "Du bist nicht angemeldet"
-}
