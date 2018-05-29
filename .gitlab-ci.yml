@@ -1,6 +1,7 @@
 stages:
   - test
   - stats
+  - deploy
   - release
 
 stylecheck:
