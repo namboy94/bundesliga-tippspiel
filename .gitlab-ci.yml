@@ -7,18 +7,6 @@ stages:
 variables:
   PRODUCTION: "1"  # Tells script that it's running on the production instance
 
-github_mirror:
-  stage: mirror
-  tags:
-    - github_namboy94_push
-  script:
-    - git checkout master
-    - git pull
-    - git push git@github.com:namboy94/bundesliga-tippspiel.git master -f
-    - git checkout develop
-    - git pull
-    - git push git@github.com:namboy94/bundesliga-tippspiel.git develop -f
-
 lint:
   stage: test
   tags:
@@ -26,7 +14,7 @@ lint:
     - composer
   script:
     - composer update
-    - ./lint.sh
+    - php vendor/phpcheckstyle/phpcheckstyle/run.php --src src --src test --config checkstyle.xml
 
 unittest:
   stage: test
@@ -36,9 +24,9 @@ unittest:
     - progstats
     - bundesliga-tippspiel-test-db
   script:
-    - echo $TEST_DB_PASS > DB_PASS.secret
     - composer update
-    - ./unittest.sh
+    - echo $TEST_DB_PASS > DB_PASS.secret
+    - vendor/bin/phpunit test --coverage-html=coverage --stderr
     - rsync -av coverage/ /var/www/progstats.namibsun.net/public/coverage/bundesliga-tippspiel --delete-before
     - rm DB_PASS.secret
 
@@ -78,7 +66,13 @@ deploy_develop_webpage:
   tags:
     - bundesliga-tippspiel-develop
   script:
-    - ./deploy.sh
+    - echo $DB_PASS > DB_PASS.secret
+    - echo $RECAPTCHA_SITE_KEY > RECAPTCHA_SITE_KEY.secret
+    - echo $KUDUBOT_WHATSAPP_CONFIG > kudubot/connection_config/whatsapp.conf
+    - echo $KUDUBOT_TELEGRAM_CONFIG > kudubot/connection_config/telegram.conf
+    - echo "domain = \"develop.hk-tippspiel.com\"" > kudubot/modules/bundesliga_tippspiel_reminder/__init__.py
+    - composer update
+    -
 
 deploy_live_webpage:
   stage: deploy
