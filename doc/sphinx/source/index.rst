@@ -1,12 +1,12 @@
-Welcome to progstats' documentation!
-====================================
+Welcome to bundesliga-tippspiel' documentation!
+===============================================
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   progstats.rst
+   bundesliga_tippspiel.rst
    modules.rst
 
 Indices and tables
