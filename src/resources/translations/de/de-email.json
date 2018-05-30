@@ -1,8 +1,0 @@
-{
-  "PASSWORD_RESET_EMAIL_TITLE": "Password Zurückgesetzt",
-  "PASSWORD_RESET_EMAIL_BODY_START": "Dein Password wurde zurückgesetzt. Bitte melde dich mit diesem Passwort ein:",
-  "PASSWORD_RESET_EMAIL_BODY_END": "Dein altes Passwort wurde gelöscht. Du kannst dein Passwort wieder ändern sobald du dich mit dem generierten Passwort angemeldet hast",
-  "SIGNUP_EMAIL_TITLE": "Willkommen!",
-  "SIGNUP_EMAIL_BODY_START": "Willkommen beim Bundesliga Tippspiel! Um deine Registrierung zu vervollständigen, musst du bitte den folgenden Link besuchen:",
-  "SIGNUP_EMAIL_BODY_END": "Viel Spaß beim Spielen!"
-}

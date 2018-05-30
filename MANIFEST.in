@@ -1,0 +1,3 @@
+graft bundesliga_tippspiel/templates
+graft bundesliga_tippspiel/static
+include version
