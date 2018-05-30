@@ -6,10 +6,6 @@
 
 ![Logo](resources/logo/logo-readme.png)
 
-[Development Demo](https://demo.tippspiel.krumreyh.com)
-
-[Production Instance](https://tippspiel.krumreyh.com)
-
 Bundesliga Tippspiel is a website written in PHP. It enables users to bet on
 Bundesliga Matches and compete against each other.
 
