@@ -2,7 +2,7 @@
 
 |master|develop|
 |:----:|:-----:|
-|[![build status](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/badges/master/build.svg)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/commits/master)|[![build status](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/badges/develop/build.svg)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/commits/develop)|
+|[![build status](https://gitlab.namibsun.net/namibsun/python/bundesliga-tippspiel/badges/master/build.svg)](https://gitlab.namibsun.net/namibsun/python/bundesliga-tippspiel/commits/master)|[![build status](https://gitlab.namibsun.net/namibsun/python/bundesliga-tippspiel/badges/develop/build.svg)](https://gitlab.namibsun.net/namibsun/python/bundesliga-tippspiel/commits/develop)|
 
 ![Logo](resources/logo/logo-readme.png)
 
@@ -26,10 +26,9 @@ Documentation on the API can be found [here](doc/APISpec.md).
 
 ## Further Information
 
-* [Changelog](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/CHANGELOG)
-* [License (GPLv3)](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel/raw/master/LICENSE)
-* [Gitlab](https://gitlab.namibsun.net/namboy94/bundesliga-tippspiel)
+* [Changelog](CHANGELOG)
+* [License (GPLv3)](LICENSE)
+* [Gitlab](https://gitlab.namibsun.net/namibsun/python/bundesliga-tippspiel)
 * [Github](https://github.com/namboy94/bundesliga-tippspiel)
-* [Git Statistics (gitstats)](https://gitstats.namibsun.net/gitstats/bundesliga-tippspiel/index.html)
-* [Git Statistics (git_stats)](https://gitstats.namibsun.net/git_stats/bundesliga-tippspiel/index.html)
-* [Test Coverage](https://coverage.namibsun.net/bundesliga-tippspiel/index.html)
+* [Progstats](https://progstats.namibsun.net/projects/bundesliga-tippspiel)
+* [PyPi](https://pypi.org/project/bundesliga-tippspiel)
