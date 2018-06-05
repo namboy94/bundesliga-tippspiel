@@ -24,15 +24,3 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return "Hello World!"
-
-
-@app.route('/.well-known/acme-challenge/<token_value>')
-def letsencrpyt(token_value: str):
-    """
-    Letsencrypt endpoint for renewal of SSL certs
-    :param token_value: The token requested by letsencrypt
-    :return: The response for letsencrypt
-    """
-    with open('.well-known/acme-challenge/{}'.format(token_value)) as f:
-        answer = f.readline().strip()
-    return answer
