@@ -1,7 +1,7 @@
 .idea/
 *.iml
-style-report/
-vendor/
-composer.lock
-coverage/
-*.secret
+cover/
+.coverage
+*.egg-info/
+dist/
+build/
