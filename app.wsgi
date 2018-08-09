@@ -17,4 +17,4 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.router import app as application
+from bundesliga_tippspiel import app as application
