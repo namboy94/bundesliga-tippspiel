@@ -17,22 +17,15 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-
-import bundesliga_tippspiel.globals as glob
-from flask import render_template
-from bundesliga_tippspiel.initialize import initialize_db, initialize_db_models
-
-app = glob.app
-initialize_db()
-initialize_db_models()
+from bundesliga_tippspiel.globals import db
 
 
-@app.route("/")
-def index():
-    print("AAAAAA")
-    return render_template("index.html")
+class Team(db.Model):
+    __tablename__ = "teams"
 
-
-@app.route("/graphql")
-def graphql():
-    return ""
+    id = db.Column(db.Integer,
+                   primary_key=True, nullable=False, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
+    short_name = db.Column(db.String, nullable=False)
+    abbreviation = db.Column(db.String, nullable=False)
+    icon = db.Column(db.String)

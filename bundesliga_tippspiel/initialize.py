@@ -17,22 +17,27 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-
 import bundesliga_tippspiel.globals as glob
-from flask import render_template
-from bundesliga_tippspiel.initialize import initialize_db, initialize_db_models
-
-app = glob.app
-initialize_db()
-initialize_db_models()
+from flask_sqlalchemy import SQLAlchemy
 
 
-@app.route("/")
-def index():
-    print("AAAAAA")
-    return render_template("index.html")
+def initialize_db():
+
+    if glob.app.config["ENV"] == "production":
+        db_uri = "sqlite:////tmp/test.db"
+    elif glob.app.config["TESTING"]:
+        db_uri = "sqlite://test.db"
+    else:
+        db_uri = "sqlite:////tmp/test.db"
+
+    glob.app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    glob.db = SQLAlchemy(glob.app)
 
 
-@app.route("/graphql")
-def graphql():
-    return ""
+# noinspection PyUnresolvedReferences
+def initialize_db_models():
+    from bundesliga_tippspiel.models.match_data.Team import Team
+    from bundesliga_tippspiel.models.match_data.Goal import Goal
+    from bundesliga_tippspiel.models.match_data.Match import Match
+    from bundesliga_tippspiel.models.match_data.Player import Player
+    glob.db.create_all()
