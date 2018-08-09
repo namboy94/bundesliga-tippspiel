@@ -17,9 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from bundesliga_tippspiel import db
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
+
+class Team(db.Model):
+    __tablename__ = "teams"
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    short_name = db.Column(db.String, nullable=False)
+    abbreviation = db.Column(db.String, nullable=False)
+    icon = db.Column(db.String)

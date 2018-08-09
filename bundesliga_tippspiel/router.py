@@ -17,10 +17,19 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import Flask
-app = Flask(__name__)
+from flask import render_template
+from bundesliga_tippspiel import app, db
+from bundesliga_tippspiel.models import Goal
+
+db.create_all()
 
 
 @app.route("/")
 def index():
-    return "Hello World!"
+    print("AAAAAA")
+    return render_template("index.html")
+
+
+@app.route("/graphql")
+def graphql():
+    pass

@@ -1,4 +1,4 @@
-<!--
+"""LICENSE
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,10 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
--->
+LICENSE"""
 
-<!--suppress HtmlUnknownTarget -->
-<meta charset="UTF-8">
-<link rel=stylesheet type=text/css
-      href="{{ url_for('static', filename='style.css') }}">
-<link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+from bundesliga_tippspiel.models.match_data.Goal import Goal
+from bundesliga_tippspiel.models.match_data.Team import Team

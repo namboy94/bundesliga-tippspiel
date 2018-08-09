@@ -1,4 +1,4 @@
-"""LICENSE
+<!--
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,11 +15,17 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-LICENSE"""
+-->
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
+<!--suppress HtmlUnknownTarget -->
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <link rel=stylesheet type=text/css
+              href="{{ url_for('static', filename='style.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+    {% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
