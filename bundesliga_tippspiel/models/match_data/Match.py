@@ -21,7 +21,97 @@ from bundesliga_tippspiel.globals import db
 
 
 class Match(db.Model):
-    __tablename__ = "matches"
+    """
+    Model that describes the 'matches' SQL table
+    """
 
-    id = db.Column(db.Integer,
-                   primary_key=True, nullable=False, autoincrement=True)
+    __tablename__ = "matches"
+    """
+    The table name
+    """
+
+    id = db.Column(
+        db.Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    """
+    The ID of the table entries acts as a primary key
+    """
+
+    home_id = db.Column(
+        db.Integer, db.ForeignKey("teams.id"), nullable=False
+    )
+    """
+    The ID of the home team. Acts as a foreign key
+    """
+
+    home_team = db.relationship(
+        "Team", backref=db.backref("matches", lazy=True)
+    )
+    """
+    The home team.
+    """
+
+    away_id = db.Column(
+        db.Integer, db.ForeignKey("teams.id"), nullable=False
+    )
+    """
+    The ID of the away team. Acts as a foreign key
+    """
+
+    away_team = db.relationship(
+        "Team", backref=db.backref("matches", lazy=True)
+    )
+    """
+    The away team.
+    """
+
+    matchday = db.Column(db.Integer, nullable=False)
+    """
+    The match day of the match
+    """
+
+    home_current_score = db.Column(db.Integer)
+    """
+    The current score of the home team.
+    """
+
+    away_current_score = db.Column(db.Integer)
+    """
+    The current score of the away team.
+    """
+
+    home_ht_score = db.Column(db.Integer)
+    """
+    The score of the home team at half time
+    """
+
+    away_ht_score = db.Column(db.Integer)
+    """
+    The score of the away team at half time
+    """
+
+    home_ft_score = db.Column(db.Integer)
+    """
+    The final score of the home team
+    """
+
+    away_ft_score = db.Column(db.Integer)
+    """
+    The final score of the away team
+    """
+
+    kickoff = db.Column(db.String)
+    """
+    A string representing the kickoff time in UTC in the following format:
+    YYYY-MM-DD:HH-mm-ss
+    """
+
+    started = db.Column(db.Boolean, nullable=False)
+    """
+    Indicates whether or not the match has started yet
+    """
+
+    finished = db.Column(db.Boolean, nullable=False)
+    """
+    Indicates whether or not the match has finished yet
+    """

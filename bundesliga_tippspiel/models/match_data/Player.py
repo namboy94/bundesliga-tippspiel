@@ -21,13 +21,33 @@ from bundesliga_tippspiel.globals import db
 
 
 class Player(db.Model):
-    __tablename__ = "players"
+    """
+    Model that describes the "players" SQL table
+    """
 
-    id = db.Column(db.Integer,
-                   primary_key=True, nullable=False, autoincrement=True)
+    __tablename__ = "players"
+    """
+    The name of the database table
+    """
+
+    id = db.Column(
+        db.Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    """
+    The ID of the player is the primary key and auto-increments
+    """
 
     team_id = db.Column(
-        db.Integer, db.ForeignKey("teams.id"), nullable=False)
+        db.Integer, db.ForeignKey("teams.id"), nullable=False
+    )
+    """
+    The ID of the team the player is affiliated with.
+    Acts as a foreign key to the 'teams' table.
+    """
+
     team = db.relationship(
         "Team", backref=db.backref("players", lazy=True)
     )
+    """
+    The team the player is affiliated with.
+    """

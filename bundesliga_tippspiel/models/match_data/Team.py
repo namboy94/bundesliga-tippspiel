@@ -21,11 +21,48 @@ from bundesliga_tippspiel.globals import db
 
 
 class Team(db.Model):
-    __tablename__ = "teams"
+    """
+    Model that describes the 'teams' SQL table
+    A Team is the most basic data for a match, it relies on no other data,
+    only primitives
+    """
 
-    id = db.Column(db.Integer,
-                   primary_key=True, nullable=False, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
-    short_name = db.Column(db.String, nullable=False)
-    abbreviation = db.Column(db.String, nullable=False)
-    icon = db.Column(db.String)
+    __tablename__ = "teams"
+    """
+    The name of the table
+    """
+
+    id = db.Column(
+        db.Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    """
+    The ID is the primary key of the table and increments automatically
+    """
+
+    name = db.Column(db.String, nullable=False, unique=True)
+    """
+    The full name of the team. Has to be unique.
+    Example: FC Bayern München
+    """
+
+    short_name = db.Column(db.String, nullable=False, unique=True)
+    """
+    The shortened version of the team's name. Has to be unique.
+    Example: Bayern
+    """
+
+    abbreviation = db.Column(db.String(3), nullable=False, unique=True)
+    """
+    A three-letter abbreviation of the team's name. Has to be unique.
+    Example: FCB
+    """
+
+    icon_svg = db.Column(db.String, nullable=False)
+    """
+    The URL of an image file representing the team's logo in SVG format
+    """
+
+    icon_png = db.Column(db.String, nullable=False)
+    """
+    The URL of an image file representing the team's logo in PNG format
+    """
