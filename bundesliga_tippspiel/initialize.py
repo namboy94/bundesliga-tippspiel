@@ -30,7 +30,8 @@ def initialize_db():
     else:
         db_uri = "sqlite:////tmp/test.db"
 
-    glob.app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    glob.app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    glob.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     glob.db = SQLAlchemy(glob.app)
 
 
