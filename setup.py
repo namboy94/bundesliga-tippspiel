@@ -37,7 +37,7 @@ if __name__ == "__main__":
         author_email="hermann@krumreyh.com",
         license="GNU GPL3",
         packages=find_packages(),
-        install_requires=["flask"],
+        install_requires=["flask", "flask_sqlalchemy"],
         include_package_data=True,
         zip_safe=False
     )
