@@ -17,20 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.globals import app, initialize_db
-from flask import render_template
-
-if app.config["ENV"] == "production":
-    uri = "sqlite:////tmp/test.db"
-else:
-    uri = "sqlite:////tmp/bundesliga_tippspiel.db"
-initialize_db(uri)
+from bundesliga_tippspiel.test.TestFramework import TestFramework
 
 
-@app.route("/")
-def index():
-    """
-    The index/home page
-    :return: The generated HTML
-    """
-    return render_template("index.html")
+class GoalTest(TestFramework):
+
+    def test_x(self):
+        self.assertEqual(True, True)

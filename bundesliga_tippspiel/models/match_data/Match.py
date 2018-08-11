@@ -37,7 +37,7 @@ class Match(db.Model):
     The ID of the table entries acts as a primary key
     """
 
-    home_id = db.Column(
+    home_team_id = db.Column(
         db.Integer, db.ForeignKey("teams.id"), nullable=False
     )
     """
@@ -45,13 +45,13 @@ class Match(db.Model):
     """
 
     home_team = db.relationship(
-        "Team", backref=db.backref("matches", lazy=True)
+        "Team", foreign_keys=[home_team_id]
     )
     """
     The home team.
     """
 
-    away_id = db.Column(
+    away_team_id = db.Column(
         db.Integer, db.ForeignKey("teams.id"), nullable=False
     )
     """
@@ -59,7 +59,7 @@ class Match(db.Model):
     """
 
     away_team = db.relationship(
-        "Team", backref=db.backref("matches", lazy=True)
+        "Team", foreign_keys=[away_team_id]
     )
     """
     The away team.

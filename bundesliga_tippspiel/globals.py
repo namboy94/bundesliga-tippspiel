@@ -21,4 +21,32 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-db = None  # type: SQLAlchemy
+"""
+The Flask App
+"""
+
+db = SQLAlchemy()
+"""
+The SQLAlchemy database connection
+"""
+
+
+# noinspection PyUnresolvedReferences
+def initialize_db(db_uri: str):
+    """
+    Initializes the SQLAlchemy database
+    :param db_uri: The URI of the database to initialize
+    :return: None
+    """
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.init_app(app)
+
+    from bundesliga_tippspiel.models.match_data.Team import Team
+    from bundesliga_tippspiel.models.match_data.Goal import Goal
+    from bundesliga_tippspiel.models.match_data.Match import Match
+    from bundesliga_tippspiel.models.match_data.Player import Player
+
+    with app.app_context():
+        db.create_all()

@@ -70,7 +70,7 @@ class Goal(db.Model):
     The minute in which the goal was scored
     """
 
-    minute_et = db.Column(db.Integer, nullable=False)
+    minute_et = db.Column(db.Integer, nullable=True)
     """
     This keeps track in which minute of extra time a goal was scored.
     """
