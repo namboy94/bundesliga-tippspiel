@@ -18,7 +18,7 @@ unittest:
     - python3
     - progstats
   script:
-    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts
+    - python3 -m venv virtual && source virtual/bin/activate && pip install ci-scripts flask
     - python-unittest
 
 deploy_develop:
