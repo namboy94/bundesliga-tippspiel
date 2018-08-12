@@ -18,3 +18,4 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.globals import app as application
+import bundesliga_tippspiel.router
