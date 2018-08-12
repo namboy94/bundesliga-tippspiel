@@ -34,3 +34,8 @@ def index():
     :return: The generated HTML
     """
     return render_template("index.html")
+
+
+@app.route("/env")
+def env():
+    return app.config["ENV"]
