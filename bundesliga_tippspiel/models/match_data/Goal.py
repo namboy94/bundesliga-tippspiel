@@ -70,7 +70,7 @@ class Goal(db.Model):
     The minute in which the goal was scored
     """
 
-    minute_et = db.Column(db.Integer, nullable=True)
+    minute_et = db.Column(db.Integer, nullable=True, default=0)
     """
     This keeps track in which minute of extra time a goal was scored.
     """
@@ -85,12 +85,33 @@ class Goal(db.Model):
     The away team's score after the goal was scored
     """
 
-    own_goal = db.Column(db.Boolean, nullable=False)
+    own_goal = db.Column(db.Boolean, nullable=False, default=False)
     """
     Indicates whether or not this goal was an own goal
     """
 
-    penalty = db.Column(db.Boolean, nullable=False)
+    penalty = db.Column(db.Boolean, nullable=False, default=False)
     """
     Indicates whether or not this goal was a penalty
     """
+
+    def __str__(self) -> str:
+        """
+        Generates a string representation for the model
+        :return: The string representation of the model
+        """
+        return "<Goal:{} - {} (Match:{}, {}:{}, {})>".format(
+            self.id, self.player.name, self.match_id,
+            self.home_score, self.away_score, self.get_minute_string()
+        )
+
+    def get_minute_string(self):
+        """
+        Generates a minute string that also takes
+        extra time minutes into account
+        :return: The minute string
+        """
+        minute_string = str(self.minute)
+        if self.minute_et > 0:
+            minute_string += str(self.minute_et)
+        return minute_string
