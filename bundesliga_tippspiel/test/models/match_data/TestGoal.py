@@ -20,7 +20,7 @@ LICENSE"""
 from bundesliga_tippspiel.test.TestFramework import TestFramework
 
 
-class GoalTest(TestFramework):
+class TestGoal(TestFramework):
 
     def test_x(self):
         self.assertEqual(True, True)

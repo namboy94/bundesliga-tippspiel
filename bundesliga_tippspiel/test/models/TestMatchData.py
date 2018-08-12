@@ -25,7 +25,7 @@ from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.match_data.Goal import Goal
 
 
-class MatchDataTest(TestFramework):
+class TestMatchData(TestFramework):
     """
     Class that tests the various match data models
     """
