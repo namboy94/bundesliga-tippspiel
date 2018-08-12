@@ -17,55 +17,47 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+from bundesliga_tippspiel.test.models.ModelTestFramework import \
+    ModelTestFramework
 from bundesliga_tippspiel.models.match_data.Goal import Goal
 
 
-class TestGoal(TestFramework):
+class TestGoal(ModelTestFramework):
     """
     Tests the Goal SQL model
     """
 
-    def test_missing_column_data(self):
+    def setUp(self):
         """
-        Tests that missing column data is handled correctly
+        Sets up the data needed by the tests
         :return: None
         """
-
-        _, _, player, match, _ = self.generate_sample_match_data()
-
-        for g in [
-            Goal(match=None, player=player, minute=1,
+        super().setUp()
+        self.incomplete_columns = [
+            Goal(match=None, player=self.player, minute=1,
                  home_score=1, away_score=1),
-            Goal(match=match, player=None, minute=1,
+            Goal(match=self.match, player=None, minute=1,
                  home_score=1, away_score=1),
-            Goal(match=match, player=player, minute=None,
+            Goal(match=self.match, player=self.player, minute=None,
                  home_score=1, away_score=1),
-            Goal(match=match, player=player, minute=1,
+            Goal(match=self.match, player=self.player, minute=1,
                  home_score=None, away_score=1),
-            Goal(match=match, player=player, minute=1,
+            Goal(match=self.match, player=self.player, minute=1,
                  home_score=1, away_score=None)
-        ]:
-            self._test_invalid_db_add(g)
-
-    def test_invalid_column_types(self):
-        """
-        Tests that invalid types for column data is handled correctly
-        :return: None
-        """
-
-        _, _, player, match, _ = self.generate_sample_match_data()
-
-        for constructor_call in [
-            lambda: Goal(match="Match", player=player,
+        ]
+        self.invalid_constructors = [
+            lambda: Goal(match="Match", player=self.player,
                          home_score=1, away_score=1, minute=1),
-            lambda: Goal(match=match, player="Player",
+            lambda: Goal(match=self.match, player="Player",
                          home_score=1, away_score=1, minute=1),
-            lambda: Goal(match=1, player=player,
+            lambda: Goal(match=1, player=self.player,
                          home_score=1, away_score=1, minute=1)
-        ]:
-            try:
-                constructor_call()
-                self.fail()
-            except AttributeError:
-                pass
+        ]
+        self.indexed = [
+            (1, self.goal),
+            (2, Goal(match=self.match, player=self.player,
+                     minute=1, home_score=1, away_score=1)),
+            (3, Goal(match=self.match, player=self.player,
+                     minute=2, home_score=2, away_score=1))
+        ]
+        self.non_uniques = []  # No unique attributes

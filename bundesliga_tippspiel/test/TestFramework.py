@@ -21,7 +21,6 @@ import os
 import bundesliga_tippspiel.globals as glob
 from typing import Tuple
 from unittest import TestCase
-from sqlalchemy.exc import IntegrityError
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
@@ -100,17 +99,3 @@ class TestFramework(TestCase):
         self.db.session.commit()
 
         return team_one, team_two, player, match, goal
-
-    def _test_invalid_db_add(self, obj: glob.db.Model):
-        """
-        Tests adding a database model object to the database and makes sure
-        it fails.
-        :param obj: The object to add
-        :return: None
-        """
-        self.db.session.add(obj)
-        try:
-            self.db.session.commit()
-            self.fail()
-        except IntegrityError:
-            self.db.session.rollback()
