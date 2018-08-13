@@ -19,12 +19,12 @@ LICENSE"""
 
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
     ModelTestFramework
-from bundesliga_tippspiel.models.match_data.Goal import Goal
+from bundesliga_tippspiel.models.match_data.Player import Player
 
 
-class TestGoal(ModelTestFramework):
+class TestPlayer(ModelTestFramework):
     """
-    Tests the Goal SQL model
+    Tests the Player SQL model
     """
 
     def setUp(self):
@@ -34,22 +34,12 @@ class TestGoal(ModelTestFramework):
         """
         super().setUp()
         self.incomplete_columns = [
-            Goal(match=None, player=self.player, minute=1,
-                 home_score=1, away_score=1),
-            Goal(match=self.match, player=None, minute=1,
-                 home_score=1, away_score=1),
-            Goal(match=self.match, player=self.player, minute=None,
-                 home_score=1, away_score=1),
-            Goal(match=self.match, player=self.player, minute=1,
-                 home_score=None, away_score=1),
-            Goal(match=self.match, player=self.player, minute=1,
-                 home_score=1, away_score=None)
+            Player(team=self.team_one),
+            Player(name="1")
         ]
         self.indexed = [
-            (1, self.goal),
-            (2, Goal(match=self.match, player=self.player,
-                     minute=1, home_score=1, away_score=1)),
-            (3, Goal(match=self.match, player=self.player,
-                     minute=2, home_score=2, away_score=1))
+            (1, self.player),
+            (2, Player(team=self.team_one, name="1")),
+            (3, Player(team=self.team_two, name="2"))
         ]
         self.non_uniques = []  # No unique attributes

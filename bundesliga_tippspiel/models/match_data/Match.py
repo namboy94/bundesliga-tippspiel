@@ -100,7 +100,7 @@ class Match(db.Model):
     The final score of the away team
     """
 
-    kickoff = db.Column(db.String)
+    kickoff = db.Column(db.String, nullable=False)
     """
     A string representing the kickoff time in UTC in the following format:
     YYYY-MM-DD:HH-mm-ss

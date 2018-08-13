@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from unittest import skip
-from typing import List, Callable, Tuple
+from typing import List, Tuple
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from bundesliga_tippspiel.globals import db
@@ -39,7 +38,6 @@ class ModelTestFramework(TestFramework):
         self.team_one, self.team_two, self.player, self.match, self.goal = \
             self.generate_sample_match_data()
         self.incomplete_columns = []  # type: List[self.db.Model]
-        self.invalid_constructors = []  # type: List[Callable -> self.db.Model]
         self.index_map = []  # type: List[Tuple[int, self.db.Model]]
         self.non_uniques = []  # type: List[self.db.Model]
 
@@ -50,18 +48,6 @@ class ModelTestFramework(TestFramework):
         """
         for obj in self.incomplete_columns:
             self.__test_invalid_db_add(obj)
-
-    def test_invalid_column_types(self):
-        """
-        Tests that invalid types for column data is handled correctly
-        :return: None
-        """
-        for constructor_call in self.invalid_constructors:
-            try:
-                constructor_call()
-                self.fail()
-            except AttributeError:
-                pass
 
     def test_auto_increment(self):
         """

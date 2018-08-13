@@ -57,12 +57,12 @@ class Team(db.Model):
     Example: FCB
     """
 
-    icon_svg = db.Column(db.String, nullable=False)
+    icon_svg = db.Column(db.String, nullable=False, unique=True)
     """
     The URL of an image file representing the team's logo in SVG format
     """
 
-    icon_png = db.Column(db.String, nullable=False)
+    icon_png = db.Column(db.String, nullable=False, unique=True)
     """
     The URL of an image file representing the team's logo in PNG format
     """
