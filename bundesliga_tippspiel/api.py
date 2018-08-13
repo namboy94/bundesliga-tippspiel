@@ -17,27 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-# noinspection PyUnresolvedReferences
-import bundesliga_tippspiel.api
-from bundesliga_tippspiel.globals import app, initialize_db
-from flask import render_template
-
-if app.config["ENV"] == "production":
-    uri = "sqlite:////tmp/test.db"
-else:
-    uri = "sqlite:////tmp/bundesliga_tippspiel.db"
-initialize_db(uri)
+from flask import jsonify
+from bundesliga_tippspiel.globals import app
 
 
-@app.route("/")
-def index():
-    """
-    The index/home page
-    :return: The generated HTML
-    """
-    return render_template("index.html")
-
-
-@app.route("/env")
-def env():
-    return app.config["ENV"]
+@app.route("/api/v2/test")
+def test():
+    return jsonify({"Test": 1})
