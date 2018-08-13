@@ -33,13 +33,51 @@ class TestPlayer(ModelTestFramework):
         :return: None
         """
         super().setUp()
-        self.incomplete_columns = [
+        self.model_cls = Player
+
+    def test_missing_column_data(self):
+        """
+        Tests that missing column data is handled correctly
+        :return: None
+        """
+        self._test_missing_column_data([
             Player(team=self.team_one),
             Player(name="1")
-        ]
-        self.indexed = [
+        ])
+
+    def test_auto_increment(self):
+        """
+        Tests that auto-incrementing works as expected
+        :return: None
+        """
+        self._test_auto_increment([
             (1, self.player),
             (2, Player(team=self.team_one, name="1")),
             (3, Player(team=self.team_two, name="2"))
-        ]
-        self.non_uniques = []  # No unique attributes
+        ])
+
+    def test_uniqueness(self):
+        """
+        Tests that unique attributes are correctly checked
+        :return: None
+        """
+        self._test_uniqueness([])
+
+    def test_retrieving_from_db(self):
+        """
+        Tests retrieving model objects from the database
+        :return: None
+        """
+        self._test_retrieving_from_db([
+            (lambda: Player.query.filter_by(id=self.player.id).first(),
+             self.player)
+        ])
+
+    def test_deleting_from_db(self):
+        """
+        Tests deleting model objects from the database
+        :return: None
+        """
+        self._test_deleting_from_db([
+            (self.player, [self.goal])
+        ])

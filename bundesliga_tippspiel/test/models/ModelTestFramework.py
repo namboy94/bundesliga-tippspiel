@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import List, Tuple
+from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from bundesliga_tippspiel.globals import db
@@ -35,26 +35,32 @@ class ModelTestFramework(TestFramework):
         :return: None
         """
         super().setUp()
+        self.model_cls = None  # type: db.Model
         self.team_one, self.team_two, self.player, self.match, self.goal = \
             self.generate_sample_match_data()
-        self.incomplete_columns = []  # type: List[self.db.Model]
-        self.index_map = []  # type: List[Tuple[int, self.db.Model]]
-        self.non_uniques = []  # type: List[self.db.Model]
 
-    def test_missing_column_data(self):
+    def test_x(self):
+        pass
+
+    def _test_missing_column_data(
+            self, incomplete_columns: List[db.Model]
+    ):
         """
         Tests that missing column data is handled correctly
+        :param incomplete_columns: A list of model objects
+                                   with missing column data
         :return: None
         """
-        for obj in self.incomplete_columns:
+        for obj in incomplete_columns:
             self.__test_invalid_db_add(obj)
 
-    def test_auto_increment(self):
+    def _test_auto_increment(self, index_map: List[Tuple[int, db.Model]]):
         """
         Tests that auto-incrementing works as expected
+        :param index_map: A list of tuples mapping ids to model objects
         :return: None
         """
-        for index, obj in self.index_map:
+        for index, obj in index_map:
 
             if obj.id is None:
                 self.db.session.add(obj)
@@ -62,13 +68,51 @@ class ModelTestFramework(TestFramework):
 
             self.assertEqual(obj.id, index)
 
-    def test_uniqueness(self):
+    def _test_uniqueness(self, non_uniques: List[db.Model]):
         """
         Tests that unique attributes are correctly checked
+        :param non_uniques: A list of model objects containing
+                            non-unique column data
         :return: None
         """
-        for non_unique in self.non_uniques:
+        for non_unique in non_uniques:
             self.__test_invalid_db_add(non_unique)
+
+    def _test_retrieving_from_db(
+            self, queries: List[Tuple[Callable, db.Model]]
+    ):
+        """
+        Tests retrieving model objects from the database
+        :param queries: A list of tuples containing queries and
+                        their expected result
+        :return: None
+        """
+        for query, result in queries:
+            self.assertEqual(query(), result)
+
+    def _test_deleting_from_db(
+            self, to_delete: List[Tuple[db.Model, List[db.Model]]]
+    ):
+        """
+        Tests deleting model objects from the database
+        :param to_delete: A list of tuples consisting of:
+                          * a model object to remove from the DB
+                          * a list of other model objects that should
+                            be removed due to cascading
+        :return: None
+        """
+        for obj, cascade_effects in to_delete:
+            _id = obj.id
+            self.db.session.delete(obj)
+            self.db.session.commit()
+            self.assertEqual([], self.model_cls.query.filter_by(id=_id).all())
+
+            for cascaded in cascade_effects:
+                cls = type(cascaded)
+                self.assertEqual(
+                    [],
+                    cls.query.filter_by(id=cascaded.id).all()
+                )
 
     def __test_invalid_db_add(self, obj: db.Model):
         """

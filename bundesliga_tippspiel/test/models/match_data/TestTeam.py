@@ -33,7 +33,14 @@ class TestTeam(ModelTestFramework):
         :return: None
         """
         super().setUp()
-        self.incomplete_columns = [
+        self.model_cls = Team
+
+    def test_missing_column_data(self):
+        """
+        Tests that missing column data is handled correctly
+        :return: None
+        """
+        self._test_missing_column_data([
             Team(name="1", short_name="2", abbreviation="3",
                  icon_png="4"),
             Team(name="1", short_name="2", abbreviation="3",
@@ -44,14 +51,26 @@ class TestTeam(ModelTestFramework):
                  icon_png="4", icon_svg="5"),
             Team(short_name="2", abbreviation="3",
                  icon_png="4", icon_svg="5")
-        ]
-        self.indexed = [
+        ])
+
+    def test_auto_increment(self):
+        """
+        Tests that auto-incrementing works as expected
+        :return: None
+        """
+        self._test_auto_increment([
             (1, self.team_one),
             (2, self.team_two),
             (3, Team(name="1", short_name="2", abbreviation="3",
                      icon_png="4", icon_svg="5"))
-        ]
-        self.non_uniques = [
+        ])
+
+    def test_uniqueness(self):
+        """
+        Tests that unique attributes are correctly checked
+        :return: None
+        """
+        self._test_uniqueness([
             Team(name=self.team_one.name, short_name="2", abbreviation="3",
                  icon_png="4", icon_svg="5"),
             Team(name="1", short_name=self.team_one.short_name,
@@ -63,4 +82,26 @@ class TestTeam(ModelTestFramework):
                  icon_png=self.team_one.icon_png, icon_svg="5"),
             Team(name="1", short_name="2", abbreviation="3",
                  icon_png="4", icon_svg=self.team_one.icon_svg)
-        ]  # No unique attributes
+        ])
+
+    def test_retrieving_from_db(self):
+        """
+        Tests retrieving model objects from the database
+        :return: None
+        """
+        self._test_retrieving_from_db([
+            (lambda: Team.query.filter_by(id=self.team_one.id).first(),
+             self.team_one),
+            (lambda: Team.query.filter_by(name=self.team_two.name).first(),
+             self.team_two)
+        ])
+
+    def test_deleting_from_db(self):
+        """
+        Tests deleting model objects from the database
+        :return: None
+        """
+        # TODO Match not cascading correctly
+        self._test_deleting_from_db([
+            (self.team_one, [self.player])
+        ])

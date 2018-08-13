@@ -38,28 +38,33 @@ class Goal(db.Model):
     """
 
     match_id = db.Column(
-        db.Integer, db.ForeignKey("matches.id"), nullable=False
+        db.Integer,
+        db.ForeignKey("matches.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False
     )
     """
     The ID of the match in which this goal was scored. Acts as a foreign key.
     """
 
     match = db.relationship(
-        "Match", backref=db.backref("goals", lazy=True)
+        "Match", backref=db.backref("goals", lazy=True, cascade="all,delete")
     )
     """
     The match in which this goal was scored.
     """
 
     player_id = db.Column(
-        db.Integer, db.ForeignKey("players.id"), nullable=False
+        db.Integer,
+        db.ForeignKey("players.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False
     )
     """
     The ID of the player that scored this goal. Acts as a foreign key.
     """
 
     player = db.relationship(
-        "Player", backref=db.backref("goals", lazy=True)
+        "Player",
+        backref=db.backref("goals", lazy=True, cascade="all,delete")
     )
     """
     The player that scored this goal.

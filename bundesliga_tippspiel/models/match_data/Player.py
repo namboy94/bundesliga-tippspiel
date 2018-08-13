@@ -38,7 +38,9 @@ class Player(db.Model):
     """
 
     team_id = db.Column(
-        db.Integer, db.ForeignKey("teams.id"), nullable=False
+        db.Integer,
+        db.ForeignKey("teams.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False
     )
     """
     The ID of the team the player is affiliated with.
@@ -46,7 +48,7 @@ class Player(db.Model):
     """
 
     team = db.relationship(
-        "Team", backref=db.backref("players", lazy=True)
+        "Team", backref=db.backref("players", lazy=True, cascade="all,delete"),
     )
     """
     The team the player is affiliated with.

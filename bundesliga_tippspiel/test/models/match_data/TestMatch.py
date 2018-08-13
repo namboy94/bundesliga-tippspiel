@@ -33,8 +33,14 @@ class TestMatch(ModelTestFramework):
         :return: None
         """
         super().setUp()
+        self.model_cls = Match
 
-        self.incomplete_columns = [
+    def test_missing_column_data(self):
+        """
+        Tests that missing column data is handled correctly
+        :return: None
+        """
+        self._test_missing_column_data([
             Match(away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False),
@@ -53,11 +59,50 @@ class TestMatch(ModelTestFramework):
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False)
-        ]
-        self.indexed = [
+        ])
+
+    def test_auto_increment(self):
+        """
+        Tests that auto-incrementing works as expected
+        :return: None
+        """
+        self._test_auto_increment([
             (1, self.match),
             (2, Match(home_team=self.team_one, away_team=self.team_two,
                       matchday=1, kickoff="2019-01-01:01:02:03",
                       started=False, finished=False))
-        ]
-        self.non_uniques = []  # No unique attributes
+        ])
+
+    def test_uniqueness(self):
+        """
+        Tests that unique attributes are correctly checked
+        :return: None
+        """
+        # TODO Fix unique constraint
+        self._test_uniqueness([
+            # Match(home_team=self.match.home_team,
+            #       away_team=self.match.away_team,
+            #       matchday=self.match.matchday,
+            #       kickoff="2019-01-01:01:02:03",
+            #       started=False, finished=False)
+        ])
+
+    def test_retrieving_from_db(self):
+        """
+        Tests retrieving model objects from the database
+        :return: None
+        """
+        self._test_retrieving_from_db([
+            (lambda: Match.query.filter_by(id=self.match.id).first(),
+             self.match)
+        ])
+
+    def test_deleting_from_db(self):
+        """
+        Tests deleting model objects from the database
+        :return: None
+        """
+        print(self.match.id)
+        self._test_deleting_from_db([
+            (self.match, [self.goal])
+        ])

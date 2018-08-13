@@ -38,28 +38,32 @@ class Match(db.Model):
     """
 
     home_team_id = db.Column(
-        db.Integer, db.ForeignKey("teams.id"), nullable=False
+        db.Integer,
+        db.ForeignKey("teams.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False
     )
     """
     The ID of the home team. Acts as a foreign key
     """
 
     home_team = db.relationship(
-        "Team", foreign_keys=[home_team_id]
+        "Team", foreign_keys=[home_team_id], cascade="all,delete"
     )
     """
     The home team.
     """
 
     away_team_id = db.Column(
-        db.Integer, db.ForeignKey("teams.id"), nullable=False
+        db.Integer,
+        db.ForeignKey("teams.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False
     )
     """
     The ID of the away team. Acts as a foreign key
     """
 
     away_team = db.relationship(
-        "Team", foreign_keys=[away_team_id]
+        "Team", foreign_keys=[away_team_id], cascade="all,delete"
     )
     """
     The away team.
@@ -104,6 +108,7 @@ class Match(db.Model):
     """
     A string representing the kickoff time in UTC in the following format:
     YYYY-MM-DD:HH-mm-ss
+    If the kickoff time is not known, it should be set to 'TBD'
     """
 
     started = db.Column(db.Boolean, nullable=False)
