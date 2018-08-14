@@ -20,7 +20,7 @@ LICENSE"""
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
 from bundesliga_tippspiel.globals import app, initialize_db
-from flask import render_template
+from flask import render_template, request
 
 if app.config["ENV"] == "production":
     uri = "sqlite:////tmp/test.db"
@@ -41,3 +41,48 @@ def index():
 @app.route("/env")
 def env():
     return app.config["ENV"]
+
+
+@app.route("/two")
+def second_home():
+    return request.path
+
+
+@app.route("/login")
+def login():
+    return "Login"
+
+
+@app.route("/logout")
+def logout():
+    return "Logout"
+
+
+@app.route("/registration")
+def registration():
+    return "Registration"
+
+
+@app.route("/bets")
+def bets():
+    return "Bets"
+
+
+@app.route("/leaderboard")
+def leaderboard():
+    return "Leaderboard"
+
+
+@app.route("/profile")
+def profile():
+    return "Profile"
+
+
+@app.route("/about")
+def about():
+    return "Impressum"
+
+
+@app.route("/privacy")
+def privacy():
+    return "Privacy"

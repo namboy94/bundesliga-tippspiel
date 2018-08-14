@@ -1,4 +1,4 @@
-/**
+<!--
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,42 +15,20 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-*/
+-->
 
-body {
-    background: aqua;
-}
+<head>
+    <meta charset="UTF-8">
+    <title>Bundesliga Tippspiel</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
 
-main {
-    height: 100vh;
-    background: green;
-}
+    <!--suppress JSUnresolvedLibraryURL -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--suppress JSUnresolvedLibraryURL -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-footer {
-    background: lightgray;
-    bottom: 0;
-    width: 100%;
-}
-
-.navbar {
-    margin-bottom: 0;
-}
-
-.brand-image {
-    padding-top: 5px;
-}
-
-.brand-image img {
-    max-height: 40px;
-}
-
-.dependency-logo {
-    max-height: 20px;
-    margin-left: 10px;
-}
-
-.footer-col {
-    padding: 7px;
-    text-align: center;
-    background: red;
-}
+    <link rel=stylesheet type=text/css
+              href="{{ url_for('static', filename='style.css') }}">
+    {% block head %}{% endblock %}
+</head>

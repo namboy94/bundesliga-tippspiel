@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!--suppress HtmlUnknownTarget -->
-<head>
-    {% block head %}
-        <meta charset="UTF-8">
-        <link rel=stylesheet type=text/css
-              href="{{ url_for('static', filename='style.css') }}">
-        <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
-    {% endblock %}
-</head>
-<body>
-    {% block body %}{% endblock %}
-</body>
+<!DOCTYPE html>
+<html lang="en">
+    {% include "header.html" %}
+    <body>
+        {% include "navbar.html" %}
+        <main class="container" role="main">
+            {% block body %}{% endblock %}
+        </main>
+        {% include "footer.html" %}
+    </body>
+</html>
