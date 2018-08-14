@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import pkg_resources
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -29,6 +30,20 @@ db = SQLAlchemy()
 """
 The SQLAlchemy database connection
 """
+
+
+@app.context_processor
+def inject_template_variables():
+    """
+    Injects the project's version string so that it will be available
+    in templates
+    :return: The dictionary to inject
+    """
+    version = pkg_resources.get_distribution("bundesliga-tippspiel").version
+    return {
+        "version": version,
+        "env": app.config["ENV"]
+    }
 
 
 # noinspection PyUnresolvedReferences

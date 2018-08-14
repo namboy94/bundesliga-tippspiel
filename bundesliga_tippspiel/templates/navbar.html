@@ -17,90 +17,72 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
-        <!-- Logo and Title -->
-        <div class="navbar-header">
+    <!-- Logo Button -->
+    <a class="navbar-brand" href="/">
+        <img alt="Bundesliga Tippspiel" class="brand-image"
+             src="{{ url_for('static', filename='logo.png') }}">
+    </a>
 
-            <!-- Toggle Button when collapsed-->
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1"
-                    aria-expanded="false">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+    <!-- Toggle Button for mobile layouts -->
+    <button class="navbar-toggler collapsed" type="button"
+            data-toggle="collapse" data-target="#navbar-data"
+            aria-controls="navbars-data" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <!-- Logo and Text -->
-            <a class="navbar-brand brand-image" href="/">
-                <img alt="Bundesliga Tippspiel"
-                     src="{{ url_for('static', filename='logo.png') }}">
-            </a>
-            <a class="navbar-brand" href="/"><strong>
-                Bundesliga Tippspiel
-            </strong></a>
+    <!-- Navbar Content -->
+    <div class="navbar-collapse collapse" id="navbar-data" style="">
 
-        </div>
+        <!-- Navigation Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.path == "/" %} active {% endif %}">
+                <a class="nav-link" href="/">Home</a>
+            </li>
 
-        <!-- Navbar Content -->
-        <div class="collapse navbar-collapse">
+            {% if not session.logged_in %}
 
-            <!-- Nav Links -->
-            <ul class="nav navbar-nav">
-
-                <li {% if request.path == "/" %} class="active" {% endif %}>
-                    <a href="/">Home</a>
+                <li class="nav-item {% if request.path == "/registration" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("registration") }}">
+                        Registrieren
+                    </a>
                 </li>
 
-                {% if not session.logged_in %}
+            {% else %}
 
-                    <li {% if request.path == "/registration" %}
-                        class="active"
-                        {% endif %}>
-                        <a href="{{ url_for("registration") }}">
-                            Registrieren
-                        </a>
-                    </li>
+                <li class="nav-item {% if request.path == "/bets" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("bets") }}">Spieltag</a>
+                </li>
+                <li class="nav-item {% if request.path == "/leaderboard" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("leaderboard") }}">Rangliste</a>
+                </li>
+                <li class="nav-item {% if request.path == "/profile" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("profile") }}">Profil</a>
+                </li>
 
+            {% endif %}
+        </ul>
+
+        <!-- Login/Logout Data -->
+        <ul class="navbar-nav ml-auto">
+
+            <li>
+                <!-- Login/Logout Button-->
+                {% if session.logged_in %}
+                    <a href="{{ url_for('logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
                 {% else %}
-
-                    <li {% if request.path == "/bets" %}
-                        class="active"
-                        {% endif %}>
-                        <a href="{{ url_for("bets") }}">Spieltag</a>
-                    </li>
-                    <li {% if request.path == "/leaderboard" %}
-                        class="active"
-                        {% endif %}>
-                        <a href="{{ url_for("leaderboard") }}">Rangliste</a>
-                    </li>
-                    <li {% if request.path == "/profile" %}
-                        class="active"
-                        {% endif %}>
-                        <a href="{{ url_for("profile") }}">Profil</a>
-                    </li>
-
+                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for('logout') }}">
+                        <input class="form-control mr-sm-2" name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
+                        <input class="form-control mr-sm-2" name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
+                        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>
+                    </form>
                 {% endif %}
+            </li>
+        </ul>
 
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <!-- Login/Logout Button-->
-                    {% if session.logged_in %}
-                        <a href="{{ url_for('logout') }}">
-                            <span class="glyphicon glyphicon-log-out"></span>
-                        </a>
-                    {% else %}
-                        <a href="{{ url_for('login') }}">
-                            <span class="glyphicon glyphicon-log-in"></span>
-                        </a>
-                    {% endif %}
-                </li>
-            </ul>
-
-        </div>
     </div>
 </nav>

@@ -18,39 +18,56 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 body {
-    background: aqua;
+    background: darkgray;
 }
 
 main {
+    padding-top: 15px;
     height: 100vh;
-    background: green;
+    background: lightgray;
 }
 
 footer {
-    background: lightgray;
-    bottom: 0;
-    width: 100%;
+    background: slategray;
 }
 
-.navbar {
-    margin-bottom: 0;
+a {
+    color: #444444
+}
+
+i {
+    color: #999c9f;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 30pt;
+}
+
+p {
+    font-size: 15pt;
 }
 
 .brand-image {
-    padding-top: 5px;
-}
-
-.brand-image img {
     max-height: 40px;
 }
 
 .dependency-logo {
-    max-height: 20px;
+    max-height: 30px;
     margin-left: 10px;
+    background: lightgray;
 }
 
 .footer-col {
     padding: 7px;
     text-align: center;
-    background: red;
+    font-size: 15pt;
+}
+
+.version-button {
+    background: gray;
+    border-radius:4px;
+    padding: 3px;
+    margin-left: 10px;
 }
