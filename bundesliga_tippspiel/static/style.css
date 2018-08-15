@@ -115,3 +115,20 @@ p {
     padding: 3px;
     margin-left: 10px;
 }
+
+table, th, td{
+    border: 1px solid black;
+    text-align: center;
+}
+
+th {
+    height: 5em;
+}
+
+td {
+    width: 10em;
+}
+
+.register-form-entry {
+    max-width: 50em;
+}

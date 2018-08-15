@@ -19,9 +19,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "base_layout.html" %}
 {% block body %}
-<h1>Tippspiel zur Bundesliga Saison 2018/19</h1>
-    <p>Beim Bundesliga Tippspiel kannst du dein Fußballwissen (und dein Glück)
-       mit deinen Freunden messen!</p>
+    <h1>Tippspiel zur Bundesliga Saison 2018/19</h1>
+    <p>
+        Beim Bundesliga Tippspiel kannst du dein Fußballwissen (und dein Glück)
+        mit deinen Freunden messen! hast du bereits ein Account, kannst du
+        dich mithilfe der Anmeldefunktion anmelden, ansonsten kannst du dich
+        <a style="color: greenyellow" href="{{ url_for("register") }}">hier</a> registrieren.
+    </p>
+    <h3>Punktevergabe</h3>
     <p>Punkte werden wie folgt vergeben:</p>
     <ul>
         <li>
@@ -37,4 +42,37 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </li>
     </ul>
     <p>Es können also maximal 15 Punkte pro Spiel erzielt werden.</p>
+    <h4>Beispiele:</h4>
+    <table>
+        <tr>
+            <th>Ergebnis</th>
+            <th>Tipp</th>
+            <th>Punkte</th>
+        </tr>
+        <tr>
+            <td>3:0</td>
+            <td>1:0</td>
+            <td>7 + 3 = 10</td>
+        </tr>
+        <tr>
+            <td>2:1</td>
+            <td>1:2</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>1:1</td>
+            <td>2:2</td>
+            <td>7 + 5 = 12</td>
+        </tr>
+        <tr>
+            <td>5:0</td>
+            <td>0:0</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>4:1</td>
+            <td>3:0</td>
+            <td>7 + 5 = 12</td>
+        </tr>
+    </table>
 {% endblock %}

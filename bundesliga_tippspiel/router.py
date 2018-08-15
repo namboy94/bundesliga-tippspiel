@@ -20,7 +20,7 @@ LICENSE"""
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
 from bundesliga_tippspiel.globals import app, initialize_db
-from flask import render_template, request
+from flask import render_template
 
 if app.config["ENV"] == "production":
     uri = "sqlite:////tmp/test.db"
@@ -28,6 +28,8 @@ else:
     uri = "sqlite:////tmp/bundesliga_tippspiel.db"
 initialize_db(uri)
 
+
+# Pages
 
 @app.route("/")
 def index():
@@ -38,14 +40,27 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/env")
-def env():
-    return app.config["ENV"]
+@app.route("/about")
+def about():
+    """
+    The about page/"Impressum" for the website
+    :return: The generated HTML
+    """
+    return render_template("about.html")
 
 
-@app.route("/two")
-def second_home():
-    return request.path
+@app.route("/privacy")
+def privacy():
+    """
+    Page containing a privacy disclaimer
+    :return: The generated HTML
+    """
+    return render_template("privacy.html")
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
 
 
 @app.route("/login")
@@ -56,11 +71,6 @@ def login():
 @app.route("/logout")
 def logout():
     return "Logout"
-
-
-@app.route("/registration")
-def registration():
-    return "Registration"
 
 
 @app.route("/bets")
@@ -76,13 +86,3 @@ def leaderboard():
 @app.route("/profile")
 def profile():
     return "Profile"
-
-
-@app.route("/about")
-def about():
-    return "Impressum"
-
-
-@app.route("/privacy")
-def privacy():
-    return "Privacy"

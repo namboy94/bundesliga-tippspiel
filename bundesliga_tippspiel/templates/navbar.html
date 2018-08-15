@@ -44,8 +44,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
             {% if not session.logged_in %}
 
-                <li class="nav-item {% if request.path == "/registration" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("registration") }}">
+                <li class="nav-item {% if request.path == "/register" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("register") }}">
                         Registrieren
                     </a>
                 </li>
