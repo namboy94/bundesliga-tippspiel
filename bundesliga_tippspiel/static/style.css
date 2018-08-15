@@ -17,19 +17,57 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-body {
-    background: darkgray;
-}
+/* Basic Structure */
 
-main {
-    padding-top: 15px;
-    height: 100vh;
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
     background: lightgray;
 }
 
 footer {
-    background: slategray;
+    background: #343a40;
+    padding-left: 1em;
+    padding-right: 1em;
 }
+
+footer a {
+    color: #999c9f;
+}
+
+#container {
+    min-height:100%;
+    position:relative;
+}
+
+#body {
+    padding-bottom: 60px;   /* Height of the footer */
+    margin: 0 auto;
+    width: 80%;
+    min-height: calc(100vh - 100px);
+}
+
+#footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    max-height:60px;         /* Height of the footer */
+}
+
+/*noinspection CssOptimizeSimilarProperties*/
+.content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 3em;
+    padding-right: 3em;
+    background: darkgray;
+    min-height: calc(100vh - 60px);
+    margin-bottom: -20px;
+}
+
+
+/* Text Formatting */
 
 a {
     color: #444444
@@ -49,15 +87,21 @@ p {
     font-size: 15pt;
 }
 
+/* Images */
+
 .brand-image {
     max-height: 40px;
 }
 
 .dependency-logo {
     max-height: 30px;
-    margin-left: 10px;
-    background: lightgray;
+    margin-left: 5px;
+    background: #999c9f;
+    border-radius: 3px;
+    padding: 3px;
 }
+
+/* Footer Elements */
 
 .footer-col {
     padding: 7px;

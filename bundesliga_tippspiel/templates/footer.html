@@ -30,7 +30,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             |
             <a href="{{ url_for("privacy") }}">Datenschutzerklärung</a>
         </div>
-        <div class="col-md-4 footer-col">
+        <div class="col-md-3 footer-col">
             <a href="http://flask.pocoo.org/">
                 <img class="dependency-logo"
                      src="{{ url_for('static', filename='flask-logo.png') }}">
@@ -43,8 +43,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <img class="dependency-logo"
                      src="{{ url_for('static', filename='sqlalchemy-logo.png') }}">
             </a>
-            <a href="https://gitlab.namibsun.net:/namibsun/python/bundesliga-tippspiel"
-               class="version-button">
+        </div>
+        <div class="col-md-1 footer-col">
+            <a href="https://gitlab.namibsun.net:/namibsun/python/bundesliga-tippspiel">
                 V{{ version }}
             </a>
         </div>

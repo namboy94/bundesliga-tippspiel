@@ -21,10 +21,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 <html lang="en">
     {% include "header.html" %}
     <body>
-        {% include "navbar.html" %}
-        <main class="container" role="main">
-            {% block body %}{% endblock %}
-        </main>
-        {% include "footer.html" %}
+        <div id="container">
+            <div id="header">{% include "navbar.html" %}</div>
+            <div id="body">
+                <div class="container content">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+            <div id="footer">{% include "footer.html" %}</div>
+        </div>
     </body>
 </html>
