@@ -20,7 +20,7 @@ LICENSE"""
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
 from bundesliga_tippspiel.globals import app, initialize_db
-from flask import render_template
+from flask import render_template, request
 
 if app.config["ENV"] == "production":
     uri = "sqlite:////tmp/test.db"
@@ -58,9 +58,12 @@ def privacy():
     return render_template("privacy.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    if request.method == "GET":
+        return render_template("register.html")
+    else:  # request.method == "POST"
+        
 
 
 @app.route("/login")
