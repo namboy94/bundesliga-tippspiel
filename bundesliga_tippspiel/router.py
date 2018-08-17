@@ -19,11 +19,13 @@ LICENSE"""
 
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
-from bundesliga_tippspiel.globals import app, initialize_db
 from flask import render_template, request
+from bundesliga_tippspiel.globals import app, initialize_db
+from bundesliga_tippspiel.config import db_key, db_name, db_user
+
 
 if app.config["ENV"] == "production":
-    uri = "sqlite:////tmp/test.db"
+    uri = "mysql://{}:{}@localhost:3306/{}".format(db_user, db_key, db_name)
 else:
     uri = "sqlite:////tmp/bundesliga_tippspiel.db"
 initialize_db(uri)
@@ -63,7 +65,7 @@ def register():
     if request.method == "GET":
         return render_template("register.html")
     else:  # request.method == "POST"
-        
+        pass
 
 
 @app.route("/login")

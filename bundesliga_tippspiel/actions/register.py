@@ -65,7 +65,6 @@ def register(username: str, email: str, password: str, recaptcha: str):
     email_message = str(render_template("registration_email.html"))
 
 
-
 def username_exists(username: str) -> bool:
     return len(User.query.filter_by(username=username).all()) > 0
 

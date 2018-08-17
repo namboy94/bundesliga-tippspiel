@@ -20,14 +20,36 @@ LICENSE"""
 import os
 import json
 
-secrets_file = os.path.join(
-    os.path.abspath(os.path.dirname(__file__)), "secrets.json"
-)
-with open(secrets_file, "r") as f:
-    secrets = json.load(f)
 
-for secret, value in secrets.items():
-    os.environ[secret] = str(value)
+def generate_secrets():
+    """
+    Generates a secrets.json file out of environment variables
+    :return: None
+    """
+    environment = os.environ["TIPPSPIEL_ENV"]
+    secrets = {}
 
-from bundesliga_tippspiel.globals import app as application
-import bundesliga_tippspiel.router
+    db_prefix = "DEVEL_" if environment == "develop" else "PROD_"
+
+    for key in [
+        "DB_KEY",
+        "DB_NAME",
+        "DB_USER",
+        "SMTP_SERVER",
+        "SMTP_ADDRESS",
+        "SMTP_PORT",
+        "SMTP_PASSWORD",
+        "RECAPTCHA_SECRET_KEY",
+        "RECAPTCHA_SITE_KEY"
+    ]:
+        if key.startswith("DB_"):
+            secrets[key] = os.environ[db_prefix + key]
+        else:
+            secrets[key] = os.environ[key]
+
+    with open("secrets.json", "w") as f:
+        f.write(json.dumps(secrets))
+
+
+if __name__ == "__main__":
+    generate_secrets()
