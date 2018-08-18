@@ -21,6 +21,7 @@ import os
 from typing import Optional
 from bundesliga_tippspiel.globals import app
 
+
 """
 This file contains environment specific configuration information
 All of this information is found using environment variables

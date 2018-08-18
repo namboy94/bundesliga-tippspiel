@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import os
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
 from flask import render_template, request
@@ -24,7 +25,7 @@ from bundesliga_tippspiel.globals import app, initialize_db
 from bundesliga_tippspiel.config import db_key, db_name, db_user
 
 
-if app.config["ENV"] == "production":
+if app.config["ENV"] == "production" and not app.config["TESTING"]:
     uri = "mysql://{}:{}@localhost:3306/{}".format(db_user, db_key, db_name)
 else:
     uri = "sqlite:////tmp/bundesliga_tippspiel.db"

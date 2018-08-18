@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import os
 import pkg_resources
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -30,6 +31,8 @@ db = SQLAlchemy()
 """
 The SQLAlchemy database connection
 """
+
+app.config["TESTING"] = os.environ["FLASK_TESTING"] == "1"
 
 
 @app.context_processor
