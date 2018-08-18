@@ -21,6 +21,7 @@ import os
 import bundesliga_tippspiel.globals as glob
 from typing import Tuple, Callable
 from unittest import TestCase
+
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
@@ -38,10 +39,13 @@ class TestFramework(TestCase):
         :return: None
         """
         glob.app.config["TESTING"] = True
+        self.db_path = os.path.join(os.path.abspath("."), "test.db")
+
         self.cleanup()
+
         self.app = glob.app
         self.db = glob.db
-        glob.initialize_db("sqlite:////tmp/test.db")
+        glob.initialize_db("sqlite:///{}".format(self.db_path))
         self.app.app_context().push()
 
     def tearDown(self):
@@ -51,14 +55,13 @@ class TestFramework(TestCase):
         """
         self.cleanup()
 
-    @staticmethod
-    def cleanup():
+    def cleanup(self):
         """
         Deletes the SQLite database file
         :return: None
         """
         try:
-            os.remove("/tmp/test.db")
+            os.remove(self.db_path)
         except FileNotFoundError:
             pass
 
