@@ -19,7 +19,7 @@ LICENSE"""
 
 import os
 import bundesliga_tippspiel.globals as glob
-from typing import Tuple
+from typing import Tuple, Callable
 from unittest import TestCase
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
@@ -99,3 +99,20 @@ class TestFramework(TestCase):
         self.db.session.commit()
 
         return team_one, team_two, player, match, goal
+
+
+def online_required(test_func: Callable):
+    """
+    Decorator that skips tests that require online connectivity if
+    the NO_ONLINE environment variable is set to 1
+    :param test_func: The function to wrap
+    :return: The wrapper function
+    """
+
+    def test_wrapper(*args, **kwargs):
+        if os.environ["NO_ONLINE"] == "1":
+            pass
+        else:
+            test_func(*args, **kwargs)
+
+    return test_wrapper

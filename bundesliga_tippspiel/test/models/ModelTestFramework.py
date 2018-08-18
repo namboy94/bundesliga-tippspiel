@@ -39,9 +39,6 @@ class ModelTestFramework(TestFramework):
         self.team_one, self.team_two, self.player, self.match, self.goal = \
             self.generate_sample_match_data()
 
-    def test_x(self):
-        pass
-
     def _test_missing_column_data(
             self, incomplete_columns: List[db.Model]
     ):

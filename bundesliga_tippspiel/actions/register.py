@@ -22,15 +22,23 @@ from sqlalchemy.exc import SQLAlchemyError
 from bundesliga_tippspiel.globals import db
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.exceptions import ActionException
+from bundesliga_tippspiel.utils.email import send_email
+from bundesliga_tippspiel.utils.recaptcha import verify_recaptcha
+from bundesliga_tippspiel.utils.db import username_exists, email_exists
 from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random
 
 
-def register(username: str, email: str, password: str, recaptcha: str):
+def register(
+        username: str, email: str, password: str,
+        client_address: str, recaptcha_response: str,
+):
     """
     Registers a user on the website
     :param username: The user's username
     :param email: The user's email address
     :param password: The user's password
+    :param client_address: The client's address
+    :param recaptcha_response: The recaptcha
     :return: None
     :raises: ActionException if any problems occur
     """
@@ -44,6 +52,8 @@ def register(username: str, email: str, password: str, recaptcha: str):
         raise ActionException("Username already exists")
     elif email_exists(email):
         raise ActionException("Email already exists")
+    elif not verify_recaptcha(client_address, recaptcha_response):
+        raise ActionException("Invalid ReCaptcha Response")
 
     confirmation_key = generate_random(32)
     confirmation_hash = generate_hash(confirmation_key)
@@ -63,11 +73,4 @@ def register(username: str, email: str, password: str, recaptcha: str):
         raise ActionException("Unknown SQL Error")
 
     email_message = str(render_template("registration_email.html"))
-
-
-def username_exists(username: str) -> bool:
-    return len(User.query.filter_by(username=username).all()) > 0
-
-
-def email_exists(email: str) -> bool:
-    return len(User.query.filter_by(email=email).all()) > 0
+    send_email(client_address, "Tippspiel Registrierung", email_message)

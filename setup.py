@@ -37,7 +37,9 @@ if __name__ == "__main__":
         author_email="hermann@krumreyh.com",
         license="GNU GPL3",
         packages=find_packages(),
-        install_requires=["bcrypt", "flask_sqlalchemy", "sqlalchemy", "flask"],
+        install_requires=[
+            "requests", "bcrypt", "flask_sqlalchemy", "sqlalchemy", "flask"
+        ],
         include_package_data=True,
         zip_safe=False
     )
