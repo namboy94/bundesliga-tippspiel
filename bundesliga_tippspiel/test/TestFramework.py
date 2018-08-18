@@ -113,7 +113,7 @@ def online_required(test_func: Callable):
     """
 
     def test_wrapper(*args, **kwargs):
-        if os.environ["NO_ONLINE"] == "1":
+        if "NO_ONLINE" in os.environ and os.environ["NO_ONLINE"] == "1":
             pass
         else:
             test_func(*args, **kwargs)
