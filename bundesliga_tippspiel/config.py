@@ -44,7 +44,7 @@ def resolve_env_variable(
              None if the app is in testing mode and the variable is db-related
     """
     try:
-        return type(os.environ[env_key])
+        return _type(os.environ[env_key])
     except KeyError as e:
         if default is not None:
             return default
@@ -66,7 +66,7 @@ smtp_server = resolve_env_variable("SMTP_SERVER", default="smtp.strato.de")
 The SMTP server used for sending emails
 """
 
-smtp_port = resolve_env_variable("SMTP_PORT", int, default=465)
+smtp_port = resolve_env_variable("SMTP_PORT", int, default=587)
 """
 The SMTP server port used for sending emails
 """

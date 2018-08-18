@@ -32,7 +32,8 @@ def generate_random(length: int) -> bytes:
     """
     return bytes(
         "".join(random.choice(string.ascii_uppercase + string.digits)
-                for _ in range(length))
+                for _ in range(length)),
+        "utf-8"
     )
 
 
@@ -44,7 +45,7 @@ def generate_hash(password: str or bytes) -> bytes:
     """
 
     if isinstance(password, str):
-        password = bytes(password)
+        password = bytes(password, "utf-8")
 
     return bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -58,8 +59,8 @@ def verify_password(password: str or bytes, hashed: str or bytes):
     """
 
     if isinstance(password, str):
-        password = bytes(password)
+        password = bytes(password, "utf-8")
     if isinstance(hashed, str):
-        hashed = bytes(hashed)
+        hashed = bytes(hashed, "utf-8")
 
     return bcrypt.checkpw(password, hashed)

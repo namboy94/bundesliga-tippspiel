@@ -32,7 +32,8 @@ db = SQLAlchemy()
 The SQLAlchemy database connection
 """
 
-app.config["TESTING"] = os.environ["FLASK_TESTING"] == "1"
+if "FLASK_TESTING" in os.environ:
+    app.config["TESTING"] = os.environ["FLASK_TESTING"] == "1"
 
 
 @app.context_processor
