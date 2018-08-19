@@ -50,5 +50,5 @@ class TestEmail(TestFramework):
         before = self.get_inbox_count()
         send_email(smtp_address, "TEST", "<h1>Test</h1>")
         after = self.get_inbox_count()
-        self.assertEqual(before + 1, after)
         time.sleep(1)
+        self.assertEqual(before + 1, after)
