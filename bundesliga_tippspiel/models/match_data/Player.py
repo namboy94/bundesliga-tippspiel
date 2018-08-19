@@ -54,7 +54,7 @@ class Player(db.Model):
     The team the player is affiliated with.
     """
 
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(255), nullable=False)
     """
     The name of the player
     """

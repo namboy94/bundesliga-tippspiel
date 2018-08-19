@@ -39,13 +39,13 @@ class Team(db.Model):
     The ID is the primary key of the table and increments automatically
     """
 
-    name = db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String(255), nullable=False, unique=True)
     """
     The full name of the team. Has to be unique.
     Example: FC Bayern München
     """
 
-    short_name = db.Column(db.String, nullable=False, unique=True)
+    short_name = db.Column(db.String(255), nullable=False, unique=True)
     """
     The shortened version of the team's name. Has to be unique.
     Example: Bayern
@@ -57,12 +57,12 @@ class Team(db.Model):
     Example: FCB
     """
 
-    icon_svg = db.Column(db.String, nullable=False, unique=True)
+    icon_svg = db.Column(db.String(255), nullable=False, unique=True)
     """
     The URL of an image file representing the team's logo in SVG format
     """
 
-    icon_png = db.Column(db.String, nullable=False, unique=True)
+    icon_png = db.Column(db.String(255), nullable=False, unique=True)
     """
     The URL of an image file representing the team's logo in PNG format
     """

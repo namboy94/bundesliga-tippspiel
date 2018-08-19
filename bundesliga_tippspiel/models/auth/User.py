@@ -39,17 +39,17 @@ class User(db.Model):
     The ID is the primary key of the table and increments automatically
     """
 
-    username = db.Column(db.String, nullable=False, unique=True)
+    username = db.Column(db.String(12), nullable=False, unique=True)
     """
     The user's username
     """
 
-    email = db.Column(db.String, nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     """
     The user's email address
     """
 
-    password_hash = db.Column(db.String, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
     """
     The user's hashed password, salted and hashed.
     """
@@ -60,7 +60,7 @@ class User(db.Model):
     this value is False.
     """
 
-    confirmation_hash = db.Column(db.String, nullable=False)
+    confirmation_hash = db.Column(db.String(255), nullable=False)
     """
     The account's confirmation hash. This is the hash of a key emailed to
     the user. Only once the user follows the link in the email containing the

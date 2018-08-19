@@ -20,6 +20,10 @@ Documentation can be found in [doc](doc/).
 
 Documentation on the API can be found [here](doc/APISpec.md).
 
+# Deployment notes:
+
+Since this site uses MySQL, `python3-mysql` (Ubuntu) needs to be installed.
+
 ## Further Information
 
 * [Changelog](CHANGELOG)
