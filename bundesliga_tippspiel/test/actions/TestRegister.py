@@ -65,3 +65,27 @@ class TestRegister(TestFramework):
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Username too short")
+
+    def test_existing_username(self):
+        """
+        Tests using a username that already exists
+        :return: None
+        """
+        one = self.generate_sample_users()[0]["user"]  # type: User
+        try:
+            register(one.username, smtp_address, "pass", "localhost", "")
+            self.fail()
+        except ActionException as e:
+            self.assertEqual(e.reason, "Username already exists")
+
+    def test_existing_email(self):
+        """
+        Tests using an email address that already exists
+        :return: None
+        """
+        one = self.generate_sample_users()[0]["user"]  # type: User
+        try:
+            register("TestUser", one.email, "pass", "localhost", "")
+            self.fail()
+        except ActionException as e:
+            self.assertEqual(e.reason, "Email already exists")

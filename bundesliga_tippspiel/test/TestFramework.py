@@ -19,13 +19,14 @@ LICENSE"""
 
 import os
 import bundesliga_tippspiel.globals as glob
-from typing import Tuple, Callable
+from typing import Tuple, Callable, Dict
 from unittest import TestCase
-
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.match_data.Goal import Goal
+from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random
 
 
 class TestFramework(TestCase):
@@ -102,6 +103,29 @@ class TestFramework(TestCase):
         self.db.session.commit()
 
         return team_one, team_two, player, match, goal
+
+    def generate_sample_users(self) \
+            -> Tuple[Dict[str, User or str], Dict[str, User or str]]:
+        """
+        Generates two users, one confirmed, one unconfirmed
+        :return: The two users as tuple
+        """
+        pass_one = generate_random(20)
+        pass_two = generate_random(20)
+        hash_one = generate_hash(pass_one)
+        hash_two = generate_hash(pass_two)
+        one = User(username="A", email="a@hk-tippspiel.com",
+                   password_hash=hash_one, confirmed=True,
+                   confirmation_hash=hash_one)
+        two = User(username="B", email="b@hk-tippspiel.com",
+                   password_hash=hash_two, confirmed=False,
+                   confirmation_hash=hash_two)
+
+        self.db.session.add(one)
+        self.db.session.add(two)
+        self.db.session.commit()
+
+        return {"user": one, "pass": pass_one}, {"user": two, "pass": pass_two}
 
 
 def online_required(test_func: Callable):

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import time
 import imaplib
 from bundesliga_tippspiel.utils.email import send_email
 from bundesliga_tippspiel.test.TestFramework import TestFramework, \
@@ -50,3 +51,4 @@ class TestEmail(TestFramework):
         send_email(smtp_address, "TEST", "<h1>Test</h1>")
         after = self.get_inbox_count()
         self.assertEqual(before + 1, after)
+        time.sleep(1)
