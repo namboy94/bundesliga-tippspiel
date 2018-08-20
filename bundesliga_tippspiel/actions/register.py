@@ -69,7 +69,7 @@ def register(
     try:
         db.session.add(user)
         db.session.commit()
-    except SQLAlchemyError:
+    except SQLAlchemyError:  # pragma: no cover
         raise ActionException("Unknown SQL Error")
 
     email_message = str(render_template("registration_email.html"))

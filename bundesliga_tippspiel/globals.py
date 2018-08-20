@@ -32,7 +32,7 @@ db = SQLAlchemy()
 The SQLAlchemy database connection
 """
 
-if "FLASK_TESTING" in os.environ:
+if "FLASK_TESTING" in os.environ:  # pragma: no cover
     app.config["TESTING"] = os.environ["FLASK_TESTING"] == "1"
 
 
