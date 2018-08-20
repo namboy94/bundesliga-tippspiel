@@ -44,7 +44,7 @@ class User(db.Model):
     The user's username
     """
 
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(150), nullable=False, unique=True)
     """
     The user's email address
     """

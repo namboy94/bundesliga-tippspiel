@@ -39,7 +39,7 @@ class Team(db.Model):
     The ID is the primary key of the table and increments automatically
     """
 
-    name = db.Column(db.String(255), nullable=False, unique=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)
     """
     The full name of the team. Has to be unique.
     Example: FC Bayern München
