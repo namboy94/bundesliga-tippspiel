@@ -26,12 +26,13 @@ from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 
 
-if app.config["ENV"] == "production" and not app.config["TESTING"]:
+if app.config["ENV"] == "production" \
+        and not app.config["TESTING"]:  # pragma: no cover
     uri = "mysql://{}:{}@localhost:3306/{}".format(db_user, db_key, db_name)
 else:
     uri = "sqlite:////tmp/bundesliga_tippspiel.db"
 
-if not app.config["TESTING"]:
+if not app.config["TESTING"]:  # pragma: no cover
     initialize_db(uri)
 
 

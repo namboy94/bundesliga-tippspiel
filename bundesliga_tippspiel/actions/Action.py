@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request
-
 
 class Action:
     """
@@ -32,7 +30,7 @@ class Action:
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     def _execute(self):
         """
@@ -40,7 +38,7 @@ class Action:
         :return: None
         :raises ActionException: if anything went wrong
         """
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     def execute(self):
         """
@@ -57,4 +55,4 @@ class Action:
         Generates an Action object from a site request
         :return: The generated Action object
         """
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
