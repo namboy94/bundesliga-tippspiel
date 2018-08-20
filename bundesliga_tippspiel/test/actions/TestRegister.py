@@ -89,3 +89,15 @@ class TestRegister(TestFramework):
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Email already exists")
+
+    @online_required
+    def test_invalid_recaptcha(self):
+        """
+        Tests using an invalid recaptcha response
+        :return: None
+        """
+        try:
+            register("TestUser", smtp_address, "pass", "1", "AAA")
+            self.fail()
+        except ActionException as e:
+            self.assertEqual(e.reason, "Invalid ReCaptcha Response")
