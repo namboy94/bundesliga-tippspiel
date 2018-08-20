@@ -25,14 +25,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 <p>
     Um deine Registrierung vollständig abzuschließen,
-    besuche bitte den untenstehenden Link.
+    besuche bitte den untenstehenden Link:
 </p>
 
-<form method="post" action="{{ confirm_url }}">
-    <input type="hidden" name="email" value="{{ email }}" />
-    <input type="submit" value="Registrierung abschließen">
-</form>
+<<a href="{{ confirm_url }}">Registrierung Abschließen</a><
 
-<p><a href="{{ confirm_url }}">Registrierung Abschließen</a></p>
+{{ confirm_url }}
 
 <p>Viel Spaß beim Tippen!</p>

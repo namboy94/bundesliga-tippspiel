@@ -19,6 +19,10 @@ LICENSE"""
 
 import os
 import bundesliga_tippspiel.globals as glob
+# noinspection PyUnresolvedReferences
+import bundesliga_tippspiel.router
+# noinspection PyUnresolvedReferences
+import bundesliga_tippspiel.api
 from typing import Tuple, Callable, Dict
 from unittest import TestCase
 from bundesliga_tippspiel.models.match_data.Team import Team
@@ -48,6 +52,8 @@ class TestFramework(TestCase):
         self.db = glob.db
         glob.initialize_db("sqlite:///{}".format(self.db_path))
         self.app.app_context().push()
+
+        self.client = self.app.test_client()
 
     def tearDown(self):
         """

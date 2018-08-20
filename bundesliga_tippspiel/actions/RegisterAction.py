@@ -134,10 +134,15 @@ class RegisterAction(Action):
             raise ActionException("Unknown SQL Error",
                                   "Ein unbekannter Fehler ist aufgetreten")
 
+        confirm_url = os.path.join(self.host_address, "confirm")
+        confirm_url += "?username={}&confirmation_key={}".format(
+            self.username, confirmation_key.decode("utf-8")
+        )
+
         email_message = render_template(
             "registration_email.html",
             username=self.username,
-            confirm_url=os.path.join(self.host_address, "/confirm")
+            confirm_url=confirm_url
         )
         send_email(
             self.email,

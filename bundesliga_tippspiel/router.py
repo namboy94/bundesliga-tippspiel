@@ -30,7 +30,9 @@ if app.config["ENV"] == "production" and not app.config["TESTING"]:
     uri = "mysql://{}:{}@localhost:3306/{}".format(db_user, db_key, db_name)
 else:
     uri = "sqlite:////tmp/bundesliga_tippspiel.db"
-initialize_db(uri)
+
+if not app.config["TESTING"]:
+    initialize_db(uri)
 
 
 # Pages
@@ -77,7 +79,10 @@ def register():
                            "um die Registrierung abzuschließen."
             )
         except ActionException as e:
-            return render_template("register.html", alert_danger=e.reason)
+            return render_template(
+                "register.html",
+                alert_danger=e.display_message
+            )
 
 
 @app.route("/login")
