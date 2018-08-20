@@ -17,10 +17,24 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import jsonify
+from flask import jsonify, request
 from bundesliga_tippspiel.globals import app
+from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
+
+# API buildup:
+# Send JSON TO URL using GET/POST/PUT etc
+# Format:
+# {"email": <email>, "key": <api key>, "data": {...}}
+# Receive JSON response with "status": {success, error}
+# If error: reason
+# If success: data
 
 
-@app.route("/api/v2/test")
-def test():
+@app.route("/api/v2/register", methods=["POST"])
+def api_register():
+    """
+    Provides an API route for registering a new user
+    :return: The JSON response
+    """
+    # json_data = request.get_json()
     return jsonify({"Test": 1})

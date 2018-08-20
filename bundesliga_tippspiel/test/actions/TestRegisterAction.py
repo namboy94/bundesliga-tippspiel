@@ -17,18 +17,30 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.test.TestFramework import TestFramework,\
-    online_required
+import time
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.actions.RegisterAction import register
 from bundesliga_tippspiel.config import smtp_address
 from bundesliga_tippspiel.exceptions import ActionException
+from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
+from bundesliga_tippspiel.test.utils.TestEmail import TestEmail
+from bundesliga_tippspiel.test.TestFramework import TestFramework,\
+    online_required
 
 
-class TestRegister(TestFramework):
+class TestRegisterAction(TestFramework):
     """
-    Tests the 'register' action
+    Tests the RegisterAction class
     """
+
+    def setUp(self):
+        """
+        Sets up a register action object for testing
+        :return: None
+        """
+        super().setUp()
+        self.action = RegisterAction(
+            "TestUser", smtp_address, "Abc", "localhost", "localhost", ""
+        )
 
     @online_required
     def test_registering(self):
@@ -36,13 +48,17 @@ class TestRegister(TestFramework):
         Tests registering a new user
         :return: None
         """
+        emails_before = TestEmail.get_inbox_count()
         self.assertEqual(
-            len(User.query.filter_by(username="TestUser").all()), 0
+            len(User.query.filter_by(username=self.action.username).all()), 0
         )
-        register("TestUser", smtp_address, "pass", "localhost", "")
+        self.action.execute()
+        time.sleep(1)
         self.assertEqual(
-            len(User.query.filter_by(username="TestUser").all()), 1
+            len(User.query.filter_by(username=self.action.username).all()), 1
         )
+        emails_after = TestEmail.get_inbox_count()
+        self.assertEqual(emails_before + 1, emails_after)
 
     def test_too_long_username(self):
         """
@@ -50,7 +66,8 @@ class TestRegister(TestFramework):
         :return: None
         """
         try:
-            register("T" * 13, smtp_address, "pass", "localhost", "")
+            self.action.username = "A" * 13
+            self.action.execute()
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Username too long")
@@ -61,7 +78,8 @@ class TestRegister(TestFramework):
         :return: None
         """
         try:
-            register("", smtp_address, "pass", "localhost", "")
+            self.action.username = ""
+            self.action.execute()
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Username too short")
@@ -72,8 +90,8 @@ class TestRegister(TestFramework):
         :return: None
         """
         try:
-            register("TestUser", smtp_address, "pass", "localhost", "",
-                     password_repeat="Pass")
+            self.action.password_repeat = self.action.password.upper()
+            self.action.execute()
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Password Mismatch")
@@ -85,7 +103,8 @@ class TestRegister(TestFramework):
         """
         one = self.generate_sample_users()[0]["user"]  # type: User
         try:
-            register(one.username, smtp_address, "pass", "localhost", "")
+            self.action.username = one.username
+            self.action.execute()
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Username already exists")
@@ -97,7 +116,8 @@ class TestRegister(TestFramework):
         """
         one = self.generate_sample_users()[0]["user"]  # type: User
         try:
-            register("TestUser", one.email, "pass", "localhost", "")
+            self.action.email = one.email
+            self.action.execute()
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Email already exists")
@@ -109,7 +129,8 @@ class TestRegister(TestFramework):
         :return: None
         """
         try:
-            register("TestUser", smtp_address, "pass", "1", "AAA")
+            self.action.client_address = "1"
+            self.action.execute()
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Invalid ReCaptcha Response")

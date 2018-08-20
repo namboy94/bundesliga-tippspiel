@@ -45,3 +45,4 @@ def send_email(address: str, title: str, message: str):
     msg.attach(MIMEText(message, "html"))
 
     connection.sendmail(smtp_address, address, msg.as_string())
+    connection.quit()

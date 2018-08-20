@@ -39,7 +39,10 @@ class TestEmail(TestFramework):
         """
         server = imaplib.IMAP4_SSL(smtp_server.replace("smtp", "imap"), 993)
         server.login(smtp_address, smtp_password)
-        return int(server.select("Inbox")[1][0])
+        counted = int(server.select("Inbox")[1][0])
+        server.close()
+        server.logout()
+        return counted
 
     @online_required
     def test_emailing(self):
