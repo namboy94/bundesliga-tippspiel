@@ -77,11 +77,7 @@ class TestTeam(ModelTestFramework):
                  abbreviation="3", icon_png="4", icon_svg="5"),
             Team(name="1", short_name="2",
                  abbreviation=self.team_one.abbreviation,
-                 icon_png="4", icon_svg="5"),
-            Team(name="1", short_name="2", abbreviation="3",
-                 icon_png=self.team_one.icon_png, icon_svg="5"),
-            Team(name="1", short_name="2", abbreviation="3",
-                 icon_png="4", icon_svg=self.team_one.icon_svg)
+                 icon_png="4", icon_svg="5")
         ])
 
     def test_retrieving_from_db(self):
