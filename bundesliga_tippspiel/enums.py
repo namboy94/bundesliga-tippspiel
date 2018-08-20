@@ -1,4 +1,4 @@
-<!--
+"""LICENSE
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,21 +15,32 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
--->
+LICENSE"""
 
-<!DOCTYPE html>
-<html lang="en">
-    {% include "header.html" %}
-    <body>
-        <div id="container">
-            <div id="header">{% include "navbar.html" %}</div>
-            <div id="body">
-                <div class="container content">
-                    {% include "alerts.html" %}
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
-            <div id="footer">{% include "footer.html" %}</div>
-        </div>
-    </body>
-</html>
+from enum import Enum
+
+
+class AlertSeverity(Enum):
+    """
+    Enumeration that defines the various levels of severity an alert can have
+    """
+
+    SUCCESS = "success"
+    """
+    Translates to a green alert
+    """
+
+    INFO = "info"
+    """
+    Translates to a blue alert
+    """
+
+    WARNING = "warning"
+    """
+    Translates to a yellow alert
+    """
+
+    DANGER = "danger"
+    """
+    Translates to a red alert
+    """

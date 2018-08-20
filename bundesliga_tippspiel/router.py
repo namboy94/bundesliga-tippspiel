@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
 from flask import render_template, request
 from bundesliga_tippspiel.globals import app, initialize_db
 from bundesliga_tippspiel.config import db_key, db_name, db_user
+from bundesliga_tippspiel.exceptions import ActionException
+from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 
 
 if app.config["ENV"] == "production" and not app.config["TESTING"]:
@@ -65,8 +66,18 @@ def privacy():
 def register():
     if request.method == "GET":
         return render_template("register.html")
-    else:  # request.method == "POST"
-        pass
+    else:
+        action = RegisterAction.from_site_request()
+
+        try:
+            action.execute()
+            return render_template(
+                "index.html",
+                alert_info="Siehe in deiner Email-Inbox nach, "
+                           "um die Registrierung abzuschließen."
+            )
+        except ActionException as e:
+            return render_template("register.html", alert_danger=e.reason)
 
 
 @app.route("/login")

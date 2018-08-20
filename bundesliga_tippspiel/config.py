@@ -43,12 +43,13 @@ def resolve_env_variable(
     :return: The resolved environment variable.
              None if the app is in testing mode and the variable is db-related
     """
+    using_sqlite = app.config["TESTING"] or app.config["ENV"] == "development"
     try:
         return _type(os.environ[env_key])
     except KeyError as e:
         if default is not None:
             return default
-        elif app.config["TESTING"] and env_key.startswith("DB_"):
+        elif using_sqlite and env_key.startswith("DB_"):
             return None
         else:
             raise e

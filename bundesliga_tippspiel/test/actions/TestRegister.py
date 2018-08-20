@@ -20,7 +20,7 @@ LICENSE"""
 from bundesliga_tippspiel.test.TestFramework import TestFramework,\
     online_required
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.actions.register import register
+from bundesliga_tippspiel.actions.RegisterAction import register
 from bundesliga_tippspiel.config import smtp_address
 from bundesliga_tippspiel.exceptions import ActionException
 
@@ -65,6 +65,18 @@ class TestRegister(TestFramework):
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, "Username too short")
+
+    def test_mismatching_passwords(self):
+        """
+        Tests using passwords that don't match
+        :return: None
+        """
+        try:
+            register("TestUser", smtp_address, "pass", "localhost", "",
+                     password_repeat="Pass")
+            self.fail()
+        except ActionException as e:
+            self.assertEqual(e.reason, "Password Mismatch")
 
     def test_existing_username(self):
         """

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from bundesliga_tippspiel.enums import AlertSeverity
+
 
 class ActionException(Exception):
     """
@@ -24,10 +26,17 @@ class ActionException(Exception):
     reason. The reason should be provided as a parameter
     """
 
-    def __init__(self, reason: str):
+    def __init__(
+            self, reason: str, display_message: str,
+            severity: AlertSeverity = AlertSeverity.DANGER
+    ):
         """
         Initializes the Exception while adding the 'reason' variable
         :param reason: The reason for the exception
+        :param display_message: The message to display
+        :param severity: The severity of the exception. Defaults to DANGER
         """
         super().__init__(reason)
         self.reason = reason
+        self.display_message = display_message
+        self.severity = severity
