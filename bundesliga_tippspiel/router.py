@@ -19,7 +19,7 @@ LICENSE"""
 
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.api
-from flask import render_template, request
+from flask import render_template, request, flash, redirect, url_for
 from bundesliga_tippspiel.globals import app, initialize_db
 from bundesliga_tippspiel.config import db_key, db_name, db_user
 from bundesliga_tippspiel.exceptions import ActionException
@@ -67,6 +67,11 @@ def privacy():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """
+    Page that allows a new user to register
+    :return: The generated HTML
+    """
+
     if request.method == "GET":
         return render_template("register.html")
     else:
@@ -74,16 +79,13 @@ def register():
 
         try:
             action.execute()
-            return render_template(
-                "index.html",
-                alert_info="Siehe in deiner Email-Inbox nach, "
-                           "um die Registrierung abzuschließen."
-            )
+            flash("Siehe in deiner Email-Inbox nach, "
+                  "um die Registrierung abzuschließen.", "info")
+            return redirect(url_for("index"))
+
         except ActionException as e:
-            return render_template(
-                "register.html",
-                alert_danger=e.display_message
-            )
+            e.flash()
+            return redirect(url_for("register"))
 
 
 @app.route("/login")

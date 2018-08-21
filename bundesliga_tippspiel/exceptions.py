@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from flask import flash
 from bundesliga_tippspiel.enums import AlertSeverity
 
 
@@ -40,3 +41,10 @@ class ActionException(Exception):
         self.reason = reason
         self.display_message = display_message
         self.severity = severity
+
+    def flash(self):
+        """
+        Flashes the message so that it can be displayed on the next redirect
+        :return: None
+        """
+        flash(self.display_message, self.severity.value)
