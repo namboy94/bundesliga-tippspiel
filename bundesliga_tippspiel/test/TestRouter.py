@@ -36,7 +36,7 @@ class TestRouter(TestFramework):
         self.assertTrue(b"Registrierung" in get.data)
 
         self.assertFalse(username_exists("TestUser"))
-        post = self.client.post("/register", data={
+        post = self.client.post("/register", follow_redirects=True, data={
             "username": "TestUser",
             "email": smtp_address,
             "password": "Abc",
@@ -47,13 +47,17 @@ class TestRouter(TestFramework):
         self.assertTrue(username_exists("TestUser"))
 
         self.assertFalse(username_exists("TestUser2"))
-        failed_post = self.client.post("/register", data={
-            "username": "TestUser2",
-            "email": "A" + smtp_address,
-            "password": "Abc",
-            "password-repeat": "AbC",
-            "g-recaptcha-response": ""
-        })
+        failed_post = self.client.post(
+            "/register",
+            follow_redirects=True,
+            data={
+                "username": "TestUser2",
+                "email": "A" + smtp_address,
+                "password": "Abc",
+                "password-repeat": "AbC",
+                "g-recaptcha-response": ""
+            }
+        )
         self.assertFalse(b"Siehe in deiner Email-Inbox" in failed_post.data)
         self.assertTrue(b"Die angegebenen Passw" in failed_post.data)
         self.assertFalse(username_exists("TestUser2"))

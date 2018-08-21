@@ -40,7 +40,8 @@ def generate_secrets():
         "SMTP_PORT",
         "SMTP_PASSWORD",
         "RECAPTCHA_SECRET_KEY",
-        "RECAPTCHA_SITE_KEY"
+        "RECAPTCHA_SITE_KEY",
+        "FLASK_SECRET"
     ]:
         if key.startswith("DB_"):
             secrets[key] = os.environ[db_prefix + key]

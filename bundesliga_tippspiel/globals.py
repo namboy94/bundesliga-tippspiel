@@ -26,6 +26,7 @@ app = Flask(__name__)
 """
 The Flask App
 """
+app.secret_key = os.environ["FLASK_SECRET"]
 
 db = SQLAlchemy()
 """
