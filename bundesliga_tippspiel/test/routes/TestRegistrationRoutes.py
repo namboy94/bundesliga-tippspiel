@@ -62,3 +62,10 @@ class TestRegistrationRoutes(TestFramework):
         self.assertFalse(b"Siehe in deiner Email-Inbox" in failed_post.data)
         self.assertTrue(b"Die angegebenen Passw" in failed_post.data)
         self.assertFalse(username_exists("TestUser2"))
+
+        malformed = self.client.post(
+            "/register",
+            follow_redirects=True,
+            data={}
+        )
+        self.assertEqual(malformed.status_code, 400)

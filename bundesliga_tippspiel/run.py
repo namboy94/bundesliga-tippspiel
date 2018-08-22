@@ -23,7 +23,7 @@ from bundesliga_tippspiel.routes import load_routes
 from bundesliga_tippspiel.utils.db import initialize_db
 from bundesliga_tippspiel.config import db_user, db_key, db_name
 
-if not app.testing:
+if not app.testing:  # pragma: no cover
 
     if app.config["ENV"] == "production":
         uri = "mysql://{}:{}@localhost:3306/{}".format(

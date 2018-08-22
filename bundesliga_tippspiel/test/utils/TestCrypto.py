@@ -68,3 +68,11 @@ class TestCrypto(TestFramework):
         password = str(generate_random(30))
         _hash = generate_hash(password)
         self.assertTrue(verify_password(password, _hash.decode("utf-8")))
+
+    def test_verifying_with_invalid_hash(self):
+        """
+        Tests that attempting to verify a password with an incorrectly
+        formatted hash will return False
+        :return: None
+        """
+        self.assertFalse(verify_password("A", "A"))
