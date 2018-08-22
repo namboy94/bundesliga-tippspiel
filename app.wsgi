@@ -26,4 +26,4 @@ secrets_file = os.path.join(
 )
 load_secrets(secrets_file)
 
-import bundesliga_tippspiel.run
+from bundesliga_tippspiel.run import app as application
