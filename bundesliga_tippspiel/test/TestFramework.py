@@ -48,6 +48,8 @@ class TestFramework(TestCase):
 
         self.app = bundesliga_tippspiel.app
         self.db = bundesliga_tippspiel.db
+
+        self.app.secret_key = generate_random(20)
         load_routes()
 
         initialize_db("sqlite:///{}".format(self.db_path))

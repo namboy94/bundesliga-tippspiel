@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import os
 import pkg_resources
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.routes import load_routes
@@ -24,6 +25,8 @@ from bundesliga_tippspiel.utils.db import initialize_db
 from bundesliga_tippspiel.config import db_user, db_key, db_name
 
 if not app.testing:  # pragma: no cover
+
+    app.secret_key = os.environ["FLASK_SECRET"]
 
     if app.config["ENV"] == "production":
         uri = "mysql://{}:{}@localhost:3306/{}".format(

@@ -31,7 +31,5 @@ db = SQLAlchemy()
 The SQLAlchemy database connection
 """
 
-app.secret_key = os.environ["FLASK_SECRET"]
-
 if "FLASK_TESTING" in os.environ:  # pragma: no cover
     app.testing = os.environ["FLASK_TESTING"] == "1"
