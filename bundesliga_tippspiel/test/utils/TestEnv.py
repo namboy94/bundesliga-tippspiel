@@ -38,6 +38,7 @@ class TestEnv(TestFramework):
         Deletes the secrets.json file
         :return: None
         """
+        super().cleanup()
         if os.path.isfile(self.secrets_file):
             os.remove(self.secrets_file)
 
