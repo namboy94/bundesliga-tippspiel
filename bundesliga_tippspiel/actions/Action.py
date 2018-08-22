@@ -58,7 +58,7 @@ class Action:
         :return: The generated Action object
         """
         try:
-            return cls.from_site_request()
+            return cls._from_site_request()
         except (KeyError, TypeError, ValueError):
             abort(400)
 
