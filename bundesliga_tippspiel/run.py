@@ -17,22 +17,23 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
 import pkg_resources
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.routes import load_routes
 from bundesliga_tippspiel.utils.db import initialize_db
 from bundesliga_tippspiel.config import db_user, db_key, db_name
 
-app.secret_key = os.environ["FLASK_SECRET"]
+if not app.testing:
 
-if app.config["ENV"] == "production":
-    uri = "mysql://{}:{}@localhost:3306/{}".format(db_user, db_key, db_name)
-else:
-    uri = "sqlite:////tmp/bundesliga_tippspiel.db"
+    if app.config["ENV"] == "production":
+        uri = "mysql://{}:{}@localhost:3306/{}".format(
+            db_user, db_key, db_name
+        )
+    else:
+        uri = "sqlite:////tmp/bundesliga_tippspiel.db"
 
-initialize_db(uri)
-load_routes()
+    initialize_db(uri)
+    load_routes()
 
 
 @app.context_processor
