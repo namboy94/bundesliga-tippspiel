@@ -51,7 +51,6 @@ class RegisterAction(Action):
         :param host_address: The host's address
         :param recaptcha_response: The recaptcha response
         :param password_repeat: If provided, makes sure that passwords match.
-        :return: None
         :raises: ActionException if any problems occur
         """
         self.username = username
@@ -112,7 +111,7 @@ class RegisterAction(Action):
 
     def _execute(self):
         """
-        Registers a data
+        Registers an unconfirmed user in the database
         :return: None
         :raises ActionException: if anything went wrong
         """
@@ -135,8 +134,8 @@ class RegisterAction(Action):
                                   "Ein unbekannter Fehler ist aufgetreten")
 
         confirm_url = os.path.join(self.host_address, "confirm")
-        confirm_url += "?username={}&confirmation_key={}".format(
-            self.username, confirmation_key.decode("utf-8")
+        confirm_url += "?user={}&confirm_key={}".format(
+            user.id, confirmation_key.decode("utf-8")
         )
 
         email_message = render_template(
@@ -151,7 +150,7 @@ class RegisterAction(Action):
         )
 
     @classmethod
-    def from_site_request(cls) -> Action:
+    def _from_site_request(cls) -> Action:
         """
         Generates a RegisterAction object from a site request
         :return: The generated RegisterAction object

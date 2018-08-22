@@ -63,4 +63,7 @@ def verify_password(password: str or bytes, hashed: str or bytes):
     if isinstance(hashed, str):
         hashed = bytes(hashed, "utf-8")
 
-    return bcrypt.checkpw(password, hashed)
+    try:
+        return bcrypt.checkpw(password, hashed)
+    except ValueError:
+        return False

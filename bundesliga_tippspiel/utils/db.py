@@ -24,6 +24,15 @@ A collection of functions to simplify common database operations
 """
 
 
+def user_exists(user_id: int) -> bool:
+    """
+    Checks if a username already exists in the database
+    :param user_id: The user's id
+    :return: True if the user exists, False otherwise
+    """
+    return len(User.query.filter_by(id=user_id).all()) > 0
+
+
 def username_exists(username: str) -> bool:
     """
     Checks if a username already exists in the database

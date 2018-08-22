@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from flask import abort
+
 
 class Action:
     """
@@ -53,6 +55,17 @@ class Action:
     def from_site_request(cls):
         """
         Generates an Action object from a site request
+        :return: The generated Action object
+        """
+        try:
+            return cls.from_site_request()
+        except (KeyError, TypeError, ValueError):
+            abort(400)
+
+    @classmethod
+    def _from_site_request(cls):
+        """
+        Actual implementation of the from_site_request method
         :return: The generated Action object
         """
         raise NotImplementedError()  # pragma: no cover
