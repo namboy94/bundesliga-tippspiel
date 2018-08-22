@@ -20,7 +20,7 @@ LICENSE"""
 from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
-from bundesliga_tippspiel.globals import db
+from bundesliga_tippspiel import db
 from bundesliga_tippspiel.test.TestFramework import TestFramework
 
 

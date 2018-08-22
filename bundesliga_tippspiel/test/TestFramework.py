@@ -18,18 +18,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-import bundesliga_tippspiel.globals as glob
-# noinspection PyUnresolvedReferences
-import bundesliga_tippspiel.router
-# noinspection PyUnresolvedReferences
-import bundesliga_tippspiel.api
-from typing import Tuple, Callable, Dict
+import bundesliga_tippspiel
 from unittest import TestCase
+from typing import Tuple, Callable, Dict
+from bundesliga_tippspiel.routes import load_routes
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.match_data.Goal import Goal
 from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.utils.db import initialize_db
 from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random
 
 
@@ -43,14 +41,16 @@ class TestFramework(TestCase):
         Sets up the SQLite database
         :return: None
         """
-        glob.app.config["TESTING"] = True
+        bundesliga_tippspiel.app.config["TESTING"] = True
         self.db_path = os.path.join(os.path.abspath("."), "test.db")
 
         self.cleanup()
 
-        self.app = glob.app
-        self.db = glob.db
-        glob.initialize_db("sqlite:///{}".format(self.db_path))
+        self.app = bundesliga_tippspiel.app
+        self.db = bundesliga_tippspiel.db
+        load_routes()
+
+        initialize_db("sqlite:///{}".format(self.db_path))
         self.app.app_context().push()
 
         self.client = self.app.test_client()
@@ -133,19 +133,19 @@ class TestFramework(TestCase):
 
         return {"user": one, "pass": pass_one}, {"user": two, "pass": pass_two}
 
+    @staticmethod
+    def online_required(test_func: Callable):
+        """
+        Decorator that skips tests that require online connectivity if
+        the NO_ONLINE environment variable is set to 1
+        :param test_func: The function to wrap
+        :return: The wrapper function
+        """
 
-def online_required(test_func: Callable):
-    """
-    Decorator that skips tests that require online connectivity if
-    the NO_ONLINE environment variable is set to 1
-    :param test_func: The function to wrap
-    :return: The wrapper function
-    """
+        def test_wrapper(*args, **kwargs):
+            if "NO_ONLINE" in os.environ and os.environ["NO_ONLINE"] == "1":
+                pass
+            else:
+                test_func(*args, **kwargs)
 
-    def test_wrapper(*args, **kwargs):
-        if "NO_ONLINE" in os.environ and os.environ["NO_ONLINE"] == "1":
-            pass
-        else:
-            test_func(*args, **kwargs)
-
-    return test_wrapper
+        return test_wrapper

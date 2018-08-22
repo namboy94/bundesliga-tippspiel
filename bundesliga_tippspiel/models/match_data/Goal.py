@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.globals import db
+from bundesliga_tippspiel import db
 
 
 class Goal(db.Model):
@@ -99,24 +99,3 @@ class Goal(db.Model):
     """
     Indicates whether or not this goal was a penalty
     """
-
-    def __str__(self) -> str:
-        """
-        Generates a string representation for the model
-        :return: The string representation of the model
-        """
-        return "<Goal:{} - {} (Match:{}, {}:{}, {})>".format(
-            self.id, self.player.name, self.match_id,
-            self.home_score, self.away_score, self.get_minute_string()
-        )
-
-    def get_minute_string(self):
-        """
-        Generates a minute string that also takes
-        extra time minutes into account
-        :return: The minute string
-        """
-        minute_string = str(self.minute)
-        if self.minute_et > 0:
-            minute_string += str(self.minute_et)
-        return minute_string

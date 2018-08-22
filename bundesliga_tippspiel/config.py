@@ -17,42 +17,12 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
-from typing import Optional
-from bundesliga_tippspiel.globals import app
-
+from bundesliga_tippspiel.utils.env import resolve_env_variable
 
 """
 This file contains environment specific configuration information
 All of this information is found using environment variables
 """
-
-
-def resolve_env_variable(
-        env_key: str, _type: type = str, default: object = None
-) -> Optional[object]:
-    """
-    Resolves an environment key.
-    A non-existant environment key will lead to a KeyError unless the app
-    is in testing mode, in which case database-related variables won't
-    cause a KeyError.
-    KeyErrors can also be provided using the 'default' argument
-    :param env_key: The environment key to resolve
-    :param _type: The type of the environment variable
-    :param default: An optional default value
-    :return: The resolved environment variable.
-             None if the app is in testing mode and the variable is db-related
-    """
-    using_sqlite = app.config["TESTING"] or app.config["ENV"] == "development"
-    try:
-        return _type(os.environ[env_key])
-    except KeyError as e:
-        if default is not None:
-            return default
-        elif using_sqlite and env_key.startswith("DB_"):
-            return None
-        else:
-            raise e
 
 
 smtp_address = resolve_env_variable(

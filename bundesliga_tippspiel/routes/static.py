@@ -17,20 +17,32 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-"""
-The Flask App
-"""
-
-db = SQLAlchemy()
-"""
-The SQLAlchemy database connection
-"""
+from bundesliga_tippspiel import app
+from flask import render_template
 
 
-if "FLASK_TESTING" in os.environ:
-    app.testing = os.environ["FLASK_TESTING"] == "1"
+@app.route("/")
+def index():
+    """
+    The index/home page
+    :return: The generated HTML
+    """
+    return render_template("index.html")
+
+
+@app.route("/about")
+def about():
+    """
+    The about page/"Impressum" for the website
+    :return: The generated HTML
+    """
+    return render_template("about.html")
+
+
+@app.route("/privacy")
+def privacy():
+    """
+    Page containing a privacy disclaimer
+    :return: The generated HTML
+    """
+    return render_template("privacy.html")

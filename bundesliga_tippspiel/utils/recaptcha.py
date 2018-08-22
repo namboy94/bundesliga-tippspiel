@@ -24,6 +24,8 @@ from bundesliga_tippspiel.config import recaptcha_secret_key
 def verify_recaptcha(client_ip: str, recaptcha_response: str) -> bool:
     """
     Verifies a recaptcha response.
+    If the recaptcha response originates from a local address,
+    this method will always return True.
     :param client_ip: The IP Address of the client solving the captcha
     :param recaptcha_response: the recaptcha response to verify
     :return: True if the recaptcha response was correct, False otherwise

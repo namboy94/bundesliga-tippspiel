@@ -22,11 +22,12 @@ from bundesliga_tippspiel.config import smtp_address
 from bundesliga_tippspiel.test.TestFramework import TestFramework
 
 
-class TestRouter(TestFramework):
+class TestRegistrationRoutes(TestFramework):
     """
-    Class that tests the routes defined in router.py
+    Class that tests the routes defined by registration routes
     """
 
+    @TestFramework.online_required
     def test_register(self):
         """
         Tests the /register route

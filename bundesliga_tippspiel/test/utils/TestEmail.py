@@ -20,8 +20,7 @@ LICENSE"""
 import time
 import imaplib
 from bundesliga_tippspiel.utils.email import send_email
-from bundesliga_tippspiel.test.TestFramework import TestFramework, \
-    online_required
+from bundesliga_tippspiel.test.TestFramework import TestFramework
 from bundesliga_tippspiel.config import smtp_address, smtp_password, \
     smtp_server
 
@@ -44,7 +43,7 @@ class TestEmail(TestFramework):
         server.logout()
         return counted
 
-    @online_required
+    @TestFramework.online_required
     def test_emailing(self):
         """
         Tests sending an email message

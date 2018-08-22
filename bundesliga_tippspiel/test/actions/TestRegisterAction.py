@@ -20,11 +20,10 @@ LICENSE"""
 import time
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.config import smtp_address
-from bundesliga_tippspiel.exceptions import ActionException
+from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.test.utils.TestEmail import TestEmail
-from bundesliga_tippspiel.test.TestFramework import TestFramework,\
-    online_required
+from bundesliga_tippspiel.test.TestFramework import TestFramework
 
 
 class TestRegisterAction(TestFramework):
@@ -42,7 +41,7 @@ class TestRegisterAction(TestFramework):
             "TestUser", smtp_address, "Abc", "localhost", "localhost", ""
         )
 
-    @online_required
+    @TestFramework.online_required
     def test_registering(self):
         """
         Tests registering a new user
@@ -122,7 +121,7 @@ class TestRegisterAction(TestFramework):
         except ActionException as e:
             self.assertEqual(e.reason, "Email already exists")
 
-    @online_required
+    @TestFramework.online_required
     def test_invalid_recaptcha(self):
         """
         Tests using an invalid recaptcha response

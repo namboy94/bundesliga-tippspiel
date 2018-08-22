@@ -22,9 +22,9 @@ from unittest import TestCase
 from bundesliga_tippspiel.config import resolve_env_variable
 
 
-class TestConfig(TestCase):
+class TestEnv(TestCase):
     """
-    Unit test class that tests the config environment variable resolving method
+    Unit test class that tests environment variable functions
     """
 
     def test_resolving_env_variable(self):

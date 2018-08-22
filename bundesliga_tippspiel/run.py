@@ -19,22 +19,20 @@ LICENSE"""
 
 import os
 import pkg_resources
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from bundesliga_tippspiel import app
+from bundesliga_tippspiel.routes import load_routes
+from bundesliga_tippspiel.utils.db import initialize_db
+from bundesliga_tippspiel.config import db_user, db_key, db_name
 
-app = Flask(__name__)
-"""
-The Flask App
-"""
 app.secret_key = os.environ["FLASK_SECRET"]
 
-db = SQLAlchemy()
-"""
-The SQLAlchemy database connection
-"""
+if app.config["ENV"] == "production":
+    uri = "mysql://{}:{}@localhost:3306/{}".format(db_user, db_key, db_name)
+else:
+    uri = "sqlite:////tmp/bundesliga_tippspiel.db"
 
-if "FLASK_TESTING" in os.environ:  # pragma: no cover
-    app.config["TESTING"] = os.environ["FLASK_TESTING"] == "1"
+initialize_db(uri)
+load_routes()
 
 
 @app.context_processor
@@ -47,26 +45,5 @@ def inject_template_variables():
     version = pkg_resources.get_distribution("bundesliga-tippspiel").version
     return {
         "version": version,
-        "env": app.config["ENV"]
+        "env": app.env
     }
-
-
-# noinspection PyUnresolvedReferences
-def initialize_db(db_uri: str):
-    """
-    Initializes the SQLAlchemy database
-    :param db_uri: The URI of the database to initialize
-    :return: None
-    """
-
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.init_app(app)
-
-    from bundesliga_tippspiel.models.match_data.Team import Team
-    from bundesliga_tippspiel.models.match_data.Goal import Goal
-    from bundesliga_tippspiel.models.match_data.Match import Match
-    from bundesliga_tippspiel.models.match_data.Player import Player
-
-    with app.app_context():
-        db.create_all()

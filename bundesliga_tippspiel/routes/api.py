@@ -17,9 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import jsonify, request
-from bundesliga_tippspiel.globals import app
-from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
+from flask import jsonify
+from bundesliga_tippspiel import app
 
 # API buildup:
 # Send JSON TO URL using GET/POST/PUT etc

@@ -17,20 +17,15 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
-"""
-The Flask App
-"""
-
-db = SQLAlchemy()
-"""
-The SQLAlchemy database connection
-"""
-
-
-if "FLASK_TESTING" in os.environ:
-    app.testing = os.environ["FLASK_TESTING"] == "1"
+def load_routes():
+    """
+    Loads all application routes
+    :return: None
+    """
+    # noinspection PyUnresolvedReferences
+    import bundesliga_tippspiel.routes.api
+    # noinspection PyUnresolvedReferences
+    import bundesliga_tippspiel.routes.registration
+    # noinspection PyUnresolvedReferences
+    import bundesliga_tippspiel.routes.static
