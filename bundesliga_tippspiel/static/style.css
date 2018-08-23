@@ -69,10 +69,6 @@ footer a {
 
 /* Text Formatting */
 
-a {
-    color: #444444
-}
-
 i {
     color: #999c9f;
 }
@@ -129,4 +125,10 @@ th {
 
 td {
     width: 10em;
+}
+
+.form-container {
+    background: lightgray;
+    padding: 20px;
+    border-radius: 10px
 }

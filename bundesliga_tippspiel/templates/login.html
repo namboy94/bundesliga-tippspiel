@@ -23,12 +23,50 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <p>
         Fülle die folgenden Einträge aus, um dich anzumelden:
     </p>
+
     <br>
-    <form id="register-form" class="form mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for('register') }}">
-        <input class="form-control register-form-entry" name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
-        <input class="form-control register-form-entry" name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
-        <input class="form-check" name="remember" aria-label="Merken?" type="checkbox">
-        <button type="submit" class="btn btn-primary">Registrieren</button>
-    </form>
+
+    <div class="container form-container">
+        <form method="post" action="{{ url_for("login") }}">
+            <div class="form-group">
+                <label for="username_input">Benutzername</label>
+                <input class="form-control"
+                       type="text"
+                       autocomplete="on"
+                       id="email_input"
+                       aria-label="username"
+                       placeholder="Username"
+                       name="username">
+            </div>
+            <div class="form-group">
+                <label for="password_input">Passwort</label>
+                <input class="form-control"
+                       type="password"
+                       autocomplete="on"
+                       id="password_input"
+                       aria-label="password"
+                       placeholder="Passwort"
+                       name="password">
+            </div>
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="remember_me_check"
+                       name="remember_me"
+                       checked>
+                <label class="form-check-label" for="remember_me_check">Merken?</label>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Anmelden</button>
+        </form>
+    </div>
+
+    <br>
+
+    <p>
+        Wenn du dein Passwort vergessen hast, kannst du es
+        <a href="{{ url_for("forgot") }}">hier</a>
+        zurücksetzen.
+    </p>
 
 {% endblock %}

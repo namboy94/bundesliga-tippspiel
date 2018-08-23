@@ -55,3 +55,8 @@ def confirm():
         "Du kannst dich jetzt anmelden.",
         "index"
     )
+
+
+@app.route("/forgot")
+def forgot():
+    return render_template("index.html")

@@ -95,5 +95,5 @@ class LoginAction(Action):
         return cls(
             request.form["username"],
             request.form["password"],
-            request.form.get("remember_me", True)
+            request.form.get("remember_me") == "on"
         )
