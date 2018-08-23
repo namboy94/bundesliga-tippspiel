@@ -67,27 +67,29 @@ class User(db.Model):
     key will their account be activated
     """
 
+    @property
     def is_authenticated(self) -> bool:
         """
-        Method required by flask-login
+        Property required by flask-login
         :return: True if the user is confirmed, False otherwise
         """
-        return self.confirmed
+        return True
 
+    @property
     def is_anonymous(self) -> bool:
         """
-        Method required by flask-login
+        Property required by flask-login
         :return: True if the user is not confirmed, False otherwise
         """
-        return not self.is_authenticated()
+        return not self.is_authenticated
 
-    # noinspection PyMethodMayBeStatic
+    @property
     def is_active(self) -> bool:
         """
-        Method required by flask-login
+        Property required by flask-login
         :return: True
         """
-        return True
+        return self.confirmed
 
     def get_id(self) -> str:
         """

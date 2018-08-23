@@ -40,6 +40,7 @@ class TestRegisterAction(ActionTestFramework):
             "TestUser", smtp_address, "Abc", "localhost", "localhost", ""
         )
 
+    # noinspection PyUnresolvedReferences
     @ActionTestFramework.online_required
     def test_registering(self):
         """
@@ -79,6 +80,7 @@ class TestRegisterAction(ActionTestFramework):
         Tests using passwords that don't match
         :return: None
         """
+        # noinspection PyUnresolvedReferences
         self.action.password_repeat = self.action.password.upper()
         self.failed_execute("Password Mismatch")
 

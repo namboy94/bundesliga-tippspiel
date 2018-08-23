@@ -87,6 +87,6 @@ class ConfirmAction(Action):
         :return: The generated ConfirmAction object
         """
         return cls(
-            int(request.args["user"]),
+            int(request.args["user_id"]),
             request.args["confirm_key"]
         )

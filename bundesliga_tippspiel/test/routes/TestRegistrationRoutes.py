@@ -69,3 +69,28 @@ class TestRegistrationRoutes(TestFramework):
             data={}
         )
         self.assertEqual(malformed.status_code, 400)
+
+    def test_confirm(self):
+        """
+        Tests the /confirm route
+        :return: None
+        """
+        userdata = self.generate_sample_users()[1]
+        user = userdata["user"]
+        pw = userdata["pass"].decode("utf-8")
+
+        valid = self.client.get(
+            "/confirm?user_id={}&confirm_key={}".format(user.id, pw),
+            follow_redirects=True
+        )
+        self.assertTrue(b"Du kannst dich jetzt anmelden" in valid.data)
+
+        invalid = self.client.get(
+            "/confirm?user_id={}&confirm_key={}".format(user.id + 1, pw),
+            follow_redirects=True
+        )
+        self.assertFalse(b"Du kannst dich jetzt anmelden" in invalid.data)
+        self.assertTrue(b"Dieser Nutzer existiert nicht" in invalid.data)
+
+        malformed = self.client.get("/confirm?alolo=1")
+        self.assertEqual(malformed.status_code, 400)

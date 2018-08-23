@@ -134,7 +134,7 @@ class RegisterAction(Action):
                                   "Ein unbekannter Fehler ist aufgetreten")
 
         confirm_url = os.path.join(self.host_address, "confirm")
-        confirm_url += "?user={}&confirm_key={}".format(
+        confirm_url += "?user_id={}&confirm_key={}".format(
             user.id, confirmation_key.decode("utf-8")
         )
 

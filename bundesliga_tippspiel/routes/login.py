@@ -31,10 +31,9 @@ def login():
     """
 
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("login.html")
     else:  # request.method == "POST"
         action = LoginAction.from_site_request()
-        print("WUT")
         return action.execute_with_redirects(
             "index", "Du hast dich erfolgreich angemeldet.", "login"
         )

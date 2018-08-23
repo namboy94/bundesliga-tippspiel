@@ -19,6 +19,7 @@ LICENSE"""
 
 from bundesliga_tippspiel import app
 from flask import render_template
+from flask_login import login_required
 
 
 @app.route("/")
@@ -46,3 +47,21 @@ def privacy():
     :return: The generated HTML
     """
     return render_template("privacy.html")
+
+
+@app.route("/bets")
+@login_required
+def bets():
+    return render_template("index.html")
+
+
+@app.route("/leaderboard")
+@login_required
+def leaderboard():
+    return render_template("index.html")
+
+
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("index.html")

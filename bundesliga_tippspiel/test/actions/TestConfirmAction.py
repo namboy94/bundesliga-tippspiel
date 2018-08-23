@@ -31,7 +31,7 @@ class TestConfirmAction(ActionTestFramework):
 
     def setUp(self):
         """
-        Sets up a confirm action object for testing
+        Sets up users for testing
         :return: None
         """
         super().setUp()

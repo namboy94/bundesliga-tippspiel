@@ -58,6 +58,10 @@ class TestFramework(TestCase):
 
         self.client = self.app.test_client()
 
+        # Initialize current_user
+        import flask_login
+        flask_login.current_user = flask_login.AnonymousUserMixin()
+
     def tearDown(self):
         """
         Deletes the test database if it exists

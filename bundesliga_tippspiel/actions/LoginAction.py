@@ -52,7 +52,7 @@ class LoginAction(Action):
         """
         if not username_exists(self.username):
             raise ActionException(
-                "user does not exist",
+                "User does not exist",
                 "Dieser User ist nicht registriert"
             )
         elif current_user.is_authenticated:
@@ -82,7 +82,7 @@ class LoginAction(Action):
             login_user(user, remember=self.remember)
         else:
             raise ActionException(
-                "Invalid Login",
+                "Invalid Password",
                 "Das angegebene Password ist inkorrekt."
             )
 

@@ -18,7 +18,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel import app
-from flask_login import login_required
 from flask import render_template, request
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
@@ -56,21 +55,3 @@ def confirm():
         "Du kannst dich jetzt anmelden.",
         "index"
     )
-
-
-@app.route("/bets")
-@login_required
-def bets():
-    return "Bets"
-
-
-@app.route("/leaderboard")
-@login_required
-def leaderboard():
-    return "Leaderboard"
-
-
-@app.route("/profile")
-@login_required
-def profile():
-    return "Profile"

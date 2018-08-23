@@ -35,7 +35,8 @@ def initialize_app():
         in templates
         :return: The dictionary to inject
         """
-        version = pkg_resources.get_distribution("bundesliga-tippspiel").version
+        version = \
+            pkg_resources.get_distribution("bundesliga-tippspiel").version
         return {
             "version": version,
             "env": app.env
