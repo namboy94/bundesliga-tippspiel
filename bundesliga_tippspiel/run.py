@@ -18,11 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-import pkg_resources
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.routes import load_routes
-from bundesliga_tippspiel.utils.db import initialize_db
 from bundesliga_tippspiel.config import db_user, db_key, db_name
+from bundesliga_tippspiel.utils.initialize import initialize_db, \
+    initialize_app, initialize_login_manager
+
 
 if not app.testing:  # pragma: no cover
 
@@ -35,19 +35,6 @@ if not app.testing:  # pragma: no cover
     else:
         uri = "sqlite:////tmp/bundesliga_tippspiel.db"
 
+    initialize_app()
     initialize_db(uri)
-    load_routes()
-
-
-@app.context_processor
-def inject_template_variables():
-    """
-    Injects the project's version string so that it will be available
-    in templates
-    :return: The dictionary to inject
-    """
-    version = pkg_resources.get_distribution("bundesliga-tippspiel").version
-    return {
-        "version": version,
-        "env": app.env
-    }
+    initialize_login_manager()

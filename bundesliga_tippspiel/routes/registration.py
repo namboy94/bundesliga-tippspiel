@@ -20,6 +20,8 @@ LICENSE"""
 # noinspection PyUnresolvedReferences
 import bundesliga_tippspiel.routes.api
 from bundesliga_tippspiel import app
+from flask_login import logout_user, login_required, login_user
+from bundesliga_tippspiel.models.auth.User import User
 from flask import render_template, request, flash, redirect, url_for
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
@@ -50,24 +52,31 @@ def register():
 
 @app.route("/login")
 def login():
-    return "Login"
+    login_user(User.query.get(1), remember=True)
+    flash("Login Successful")
+    return redirect("/")
 
 
 @app.route("/logout")
+@login_required
 def logout():
+    logout_user()
     return "Logout"
 
 
 @app.route("/bets")
+@login_required
 def bets():
     return "Bets"
 
 
 @app.route("/leaderboard")
+@login_required
 def leaderboard():
     return "Leaderboard"
 
 
 @app.route("/profile")
+@login_required
 def profile():
     return "Profile"

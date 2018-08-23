@@ -20,6 +20,7 @@ LICENSE"""
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
 """
@@ -30,6 +31,12 @@ db = SQLAlchemy()
 """
 The SQLAlchemy database connection
 """
+
+login_manager = LoginManager(app)
+"""
+The Flask-Login Login Manager
+"""
+
 
 if "FLASK_TESTING" in os.environ:  # pragma: no cover
     app.testing = os.environ["FLASK_TESTING"] == "1"

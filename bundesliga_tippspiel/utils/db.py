@@ -17,32 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel import app, db
 from bundesliga_tippspiel.models.auth.User import User
 
 """
 A collection of functions to simplify common database operations
 """
-
-
-# noinspection PyUnresolvedReferences
-def initialize_db(db_uri: str):
-    """
-    Initializes the SQLAlchemy database
-    :param db_uri: The URI of the database to initialize
-    :return: None
-    """
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.init_app(app)
-
-    from bundesliga_tippspiel.models.match_data.Team import Team
-    from bundesliga_tippspiel.models.match_data.Goal import Goal
-    from bundesliga_tippspiel.models.match_data.Match import Match
-    from bundesliga_tippspiel.models.match_data.Player import Player
-
-    with app.app_context():
-        db.create_all()
 
 
 def user_exists(user_id: int) -> bool:

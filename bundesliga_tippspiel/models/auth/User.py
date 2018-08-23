@@ -66,3 +66,32 @@ class User(db.Model):
     the user. Only once the user follows the link in the email containing the
     key will their account be activated
     """
+
+    def is_authenticated(self) -> bool:
+        """
+        Method required by flask-login
+        :return: True if the user is confirmed, False otherwise
+        """
+        return self.confirmed
+
+    def is_anonymous(self) -> bool:
+        """
+        Method required by flask-login
+        :return: True if the user is not confirmed, False otherwise
+        """
+        return not self.is_authenticated()
+
+    # noinspection PyMethodMayBeStatic
+    def is_active(self) -> bool:
+        """
+        Method required by flask-login
+        :return: True
+        """
+        return True
+
+    def get_id(self) -> str:
+        """
+        Method required by flask-login
+        :return: The user's ID as a unicode string
+        """
+        return str(self.id)

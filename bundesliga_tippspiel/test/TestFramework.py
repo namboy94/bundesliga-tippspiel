@@ -21,14 +21,14 @@ import os
 import bundesliga_tippspiel
 from unittest import TestCase
 from typing import Tuple, Callable, Dict
-from bundesliga_tippspiel.routes import load_routes
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.match_data.Goal import Goal
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.utils.db import initialize_db
 from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random
+from bundesliga_tippspiel.utils.initialize import initialize_app, \
+    initialize_login_manager, initialize_db
 
 
 class TestFramework(TestCase):
@@ -50,10 +50,11 @@ class TestFramework(TestCase):
         self.db = bundesliga_tippspiel.db
 
         self.app.secret_key = generate_random(20)
-        load_routes()
 
+        initialize_app()
         initialize_db("sqlite:///{}".format(self.db_path))
         self.app.app_context().push()
+        initialize_login_manager()
 
         self.client = self.app.test_client()
 
