@@ -29,3 +29,5 @@ def load_routes():
     import bundesliga_tippspiel.routes.registration
     # noinspection PyUnresolvedReferences
     import bundesliga_tippspiel.routes.static
+    # noinspection PyUnresolvedReferences
+    import bundesliga_tippspiel.routes.login

@@ -17,13 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-# noinspection PyUnresolvedReferences
-import bundesliga_tippspiel.routes.api
 from bundesliga_tippspiel import app
-from flask_login import logout_user, login_required, login_user
-from bundesliga_tippspiel.models.auth.User import User
-from flask import render_template, request, flash, redirect, url_for
-from bundesliga_tippspiel.types.exceptions import ActionException
+from flask_login import login_required
+from flask import render_template, request
+from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 
 
@@ -36,32 +33,29 @@ def register():
 
     if request.method == "GET":
         return render_template("register.html")
-    else:
+    else:  # request.method == "POST"
         action = RegisterAction.from_site_request()
-
-        try:
-            action.execute()
-            flash("Siehe in deiner Email-Inbox nach, "
-                  "um die Registrierung abzuschließen.", "info")
-            return redirect(url_for("index"))
-
-        except ActionException as e:
-            e.flash()
-            return redirect(url_for("register"))
+        return action.execute_with_redirects(
+            "index",
+            "Siehe in deiner Email-Inbox nach, "
+            "um die Registrierung abzuschließen.",
+            "register"
+        )
 
 
-@app.route("/login")
-def login():
-    login_user(User.query.get(1), remember=True)
-    flash("Login Successful")
-    return redirect("/")
-
-
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return "Logout"
+@app.route("/confirm", methods=["GET"])
+def confirm():
+    """
+    Confirms a user
+    :return: The appropriate redirect
+    """
+    action = ConfirmAction.from_site_request()
+    return action.execute_with_redirects(
+        "login",
+        "Benutzer wurde erfolgreich registriert. "
+        "Du kannst dich jetzt anmelden.",
+        "index"
+    )
 
 
 @app.route("/bets")

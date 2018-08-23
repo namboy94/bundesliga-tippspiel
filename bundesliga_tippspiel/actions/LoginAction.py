@@ -18,29 +18,31 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask import request
-from bundesliga_tippspiel import db
+from flask_login import login_user, current_user
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.types.exceptions import ActionException
-from bundesliga_tippspiel.utils.db import user_exists
+from bundesliga_tippspiel.utils.db import username_exists
 from bundesliga_tippspiel.utils.crypto import verify_password
 from bundesliga_tippspiel.actions.Action import Action
 
 
-class ConfirmAction(Action):
+class LoginAction(Action):
     """
-    Action that allows the confirmation of previously registered users
+    Action that allows the logging in of users
     """
 
-    def __init__(self, user_id: int, confirm_key: str):
+    def __init__(self, username: str, password: str, remember: bool):
         """
-        Initializes the ConfirmAction object
-        :param user_id: The user's ID
-        :param confirm_key: The user's confirmation key
+        Initializes the LoginAction object
+        :param username: The user's username
+        :param password: The user's password
+        :param remember: If set to true, the login session will be persistent
         :raises: ActionException if any problems occur
         """
-        self.user_id = user_id
-        self.confirm_key = confirm_key
+        self.username = username
+        self.password = password
+        self.remember = remember
 
     def validate_data(self):
         """
@@ -48,45 +50,50 @@ class ConfirmAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if not user_exists(self.user_id):
+        if not username_exists(self.username):
             raise ActionException(
-                "User does not exist",
-                "Dieser Nutzer existiert nicht"
+                "user does not exist",
+                "Dieser User ist nicht registriert"
+            )
+        elif current_user.is_authenticated:
+            raise ActionException(
+                "Already logged in",
+                "Du bist bereits angemeldet.",
+                AlertSeverity.INFO
             )
         else:
-            user = User.query.filter_by(id=self.user_id).first()
-            if user.confirmed:
+            user = User.query.filter_by(username=self.username).first()
+            if not user.confirmed:
                 raise ActionException(
-                    "Already Confirmed",
-                    "Dieser Nutzer is bereits bestätigt worden.",
-                    severity=AlertSeverity.WARNING
+                    "Not confirmed",
+                    "Dieser Nutzer wurde noch nicht bestätigt"
                 )
 
     def _execute(self):
         """
-        Confirms a previously registered user
+        Logins a previously registered user
         :return: None
         :raises ActionException: if anything went wrong
         """
-        user = User.query.filter_by(id=self.user_id).first()
-        verified = verify_password(self.confirm_key, user.confirmation_hash)
+        user = User.query.filter_by(username=self.username).first()
+        verified = verify_password(self.password, user.password_hash)
 
         if verified:
-            user.confirmed = True
-            db.session.commit()
+            login_user(user, remember=self.remember)
         else:
             raise ActionException(
-                "Invalid Confirmation Key",
-                "Der angegebene Bestätigungsschlüssel ist inkorrekt."
+                "Invalid Login",
+                "Das angegebene Password ist inkorrekt."
             )
 
     @classmethod
     def _from_site_request(cls) -> Action:
         """
-        Generates a ConfirmAction object from a site request
-        :return: The generated ConfirmAction object
+        Generates a LoginAction object from a site request
+        :return: The generated LoginAction object
         """
         return cls(
-            int(request.args["user"]),
-            request.args["confirm_key"]
+            request.form["username"],
+            request.form["password"],
+            request.form.get("remember_me", True)
         )
