@@ -19,6 +19,7 @@ LICENSE"""
 
 from flask import request
 from bundesliga_tippspiel import db
+from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.utils.db import user_exists
@@ -48,8 +49,16 @@ class ConfirmAction(Action):
         if not user_exists(self.user_id):
             raise ActionException(
                 "User does not exist",
-                "Dieser Username existiert nicht"
+                "Dieser Nutzer existiert nicht"
             )
+        else:
+            user = User.query.filter_by(id=self.user_id).first()
+            if user.confirmed:
+                raise ActionException(
+                    "Already Confirmed",
+                    "Dieser Nutzer is bereits bestätigt worden.",
+                    severity=AlertSeverity.WARNING
+                )
 
     def _execute(self):
         """
@@ -65,7 +74,7 @@ class ConfirmAction(Action):
             db.session.commit()
         else:
             raise ActionException(
-                "Invalid Confirmation",
+                "Invalid Confirmation Key",
                 "Der angegebene Bestätigungsschlüssel ist inkorrekt."
             )
 

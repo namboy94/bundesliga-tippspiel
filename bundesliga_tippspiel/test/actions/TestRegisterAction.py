@@ -20,28 +20,27 @@ LICENSE"""
 import time
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.config import smtp_address
-from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.test.utils.TestEmail import TestEmail
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+from bundesliga_tippspiel.test.actions.ActionTestFramework import \
+    ActionTestFramework
 
 
-class TestRegisterAction(TestFramework):
+class TestRegisterAction(ActionTestFramework):
     """
     Tests the RegisterAction class
     """
 
-    def setUp(self):
+    def generate_action(self) -> RegisterAction:
         """
-        Sets up a register action object for testing
-        :return: None
+        Generates a valid RegisterAction object
+        :return: The generated RegisterAction
         """
-        super().setUp()
-        self.action = RegisterAction(
+        return RegisterAction(
             "TestUser", smtp_address, "Abc", "localhost", "localhost", ""
         )
 
-    @TestFramework.online_required
+    @ActionTestFramework.online_required
     def test_registering(self):
         """
         Tests registering a new user
@@ -64,36 +63,24 @@ class TestRegisterAction(TestFramework):
         Tests using a username that's too long
         :return: None
         """
-        try:
-            self.action.username = "A" * 13
-            self.action.execute()
-            self.fail()
-        except ActionException as e:
-            self.assertEqual(e.reason, "Username too long")
+        self.action.username = "A" * 13
+        self.failed_execute("Username too long")
 
     def test_too_short_username(self):
         """
         Tests using a username that's too short
         :return: None
         """
-        try:
-            self.action.username = ""
-            self.action.execute()
-            self.fail()
-        except ActionException as e:
-            self.assertEqual(e.reason, "Username too short")
+        self.action.username = ""
+        self.failed_execute("Username too short")
 
     def test_mismatching_passwords(self):
         """
         Tests using passwords that don't match
         :return: None
         """
-        try:
-            self.action.password_repeat = self.action.password.upper()
-            self.action.execute()
-            self.fail()
-        except ActionException as e:
-            self.assertEqual(e.reason, "Password Mismatch")
+        self.action.password_repeat = self.action.password.upper()
+        self.failed_execute("Password Mismatch")
 
     def test_existing_username(self):
         """
@@ -101,12 +88,8 @@ class TestRegisterAction(TestFramework):
         :return: None
         """
         one = self.generate_sample_users()[0]["user"]  # type: User
-        try:
-            self.action.username = one.username
-            self.action.execute()
-            self.fail()
-        except ActionException as e:
-            self.assertEqual(e.reason, "Username already exists")
+        self.action.username = one.username
+        self.failed_execute("Username already exists")
 
     def test_existing_email(self):
         """
@@ -114,22 +97,14 @@ class TestRegisterAction(TestFramework):
         :return: None
         """
         one = self.generate_sample_users()[0]["user"]  # type: User
-        try:
-            self.action.email = one.email
-            self.action.execute()
-            self.fail()
-        except ActionException as e:
-            self.assertEqual(e.reason, "Email already exists")
+        self.action.email = one.email
+        self.failed_execute("Email already exists")
 
-    @TestFramework.online_required
+    @ActionTestFramework.online_required
     def test_invalid_recaptcha(self):
         """
         Tests using an invalid recaptcha response
         :return: None
         """
-        try:
-            self.action.client_address = "1"
-            self.action.execute()
-            self.fail()
-        except ActionException as e:
-            self.assertEqual(e.reason, "Invalid ReCaptcha Response")
+        self.action.client_address = "1"
+        self.failed_execute("Invalid ReCaptcha Response")
