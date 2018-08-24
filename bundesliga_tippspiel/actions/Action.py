@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from flask import abort, redirect, url_for
+from flask import abort, redirect, url_for, request
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
 
@@ -55,23 +55,32 @@ class Action:
         return self._execute()
 
     @classmethod
+    def from_dict(cls, data: Dict[str, Any]):
+        """
+        Generates an action from a dictionary
+        :param data: The dictionary containing the relevant data
+        :return: The generated Action object
+        """
+        raise NotImplementedError()
+
+    @classmethod
     def from_site_request(cls):
         """
         Generates an Action object from a site request
         :return: The generated Action object
         """
         try:
-            return cls._from_site_request()
+
+            if request.method == "GET":
+                data = request.args
+            elif request.method == "POST":
+                data = request.form
+            else:
+                raise KeyError()
+            return cls.from_dict(data)
+
         except (KeyError, TypeError, ValueError):
             abort(400)
-
-    @classmethod
-    def _from_site_request(cls):
-        """
-        Actual implementation of the from_site_request method
-        :return: The generated Action object
-        """
-        raise NotImplementedError()  # pragma: no cover
 
     def execute_with_redirects(
             self,

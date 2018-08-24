@@ -18,7 +18,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from flask import request
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.models.auth.User import User
@@ -83,12 +82,13 @@ class ConfirmAction(Action):
         return {}
 
     @classmethod
-    def _from_site_request(cls) -> Action:
+    def from_dict(cls, data: Dict[str, Any]):
         """
-        Generates a ConfirmAction object from a site request
-        :return: The generated ConfirmAction object
+        Generates an action from a dictionary
+        :param data: The dictionary containing the relevant data
+        :return: The generated Action object
         """
         return cls(
-            int(request.args["user_id"]),
-            request.args["confirm_key"]
+            int(data["user_id"]),
+            data["confirm_key"]
         )

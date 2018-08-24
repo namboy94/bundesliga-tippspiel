@@ -17,41 +17,22 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import make_response, request, jsonify
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.types.exceptions import ActionException
-from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 
 
 @app.route("/api/v2/register", methods=["POST"])
 def api_register():
     """
-    Enables registering a user using the API
-    :return: None
+    Allows registering a user using the API
+    :return: The JSON response
     """
-    json_data = request.get_json()
-    action = RegisterAction.from_site_request()
-
-    code = 200
-
-    try:
-        action.execute()
-    except ActionException as e:
+    return ""
 
 
-    resp_data = {}
-    resp = {"status": "ok", "data": resp_data}
-
-    return make_response(jsonify(resp), code)
-
-
-# How API works:
-
-# REQUEST
-#   Not Auth'ed:
-#       {key: val}
-#   Auth'ed:
-#       {"api_key": "user_id:key", key: val}
-
-# Response:
-# {status: ok|error, data:{...}}
+@app.route("/api/v2/confirm", methods=["POST"])
+def api_confirm():
+    """
+    Allows confirming a previously registered user using the API
+    :return: The JSON response
+    """
+    return ""

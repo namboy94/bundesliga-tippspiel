@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request
 from typing import Dict, Any
 from flask_login import login_user, current_user
 from bundesliga_tippspiel.types.enums import AlertSeverity
@@ -89,13 +88,14 @@ class LoginAction(Action):
         return {}
 
     @classmethod
-    def _from_site_request(cls) -> Action:
+    def from_dict(cls, data: Dict[str, Any]):
         """
-        Generates a LoginAction object from a site request
-        :return: The generated LoginAction object
+        Generates an action from a dictionary
+        :param data: The dictionary containing the relevant data
+        :return: The generated Action object
         """
         return cls(
-            request.form["username"],
-            request.form["password"],
-            request.form.get("remember_me") == "on"
+            data["username"],
+            data["password"],
+            data.get("remember_me") == "on"
         )

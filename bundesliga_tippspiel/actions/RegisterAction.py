@@ -160,17 +160,18 @@ class RegisterAction(Action):
         }
 
     @classmethod
-    def _from_site_request(cls) -> Action:
+    def from_dict(cls, data: Dict[str, Any]):
         """
-        Generates a RegisterAction object from a site request
-        :return: The generated RegisterAction object
+        Generates an action from a dictionary
+        :param data: The dictionary containing the relevant data
+        :return: The generated Action object
         """
         return cls(
-            request.form["username"],
-            request.form["email"],
-            request.form["password"],
+            data["username"],
+            data["email"],
+            data["password"],
             request.remote_addr,
             request.host,
-            request.form["g-recaptcha-response"],
-            password_repeat=request.form["password-repeat"]
+            data["g-recaptcha-response"],
+            password_repeat=data["password-repeat"]
         )
