@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-from typing import Optional
+from typing import Dict, Any, Optional
 from flask import render_template, request
 from sqlalchemy.exc import SQLAlchemyError
 from bundesliga_tippspiel import db
@@ -82,6 +82,12 @@ class RegisterAction(Action):
                 "1 und 12 Zeichen lang sein."
             )
 
+        elif ":" in self.username:
+            raise ActionException(
+                "Username contains colon",
+                "Der Username darf keine ':' enthalten."
+            )
+
         elif self.password_repeat is not None \
                 and self.password_repeat != self.password:
             raise ActionException(
@@ -109,10 +115,10 @@ class RegisterAction(Action):
                 "Bitte löse das ReCaptcha."
             )
 
-    def _execute(self):
+    def _execute(self) -> Dict[str, Any]:
         """
         Registers an unconfirmed user in the database
-        :return: None
+        :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
         confirmation_key = generate_random(32)
@@ -148,6 +154,10 @@ class RegisterAction(Action):
             "Tippspiel Registrierung",
             email_message
         )
+        return {
+            "user_id": user.id,
+            "confirm_key": confirmation_key
+        }
 
     @classmethod
     def _from_site_request(cls) -> Action:

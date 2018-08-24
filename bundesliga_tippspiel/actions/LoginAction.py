@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask import request
+from typing import Dict, Any
 from flask_login import login_user, current_user
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.models.auth.User import User
@@ -69,10 +70,10 @@ class LoginAction(Action):
                     "Dieser Nutzer wurde noch nicht bestätigt"
                 )
 
-    def _execute(self):
+    def _execute(self) -> Dict[str, Any]:
         """
         Logins a previously registered user
-        :return: None
+        :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
         user = User.query.filter_by(username=self.username).first()
@@ -85,6 +86,7 @@ class LoginAction(Action):
                 "Invalid Password",
                 "Das angegebene Password ist inkorrekt."
             )
+        return {}
 
     @classmethod
     def _from_site_request(cls) -> Action:

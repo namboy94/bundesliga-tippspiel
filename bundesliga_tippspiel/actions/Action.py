@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
 from flask import abort, redirect, url_for
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
@@ -36,22 +37,22 @@ class Action:
         """
         raise NotImplementedError()  # pragma: no cover
 
-    def _execute(self):
+    def _execute(self) -> Dict[str, Any]:
         """
         Executes the actual action
-        :return: None
+        :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
         raise NotImplementedError()  # pragma: no cover
 
-    def execute(self):
+    def execute(self) -> Dict[str, Any]:
         """
         Executes the action after validating user-provided data
-        :return: None
+        :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
         self.validate_data()
-        self._execute()
+        return self._execute()
 
     @classmethod
     def from_site_request(cls):

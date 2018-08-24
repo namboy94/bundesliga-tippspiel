@@ -75,6 +75,14 @@ class TestRegisterAction(ActionTestFramework):
         self.action.username = ""
         self.failed_execute("Username too short")
 
+    def test_username_with_colon(self):
+        """
+        Tests using a username containing a colon
+        :return: None
+        """
+        self.action.username = "A:B"
+        self.failed_execute("Username contains colon")
+
     def test_mismatching_passwords(self):
         """
         Tests using passwords that don't match

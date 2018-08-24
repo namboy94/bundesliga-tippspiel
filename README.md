@@ -6,8 +6,8 @@
 
 ![Logo](resources/logo/logo-readme.png)
 
-Bundesliga Tippspiel is a website written in PHP. It enables users to bet on
-Bundesliga Matches and compete against each other.
+Bundesliga Tippspiel is a website using flask and various plugins that allows
+users to bet on Bundesliga matches and compete with one another.
 
 A live version of the page is available on
 [hk-tippspiel.com](https://hk-tippspiel.com). A development instance is available
@@ -15,14 +15,19 @@ on [develop.hk-tippspiel.com](https://develop.hk-tippspiel.com)
 
 ## Documentation
 
-All classes and methods are documented using DocBlock comments. Additional
-Documentation can be found in [doc](doc/).
+Documentation on the API can be found [here](doc/api/API.md).
 
-Documentation on the API can be found [here](doc/APISpec.md).
+For general documentation visit the
+[progstats](https://progstats.namibsun.net/projects/bundesliga-tippspiel)
+page
 
 # Deployment notes:
 
 Since this site uses MySQL, `python3-mysql` (Ubuntu) needs to be installed.
+
+To correctly function, a lot of environment variables must be set and
+written to a JSON file using the [generate_secrets.py](generate_secrets.py)
+file. Consult that file to see which variables need to be set.
 
 ## Further Information
 

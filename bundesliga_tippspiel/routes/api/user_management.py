@@ -17,21 +17,41 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.routes.api import load_routes as load_api_routes
+from flask import make_response, request, jsonify
+from bundesliga_tippspiel import app
+from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 
 
-def load_routes():
+@app.route("/api/v2/register", methods=["POST"])
+def api_register():
     """
-    Loads all application routes
+    Enables registering a user using the API
     :return: None
     """
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.registration
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.static
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.login
+    json_data = request.get_json()
+    action = RegisterAction.from_site_request()
 
-    load_api_routes()
+    code = 200
+
+    try:
+        action.execute()
+    except ActionException as e:
+
+
+    resp_data = {}
+    resp = {"status": "ok", "data": resp_data}
+
+    return make_response(jsonify(resp), code)
+
+
+# How API works:
+
+# REQUEST
+#   Not Auth'ed:
+#       {key: val}
+#   Auth'ed:
+#       {"api_key": "user_id:key", key: val}
+
+# Response:
+# {status: ok|error, data:{...}}

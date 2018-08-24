@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
 from flask import request
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.types.enums import AlertSeverity
@@ -62,10 +63,10 @@ class ConfirmAction(Action):
                     severity=AlertSeverity.WARNING
                 )
 
-    def _execute(self):
+    def _execute(self) -> Dict[str, Any]:
         """
         Confirms a previously registered user
-        :return: None
+        :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
         user = User.query.filter_by(id=self.user_id).first()
@@ -79,6 +80,7 @@ class ConfirmAction(Action):
                 "Invalid Confirmation Key",
                 "Der angegebene Bestätigungsschlüssel ist inkorrekt."
             )
+        return {}
 
     @classmethod
     def _from_site_request(cls) -> Action:

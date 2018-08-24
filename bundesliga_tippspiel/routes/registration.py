@@ -59,4 +59,8 @@ def confirm():
 
 @app.route("/forgot")
 def forgot():
+    """
+    Allows a user to reset their password
+    :return: None
+    """
     return render_template("index.html")
