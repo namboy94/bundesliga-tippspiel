@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import json
 from typing import Tuple, List
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
@@ -42,22 +43,43 @@ class _ApiRouteTestFramework(_TestFramework):
         is successfully handled
         :return: None
         """
-        method = "POST"
-        if method not in self.route_info[1]:
-            method = "PUT"
+        for method in self.route_info[1]:
+            if method not in ["POST", "PUT"]:
+                continue
 
-        if method in self.route_info[1]:
+            for data, content_type in [
+                ({}, "text/html"),
+                (None, "application/json"),
+                ("", "application/json")
+            ]:
+                if method == "POST":
+                    resp = self.client.post(
+                        self.route_info[0],
+                        json=data,
+                        content_type=content_type
+                    )
+                else:  # == PUT
+                    resp = self.client.put(
+                        self.route_info[0],
+                        json=data,
+                        content_type=content_type
+                    )
 
-            if method == "POST":
-                resp = self.client.post(
-                    self.route_info[0], data={}, content_type="text/html"
-                )
-            else:
-                resp = self.client.put(
-                    self.route_info[0], data={}, content_type="text/html"
-                )
+                self.assertEqual(resp.status_code, 400)
+                resp = json.loads(resp.data)
+                self.assertEqual(resp["status"], "error")
+                self.assertEqual(resp["reason"], "Not in JSON format")
 
-            print(resp.data)
+    def test_successful_call(self):
+        """
+        Tests a successful API call
+        :return: None
+        """
+        raise NotImplementedError()
 
-            ##self.assertEqual(resp.data["status"], "error")
-            #elf.assertEqual(resp.data["reason"], "Not in JSON format")
+    def test_unsuccessful_call(self):
+        """
+        Tests an unsuccessful API call
+        :return: None
+        """
+        raise NotImplementedError()

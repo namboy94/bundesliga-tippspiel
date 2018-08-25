@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import json
 from typing import Tuple, List
+from bundesliga_tippspiel.config import smtp_address
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework
@@ -36,3 +38,36 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
                  A list of supported methods
         """
         return "/api/v2/register", ["POST"]
+
+    def test_successful_call(self):
+        """
+        Tests a successful API call
+        :return: None
+        """
+        resp = self.client.post(self.route_info[0], json={
+            "username": "TestUser",
+            "email": smtp_address,
+            "password": "Abc",
+            "password-repeat": "Abc",
+            "g-recaptcha-response": ""
+        }, content_type="application/json")
+        self.assertEqual(resp.status_code, 200)
+        resp_data = json.loads(resp.data)
+        self.assertEqual(resp_data["data"]["user_id"], 1)
+        self.assertTrue("confirm_key" in resp_data["data"])
+
+    def test_unsuccessful_call(self):
+        """
+        Tests an unsuccessful API call
+        :return: None
+        """
+        resp = self.client.post(self.route_info[0], json={
+            "username": "TestUser",
+            "email": smtp_address,
+            "password": "Abc",
+            "password-repeat": "Def",
+            "g-recaptcha-response": ""
+        }, content_type="application/json")
+        self.assertEqual(resp.status_code, 400)
+        resp_data = json.loads(resp.data)
+        self.assertEqual(resp_data["reason"], "Password Mismatch")

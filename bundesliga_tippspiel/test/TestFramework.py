@@ -19,6 +19,7 @@ LICENSE"""
 
 import os
 import bundesliga_tippspiel
+from functools import wraps
 from unittest import TestCase
 from typing import Tuple, Callable, Dict
 from bundesliga_tippspiel.models.match_data.Team import Team
@@ -141,18 +142,19 @@ class _TestFramework(TestCase):
         return {"user": one, "pass": pass_one}, {"user": two, "pass": pass_two}
 
     @staticmethod
-    def online_required(test_func: Callable):
+    def online_required(func: Callable):
         """
         Decorator that skips tests that require online connectivity if
         the NO_ONLINE environment variable is set to 1
-        :param test_func: The function to wrap
+        :param func: The function to wrap
         :return: The wrapper function
         """
 
-        def test_wrapper(*args, **kwargs):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
             if "NO_ONLINE" in os.environ and os.environ["NO_ONLINE"] == "1":
                 pass
             else:
-                test_func(*args, **kwargs)
+                func(*args, **kwargs)
 
-        return test_wrapper
+        return wrapper

@@ -19,7 +19,7 @@ LICENSE"""
 
 from flask import request
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.utils.api import api
+from bundesliga_tippspiel.utils.routes import api
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 
@@ -31,7 +31,9 @@ def api_register():
     Allows registering a user using the API
     :return: The JSON response
     """
-    return RegisterAction.from_dict(request.get_json()).execute()
+    action = RegisterAction.from_dict(request.get_json())
+    action.do_send_email = False
+    return action.execute()
 
 
 @app.route("/api/v2/confirm", methods=["POST"])

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from unittest import mock
 from typing import List, Optional, Tuple
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
@@ -47,13 +48,18 @@ class TestRegisterRoute(_RouteTestFramework):
         :return: None
         """
         self.assertFalse(username_exists("TestUser"))
-        post = self.client.post("/register", follow_redirects=True, data={
-            "username": "TestUser",
-            "email": smtp_address,
-            "password": "Abc",
-            "password-repeat": "Abc",
-            "g-recaptcha-response": ""
-        })
+
+        with mock.patch(
+                "bundesliga_tippspiel.actions.RegisterAction.send_email",
+                lambda x, y, z: self.assertEqual(x, smtp_address)
+        ):
+            post = self.client.post("/register", follow_redirects=True, data={
+                "username": "TestUser",
+                "email": smtp_address,
+                "password": "Abc",
+                "password-repeat": "Abc",
+                "g-recaptcha-response": ""
+            })
         self.assertTrue(b"Siehe in deiner Email-Inbox nach" in post.data)
         self.assertTrue(username_exists("TestUser"))
 

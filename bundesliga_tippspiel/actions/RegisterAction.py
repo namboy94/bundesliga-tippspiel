@@ -40,7 +40,8 @@ class RegisterAction(Action):
             self, username: str, email: str, password: str,
             client_address: str, host_address: str,
             recaptcha_response: str,
-            password_repeat: Optional[str] = None
+            password_repeat: Optional[str] = None,
+            do_send_email: bool = True
     ):
         """
         Initializes the RegisterAction object
@@ -51,6 +52,8 @@ class RegisterAction(Action):
         :param host_address: The host's address
         :param recaptcha_response: The recaptcha response
         :param password_repeat: If provided, makes sure that passwords match.
+        :param do_send_email: If True, will send an email to the user with a
+                              link to the registration URL
         :raises: ActionException if any problems occur
         """
         self.username = username
@@ -60,6 +63,7 @@ class RegisterAction(Action):
         self.host_address = host_address
         self.recaptcha_response = recaptcha_response
         self.password_repeat = password_repeat
+        self.do_send_email = do_send_email
 
     def validate_data(self):
         """
@@ -139,24 +143,27 @@ class RegisterAction(Action):
             raise ActionException("Unknown SQL Error",
                                   "Ein unbekannter Fehler ist aufgetreten")
 
-        confirm_url = os.path.join(self.host_address, "confirm")
-        confirm_url += "?user_id={}&confirm_key={}".format(
-            user.id, confirmation_key.decode("utf-8")
-        )
+        if self.do_send_email:
 
-        email_message = render_template(
-            "registration_email.html",
-            username=self.username,
-            confirm_url=confirm_url
-        )
-        send_email(
-            self.email,
-            "Tippspiel Registrierung",
-            email_message
-        )
+            confirm_url = os.path.join(self.host_address, "confirm")
+            confirm_url += "?user_id={}&confirm_key={}".format(
+                user.id, confirmation_key.decode("utf-8")
+            )
+
+            email_message = render_template(
+                "registration_email.html",
+                username=self.username,
+                confirm_url=confirm_url
+            )
+            send_email(
+                self.email,
+                "Tippspiel Registrierung",
+                email_message
+            )
+
         return {
             "user_id": user.id,
-            "confirm_key": confirmation_key
+            "confirm_key": confirmation_key.decode("utf-8")
         }
 
     @classmethod

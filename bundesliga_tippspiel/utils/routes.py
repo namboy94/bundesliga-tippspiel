@@ -43,8 +43,10 @@ def api(func: Callable):
         response = {"status": "ok"}
 
         try:
-
-            if not request.is_json:
+            if request.method in ["POST", "PUT"] and \
+                    (not request.content_type == "application/json"
+                     or not request.is_json
+                     or not isinstance(request.get_json(silent=True), dict)):
                 raise ActionException(
                     "Not in JSON format", "Not in JSON format"
                 )

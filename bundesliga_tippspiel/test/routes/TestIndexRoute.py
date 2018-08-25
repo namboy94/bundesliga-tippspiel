@@ -17,40 +17,45 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Tuple, Optional, List
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.TestFramework import _TestFramework
+from bundesliga_tippspiel.test.routes.RouteTestFramework import \
+    _RouteTestFramework
 
 
-class TestStaticRoutes(_TestFramework):
+class TestIndexRoute(_RouteTestFramework):
     """
-    Class that tests the routes defined by static routes
+    Class that tests the / route
     """
 
-    def test_index(self):
+    @property
+    def route_info(self) -> Tuple[str, List[str], Optional[str]]:
         """
-        Tests the index page
-        :return: None
+        Info about the route to test
+        :return: The route's path,
+                 the route's primary methods,
+                 A phrase found on the route's GET page.
+                 None if no such page exists
         """
-        resp = self.client.get("/")
-        self.assertTrue(
-            b"Tippspiel zur Bundesliga Saison 2018/19" in resp.data
-        )
+        return "/", ["GET"], "Tippspiel zur Bundesliga Saison 2018/19"
 
-    def test_about(self):
+    def test_successful_requests(self):
         """
-        Tests the about/impressum page
+        Tests (a) successful request(s)
         :return: None
         """
-        resp = self.client.get("/about")
-        self.assertTrue(b"eRecht24" in resp.data)
+        pass
 
-    def test_privacy(self):
+    def test_unsuccessful_requests(self):
         """
-        Tests the privacy statement page
+        Tests (an) unsuccessful request(s)
         :return: None
         """
-        resp = self.client.get("/privacy")
-        self.assertTrue(
-            b""
-            in resp.data
-        )
+        pass
+
+    def test_malformed_data(self):
+        """
+        Tests that malformed data in the request is handled appropriately
+        :return: None
+        """
+        pass
