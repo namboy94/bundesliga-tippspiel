@@ -18,7 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import json
-from typing import Tuple, List
+from flask import Response
+from typing import Tuple, List, Dict, Any
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
@@ -66,9 +67,9 @@ class _ApiRouteTestFramework(_TestFramework):
                     )
 
                 self.assertEqual(resp.status_code, 400)
-                resp = json.loads(resp.data)
-                self.assertEqual(resp["status"], "error")
-                self.assertEqual(resp["reason"], "Not in JSON format")
+                data = self.decode_data(resp)
+                self.assertEqual(data["status"], "error")
+                self.assertEqual(data["reason"], "Not in JSON format")
 
     def test_successful_call(self):
         """
@@ -83,3 +84,11 @@ class _ApiRouteTestFramework(_TestFramework):
         :return: None
         """
         raise NotImplementedError()
+
+    @staticmethod
+    def decode_data(response: Response) -> Dict[str, Any]:
+        """
+        Decodes the response's data
+        :return: The JSON data
+        """
+        return json.loads(response.data.decode("utf-8"))

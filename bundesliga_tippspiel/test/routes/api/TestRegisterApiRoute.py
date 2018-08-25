@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import json
 from typing import Tuple, List
 from bundesliga_tippspiel.config import smtp_address
 # noinspection PyProtectedMember
@@ -52,7 +51,7 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
             "g-recaptcha-response": ""
         }, content_type="application/json")
         self.assertEqual(resp.status_code, 200)
-        resp_data = json.loads(resp.data)
+        resp_data = self.decode_data(resp)
         self.assertEqual(resp_data["data"]["user_id"], 1)
         self.assertTrue("confirm_key" in resp_data["data"])
 
@@ -69,5 +68,5 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
             "g-recaptcha-response": ""
         }, content_type="application/json")
         self.assertEqual(resp.status_code, 400)
-        resp_data = json.loads(resp.data)
+        resp_data = self.decode_data(resp)
         self.assertEqual(resp_data["reason"], "Password Mismatch")
