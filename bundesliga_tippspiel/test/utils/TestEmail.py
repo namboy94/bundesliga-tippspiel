@@ -18,39 +18,25 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-import imaplib
-from bundesliga_tippspiel.utils.email import send_email
-from bundesliga_tippspiel.test.TestFramework import TestFramework
-from bundesliga_tippspiel.config import smtp_address, smtp_password, \
-    smtp_server
+from bundesliga_tippspiel.utils.email import send_email, get_inbox_count
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
+from bundesliga_tippspiel.config import smtp_address
 
 
-class TestEmail(TestFramework):
+class TestEmail(_TestFramework):
     """
     Tests email functionality
     """
 
-    @staticmethod
-    def get_inbox_count() -> int:
-        """
-        Checks the amount of emails in the IMAP inbox of the SMTP mail account
-        :return: The amount of emails
-        """
-        server = imaplib.IMAP4_SSL(smtp_server.replace("smtp", "imap"), 993)
-        server.login(smtp_address, smtp_password)
-        counted = int(server.select("Inbox")[1][0])
-        server.close()
-        server.logout()
-        return counted
-
-    @TestFramework.online_required
+    @_TestFramework.online_required
     def test_emailing(self):
         """
         Tests sending an email message
         :return: None
         """
-        before = self.get_inbox_count()
+        before = get_inbox_count()
         send_email(smtp_address, "TEST", "<h1>Test</h1>")
         time.sleep(1)
-        after = self.get_inbox_count()
+        after = get_inbox_count()
         self.assertEqual(before + 1, after)

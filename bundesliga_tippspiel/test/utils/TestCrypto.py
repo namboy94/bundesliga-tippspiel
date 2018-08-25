@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random, \
     verify_password
 
 
-class TestCrypto(TestFramework):
+class TestCrypto(_TestFramework):
     """
     Tests cryptographical functions
     """

@@ -17,25 +17,35 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask_login import current_user, logout_user
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+from typing import Tuple, Optional, List
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.routes.RouteTestFramework import \
+    _RouteTestFramework
 
 
-class TestLoginRoutes(TestFramework):
+class TestLoginRoute(_RouteTestFramework):
     """
-    Class that tests the routes defined by registration routes
+    Class that tests the /login route
     """
 
-    def test_logging_in(self):
+    @property
+    def route_info(self) -> Tuple[str, List[str], Optional[str]]:
         """
-        Tests the /login route
+        Info about the route to test
+        :return: The route's path,
+                 the route's primary methods,
+                 A phrase found on the route's GET page.
+                 None if no such page exists
+        """
+        return "/login", ["POST"], "Anmelden"
+
+    def test_successful_requests(self):
+        """
+        Tests (a) successful request(s)
         :return: None
         """
         userdata = self.generate_sample_users()[0]
         user, password = userdata["user"], userdata["pass"]
-
-        page = self.client.get("/login")
-        self.assertTrue(b"Anmelden" in page.data)
 
         success = self.client.post("/login", follow_redirects=True, data={
             "username": user.username,
@@ -45,16 +55,18 @@ class TestLoginRoutes(TestFramework):
 
         self.client.get("/logout")
 
+    def test_unsuccessful_requests(self):
+        """
+        Tests (an) unsuccessful request(s)
+        :return: None
+        """
         failure = self.client.post("/login", follow_redirects=True, data={
-            "username": user.username,
+            "username": "A",
             "password": "ABC"
         })
         self.assertFalse(
             b"Du hast dich erfolgreich angemeldet" in failure.data
         )
         self.assertTrue(
-            b"Das angegebene Password ist inkorrekt" in failure.data
+            b"Dieser User ist nicht registriert" in failure.data
         )
-
-        malformed = self.client.post("/login", follow_redirects=True, data={})
-        self.assertEqual(400, malformed.status_code)

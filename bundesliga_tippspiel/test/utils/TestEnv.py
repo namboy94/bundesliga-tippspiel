@@ -19,11 +19,12 @@ LICENSE"""
 
 import os
 import json
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.env import resolve_env_variable, load_secrets
 
 
-class TestEnv(TestFramework):
+class TestEnv(_TestFramework):
     """
     Unit test class that tests environment variable functions
     """

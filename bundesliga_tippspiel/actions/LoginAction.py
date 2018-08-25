@@ -59,7 +59,7 @@ class LoginAction(Action):
             raise ActionException(
                 "Already logged in",
                 "Du bist bereits angemeldet.",
-                AlertSeverity.INFO
+                severity=AlertSeverity.INFO
             )
         else:
             user = User.query.filter_by(username=self.username).first()

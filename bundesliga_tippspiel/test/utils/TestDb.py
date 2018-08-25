@@ -18,12 +18,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.db import user_exists, username_exists, \
     email_exists
 
 
-class TestDb(TestFramework):
+class TestDb(_TestFramework):
     """
     Class that tests database helper functions
     """

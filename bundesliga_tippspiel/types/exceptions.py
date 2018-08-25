@@ -29,17 +29,21 @@ class ActionException(Exception):
 
     def __init__(
             self, reason: str, display_message: str,
+            status_code: int = 400,
             severity: AlertSeverity = AlertSeverity.DANGER
     ):
         """
         Initializes the Exception while adding the 'reason' variable
         :param reason: The reason for the exception
         :param display_message: The message to display
+        :param status_code: The status code corresponding to the exception
+                            Defaults to 400
         :param severity: The severity of the exception. Defaults to DANGER
         """
         super().__init__(reason)
         self.reason = reason
         self.display_message = display_message
+        self.status_code = status_code
         self.severity = severity
 
     def flash(self):

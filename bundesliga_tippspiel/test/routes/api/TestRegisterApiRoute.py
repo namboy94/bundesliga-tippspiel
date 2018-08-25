@@ -17,28 +17,22 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request
-from bundesliga_tippspiel import app
-from bundesliga_tippspiel.utils.api import api
-from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
-from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
+from typing import Tuple, List
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
+    _ApiRouteTestFramework
 
 
-@app.route("/api/v2/register", methods=["POST"])
-@api
-def api_register():
+class TestRegisterApiRoute(_ApiRouteTestFramework):
     """
-    Allows registering a user using the API
-    :return: The JSON response
+    Tests the /register API route
     """
-    return RegisterAction.from_dict(request.get_json()).execute()
 
-
-@app.route("/api/v2/confirm", methods=["POST"])
-@api
-def api_confirm():
-    """
-    Allows confirming a previously registered user using the API
-    :return: The JSON response
-    """
-    return ConfirmAction.from_dict(request.get_json()).execute()
+    @property
+    def route_info(self) -> Tuple[str, List[str]]:
+        """
+        Provides information about the route
+        :return: The path of the route,
+                 A list of supported methods
+        """
+        return "/api/v2/register", ["POST"]

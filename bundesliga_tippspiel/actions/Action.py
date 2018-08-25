@@ -61,7 +61,7 @@ class Action:
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     @classmethod
     def from_site_request(cls):
@@ -75,7 +75,7 @@ class Action:
                 data = request.args
             elif request.method == "POST":
                 data = request.form
-            else:
+            else:  # pragma: no cover
                 raise KeyError()
             return cls.from_dict(data)
 
@@ -100,7 +100,7 @@ class Action:
 
             if isinstance(success_msg, str):
                 success_msg = ActionException(
-                    success_msg, success_msg, AlertSeverity.SUCCESS
+                    success_msg, success_msg, 200, AlertSeverity.SUCCESS
                 )
 
             success_msg.flash()

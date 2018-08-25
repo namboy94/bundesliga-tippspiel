@@ -21,10 +21,11 @@ from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from bundesliga_tippspiel import db
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
 
-class ModelTestFramework(TestFramework):
+class _ModelTestFramework(_TestFramework):
     """
     A framework for testing match data models
     """

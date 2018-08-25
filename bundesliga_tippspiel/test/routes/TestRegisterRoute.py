@@ -17,25 +17,35 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import List, Optional, Tuple
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.routes.RouteTestFramework import \
+    _RouteTestFramework
 from bundesliga_tippspiel.utils.db import username_exists
 from bundesliga_tippspiel.config import smtp_address
-from bundesliga_tippspiel.test.TestFramework import TestFramework
 
 
-class TestRegistrationRoutes(TestFramework):
+class TestRegisterRoute(_RouteTestFramework):
     """
-    Class that tests the routes defined by registration routes
+    Class that tests the /register route
     """
 
-    @TestFramework.online_required
-    def test_register(self):
+    @property
+    def route_info(self) -> Tuple[str, List[str], Optional[str]]:
         """
-        Tests the /register route
+        Info about the route to test
+        :return: The route's path,
+                 the route's primary methods,
+                 A phrase found on the route's GET page.
+                 None if no such page exists
+        """
+        return "/register", ["POST"], "Registrierung"
+
+    def test_successful_requests(self):
+        """
+        Tests (a) successful request(s)
         :return: None
         """
-        get = self.client.get("/register")
-        self.assertTrue(b"Registrierung" in get.data)
-
         self.assertFalse(username_exists("TestUser"))
         post = self.client.post("/register", follow_redirects=True, data={
             "username": "TestUser",
@@ -47,50 +57,23 @@ class TestRegistrationRoutes(TestFramework):
         self.assertTrue(b"Siehe in deiner Email-Inbox nach" in post.data)
         self.assertTrue(username_exists("TestUser"))
 
-        self.assertFalse(username_exists("TestUser2"))
+    def test_unsuccessful_requests(self):
+        """
+        Tests (an) unsuccessful request(s)
+        :return: None
+        """
+        self.assertFalse(username_exists("TestUser"))
         failed_post = self.client.post(
             "/register",
             follow_redirects=True,
             data={
-                "username": "TestUser2",
-                "email": "A" + smtp_address,
+                "username": "TestUser",
+                "email": smtp_address,
                 "password": "Abc",
-                "password-repeat": "AbC",
+                "password-repeat": "Def",
                 "g-recaptcha-response": ""
             }
         )
         self.assertFalse(b"Siehe in deiner Email-Inbox" in failed_post.data)
         self.assertTrue(b"Die angegebenen Passw" in failed_post.data)
         self.assertFalse(username_exists("TestUser2"))
-
-        malformed = self.client.post(
-            "/register",
-            follow_redirects=True,
-            data={}
-        )
-        self.assertEqual(malformed.status_code, 400)
-
-    def test_confirm(self):
-        """
-        Tests the /confirm route
-        :return: None
-        """
-        userdata = self.generate_sample_users()[1]
-        user = userdata["user"]
-        pw = userdata["pass"].decode("utf-8")
-
-        valid = self.client.get(
-            "/confirm?user_id={}&confirm_key={}".format(user.id, pw),
-            follow_redirects=True
-        )
-        self.assertTrue(b"Du kannst dich jetzt anmelden" in valid.data)
-
-        invalid = self.client.get(
-            "/confirm?user_id={}&confirm_key={}".format(user.id + 1, pw),
-            follow_redirects=True
-        )
-        self.assertFalse(b"Du kannst dich jetzt anmelden" in invalid.data)
-        self.assertTrue(b"Dieser Nutzer existiert nicht" in invalid.data)
-
-        malformed = self.client.get("/confirm?alolo=1")
-        self.assertEqual(malformed.status_code, 400)

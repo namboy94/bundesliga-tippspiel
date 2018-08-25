@@ -21,11 +21,12 @@ from bundesliga_tippspiel.models.auth.User import User
 from flask_login import current_user, logout_user
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.actions.LoginAction import LoginAction
+# noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
-    ActionTestFramework
+    _ActionTestFramework
 
 
-class TestLoginAction(ActionTestFramework):
+class TestLoginAction(_ActionTestFramework):
     """
     Class that tests the Login action
     """
@@ -81,7 +82,9 @@ class TestLoginAction(ActionTestFramework):
         """
         with self.app.test_request_context():
             self.action.execute()
-            self.failed_execute("Already logged in", AlertSeverity.INFO)
+            self.failed_execute(
+                "Already logged in", severity=AlertSeverity.INFO
+            )
             self.assertTrue(current_user.is_authenticated)
 
     def test_logging_in_unconfirmed_user(self):

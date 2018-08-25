@@ -21,12 +21,13 @@ import time
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.config import smtp_address
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
-from bundesliga_tippspiel.test.utils.TestEmail import TestEmail
+from bundesliga_tippspiel.utils.email import get_inbox_count
+# noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
-    ActionTestFramework
+    _ActionTestFramework
 
 
-class TestRegisterAction(ActionTestFramework):
+class TestRegisterAction(_ActionTestFramework):
     """
     Tests the RegisterAction class
     """
@@ -41,13 +42,13 @@ class TestRegisterAction(ActionTestFramework):
         )
 
     # noinspection PyUnresolvedReferences
-    @ActionTestFramework.online_required
+    @_ActionTestFramework.online_required
     def test_registering(self):
         """
         Tests registering a new user
         :return: None
         """
-        emails_before = TestEmail.get_inbox_count()
+        emails_before = get_inbox_count()
         self.assertEqual(
             len(User.query.filter_by(username=self.action.username).all()), 0
         )
@@ -56,7 +57,7 @@ class TestRegisterAction(ActionTestFramework):
         self.assertEqual(
             len(User.query.filter_by(username=self.action.username).all()), 1
         )
-        emails_after = TestEmail.get_inbox_count()
+        emails_after = get_inbox_count()
         self.assertEqual(emails_before + 1, emails_after)
 
     def test_too_long_username(self):
@@ -110,7 +111,7 @@ class TestRegisterAction(ActionTestFramework):
         self.action.email = one.email
         self.failed_execute("Email already exists")
 
-    @ActionTestFramework.online_required
+    @_ActionTestFramework.online_required
     def test_invalid_recaptcha(self):
         """
         Tests using an invalid recaptcha response

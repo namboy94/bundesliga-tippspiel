@@ -20,10 +20,11 @@ LICENSE"""
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
-from bundesliga_tippspiel.test.TestFramework import TestFramework
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
 
-class ActionTestFramework(TestFramework):
+class _ActionTestFramework(_TestFramework):
     """
     Framework for testing Action classes
     """
@@ -54,6 +55,7 @@ class ActionTestFramework(TestFramework):
     def failed_execute(
             self,
             error_reason: str,
+            error_code: int = 400,
             severity: AlertSeverity = AlertSeverity.DANGER
     ):
         """
@@ -61,6 +63,7 @@ class ActionTestFramework(TestFramework):
         raising an ActionException, then verifying that the correct error
         was thrown.
         :param error_reason: The reason for the error
+        :param error_code: The error code to check
         :param severity: The severity of the error, defaults to DANGER
         :return: None
         """
@@ -69,4 +72,5 @@ class ActionTestFramework(TestFramework):
             self.fail()
         except ActionException as e:
             self.assertEqual(e.reason, error_reason)
+            self.assertEqual(e.status_code, error_code)
             self.assertEqual(e.severity, severity)

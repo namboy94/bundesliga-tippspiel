@@ -20,11 +20,12 @@ LICENSE"""
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
+# noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
-    ActionTestFramework
+    _ActionTestFramework
 
 
-class TestConfirmAction(ActionTestFramework):
+class TestConfirmAction(_ActionTestFramework):
     """
     Class that tests the Confirm action
     """
@@ -66,7 +67,9 @@ class TestConfirmAction(ActionTestFramework):
         """
         self.action.user_id = self.confirmed_user.id
         self.action.confirm_key = self.confirmed_user_pw
-        self.failed_execute("Already Confirmed", AlertSeverity.WARNING)
+        self.failed_execute(
+            "Already Confirmed", severity=AlertSeverity.WARNING
+        )
 
     def test_using_invalid_key(self):
         """

@@ -31,7 +31,7 @@ from bundesliga_tippspiel.utils.initialize import initialize_app, \
     initialize_login_manager, initialize_db
 
 
-class TestFramework(TestCase):
+class _TestFramework(TestCase):
     """
     Class that models a testing framework for the flask application
     """

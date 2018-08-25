@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+# noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
-    ModelTestFramework
+    _ModelTestFramework
 from bundesliga_tippspiel.models.match_data.Team import Team
 
 
-class TestTeam(ModelTestFramework):
+class TestTeam(_ModelTestFramework):
     """
     Tests the Team SQL model
     """
