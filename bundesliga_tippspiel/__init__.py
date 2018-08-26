@@ -36,6 +36,7 @@ login_manager = LoginManager(app)
 """
 The Flask-Login Login Manager
 """
+login_manager.session_protection = "strong"
 
 
 if "FLASK_TESTING" in os.environ:  # pragma: no cover
