@@ -141,6 +141,7 @@ class RegisterAction(Action):
 
         email_message = render_template(
             "registration_email.html",
+            host=self.host_address,
             target=os.path.join(self.host_address, "confirm"),
             username=self.username,
             user_id=user.id,

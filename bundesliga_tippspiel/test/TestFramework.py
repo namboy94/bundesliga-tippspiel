@@ -118,28 +118,39 @@ class _TestFramework(TestCase):
 
         return team_one, team_two, player, match, goal
 
+    def generate_sample_user(self, confirmed: bool) -> Dict[str, User or str]:
+        """
+        Generates a sample user
+        :return: A dictionary containing the sample user as well as their
+                 password. The password doubles as a confirmation key
+        """
+        if confirmed:
+            password = generate_random(20)
+            hashed = generate_hash(password)
+            user = User(username="A", email="a@hk-tippspiel.com",
+                        password_hash=hashed, confirmed=True,
+                        confirmation_hash=hashed)
+        else:
+            password = generate_random(20)
+            hashed = generate_hash(password)
+            user = User(username="B", email="b@hk-tippspiel.com",
+                        password_hash=hashed, confirmed=False,
+                        confirmation_hash=hashed)
+
+        self.db.session.add(user)
+        self.db.session.commit()
+
+        return {"user": user, "pass": password}
+
     def generate_sample_users(self) \
             -> Tuple[Dict[str, User or str], Dict[str, User or str]]:
         """
         Generates two users, one confirmed, one unconfirmed
         :return: The two users as tuple
         """
-        pass_one = generate_random(20)
-        pass_two = generate_random(20)
-        hash_one = generate_hash(pass_one)
-        hash_two = generate_hash(pass_two)
-        one = User(username="A", email="a@hk-tippspiel.com",
-                   password_hash=hash_one, confirmed=True,
-                   confirmation_hash=hash_one)
-        two = User(username="B", email="b@hk-tippspiel.com",
-                   password_hash=hash_two, confirmed=False,
-                   confirmation_hash=hash_two)
-
-        self.db.session.add(one)
-        self.db.session.add(two)
-        self.db.session.commit()
-
-        return {"user": one, "pass": pass_one}, {"user": two, "pass": pass_two}
+        return \
+            self.generate_sample_user(True),\
+            self.generate_sample_user(False)
 
     @staticmethod
     def online_required(func: Callable):
