@@ -52,8 +52,7 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
         }, content_type="application/json")
         self.assertEqual(resp.status_code, 200)
         resp_data = self.decode_data(resp)
-        self.assertEqual(resp_data["data"]["user_id"], 1)
-        self.assertTrue("confirm_key" in resp_data["data"])
+        self.assertEqual(resp_data["data"], {})
 
     def test_unsuccessful_call(self):
         """
