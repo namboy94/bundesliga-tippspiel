@@ -38,9 +38,9 @@ def register():
                       "um die Registrierung abzuschließen."
         return action.execute_with_redirects(
             "index",
-            ActionException(success_msg, success_msg)
+            ActionException(success_msg, success_msg),
+            "register"
         )
-
 
 @app.route("/confirm", methods=["GET"])
 def confirm():
