@@ -61,7 +61,7 @@ def api(func: Callable):
                 code = e.status_code
                 response["reason"] = e.reason
 
-            else:
+            else:  # pragma: no cover
                 code = 400
                 response["reason"] = "Bad Request"
 

@@ -81,7 +81,7 @@ class User(db.Model):
         Property required by flask-login
         :return: True if the user is not confirmed, False otherwise
         """
-        return not self.is_authenticated
+        return not self.is_authenticated  # pragma: no cover
 
     @property
     def is_active(self) -> bool:

@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
-
+from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel import app
 from flask import render_template, request
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
@@ -34,11 +34,11 @@ def register():
         return render_template("register.html")
     else:  # request.method == "POST"
         action = RegisterAction.from_site_request()
+        success_msg = "Siehe in deiner Email-Inbox nach, " \
+                      "um die Registrierung abzuschließen."
         return action.execute_with_redirects(
             "index",
-            "Siehe in deiner Email-Inbox nach, "
-            "um die Registrierung abzuschließen.",
-            "register"
+            ActionException(success_msg, success_msg)
         )
 
 
