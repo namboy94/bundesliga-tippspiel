@@ -21,7 +21,8 @@ from flask import request
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
-from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
+from bundesliga_tippspiel.actions.ForgotPasswordAction import \
+    ForgotPasswordAction
 
 
 @app.route("/api/v2/register", methods=["POST"])
@@ -32,4 +33,15 @@ def api_register():
     :return: The JSON response
     """
     action = RegisterAction.from_dict(request.get_json())
+    return action.execute()
+
+
+@app.route("/api/v2/forgot", methods=["POST"])
+@api
+def api_forgot():
+    """
+    Allows users to reset their password using the API
+    :return: The JSON response
+    """
+    action = ForgotPasswordAction.from_dict(request.get_json())
     return action.execute()

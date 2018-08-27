@@ -16,11 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
-from bundesliga_tippspiel.types.exceptions import ActionException
+
 from bundesliga_tippspiel import app
 from flask import render_template, request
+from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
+from bundesliga_tippspiel.actions.ForgotPasswordAction import \
+    ForgotPasswordAction
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -34,6 +37,7 @@ def register():
         return render_template("register.html")
     else:  # request.method == "POST"
         action = RegisterAction.from_site_request()
+        # Manually generate ActionException for coverage purposes
         success_msg = "Siehe in deiner Email-Inbox nach, " \
                       "um die Registrierung abzuschließen."
         return action.execute_with_redirects(
@@ -41,6 +45,7 @@ def register():
             ActionException(success_msg, success_msg),
             "register"
         )
+
 
 @app.route("/confirm", methods=["GET"])
 def confirm():
@@ -57,10 +62,20 @@ def confirm():
     )
 
 
-@app.route("/forgot")
+@app.route("/forgot", methods=["POST", "GET"])
 def forgot():
     """
     Allows a user to reset their password
     :return: None
     """
-    return render_template("index.html")
+    if request.method == "GET":
+        return render_template("forgot.html")
+
+    else:
+        action = ForgotPasswordAction.from_site_request()
+        return action.execute_with_redirects(
+            "login",
+            "Passwort erfolgreich zurückgesetzt. "
+            "Sehe in deinem Email-Postfach nach.",
+            "forgot"
+        )

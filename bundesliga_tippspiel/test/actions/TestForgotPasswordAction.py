@@ -43,9 +43,6 @@ class TestForgotPasswordAction(_ActionTestFramework):
         user = self.generate_sample_user(True)
         self.user = user["user"]  # type: User
         self.password = user["pass"]
-        print(self.user.password_hash)
-        print(self.password)
-        print(verify_password(self.password, self.user.password_hash))
         self.user.email = smtp_address
         self.db.session.commit()
 
