@@ -32,15 +32,4 @@ def api_register():
     :return: The JSON response
     """
     action = RegisterAction.from_dict(request.get_json())
-    action.do_send_email = False
     return action.execute()
-
-
-@app.route("/api/v2/confirm", methods=["POST"])
-@api
-def api_confirm():
-    """
-    Allows confirming a previously registered user using the API
-    :return: The JSON response
-    """
-    return ConfirmAction.from_dict(request.get_json()).execute()
