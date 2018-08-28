@@ -23,7 +23,6 @@ from flask_login import login_required
 
 
 @app.route("/bets")
-@login_required
 def bets():
     return render_template("index.html")
 
@@ -31,10 +30,4 @@ def bets():
 @app.route("/leaderboard")
 @login_required
 def leaderboard():
-    return render_template("index.html")
-
-
-@app.route("/profile")
-@login_required
-def profile():
     return render_template("index.html")

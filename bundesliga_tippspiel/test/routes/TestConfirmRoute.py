@@ -46,7 +46,7 @@ class TestConfirmRoute(_RouteTestFramework):
         """
         userdata = self.generate_sample_users()[1]
         user = userdata["user"]
-        pw = userdata["pass"].decode("utf-8")
+        pw = userdata["pass"]
 
         valid = self.client.get(
             "/confirm?user_id={}&confirm_key={}".format(user.id, pw),

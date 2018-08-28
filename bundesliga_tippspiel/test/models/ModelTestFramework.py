@@ -39,6 +39,10 @@ class _ModelTestFramework(_TestFramework):
         self.model_cls = None  # type: db.Model
         self.team_one, self.team_two, self.player, self.match, self.goal = \
             self.generate_sample_match_data()
+        user_one, user_two = self.generate_sample_users()
+        self.user_one = user_one["user"]
+        self.user_two = user_two["user"]
+        self.api_key = self.generate_sample_api_key(self.user_one)
 
     def _test_missing_column_data(
             self, incomplete_columns: List[db.Model]

@@ -27,7 +27,8 @@ from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.match_data.Goal import Goal
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random
+from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+from bundesliga_tippspiel.utils.crypto import generate_random
 from bundesliga_tippspiel.utils.initialize import initialize_app, \
     initialize_login_manager, initialize_db
 
@@ -121,19 +122,23 @@ class _TestFramework(TestCase):
     def generate_sample_user(self, confirmed: bool) -> Dict[str, User or str]:
         """
         Generates a sample user
+        Instead of hashing the passwords each time, we simply use hard-coded
+        values.
         :return: A dictionary containing the sample user as well as their
                  password. The password doubles as a confirmation key
         """
         if confirmed:
-            password = generate_random(20)
-            hashed = generate_hash(password)
-            user = User(username="A", email="a@hk-tippspiel.com",
+            password = "samplepass1"
+            hashed = \
+                b"$2b$12$BiB2kya1Ly3wuY/Pr4JGD.JSmmd1ocTWoAH9OPAbSqyT.CQ5./pUi"
+            user = User(username="TestA", email="a@hk-tippspiel.com",
                         password_hash=hashed, confirmed=True,
                         confirmation_hash=hashed)
         else:
-            password = generate_random(20)
-            hashed = generate_hash(password)
-            user = User(username="B", email="b@hk-tippspiel.com",
+            password = "samplepass2"
+            hashed = \
+                b"$2b$12$ygmgJH2JFaMqGwBO5F3w.u7ROKuwnC0V/Erneb5Udklgqjija8kfS"
+            user = User(username="TestB", email="b@hk-tippspiel.com",
                         password_hash=hashed, confirmed=False,
                         confirmation_hash=hashed)
 
@@ -151,6 +156,23 @@ class _TestFramework(TestCase):
         return \
             self.generate_sample_user(True),\
             self.generate_sample_user(False)
+
+    def generate_sample_api_key(self, user: User):
+        """
+        Generates an API key for a user
+        :param user: The user for which to generate the API key
+        :return: The Api key object
+        """
+        # noinspection PyUnusedLocal
+        key = "apikey"
+        hashed = \
+            b"$2b$12$hZgUP0mzn6pZsQ45FYkiJuZFIRDCo.MbDb7e2fGHAJJq/jqn9yf9e"
+        obj = ApiKey(user=user, key_hash=hashed)
+
+        self.db.session.add(obj)
+        self.db.session.commit()
+
+        return obj
 
     @staticmethod
     def online_required(func: Callable):

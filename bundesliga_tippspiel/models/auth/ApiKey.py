@@ -62,7 +62,7 @@ class ApiKey(db.Model):
     The hash of the API key
     """
 
-    creation_time = db.Column(db.Integer, nullable=False)
+    creation_time = db.Column(db.Integer, nullable=False, default=time.time)
     """
     The time at which this API key was created as a UNIX timestamp
     """
@@ -81,8 +81,11 @@ class ApiKey(db.Model):
         :param key: The key to check
         :return: True if the key is valid, False otherwise
         """
-        _id, api_key = key.split(":", 1)
-        if _id != self.id:
+        try:
+            _id, api_key = key.split(":", 1)
+            if int(_id) != self.id:
+                return False
+            else:
+                return verify_password(api_key, self.key_hash)
+        except ValueError:
             return False
-        else:
-            return verify_password(api_key, self.key_hash)
