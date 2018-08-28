@@ -18,9 +18,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask import request
+from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
+from bundesliga_tippspiel.actions.ApiKeyGenAction import ApiKeyGenAction
+from bundesliga_tippspiel.actions.ApiKeyDeleteAction import ApiKeyDeleteAction
 from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
 
@@ -45,3 +48,28 @@ def api_forgot():
     """
     action = ForgotPasswordAction.from_dict(request.get_json())
     return action.execute()
+
+
+@app.route("/api/v2/api_key", methods=["POST", "DELETE"])
+@api
+def api_api_key():
+    """
+    Allows users to request a new API key or revoke an existing API key
+    :return: The JSON response
+    """
+    if request.method == "POST":
+        action = ApiKeyGenAction.from_dict(request.get_json())
+    else:  # request.method == "DELETE"
+        action = ApiKeyDeleteAction.from_dict(request.get_json())
+    return action.execute()
+
+
+@app.route("/api/v2/authorize", methods=["GET"])
+@login_required
+@api
+def api_authorize():
+    """
+    Allows a user to check if an API key is authorized or not
+    :return: None
+    """
+    return {}  # Checks done by @login_required

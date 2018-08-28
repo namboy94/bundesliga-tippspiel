@@ -36,5 +36,5 @@ Not required
 
 ##### Notes
 
-To complete the registration process, you will have to visit the URL in
+To complete the registration process, the user will have to visit the URL in
 the confirmation email.

@@ -98,9 +98,12 @@ def initialize_login_manager():
         db_api_key = ApiKey.query.get(api_key.split(":", 1)[0])
 
         # Check for validity of API key
-        if db_api_key is None \
-                or not db_api_key.verify_key(api_key) \
-                or db_api_key.has_expired():
+        if db_api_key is None or not db_api_key.verify_key(api_key):
+            return None
+
+        elif db_api_key.has_expired():
+            db.session.delete(db_api_key)
+            db.session.commit()
             return None
 
         return User.query.get(db_api_key.user_id)

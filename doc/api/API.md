@@ -16,7 +16,9 @@ The format is like this:
 Some requests do not require authentication, those can simply be called.
 
 You can aquire an API key by POSTing the username and password to
-the [api_key](endpoints/api_key.md) endpoint.
+the [api_key](endpoints/api_key.md) endpoint. To check
+if any given API key is valid, it's possible to use the
+[authorize](endpoints/authorize.md) endpoint.
 
 API keys stay valid for 30 days, after which they expire.
 
@@ -80,4 +82,6 @@ like this:
 For more details on the individual API endpoints, check out the following
 documents:
 
+* [api_key](endpoints/api_key.md)
+* [authorize](endpoints/authorize.md)
 * [register](endpoints/register.md)
