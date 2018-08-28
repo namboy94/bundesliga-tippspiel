@@ -19,11 +19,16 @@ LICENSE"""
 
 from bundesliga_tippspiel import app
 from flask import render_template, request
+from flask_login import login_required, current_user
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
+from bundesliga_tippspiel.actions.DeleteUserAction import DeleteUserAction
+from bundesliga_tippspiel.actions.ChangeEmailAction import ChangeEmailAction
 from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
+from bundesliga_tippspiel.actions.ChangePasswordAction import \
+    ChangePasswordAction
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -79,3 +84,55 @@ def forgot():
             "Sehe in deinem Email-Postfach nach.",
             "forgot"
         )
+
+
+@app.route("/profile", methods=["GET"])
+@login_required
+def profile():
+    """
+    Allows a user to edit their profile details
+    :return: The response
+    """
+    render_template(
+        "profile.html",
+        username=current_user.username
+    )
+
+
+@app.route("/change_password", methods=["POST"])
+@login_required
+def change_password():
+    """
+    Allows the user to change their password
+    :return: The response
+    """
+    action = ChangePasswordAction.from_site_request()
+    return action.execute_with_redirects(
+        "profile", "Dein Passwort wurde erfolgreich geändert.", "profile"
+    )
+
+
+@app.route("/change_email", methods=["POST"])
+@login_required
+def change_email():
+    """
+    Allows a user to change their email address
+    :return: The response
+    """
+    action = ChangeEmailAction.from_site_request()
+    return action.execute_with_redirects(
+        "profile", "Deine Email Adresse wurde erfolgreich geändert.", "profile"
+    )
+
+
+@app.route("/delete_user", methods=["POST"])
+@login_required
+def delete_user():
+    """
+    Allows a user to delete their account
+    :return: The response
+    """
+    action = DeleteUserAction.from_site_request()
+    return action.execute_with_redirects(
+        "logout", "Dein Account wurde erfolgreich gelöscht", "profile"
+    )

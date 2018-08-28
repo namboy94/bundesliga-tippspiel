@@ -90,7 +90,7 @@ class ForgotPasswordAction(Action):
             "forgot_password_email.html",
             host=self.host_address,
             target=os.path.join(self.host_address, "login"),
-            password=new_pass,
+            password=new_pass.decode("utf-8"),
             username=user.username
         )
 
