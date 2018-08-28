@@ -17,10 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import base64
 import pkg_resources
+from typing import Optional
 from bundesliga_tippspiel.routes import load_routes
 from bundesliga_tippspiel import app, db, login_manager
 from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
 
 
 def initialize_app():
@@ -71,10 +74,33 @@ def initialize_login_manager():
     :return: None
     """
     @login_manager.user_loader
-    def load_user(user_id: str):
+    def load_user(user_id: str) -> Optional[User]:
         """
         Loads a user from an ID
         :param user_id: The ID
         :return: The User
         """
         return User.query.get(int(user_id))
+
+    @login_manager.request_loader
+    def load_user_from_request(request) -> Optional[User]:
+
+        if "Authorization" not in request.headers:
+            return None
+
+        api_key = request.headers["Authorization"].replace("Basic ", "", 1)
+
+        try:
+            api_key = base64.b64decode(api_key)
+        except TypeError:
+            pass
+
+        db_api_key = ApiKey.query.get(api_key.split(":", 1)[0])
+
+        # Check for validity of API key
+        if db_api_key is None \
+                or not db_api_key.verify_key(api_key) \
+                or db_api_key.has_expired():
+            return None
+
+        return User.query.get(db_api_key.user_id)

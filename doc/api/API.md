@@ -11,9 +11,14 @@ To start off, we'll discuss how requests are sent.
 Authorization is handled using basic HTTP authentication headers.
 The format is like this:
 
-    "Authorization": "Basic username:password"
+    "Authorization": "Basic <API Key>"
     
 Some requests do not require authentication, those can simply be called.
+
+You can aquire an API key by POSTing the username and password to
+the [api_key](endpoints/api_key.md) endpoint.
+
+API keys stay valid for 30 days, after which they expire.
 
 ##### GET
 
