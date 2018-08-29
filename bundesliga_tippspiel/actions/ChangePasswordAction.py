@@ -22,7 +22,7 @@ from flask_login import current_user
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.types.exceptions import ActionException
-from bundesliga_tippspiel.utils.crypto import verify_password, generate_hash
+from bundesliga_tippspiel.utils.crypto import generate_hash
 
 
 class ChangePasswordAction(Action):
@@ -50,7 +50,13 @@ class ChangePasswordAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if not verify_password(self.old_password, current_user.password_hash):
+        if not current_user.is_authenticated:
+            raise ActionException(
+                "Unauthorized",
+                "Du musst hierfür angemeldet sein",
+                401
+            )
+        elif not current_user.verify_password(self.old_password):
             raise ActionException(
                 "Invalid Password",
                 "Das angegebene Passwort ist nicht korrekt"
@@ -67,7 +73,8 @@ class ChangePasswordAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        current_user.password_hash = generate_hash(self.new_password)
+        current_user.password_hash = \
+            generate_hash(self.new_password).decode("utf-8")
         db.session.commit()
         return {}
 

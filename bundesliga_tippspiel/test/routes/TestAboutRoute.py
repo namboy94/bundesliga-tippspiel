@@ -29,15 +29,16 @@ class TestAboutRoute(_RouteTestFramework):
     """
 
     @property
-    def route_info(self) -> Tuple[str, List[str], Optional[str]]:
+    def route_info(self) -> Tuple[str, List[str], Optional[str], bool]:
         """
         Info about the route to test
         :return: The route's path,
                  the route's primary methods,
                  A phrase found on the route's GET page.
-                 None if no such page exists
+                 None if no such page exists,
+                 An indicator for if the page requires authentication or not
         """
-        return "/about", ["GET"], "eRecht24"
+        return "/about", ["GET"], "eRecht24", False
 
     def test_successful_requests(self):
         """

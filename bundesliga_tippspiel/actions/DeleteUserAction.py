@@ -18,9 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from flask_login import current_user
+from flask_login import current_user, logout_user
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.types.exceptions import ActionException
 
 
 class DeleteUserAction(Action):
@@ -28,12 +29,13 @@ class DeleteUserAction(Action):
     Action that allows a user to delete their account
     """
 
-    def __init__(self):
+    def __init__(self, password: str):
         """
         Initializes the DeleteUserAction object
+        :param password: The password of the user for verification purposes
         :raises: ActionException if any problems occur
         """
-        pass
+        self.password = password
 
     def validate_data(self):
         """
@@ -41,7 +43,17 @@ class DeleteUserAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        pass
+        if not current_user.is_authenticated:
+            raise ActionException(
+                "Unauthorized",
+                "Du musst hierfür angemeldet sein",
+                401
+            )
+        elif not current_user.verify_password(self.password):
+            raise ActionException(
+                "Invalid Password",
+                "Das angegebene Passwort ist inkorrekt."
+            )
 
     def _execute(self) -> Dict[str, Any]:
         """
@@ -51,6 +63,7 @@ class DeleteUserAction(Action):
         """
         db.session.delete(current_user)
         db.session.commit()
+        logout_user()
         return {}
 
     @classmethod
@@ -60,4 +73,4 @@ class DeleteUserAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        return cls()
+        return cls(data["password"])

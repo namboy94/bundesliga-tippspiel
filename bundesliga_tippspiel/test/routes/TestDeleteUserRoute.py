@@ -18,14 +18,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, Optional, List
+from bundesliga_tippspiel.models.auth.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
 
 
-class TestLoginRoute(_RouteTestFramework):
+class TestDeleteUserRoute(_RouteTestFramework):
     """
-    Class that tests the /login route
+    Class that tests the /delete_user route
     """
 
     @property
@@ -38,36 +39,32 @@ class TestLoginRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/login", ["POST"], "Anmelden", False
+        return "/delete_user", ["POST"], None, True
 
     def test_successful_requests(self):
         """
         Tests (a) successful request(s)
         :return: None
         """
-        userdata = self.generate_sample_users()[0]
-        user, password = userdata["user"], userdata["pass"]
-
-        success = self.client.post("/login", follow_redirects=True, data={
-            "username": user.username,
-            "password": password
+        self.login()
+        self.assertTrue(User.query.get(self.user.id))
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            "password": self.pw
         })
-        self.assertTrue(b"Du hast dich erfolgreich angemeldet" in success.data)
+        self.assertTrue(b"Dein Account wurde erfolgreich gel" in resp.data)
+        self.assertFalse(User.query.get(self.user.id))
 
-        self.client.get("/logout")
+        unauthorized = self.client.post(self.route_path)
+        self.assertEqual(unauthorized.status_code, 401)
 
     def test_unsuccessful_requests(self):
         """
         Tests (an) unsuccessful request(s)
         :return: None
         """
-        failure = self.client.post("/login", follow_redirects=True, data={
-            "username": "A",
-            "password": "ABC"
+        self.login()
+        self.assertTrue(User.query.get(self.user.id))
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            "password": self.pw + "AAA"
         })
-        self.assertFalse(
-            b"Du hast dich erfolgreich angemeldet" in failure.data
-        )
-        self.assertTrue(
-            b"Dieser User ist nicht registriert" in failure.data
-        )
+        self.assertTrue(b"Das angegebene Passwort ist inkorrekt" in resp.data)

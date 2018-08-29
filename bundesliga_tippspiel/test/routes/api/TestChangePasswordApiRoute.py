@@ -18,14 +18,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, List
+from bundesliga_tippspiel.models.auth.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework
 
 
-class TestAuthorizeApiRoute(_ApiRouteTestFramework):
+class TestChangePasswordApiRoute(_ApiRouteTestFramework):
     """
-    Tests the /authorize API route
+    Tests the /change_password API route
     """
 
     @property
@@ -36,55 +37,46 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
                  A list of supported methods,
                  Whether or not the API endpoint requires authorization
         """
-        return "/api/v2/authorize", ["GET"], False
+        return "/api/v2/change_password", ["POST"], True
 
     def test_successful_call(self):
         """
         Tests a successful API call
         :return: None
         """
-        api_key = self.generate_sample_api_key(
-            self.generate_sample_user(True)["user"]
+        previous_hash = self.user.password_hash
+        resp = self.client.post(
+            self.route_path,
+            headers=self.generate_headers(),
+            json={
+                "old_password": self.pw,
+                "new_password": self.pw + "AAA",
+                "password_repeat": self.pw + "AAA"
+            }
         )
-
-        resp = self.client.get(
-            self.route_info[0],
-            headers=self.generate_headers(
-                "{}:{}".format(api_key.id, self.API_KEY)
-            )
-        )
-        self.assertEqual(resp.status_code, 200)
-        data = self.decode_data(resp)
-        self.assertEqual(data["status"], "ok")
+        resp_data = self.decode_data(resp)
+        self.assertEqual(resp_data["status"], "ok")
+        user = User.query.get(self.user.id)
+        self.assertNotEqual(previous_hash, user.password_hash)
+        self.assertTrue(user.verify_password(self.pw + "AAA"))
 
     def test_unsuccessful_call(self):
         """
         Tests an unsuccessful API call
         :return: None
         """
-        resp = self.client.get(
-            self.route_info[0],
-            headers=self.generate_headers("1:{}".format(self.API_KEY))
+        previous_hash = self.user.password_hash
+        resp = self.client.post(
+            self.route_path,
+            headers=self.generate_headers(),
+            json={
+                "old_password": self.pw,
+                "new_password": self.pw + "AAA",
+                "password_repeat": self.pw + "AA"
+            }
         )
-        self.assertEqual(resp.status_code, 401)
-        data = self.decode_data(resp)
-        self.assertEqual(data["status"], "error")
-
-    def test_expired_api_key(self):
-        """
-        Tests using an expired API key
-        :return: None
-        """
-        api_key = self.generate_sample_api_key(
-            self.generate_sample_user(True)["user"]
-        )
-        api_key.creation_time = 0
-        self.db.session.commit()
-
-        resp = self.client.get(
-            self.route_info[0],
-            headers=self.generate_headers("1:{}".format(self.API_KEY))
-        )
-        self.assertEqual(resp.status_code, 401)
-        data = self.decode_data(resp)
-        self.assertEqual(data["status"], "error")
+        resp_data = self.decode_data(resp)
+        self.assertEqual(resp_data["status"], "error")
+        self.assertEqual(resp_data["reason"], "Password Mismatch")
+        self.assertEqual(previous_hash, self.user.password_hash)
+        self.assertFalse(self.user.verify_password(self.pw + "AAA"))

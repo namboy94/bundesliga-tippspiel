@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel import db
+from bundesliga_tippspiel.utils.crypto import verify_password
 
 
 class User(db.Model):
@@ -97,3 +98,11 @@ class User(db.Model):
         :return: The user's ID as a unicode string
         """
         return str(self.id)
+
+    def verify_password(self, password: str) -> bool:
+        """
+        Verifies a password against the password hash
+        :param password: The password to check
+        :return: True if the password matches, False otherwise
+        """
+        return verify_password(password, self.password_hash)

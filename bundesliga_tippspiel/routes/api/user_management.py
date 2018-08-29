@@ -21,9 +21,12 @@ from flask import request
 from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api, api_login_required
+from bundesliga_tippspiel.actions.DeleteUserAction import DeleteUserAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.actions.ApiKeyGenAction import ApiKeyGenAction
 from bundesliga_tippspiel.actions.ApiKeyDeleteAction import ApiKeyDeleteAction
+from bundesliga_tippspiel.actions.ChangePasswordAction import \
+    ChangePasswordAction
 from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
 
@@ -74,3 +77,29 @@ def api_authorize():
     :return: None
     """
     return {}  # Checks done by @login_required
+
+
+@app.route("/api/v2/delete_user", methods=["POST"])
+@api_login_required
+@login_required
+@api
+def api_delete_user():
+    """
+    Allows a user to delete their account
+    :return: The JSON response
+    """
+    action = DeleteUserAction.from_dict(request.get_json())
+    return action.execute()
+
+
+@app.route("/api/v2/change_password", methods=["POST"])
+@api_login_required
+@login_required
+@api
+def api_change_password():
+    """
+    Allows a user to change their password
+    :return: The JSON response
+    """
+    action = ChangePasswordAction.from_dict(request.get_json())
+    return action.execute()

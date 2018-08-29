@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from bundesliga_tippspiel.models.auth.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
     _ModelTestFramework
-from bundesliga_tippspiel.models.auth.User import User
 
 
 class TestUser(_ModelTestFramework):
@@ -115,3 +115,11 @@ class TestUser(_ModelTestFramework):
             (self.user_one, [self.api_key]),
             (self.user_two, [])
         ])
+
+    def test_verifying_password(self):
+        """
+        Tests using the verify_password method
+        :return: None
+        """
+        self.assertTrue(self.user_one.verify_password("samplepass1"))
+        self.assertFalse(self.user_one.verify_password("samplepass2"))

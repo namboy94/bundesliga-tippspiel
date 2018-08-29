@@ -24,7 +24,6 @@ from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.actions.DeleteUserAction import DeleteUserAction
-from bundesliga_tippspiel.actions.ChangeEmailAction import ChangeEmailAction
 from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
 from bundesliga_tippspiel.actions.ChangePasswordAction import \
@@ -93,7 +92,7 @@ def profile():
     Allows a user to edit their profile details
     :return: The response
     """
-    render_template(
+    return render_template(
         "profile.html",
         username=current_user.username
     )
@@ -112,19 +111,6 @@ def change_password():
     )
 
 
-@app.route("/change_email", methods=["POST"])
-@login_required
-def change_email():
-    """
-    Allows a user to change their email address
-    :return: The response
-    """
-    action = ChangeEmailAction.from_site_request()
-    return action.execute_with_redirects(
-        "profile", "Deine Email Adresse wurde erfolgreich geändert.", "profile"
-    )
-
-
 @app.route("/delete_user", methods=["POST"])
 @login_required
 def delete_user():
@@ -134,5 +120,5 @@ def delete_user():
     """
     action = DeleteUserAction.from_site_request()
     return action.execute_with_redirects(
-        "logout", "Dein Account wurde erfolgreich gelöscht", "profile"
+        "index", "Dein Account wurde erfolgreich gelöscht", "profile"
     )

@@ -30,13 +30,14 @@ class TestForgotApiRoute(_ApiRouteTestFramework):
     """
 
     @property
-    def route_info(self) -> Tuple[str, List[str]]:
+    def route_info(self) -> Tuple[str, List[str], bool]:
         """
         Provides information about the route
         :return: The path of the route,
-                 A list of supported methods
+                 A list of supported methods,
+                 Whether or not the API endpoint requires authorization
         """
-        return "/api/v2/forgot", ["POST"]
+        return "/api/v2/forgot", ["POST"], False
 
     def test_successful_call(self):
         """

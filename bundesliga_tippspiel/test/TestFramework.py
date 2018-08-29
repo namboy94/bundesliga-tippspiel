@@ -22,6 +22,7 @@ import bundesliga_tippspiel
 from functools import wraps
 from unittest import TestCase
 from typing import Tuple, Callable, Dict
+from flask_login import login_user
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
@@ -64,10 +65,7 @@ class _TestFramework(TestCase):
         initialize_login_manager()
 
         self.client = self.app.test_client()
-
-        # Initialize current_user
-        import flask_login
-        flask_login.current_user = flask_login.AnonymousUserMixin()
+        self.context = self.app.test_request_context()
 
     def tearDown(self):
         """
@@ -190,3 +188,12 @@ class _TestFramework(TestCase):
                 func(*args, **kwargs)
 
         return wrapper
+
+    def login_user(self, user: User):
+        """
+        Logs in a user in the local context
+        :param user: The user to log in
+        :return: None
+        """
+        with self.context:
+            login_user(user)

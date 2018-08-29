@@ -23,9 +23,9 @@ from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
 
 
-class TestLoginRoute(_RouteTestFramework):
+class TestProfileRoute(_RouteTestFramework):
     """
-    Class that tests the /login route
+    Class that tests the /profile route
     """
 
     @property
@@ -38,36 +38,25 @@ class TestLoginRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/login", ["POST"], "Anmelden", False
+        return "/profile", ["GET"], "Account l", True
 
     def test_successful_requests(self):
         """
         Tests (a) successful request(s)
         :return: None
         """
-        userdata = self.generate_sample_users()[0]
-        user, password = userdata["user"], userdata["pass"]
-
-        success = self.client.post("/login", follow_redirects=True, data={
-            "username": user.username,
-            "password": password
-        })
-        self.assertTrue(b"Du hast dich erfolgreich angemeldet" in success.data)
-
-        self.client.get("/logout")
+        pass
 
     def test_unsuccessful_requests(self):
         """
         Tests (an) unsuccessful request(s)
         :return: None
         """
-        failure = self.client.post("/login", follow_redirects=True, data={
-            "username": "A",
-            "password": "ABC"
-        })
-        self.assertFalse(
-            b"Du hast dich erfolgreich angemeldet" in failure.data
-        )
-        self.assertTrue(
-            b"Dieser User ist nicht registriert" in failure.data
-        )
+        pass
+
+    def test_malformed_data(self):
+        """
+        Tests that malformed data in the request is handled appropriately
+        :return: None
+        """
+        pass

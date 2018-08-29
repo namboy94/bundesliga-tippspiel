@@ -30,13 +30,14 @@ class TestApiKeyApiRoute(_ApiRouteTestFramework):
     """
 
     @property
-    def route_info(self) -> Tuple[str, List[str]]:
+    def route_info(self) -> Tuple[str, List[str], bool]:
         """
         Provides information about the route
         :return: The path of the route,
-                 A list of supported methods
+                 A list of supported methods,
+                 Whether or not the API endpoint requires authorization
         """
-        return "/api/v2/api_key", ["POST", "DELETE"]
+        return "/api/v2/api_key", ["POST", "DELETE"], False
 
     def test_successful_call(self):
         """
@@ -49,7 +50,6 @@ class TestApiKeyApiRoute(_ApiRouteTestFramework):
             "password": user["pass"]
         })
         generated = self.decode_data(generated)
-        print(generated)
         self.assertTrue("api_key" in generated["data"])
         self.assertTrue("expiration" in generated["data"])
 

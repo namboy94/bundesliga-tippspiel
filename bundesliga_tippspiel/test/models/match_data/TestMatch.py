@@ -103,7 +103,6 @@ class TestMatch(_ModelTestFramework):
         Tests deleting model objects from the database
         :return: None
         """
-        print(self.match.id)
         self._test_deleting_from_db([
             (self.match, [self.goal])
         ])

@@ -20,6 +20,7 @@ LICENSE"""
 from typing import Tuple, List, Optional
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
+from bundesliga_tippspiel.models.auth.User import User
 
 
 class _RouteTestFramework(_TestFramework):
@@ -27,26 +28,92 @@ class _RouteTestFramework(_TestFramework):
     Framework for testing routes
     """
 
+    def setUp(self):
+        """
+        Sets up a user for testing
+        :return: None
+        """
+        super().setUp()
+        self.user = User(
+            username="RouteUser",
+            email="route@hk-tippspiel.com",
+            password_hash="$2b$12$xwI3.FxhPmL3EeAgJICetO12AzB"
+                          "vEdlBY8bQ1HZtcIjULkZg3/Kb2",
+            confirmation_hash="",
+            confirmed=True
+        )
+        self.db.session.add(self.user)
+        self.db.session.commit()
+        self.pw = "route"
+
+    def login(self):
+        """
+        Logs in self.user
+        :return: None
+        """
+        resp = self.client.post("/login", follow_redirects=True, data={
+            "username": self.user.username,
+            "password": self.pw
+        })
+        self.assertTrue(b"Du hast dich erfolgreich angemeldet" in resp.data)
+
     @property
-    def route_info(self) -> Tuple[str, List[str], Optional[str]]:
+    def route_info(self) -> Tuple[str, List[str], Optional[str], bool]:
         """
         Info about the route to test
         :return: The route's path,
                  the route's primary methods,
                  A phrase found on the route's GET page.
-                 None if no such page exists
+                 None if no such page exists,
+                 An indicator for if the page requires authentication or not
         """
         raise NotImplementedError()
+
+    @property
+    def route_path(self) -> str:
+        """
+        :return: The path of the route
+        """
+        return self.route_info[0]
+
+    @property
+    def methods(self) -> List[str]:
+        """
+        :return: The primary methods of the route
+        """
+        return self.route_info[1]
+
+    @property
+    def phrase(self) -> Optional[str]:
+        """
+        :return: A phrase contained in the GET request
+        """
+        return self.route_info[2]
+
+    @property
+    def auth_required(self) -> bool:
+        """
+        :return: If true, this route requires authentication.
+        """
+        return self.route_info[3]
 
     def test_static(self):
         """
         Tests fetching a static page using GET
         :return: None
         """
-        phrase = self.route_info[2]
-        if phrase is not None:
-            static = self.client.get(self.route_info[0], follow_redirects=True)
-            self.assertTrue(bytes(phrase, "utf-8") in static.data)
+        if self.phrase is not None:
+
+            if self.auth_required:
+                unauthorized = self.client.get(
+                    self.route_path, follow_redirects=True
+                )
+                self.assertEqual(unauthorized.status_code, 401)
+                self.login()
+
+            static = self.client.get(self.route_path, follow_redirects=True)
+            self.assertEqual(static.status_code, 200)
+            self.assertTrue(self.phrase.encode("utf-8") in static.data)
 
     def test_successful_requests(self):
         """
@@ -67,16 +134,19 @@ class _RouteTestFramework(_TestFramework):
         Tests that malformed data in the request is handled appropriately
         :return: None
         """
-        for method in self.route_info[1]:
+        if self.auth_required:
+            self.login()
+
+        for method in self.methods:
             if method == "POST":
                 malformed = self.client.post(
-                    self.route_info[0],
+                    self.route_path,
                     follow_redirects=True,
                     data={}
                 )
             elif method == "GET":
                 malformed = self.client.get(
-                    "{}?alolo=1".format(self.route_info[0]),
+                    "{}?alolo=1".format(self.route_path),
                     follow_redirects=True
                 )
             else:

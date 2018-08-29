@@ -59,7 +59,7 @@ class TestLoginAction(_ActionTestFramework):
         Tests logging in and then logging out
         :return: None
         """
-        with self.app.test_request_context():
+        with self.context:
             self.assertFalse(current_user.is_authenticated)
             self.action.execute()
             self.assertTrue(current_user.is_authenticated)
@@ -71,7 +71,7 @@ class TestLoginAction(_ActionTestFramework):
         Tests using an invalid user
         :return: None
         """
-        with self.app.test_request_context():
+        with self.context:
             self.action.username = "NewUser"
             self.failed_execute("User does not exist")
 
@@ -80,7 +80,7 @@ class TestLoginAction(_ActionTestFramework):
         Tests logging in twice
         :return: None
         """
-        with self.app.test_request_context():
+        with self.context:
             self.action.execute()
             self.failed_execute(
                 "Already logged in", severity=AlertSeverity.INFO
@@ -92,7 +92,7 @@ class TestLoginAction(_ActionTestFramework):
         Tests logging in an unconfirmed user
         :return: None
         """
-        with self.app.test_request_context():
+        with self.context:
             self.action.username = self.unconfirmed_user.username
             self.action.password = self.unconfirmed_user_pw
             self.failed_execute("Not confirmed")
@@ -102,6 +102,6 @@ class TestLoginAction(_ActionTestFramework):
         Tests using the wrong password
         :return: None
         """
-        with self.app.test_request_context():
+        with self.context:
             self.action.password = "A"
             self.failed_execute("Invalid Password")
