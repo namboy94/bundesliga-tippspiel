@@ -64,3 +64,22 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
         self.assertEqual(resp.status_code, 401)
         data = self.decode_data(resp)
         self.assertEqual(data["status"], "error")
+
+    def test_expired_api_key(self):
+        """
+        Tests using an expired API key
+        :return: None
+        """
+        api_key = self.generate_sample_api_key(
+            self.generate_sample_user(True)["user"]
+        )
+        api_key.creation_time = 0
+        self.db.session.commit()
+
+        resp = self.client.get(
+            self.route_info[0],
+            headers=self.generate_headers("1:{}".format(self.API_KEY))
+        )
+        self.assertEqual(resp.status_code, 401)
+        data = self.decode_data(resp)
+        self.assertEqual(data["status"], "error")

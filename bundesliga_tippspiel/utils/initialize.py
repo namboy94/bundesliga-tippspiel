@@ -92,7 +92,7 @@ def initialize_login_manager():
 
         try:
             api_key = base64.b64decode(api_key.encode("utf-8")).decode("utf-8")
-        except TypeError:
+        except TypeError:  # pragma: no cover
             pass
 
         db_api_key = ApiKey.query.get(api_key.split(":", 1)[0])

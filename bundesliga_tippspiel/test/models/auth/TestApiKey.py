@@ -122,3 +122,6 @@ class TestApiKey(_ModelTestFramework):
         self.assertTrue(
             self.api_key.verify_key("{}:{}".format(self.api_key.id, key))
         )
+        self.assertFalse(
+            self.api_key.verify_key("{}:{}".format(self.api_key.id + 1, key))
+        )
