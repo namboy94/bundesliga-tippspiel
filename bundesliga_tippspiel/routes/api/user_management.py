@@ -20,7 +20,7 @@ LICENSE"""
 from flask import request
 from flask_login import login_required
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.utils.routes import api
+from bundesliga_tippspiel.utils.routes import api, api_login_required
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.actions.ApiKeyGenAction import ApiKeyGenAction
 from bundesliga_tippspiel.actions.ApiKeyDeleteAction import ApiKeyDeleteAction
@@ -65,6 +65,7 @@ def api_api_key():
 
 
 @app.route("/api/v2/authorize", methods=["GET"])
+@api_login_required
 @login_required
 @api
 def api_authorize():

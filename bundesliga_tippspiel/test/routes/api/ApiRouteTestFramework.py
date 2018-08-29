@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import json
+from base64 import b64encode
 from flask import Response
 from typing import Tuple, List, Dict, Any
 # noinspection PyProtectedMember
@@ -92,3 +93,15 @@ class _ApiRouteTestFramework(_TestFramework):
         :return: The JSON data
         """
         return json.loads(response.data.decode("utf-8"))
+
+    @staticmethod
+    def generate_headers(api_key: str) -> Dict[str, str]:
+        """
+        Generates base64 encoded authorization headers for an API key
+        :param api_key: The API key to use
+        :return: The headers
+        """
+        encoded = b64encode(api_key.encode("utf-8")).decode("utf-8")
+        return {
+            "Authorization": "Basic {}".format(encoded)
+        }

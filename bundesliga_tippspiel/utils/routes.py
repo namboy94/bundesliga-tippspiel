@@ -20,10 +20,11 @@ LICENSE"""
 from functools import wraps
 from typing import Callable
 from flask import jsonify, make_response, request
+from werkzeug.exceptions import Unauthorized
 from bundesliga_tippspiel.types.exceptions import ActionException
 
 
-def api(func: Callable):
+def api(func: Callable) -> Callable:
     """
     Decorator that handles common API patterns and ensures that
     the JSON response will always follow a certain pattern
@@ -66,5 +67,34 @@ def api(func: Callable):
                 response["reason"] = "Bad Request"
 
         return make_response(jsonify(response), code)
+
+    return wrapper
+
+
+def api_login_required(func: Callable) -> Callable:
+    """
+    Decorator to make unauthorized API calls respond with JSON properly
+    :param func: The function to wrap
+    :return: The wrapped function
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """
+        Checks if flask-login throws an Unauthorized exception. If so,
+        re-wrap the response in JSON
+        :param args: The function arguments
+        :param kwargs: The function keyword arguments
+        :return: The newly wrapped response,
+                 or just the plain response if authorized
+        """
+
+        try:
+            resp = func(*args, **kwargs)
+            return resp
+        except Unauthorized:
+            return make_response(
+                jsonify({"status": "error", "reason": "Unauthorized"}), 401
+            )
 
     return wrapper

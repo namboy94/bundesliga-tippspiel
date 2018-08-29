@@ -91,7 +91,7 @@ def initialize_login_manager():
         api_key = request.headers["Authorization"].replace("Basic ", "", 1)
 
         try:
-            api_key = base64.b64decode(api_key)
+            api_key = base64.b64decode(api_key.encode("utf-8")).decode("utf-8")
         except TypeError:
             pass
 
