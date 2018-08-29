@@ -145,7 +145,7 @@ class RegisterAction(Action):
             target=os.path.join(self.host_address, "confirm"),
             username=self.username,
             user_id=user.id,
-            confirm_key=confirmation_key
+            confirm_key=confirmation_key.decode("utf-8")
         )
         send_email(
             self.email,
