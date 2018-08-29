@@ -41,7 +41,6 @@ class ApiKeyGenAction(Action):
         """
         self.username = username
         self.password = password
-        self.user = User.query.filter_by(username=username).first()
 
     def validate_data(self):
         """
@@ -49,12 +48,18 @@ class ApiKeyGenAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if self.user is None:
+        user = User.query.filter_by(username=self.username).first()
+        if user is None:
             raise ActionException(
                 "User does not exist",
                 "Der spezifizierte Nutzer existiert nicht"
             )
-        elif not verify_password(self.password, self.user.password_hash):
+        elif not user.confirmed:
+            raise ActionException(
+                "User is not confirmed",
+                "Der spezifizierte Nutzer wurde noch nicht bestätigt"
+            )
+        elif not verify_password(self.password, user.password_hash):
             raise ActionException(
                 "Invalid Password",
                 "Das angegebene Passwort ist nicht korrekt"
@@ -66,16 +71,18 @@ class ApiKeyGenAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
+        user = User.query.filter_by(username=self.username).first()
+
         key = generate_random(20)
         hashed = generate_hash(key).decode("utf-8")
-        api_key = ApiKey(user=self.user, key_hash=hashed)
+        api_key = ApiKey(user=user, key_hash=hashed)
 
         db.session.add(api_key)
         db.session.commit()
 
         return {
-            "api_key": "{}:{}".format(api_key.id, key),
-            "expiration": int(api_key.creation_time) + 2592000
+            "api_key": "{}:{}".format(api_key.id, key.decode("utf-8")),
+            "expiration": int(api_key.creation_time) + ApiKey.MAX_AGE
         }
 
     @classmethod

@@ -38,6 +38,11 @@ class _TestFramework(TestCase):
     Class that models a testing framework for the flask application
     """
 
+    # Constants
+    API_KEY = "apikey"
+    API_KEY_HASH = \
+        b"$2b$12$hZgUP0mzn6pZsQ45FYkiJuZFIRDCo.MbDb7e2fGHAJJq/jqn9yf9e"
+
     def setUp(self):
         """
         Sets up the SQLite database
@@ -163,15 +168,9 @@ class _TestFramework(TestCase):
         :param user: The user for which to generate the API key
         :return: The Api key object
         """
-        # noinspection PyUnusedLocal
-        key = "apikey"
-        hashed = \
-            b"$2b$12$hZgUP0mzn6pZsQ45FYkiJuZFIRDCo.MbDb7e2fGHAJJq/jqn9yf9e"
-        obj = ApiKey(user=user, key_hash=hashed)
-
+        obj = ApiKey(user=user, key_hash=self.API_KEY_HASH)
         self.db.session.add(obj)
         self.db.session.commit()
-
         return obj
 
     @staticmethod

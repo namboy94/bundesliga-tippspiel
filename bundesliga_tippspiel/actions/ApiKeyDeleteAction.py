@@ -36,7 +36,6 @@ class ApiKeyDeleteAction(Action):
         :raises: ActionException if any problems occur
         """
         self.api_key = api_key
-        self.api_key_obj = ApiKey.query.get(api_key.split(":", 1)[0])
 
     def validate_data(self):
         """
@@ -44,10 +43,16 @@ class ApiKeyDeleteAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if self.api_key_obj is None:
+        api_key = ApiKey.query.get(self.api_key.split(":", 1)[0])
+        if api_key is None:
             raise ActionException(
                 "API Key does not exist",
                 "Der API Schlüssel existiert nicht"
+            )
+        elif not api_key.verify_key(self.api_key):
+            raise ActionException(
+                "API key not valid",
+                "Der API Schlüssel ist ungültig"
             )
 
     def _execute(self) -> Dict[str, Any]:
@@ -56,7 +61,8 @@ class ApiKeyDeleteAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        db.session.delete(self.api_key_obj)
+        api_key = ApiKey.query.get(self.api_key.split(":", 1)[0])
+        db.session.delete(api_key)
         db.session.commit()
         return {}
 

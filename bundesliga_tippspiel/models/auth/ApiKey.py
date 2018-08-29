@@ -28,6 +28,11 @@ class ApiKey(db.Model):
     An ApiKey is used for API access using HTTP basic auth
     """
 
+    MAX_AGE = 2592000  # 30 days
+    """
+    The maximum age of an API key in seconds
+    """
+
     __tablename__ = "api_keys"
     """
     The name of the table
@@ -73,7 +78,7 @@ class ApiKey(db.Model):
         API Keys expire after 30 days
         :return: True if the key has expired, False otherwise
         """
-        return time.time() - self.creation_time > 2592000
+        return time.time() - self.creation_time > self.MAX_AGE
 
     def verify_key(self, key: str) -> bool:
         """
