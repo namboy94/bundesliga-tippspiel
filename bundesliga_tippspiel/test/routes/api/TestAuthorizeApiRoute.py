@@ -83,7 +83,9 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
 
         resp = self.client.get(
             self.route_info[0],
-            headers=self.generate_headers("1:{}".format(self.API_KEY))
+            headers=self.generate_headers(
+                "{}:{}".format(api_key.id, self.API_KEY)
+            )
         )
         self.assertEqual(resp.status_code, 401)
         data = self.decode_data(resp)
