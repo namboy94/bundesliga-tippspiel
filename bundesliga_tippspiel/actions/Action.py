@@ -109,3 +109,15 @@ class Action:
         except ActionException as e:
             e.flash()
             return redirect(url_for(failure_url))
+
+    def too_many_arguments_error(self):
+        """
+        Raises an ActionException for when too many parameters were passed
+        to the class.
+        :return: None
+        :raises ActionException: Without fail
+        """
+        raise ActionException(
+            "Too many arguments",
+            "Es wurden zu viele Parameter übergeben"
+        )
