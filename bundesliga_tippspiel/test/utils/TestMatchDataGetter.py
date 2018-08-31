@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import requests
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
@@ -30,6 +31,7 @@ class TestEnv(_TestFramework):
     Unit test class that tests the match_data_getter script
     """
 
+    @_TestFramework.online_required
     def test_populating_twice(self):
         """
         Tests populating the database. Twice.
@@ -39,6 +41,18 @@ class TestEnv(_TestFramework):
         self.assert_db_state()
         update_db_data()
         self.assert_db_state()
+
+    @_TestFramework.online_required
+    def test_icon_urls(self):
+        """
+        Tests if all team icon URLs are valid
+        :return: None
+        """
+        update_db_data()
+        for team in Team.query.all():
+            for url in [team.icon_svg, team.icon_png]:
+                resp = requests.head(url)
+                self.assertEqual(resp.status_code, 200)
 
     def assert_db_state(self):
         """

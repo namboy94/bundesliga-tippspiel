@@ -20,7 +20,7 @@ LICENSE"""
 import json
 import requests
 from datetime import datetime
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Tuple
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.match_data.Goal import Goal
@@ -144,12 +144,19 @@ def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
     """
     if goal_data["GoalGetterID"] == 0:
         return None
+
+    minute = goal_data["MatchMinute"]
+    minute_et = 0
+    if minute > 90:
+        minute_et = minute - 90
+        minute = 90
+
     return Goal(
         id=goal_data["GoalID"],
         match_id=match_id,
         player_id=goal_data["GoalGetterID"],
-        minute=goal_data["MatchMinute"],
-        minute_et=None if not goal_data["IsOvertime"] else 1,  # TODO Fix
+        minute=minute,
+        minute_et=minute_et,
         home_score=goal_data["ScoreTeam1"],
         away_score=goal_data["ScoreTeam2"],
         own_goal=goal_data["IsOwnGoal"],
@@ -177,13 +184,15 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
     :param team_data: The team data to parse
     :return: The generated Team object
     """
+    name, abbrev, short_name, icons = get_team_data(team_data["TeamName"])
+    svg, png = icons
     return Team(
         id=team_data["TeamId"],
-        name=team_data["TeamName"],
-        abbreviation=str(team_data["TeamId"]),  # TODO Fix
-        short_name=team_data["ShortName"],
-        icon_png=team_data["TeamIconUrl"],  # TODO Fix
-        icon_svg=team_data["TeamIconUrl"]   # TODO Fix
+        name=name,
+        abbreviation=abbrev,
+        short_name=short_name,
+        icon_svg=svg,
+        icon_png=png
     )
 
 
@@ -206,3 +215,107 @@ def store_in_db(objects: List[db.Model], model_cls: type(db.Model)):
         else:
             db.session.add(obj)
     db.session.commit()
+
+
+def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
+    """
+    Generates team short_names, abbreviations and icon URLs for teams
+    :param team_name: The team's full name as specified by OpenLigaDB
+    :return: A tuple containing the
+            name, short_name, abbreviation, svg URL, png URL
+    """
+    return {
+        "1. FC Nürnberg": (
+            "1. FC Nürnberg", "Nürnberg", "FCN",
+            wikimedia_icon_urls("de/b/b5/Logo_FC_Augsburg.svg")
+        ),
+        "1. FSV Mainz 05": (
+            "1. FSV Mainz 05", "Mainz", "M05",
+            wikimedia_icon_urls("commons/0/0b/FSV_Mainz_05_Logo.svg")
+        ),
+        "Bayer Leverkusen": (
+            "Bayer 04 Leverkusen", "Leverkusen", "B04",
+            wikimedia_icon_urls("de/f/f7/Bayer_Leverkusen_Logo.svg")
+        ),
+        "Borussia Dortmund": (
+            "Borussia Dortmund", "Dortmund", "BVB",
+            wikimedia_icon_urls("commons/6/67/Borussia_Dortmund_logo.svg")
+        ),
+        "Borussia Mönchengladbach": (
+            "Borussia Mönchengladbach", "M'Gladbach", "BMG",
+            wikimedia_icon_urls("commons/8/81/Borussia_"
+                                "Mönchengladbach_logo.svg")
+        ),
+        "Eintracht Frankfurt": (
+            "Eintracht Frankfurt", "Frankfurt", "SGE",
+            wikimedia_icon_urls("commons/0/04/Eintracht_Frankfurt_Logo.svg")
+        ),
+        "FC Augsburg": (
+            "FC Augsburg", "Augsburg", "FCA",
+            wikimedia_icon_urls("de/b/b5/Logo_FC_Augsburg.svg")
+        ),
+        "FC Bayern": (
+            "FC Bayern München", "Bayern", "FCB",
+            wikimedia_icon_urls("commons/1/1b/"
+                                "FC_Bayern_München_logo_(2017).svg")
+        ),
+        "FC Schalke 04": (
+            "FC Schalke 04", "Schalke", "S04",
+            wikimedia_icon_urls("commons/6/6d/FC_Schalke_04_Logo.svg")
+        ),
+        "Fortuna Düsseldorf": (
+            "Fortuna Düsseldorf", "Düsseldorf", "F95",
+            wikimedia_icon_urls("commons/9/94/Fortuna_D%C3%BCsseldorf.svg")
+        ),
+        "Hannover 96": (
+            "Hannover 96", "Hannover", "H96",
+            wikimedia_icon_urls("commons/c/cd/Hannover_96_Logo.svg")
+        ),
+        "Hertha BSC": (
+            "Hertha BSC Berlin", "Hertha", "BSC",
+            wikimedia_icon_urls("commons/8/81/Hertha_BSC_Logo_2012.svg")
+        ),
+        "RB Leipzig": (
+            "RB Leibzig", "Leibzig", "RBL",
+            wikimedia_icon_urls("it/c/cc/RB_Leipzig_primo_logo.svg")
+        ),
+        "SC Freiburg": (
+            "SC Freiburg", "Freiburg", "SCF",
+            wikimedia_icon_urls("de/8/88/Logo-SC_Freiburg.svg")
+        ),
+        "TSG 1899 Hoffenheim": (
+            "TSG 1899 Hoffenheim", "Hoffenheim", "TSG",
+            wikimedia_icon_urls("commons/e/e7/Logo_TSG_Hoffenheim.svg")
+        ),
+        "VfB Stuttgart": (
+            "VFB Stuttgart", "Stuttgart", "VFB",
+            wikimedia_icon_urls("commons/e/eb/VfB_Stuttgart_1893_Logo.svg")
+        ),
+        "VfL Wolfsburg": (
+            "VFL Wolfsburg", "Wolfsburg", "VFL",
+            wikimedia_icon_urls("commons/c/ce/VfL_Wolfsburg_Logo.svg")
+        ),
+        "Werder Bremen": (
+            "SV Werder Bremen", "Bremen", "SVW",
+            wikimedia_icon_urls("commons/b/be/SV-Werder-Bremen-Logo.svg")
+        )
+    }[team_name]
+
+
+def wikimedia_icon_urls(path: str, png_size: int = 500) -> Tuple[str, str]:
+    """
+    Generates URL paths to wikimedia-hosted SVG and PNG files
+    :param path: The URL path to the SVG file (without the wikimedia part)
+    :param png_size: The size of the PNG file
+    :return: The URL path to the SVG File, PNG file
+    """
+    wikimedia = "https://upload.wikimedia.org/wikipedia"
+    base, specific = path.split("/", 1)
+    svg_filename = path.rsplit("/", 1)[1]
+
+    svg_url = "{}/{}".format(wikimedia, path)
+    png_url = "{}/{}/thumb/{}/{}px-{}.png".format(
+        wikimedia, base, specific, png_size, svg_filename
+    )
+
+    return png_url, svg_url
