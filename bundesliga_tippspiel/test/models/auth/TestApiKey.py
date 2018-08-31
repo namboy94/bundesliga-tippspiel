@@ -88,6 +88,25 @@ class TestApiKey(_ModelTestFramework):
             (self.api_key, [])
         ])
 
+    def test_json_representation(self):
+        """
+        Tests the JSON representation of the model
+        :return: None
+        """
+        without_children = self.api_key.__json__(False)
+        without_children.update({"user": self.api_key.user.__json__(True)})
+        self.assertEqual(
+            self.api_key.__json__(True),
+            without_children
+        )
+
+    def test_string_representation(self):
+        """
+        Tests the str and repr methods of the model
+        :return: None
+        """
+        self._test_string_representation(self.api_key)
+
     def test_expiration(self):
         """
         Tests if expiration of an API key is noticed correctly
@@ -125,22 +144,3 @@ class TestApiKey(_ModelTestFramework):
         self.assertFalse(
             self.api_key.verify_key("{}:{}".format(self.api_key.id + 1, key))
         )
-
-    def test_json_representation(self):
-        """
-        Tests the JSON representation of the model
-        :return: None
-        """
-        without_children = self.api_key.__json__(False)
-        without_children.update({"user": self.api_key.user.__json__(True)})
-        self.assertEqual(
-            self.api_key.__json__(True),
-            without_children
-        )
-
-    def test_string_representation(self):
-        """
-        Tests the str and repr methods of the model
-        :return: None
-        """
-        self._test_string_representation(self.api_key)

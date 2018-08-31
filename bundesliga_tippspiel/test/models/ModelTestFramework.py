@@ -44,6 +44,7 @@ class _ModelTestFramework(_TestFramework):
         self.user_one = user_one["user"]
         self.user_two = user_two["user"]
         self.api_key = self.generate_sample_api_key(self.user_one)
+        self.bet = self.generate_sample_bet(self.user_one, self.match)
 
     def _test_missing_column_data(
             self, incomplete_columns: List[db.Model]
@@ -176,5 +177,7 @@ class _ModelTestFramework(_TestFramework):
         from bundesliga_tippspiel.models.match_data.Goal import Goal
         # noinspection PyUnresolvedReferences
         from bundesliga_tippspiel.models.match_data.Match import Match
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.user_generated.Bet import Bet
 
         exec("self.assertEqual(model, {})".format(repr(model)))

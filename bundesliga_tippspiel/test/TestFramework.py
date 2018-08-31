@@ -23,6 +23,7 @@ from functools import wraps
 from unittest import TestCase
 from typing import Tuple, Callable, Dict
 from flask_login import login_user
+from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Player import Player
 from bundesliga_tippspiel.models.match_data.Match import Match
@@ -30,6 +31,7 @@ from bundesliga_tippspiel.models.match_data.Goal import Goal
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
 from bundesliga_tippspiel.utils.crypto import generate_random
+from bundesliga_tippspiel.utils.match_data_getter import update_db_data
 from bundesliga_tippspiel.utils.initialize import initialize_app, \
     initialize_login_manager, initialize_db
 
@@ -122,6 +124,18 @@ class _TestFramework(TestCase):
 
         return team_one, team_two, player, match, goal
 
+    def generate_sample_bet(self, user: User, match: Match) -> Bet:
+        """
+        Generates a sample bet betting 2:1
+        :param user: The user for which to generate the bet
+        :param match: The match for which to generate the bet
+        :return: The bet
+        """
+        bet = Bet(user=user, match=match, home_score=2, away_score=1)
+        self.db.session.add(bet)
+        self.db.session.commit()
+        return bet
+
     def generate_sample_user(self, confirmed: bool) -> Dict[str, User or str]:
         """
         Generates a sample user
@@ -197,3 +211,11 @@ class _TestFramework(TestCase):
         """
         with self.context:
             login_user(user)
+
+    @staticmethod
+    def load_real_match_data():
+        """
+        Loads real match data from openligadb.com into the database
+        :return: None
+        """
+        update_db_data()

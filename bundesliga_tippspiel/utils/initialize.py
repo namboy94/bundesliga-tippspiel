@@ -63,6 +63,9 @@ def initialize_db(db_uri: str):
     from bundesliga_tippspiel.models.match_data.Goal import Goal
     from bundesliga_tippspiel.models.match_data.Match import Match
     from bundesliga_tippspiel.models.match_data.Player import Player
+    from bundesliga_tippspiel.models.auth.User import User
+    from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+    from bundesliga_tippspiel.models.user_generated.Bet import Bet
 
     with app.app_context():
         db.create_all()

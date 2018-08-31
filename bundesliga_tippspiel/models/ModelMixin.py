@@ -41,7 +41,7 @@ class ModelMixin:
                                  included or if they're limited to IDs
         :return: A dictionary representing the model's values
         """
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     def __str__(self) -> str:
         """
@@ -72,4 +72,4 @@ class ModelMixin:
         if "__json__" in dir(other):
             return other.__json__() == self.__json__()
         else:
-            return False
+            return False  # pragma: no cover
