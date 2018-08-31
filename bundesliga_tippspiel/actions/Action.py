@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional, List
 from flask import abort, redirect, url_for, request
+from bundesliga_tippspiel import db
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
 
@@ -110,14 +111,51 @@ class Action:
             e.flash()
             return redirect(url_for(failure_url))
 
-    def too_many_arguments_error(self):
+    @staticmethod
+    def handle_id_fetch(_id: int, query_cls: type(db.Model)) -> db.Model:
         """
-        Raises an ActionException for when too many parameters were passed
-        to the class.
-        :return: None
+        Handles fetching a single object by using it's ID
+        Raises an ActionException if an ID does not exist
+        :return: The object identified by the ID
         :raises ActionException: Without fail
         """
-        raise ActionException(
-            "Too many arguments",
-            "Es wurden zu viele Parameter übergeben"
-        )
+        result = query_cls.query.get(_id)
+        if result is None:
+            raise ActionException(
+                "ID does not exist",
+                "Die angegebene ID existiert nicht",
+                404
+            )
+        else:
+            return result
+
+    @staticmethod
+    def check_id_or_filters(
+            _id: Optional[int], filters: List[Optional[Any]]
+    ):
+        """
+        Checks that no filters are applied if a specific ID was provided
+        :param _id: The specific ID
+        :param filters: A list of filters
+        :return: None
+        """
+        has_filter = len(list(filter(lambda x: x is not None, filters))) > 0
+        if has_filter and _id is not None:
+            raise ActionException(
+                "Can't filter specific ID",
+                "Eine spezifische ID kann nicht gefiltered werden"
+            )
+
+    @staticmethod
+    def check_matchday_bounds(matchday: Optional[int]):
+        """
+        Checks the bound of a matchday
+        :param matchday: The matchday to check
+        :return: None
+        :raises ActionException: If the matchday is invalid
+        """
+        if matchday is not None and not 0 < matchday < 35:
+            raise ActionException(
+                "Matchday out of bounds",
+                "Den angegebenen Spieltag gibt es nicht"
+            )
