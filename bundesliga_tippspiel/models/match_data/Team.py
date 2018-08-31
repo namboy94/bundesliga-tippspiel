@@ -17,26 +17,29 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
 from bundesliga_tippspiel import db
+from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 
 
-class Team(db.Model):
+class Team(ModelMixin, db.Model):
     """
     Model that describes the 'teams' SQL table
     A Team is the most basic data for a match, it relies on no other data,
     only primitives
     """
 
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes the Model
+        :param args: The constructor arguments
+        :param kwargs: The constructor keyword arguments
+        """
+        super().__init__(*args, **kwargs)
+
     __tablename__ = "teams"
     """
     The name of the table
-    """
-
-    id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
-    """
-    The ID is the primary key of the table and increments automatically
     """
 
     name = db.Column(db.String(50), nullable=False, unique=True)
@@ -66,3 +69,22 @@ class Team(db.Model):
     """
     The URL of an image file representing the team's logo in PNG format
     """
+
+    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
+        """
+        Generates a dictionary containing the information of this model
+        :param include_children: Specifies if children data models will be
+                                 included or if they're limited to IDs
+        :return: A dictionary representing the model's values
+        """
+        data = {
+            "id": self.id,
+            "name": self.name,
+            "short_name": self.short_name,
+            "abbreviation": self.abbreviation,
+            "icon_svg": self.icon_svg,
+            "icon_png": self.icon_png
+        }
+        if include_children:
+            pass
+        return data

@@ -17,24 +17,27 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
 from bundesliga_tippspiel import db
+from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 
 
-class Goal(db.Model):
+class Goal(ModelMixin, db.Model):
     """
     Model that describes the "goals" SQL table
     """
 
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes the Model
+        :param args: The constructor arguments
+        :param kwargs: The constructor keyword arguments
+        """
+        super().__init__(*args, **kwargs)
+
     __tablename__ = "goals"
     """
     The name of the table
-    """
-
-    id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
-    """
-    The ID of the goal, which acts as a primary key
     """
 
     match_id = db.Column(
@@ -99,3 +102,26 @@ class Goal(db.Model):
     """
     Indicates whether or not this goal was a penalty
     """
+
+    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
+        """
+        Generates a dictionary containing the information of this model
+        :param include_children: Specifies if children data models will be
+                                 included or if they're limited to IDs
+        :return: A dictionary representing the model's values
+        """
+        data = {
+            "id": self.id,
+            "match_id": self.match_id,
+            "player_id": self.player_id,
+            "minute": self.minute,
+            "minute_et": self.minute_et,
+            "home_score": self.home_score,
+            "away_score": self.away_score,
+            "own_goal": self.own_goal,
+            "penalty": self.penalty
+        }
+        if include_children:
+            data["match"] = self.match.__json__(include_children)
+            data["player"] = self.player.__json__(include_children)
+        return data

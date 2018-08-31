@@ -123,3 +123,20 @@ class TestUser(_ModelTestFramework):
         """
         self.assertTrue(self.user_one.verify_password("samplepass1"))
         self.assertFalse(self.user_one.verify_password("samplepass2"))
+
+    def test_json_representation(self):
+        """
+        Tests the JSON representation of the model
+        :return: None
+        """
+        self.assertEqual(
+            self.user_one.__json__(True),
+            self.user_one.__json__(False)
+        )
+
+    def test_string_representation(self):
+        """
+        Tests the str and repr methods of the model
+        :return: None
+        """
+        self._test_string_representation(self.user_one)

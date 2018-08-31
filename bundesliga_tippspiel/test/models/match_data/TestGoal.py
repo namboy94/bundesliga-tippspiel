@@ -91,3 +91,27 @@ class TestGoal(_ModelTestFramework):
         self._test_deleting_from_db([
             (self.goal, [])
         ])
+
+    def test_json_representation(self):
+        """
+        Tests the JSON representation of the model
+        :return: None
+        """
+        without_children = self.goal.__json__(False)
+        without_children.update({
+            "match": self.goal.match.__json__(True),
+            "player": self.goal.player.__json__(True)
+         })
+        print(self.goal.__json__(True))
+        print(without_children)
+        self.assertEqual(
+            self.goal.__json__(True),
+            without_children
+        )
+
+    def test_string_representation(self):
+        """
+        Tests the str and repr methods of the model
+        :return: None
+        """
+        self._test_string_representation(self.goal)

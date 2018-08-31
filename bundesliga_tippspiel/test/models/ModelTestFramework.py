@@ -22,6 +22,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from bundesliga_tippspiel import db
 # noinspection PyProtectedMember
+from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
 
@@ -129,3 +130,51 @@ class _ModelTestFramework(_TestFramework):
             self.fail()
         except (IntegrityError, FlushError):
             self.db.session.rollback()
+
+    def test_json_representation(self):
+        """
+        Tests the JSON representation of the model
+        :return: None
+        """
+        raise NotImplementedError()
+
+    def test_string_representation(self):
+        """
+        Tests the str and repr methods of the model
+        :return: None
+        """
+        raise NotImplementedError()
+
+    def _test_string_representation(self, model: ModelMixin):
+        """
+        Tests the str and repr methods of a model
+        Acts as a class-independent testing method
+        :param model: The model object to test.
+        :return: None
+        """
+        data = model.__json__()
+        data.pop("id")
+
+        self.assertEqual(
+            str(model),
+            "{}:{} <{}>".format(
+                model.__class__.__name__,
+                model.id,
+                str(data)
+            )
+        )
+
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.auth.User import User
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.match_data.Player import Player
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.match_data.Team import Team
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.match_data.Goal import Goal
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.models.match_data.Match import Match
+
+        exec("self.assertEqual(model, {})".format(repr(model)))

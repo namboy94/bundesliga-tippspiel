@@ -102,3 +102,20 @@ class TestTeam(_ModelTestFramework):
         self._test_deleting_from_db([
             (self.team_one, [self.player])
         ])
+
+    def test_json_representation(self):
+        """
+        Tests the JSON representation of the model
+        :return: None
+        """
+        self.assertEqual(
+            self.team_one.__json__(True),
+            self.team_one.__json__(False)
+        )
+
+    def test_string_representation(self):
+        """
+        Tests the str and repr methods of the model
+        :return: None
+        """
+        self._test_string_representation(self.team_one)

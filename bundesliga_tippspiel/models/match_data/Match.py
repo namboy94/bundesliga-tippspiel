@@ -17,24 +17,27 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
 from bundesliga_tippspiel import db
+from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 
 
-class Match(db.Model):
+class Match(ModelMixin, db.Model):
     """
     Model that describes the 'matches' SQL table
     """
 
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes the Model
+        :param args: The constructor arguments
+        :param kwargs: The constructor keyword arguments
+        """
+        super().__init__(*args, **kwargs)
+
     __tablename__ = "matches"
     """
     The table name
-    """
-
-    id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
-    """
-    The ID of the table entries acts as a primary key
     """
 
     home_team_id = db.Column(
@@ -120,3 +123,30 @@ class Match(db.Model):
     """
     Indicates whether or not the match has finished yet
     """
+
+    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
+        """
+        Generates a dictionary containing the information of this model
+        :param include_children: Specifies if children data models will be
+                                 included or if they're limited to IDs
+        :return: A dictionary representing the model's values
+        """
+        data = {
+            "id": self.id,
+            "home_team_id": self.home_team_id,
+            "away_team_id": self.away_team_id,
+            "matchday": self.matchday,
+            "home_current_score": self.home_current_score,
+            "away_current_score": self.away_current_score,
+            "home_ht_score": self.home_ht_score,
+            "away_ht_score": self.away_ht_score,
+            "home_ft_score": self.home_ft_score,
+            "away_ft_score": self.away_ft_score,
+            "kickoff": self.kickoff,
+            "started": self.started,
+            "finished": self.finished
+        }
+        if include_children:
+            data["home_team"] = self.home_team.__json__(include_children)
+            data["away_team"] = self.away_team.__json__(include_children)
+        return data

@@ -73,3 +73,13 @@ db_key = resolve_env_variable("DB_KEY")
 """
 The database key
 """
+
+openligadb_season = resolve_env_variable("OPENLIGADB_SEASON", default="2018")
+"""
+The openligadb.de season to populate the data with
+"""
+
+openligadb_league = resolve_env_variable("OPENLIGADB_LEAGUE", default="bl1")
+"""
+The openligadb.de league to populate the data with
+"""

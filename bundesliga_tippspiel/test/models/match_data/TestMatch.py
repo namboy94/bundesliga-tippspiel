@@ -106,3 +106,25 @@ class TestMatch(_ModelTestFramework):
         self._test_deleting_from_db([
             (self.match, [self.goal])
         ])
+
+    def test_json_representation(self):
+        """
+        Tests the JSON representation of the model
+        :return: None
+        """
+        without_children = self.match.__json__(False)
+        without_children.update({
+            "home_team": self.match.home_team.__json__(True),
+            "away_team": self.match.away_team.__json__(True)
+        })
+        self.assertEqual(
+            self.match.__json__(True),
+            without_children
+        )
+
+    def test_string_representation(self):
+        """
+        Tests the str and repr methods of the model
+        :return: None
+        """
+        self._test_string_representation(self.match)

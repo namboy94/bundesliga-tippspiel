@@ -17,27 +17,30 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
 from bundesliga_tippspiel import db
+from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 from bundesliga_tippspiel.utils.crypto import verify_password
 
 
-class User(db.Model):
+class User(ModelMixin, db.Model):
     """
     Model that describes the 'users' SQL table
     A User stores a user's information, including their email address, username
     and password hash
     """
 
+    def __init__(self, *args, **kwargs):
+        """
+        Initializes the Model
+        :param args: The constructor arguments
+        :param kwargs: The constructor keyword arguments
+        """
+        super().__init__(*args, **kwargs)
+
     __tablename__ = "users"
     """
     The name of the table
-    """
-
-    id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
-    """
-    The ID is the primary key of the table and increments automatically
     """
 
     username = db.Column(db.String(12), nullable=False, unique=True)
@@ -106,3 +109,22 @@ class User(db.Model):
         :return: True if the password matches, False otherwise
         """
         return verify_password(password, self.password_hash)
+
+    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
+        """
+        Generates a dictionary containing the information of this model
+        :param include_children: Specifies if children data models will be
+                                 included or if they're limited to IDs
+        :return: A dictionary representing the model's values
+        """
+        data = {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "password_hash": self.password_hash,
+            "confirmed": self.confirmed,
+            "confirmation_hash": self.confirmation_hash
+        }
+        if include_children:
+            pass
+        return data

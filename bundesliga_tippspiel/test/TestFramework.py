@@ -135,14 +135,14 @@ class _TestFramework(TestCase):
             hashed = \
                 b"$2b$12$BiB2kya1Ly3wuY/Pr4JGD.JSmmd1ocTWoAH9OPAbSqyT.CQ5./pUi"
             user = User(username="TestA", email="a@hk-tippspiel.com",
-                        password_hash=hashed, confirmed=True,
+                        password_hash=hashed.decode("utf-8"), confirmed=True,
                         confirmation_hash=hashed)
         else:
             password = "samplepass2"
             hashed = \
                 b"$2b$12$ygmgJH2JFaMqGwBO5F3w.u7ROKuwnC0V/Erneb5Udklgqjija8kfS"
             user = User(username="TestB", email="b@hk-tippspiel.com",
-                        password_hash=hashed, confirmed=False,
+                        password_hash=hashed.decode("utf-8"), confirmed=False,
                         confirmation_hash=hashed)
 
         self.db.session.add(user)
@@ -166,7 +166,7 @@ class _TestFramework(TestCase):
         :param user: The user for which to generate the API key
         :return: The Api key object
         """
-        obj = ApiKey(user=user, key_hash=self.API_KEY_HASH)
+        obj = ApiKey(user=user, key_hash=self.API_KEY_HASH.decode("utf-8"))
         self.db.session.add(obj)
         self.db.session.commit()
         return obj
