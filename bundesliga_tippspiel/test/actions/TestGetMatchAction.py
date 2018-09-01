@@ -17,23 +17,23 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
+from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.GetActionTestFramework import \
     _GetActionTestFramework
 
 
-class TestGetBetAction(_GetActionTestFramework):
+class TestGetMatchAction(_GetActionTestFramework):
     """
-    Class that tests the GetBet action
+    Class that tests the GetMatch action
     """
 
     @property
-    def action_cls(self) -> type(GetBetAction):
+    def action_cls(self) -> type(GetMatchAction):
         """
         :return: The tested Action class
         """
-        return GetBetAction
+        return GetMatchAction
 
     def test_fetching(self):
         """
@@ -41,28 +41,25 @@ class TestGetBetAction(_GetActionTestFramework):
         :return: None
         """
         # All
-        self.assertEqual(len(self.action.execute()["bets"]), 3)
+        self.assertEqual(len(self.action.execute()["matches"]), 2)
 
         # By ID
-        self.action.id = self.bet_one.id
-        self.assertEqual(self.action.execute()["bets"], self.bet_one)
+        self.action.id = self.match_one.id
+        self.assertEqual(self.action.execute()["matches"], self.match_one)
 
         # Filtered
         self.action.id = None
-        self.action.matchday = self.bet_one.match.matchday
-        self.action.user_id = self.user_one.id
-        self.action.match_id = self.bet_one.match.id
-        filtered = self.action.execute()["bets"]
-
+        self.action.matchday = self.match_two.matchday
+        filtered = self.action.execute()["matches"]
         self.assertEqual(len(filtered), 1)
-        self.assertEqual(filtered[0], self.bet_one)
+        self.assertEqual(filtered[0], self.match_two)
 
     def test_using_filter_and_id(self):
         """
         Tests that using an ID and an explicit filter does not work
         :return: None
         """
-        self.action.id = self.bet_one.id
+        self.action.id = self.match_one.id
         self.action.matchday = self.match_one.matchday
 
         self.failed_execute("Can't filter specific ID")

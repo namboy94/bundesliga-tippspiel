@@ -76,11 +76,11 @@ class GetBetAction(Action):
             query = Bet.query
 
             if self.user_id is not None:
-                query.filter_by(id=self.user_id)
+                query = query.filter_by(id=self.user_id)
             if self.match_id is not None:
-                query.filter_by(id=self.match_id)
+                query = query.filter_by(id=self.match_id)
             if self.matchday is not None:
-                query.filter(Bet.match.has(matchday=self.matchday))
+                query = query.filter(Bet.match.has(matchday=self.matchday))
 
             result = query.all()
 

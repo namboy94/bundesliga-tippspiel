@@ -27,7 +27,11 @@ class GetMatchAction(Action):
     Action that enables getting Matches
     """
 
-    def __init__(self, _id: Optional[int], matchday: Optional[int]):
+    def __init__(
+            self,
+            _id: Optional[int] = None,
+            matchday: Optional[int] = None
+    ):
         """
         Initializes the GetMatchAction object
         :param _id: If provided, returns the match with that ID
@@ -43,8 +47,7 @@ class GetMatchAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if self.id is not None and self.matchday is not None:
-            self.too_many_arguments_error()
+        self.check_id_or_filters(self.id, [self.matchday])
         self.check_matchday_bounds(self.matchday)
 
     def _execute(self) -> Dict[str, Any]:
@@ -54,19 +57,18 @@ class GetMatchAction(Action):
         :raises ActionException: if anything went wrong
         """
         if self.id is not None:
-            matches = Match.query.filter_by(id=self.id).all()
-        elif self.matchday is not None:
-            matches = Match.query.filter_by(matchday=self.matchday).all()
+            result = self.handle_id_fetch(self.id, Match)
+
         else:
-            matches = Match.query.all()
 
-        if matches is None:
-            self.id_does_not_exist()
+            query = Match.query
 
-        return {
-            "matches": matches,
-            "count": len(matches)
-        }
+            if self.matchday is not None:
+                query = query.filter_by(matchday=self.matchday)
+
+            result = query.all()
+
+        return {"matches": result}
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):
