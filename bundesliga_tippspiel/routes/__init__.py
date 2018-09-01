@@ -32,6 +32,6 @@ def load_routes():
     # noinspection PyUnresolvedReferences
     import bundesliga_tippspiel.routes.authentification
     # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.other
+    import bundesliga_tippspiel.routes.betting
 
     load_api_routes()

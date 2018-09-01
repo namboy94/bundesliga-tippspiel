@@ -89,6 +89,7 @@ class GetGoalAction(Action):
                 query = query.filter(Goal.player.has(team_id=self.team_id))
 
             result = query.all()
+            result.sort(key=lambda x: x.match.kickoff)
 
         return {"goals": result}
 

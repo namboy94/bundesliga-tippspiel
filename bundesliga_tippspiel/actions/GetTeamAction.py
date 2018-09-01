@@ -56,6 +56,7 @@ class GetTeamAction(Action):
         else:
             query = Team.query
             result = query.all()
+            result.sort(key=lambda x: x.name)
 
         return {"teams": result}
 

@@ -67,6 +67,7 @@ class GetMatchAction(Action):
                 query = query.filter_by(matchday=self.matchday)
 
             result = query.all()
+            result.sort(key=lambda x: x.kickoff)
 
         return {"matches": result}
 

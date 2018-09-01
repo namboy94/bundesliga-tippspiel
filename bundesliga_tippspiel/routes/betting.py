@@ -17,14 +17,36 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel import app
+from typing import Optional
 from flask import render_template
 from flask_login import login_required
+from bundesliga_tippspiel import app
+from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
+from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 
 
 @app.route("/bets")
-def bets():
-    return render_template("index.html")
+@app.route("/bets/<matchday>")
+@login_required
+def bets(matchday: Optional[int] = None):
+    """
+    Displays all matches for a matchday with entries for betting
+    :param matchday: The matchday to display
+    :return: None
+    """
+    if matchday is None:
+        all_matches = GetMatchAction().execute()["matches"]
+        filtered = list(filter(lambda x: not x.started, all_matches))
+        matchday = min(filtered, key=lambda x: x.matchday)
+
+    matchday_bets = GetBetAction(matchday=matchday).execute()["bets"]
+    matchday_matches = GetMatchAction(matchday=matchday).execute()["matches"]
+
+    return render_template(
+        "bets.html",
+        bets=matchday_bets,
+        matches=matchday_matches
+    )
 
 
 @app.route("/leaderboard")

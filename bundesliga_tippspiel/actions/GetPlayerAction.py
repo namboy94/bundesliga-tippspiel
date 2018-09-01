@@ -67,6 +67,7 @@ class GetPlayerAction(Action):
                 query = query.filter_by(team_id=self.team_id)
 
             result = query.all()
+            result.sort(key=lambda x: x.name)
 
         return {"players": result}
 

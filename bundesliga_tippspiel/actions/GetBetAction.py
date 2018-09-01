@@ -18,8 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any, Optional
+from flask_login import current_user
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.types.exceptions import ActionException
 
 
 class GetBetAction(Action):
@@ -70,6 +72,13 @@ class GetBetAction(Action):
         """
         if self.id is not None:
             result = self.handle_id_fetch(self.id, Bet)
+            if not result.match.started \
+                    and not current_user.id == result.user.id:
+                raise ActionException(
+                    "ID not accessible",
+                    "Die angegebene ID kann nicht eingesehen werden",
+                    401
+                )
 
         else:
 
@@ -83,6 +92,12 @@ class GetBetAction(Action):
                 query = query.filter(Bet.match.has(matchday=self.matchday))
 
             result = query.all()
+            result = list(filter(
+                lambda x: x.match.started or current_user.id == x.user_id,
+                result
+            ))
+
+            result.sort(key=lambda x: x.match.kickoff)
 
         return {"bets": result}
 
