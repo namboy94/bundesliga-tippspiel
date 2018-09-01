@@ -40,7 +40,8 @@ class GetGoalAction(Action):
         :param _id: If provided, returns the goal with the specified ID
         :param matchday: If provided, will only fetch goals
                          on the specified matchday
-        :param match_id: If provided, will only fetch goals that occured during the specified match
+        :param match_id: If provided, will only fetch goals that occured
+                         during the specified match
         :param player_id: If provided, will only fetch goals from
                           the specified player
         :param team_id: If provided, will only fetch goals from

@@ -17,21 +17,23 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.routes.api import load_routes as load_api_routes
+import time
+import bundesliga_tippspiel.config as config
+from bundesliga_tippspiel import app
+from bundesliga_tippspiel.utils.routes import api
+from bundesliga_tippspiel.utils.match_data_getter import update_db_data
 
 
-def load_routes():
+@app.route("/api/v2/update_match_data", methods=["GET"])
+@api
+def update_match_data():
     """
-    Loads all application routes
+    Updates the match data. If the last update is less than 100 seconds in the
+    past, do not update.
     :return: None
     """
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.user_management
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.static
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.authentification
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.other
-
-    load_api_routes()
+    needs_update = time.time() - config.last_match_data_update > 100
+    if needs_update:
+        update_db_data()
+        config.last_match_data_update = time.time()
+    return {"updated": needs_update}

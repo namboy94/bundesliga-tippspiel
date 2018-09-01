@@ -83,3 +83,8 @@ openligadb_league = resolve_env_variable("OPENLIGADB_LEAGUE", default="bl1")
 """
 The openligadb.de league to populate the data with
 """
+
+last_match_data_update = 0
+"""
+Keeps track of when the match data was updated last
+"""
