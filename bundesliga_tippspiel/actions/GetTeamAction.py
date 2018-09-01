@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.models.match_data.Team import Team
 
 
 class GetTeamAction(Action):
@@ -26,11 +27,13 @@ class GetTeamAction(Action):
     Action that allows retrieving teams from the database
     """
 
-    def __init__(self):
+    def __init__(self, _id: Optional[int] = None):
         """
         Initializes the GetTeamAction object
+        :param _id: If provided, will only fetch the selected ID
         :raises: ActionException if any problems occur
         """
+        self.id = _id
 
     def validate_data(self):
         """
@@ -38,6 +41,7 @@ class GetTeamAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
+        self.check_id_or_filters(self.id, [])
 
     def _execute(self) -> Dict[str, Any]:
         """
@@ -45,6 +49,15 @@ class GetTeamAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
+
+        if self.id is not None:
+            result = self.handle_id_fetch(self.id, Team)
+
+        else:
+            query = Team.query
+            result = query.all()
+
+        return {"teams": result}
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):
@@ -54,4 +67,5 @@ class GetTeamAction(Action):
         :return: The generated Action object
         """
         return cls(
+            _id=data.get("id")
         )

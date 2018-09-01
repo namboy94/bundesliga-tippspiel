@@ -19,6 +19,9 @@ LICENSE"""
 
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.models.match_data.Match import Match
+from bundesliga_tippspiel.models.match_data.Goal import Goal
+from bundesliga_tippspiel.models.match_data.Player import Player
+from bundesliga_tippspiel.models.match_data.Team import Team
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework
@@ -35,8 +38,8 @@ class _GetActionTestFramework(_ActionTestFramework):
         :return: None
         """
         super().setUp()
-        self.team_one, self.team_two, _, self.match_one, _ = \
-            self.generate_sample_match_data()
+        self.team_one, self.team_two, self.player_one, \
+            self.match_one, self.goal_one = self.generate_sample_match_data()
         self.match_two = Match(
             home_team=self.team_two,
             away_team=self.team_one,
@@ -45,8 +48,6 @@ class _GetActionTestFramework(_ActionTestFramework):
             started=False,
             finished=False
         )
-        self.db.session.add(self.match_two)
-        self.db.session.commit()
         self.user_one, self.user_two = self.generate_sample_users()
         self.user_one = self.user_one["user"]
         self.user_two = self.user_two["user"]
@@ -54,6 +55,18 @@ class _GetActionTestFramework(_ActionTestFramework):
         self.bet_two = self.generate_sample_bet(self.user_two, self.match_one)
         self.bet_three = \
             self.generate_sample_bet(self.user_one, self.match_two)
+        self.team_three = Team(name="1", short_name="2", abbreviation="3",
+                               icon_png="4", icon_svg="5")
+        self.player_two = Player(team=self.team_three, name="TestPlayer")
+        self.goal_two = Goal(match=self.match_two, player=self.player_two,
+                             minute=1, home_score=1, away_score=1)
+
+        self.db.session.add(self.match_two)
+        self.db.session.add(self.goal_two)
+        self.db.session.add(self.player_two)
+        self.db.session.add(self.goal_two)
+        self.db.session.add(self.team_three)
+        self.db.session.commit()
 
     @property
     def action_cls(self) -> type(Action):

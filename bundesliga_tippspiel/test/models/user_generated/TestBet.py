@@ -115,3 +115,38 @@ class TestApiKey(_ModelTestFramework):
         :return: None
         """
         self._test_string_representation(self.bet)
+
+    def test_evaluating_bet_result(self):
+        """
+        Tests evaluating the results of a bet
+        :return: None
+        """
+        self.bet.home_score = 0
+        self.bet.away_score = 0
+        self.bet.match.home_current_score = 0
+        self.bet.match.away_current_score = 0
+        self.assertEqual(self.bet.evaluate(), 3 + 5 + 7)  # 0:0 | 0:0
+
+        self.bet.home_score = 2
+        self.assertEqual(self.bet.evaluate(), 3)  # 2:0 | 0:0
+
+        self.bet.match.away_current_score = 2
+        self.assertEqual(self.bet.evaluate(), 0)  # 2:0 | 0:2
+
+        self.bet.match.home_current_score = 2
+        self.bet.match.away_current_score = 0
+        self.assertEqual(self.bet.evaluate(), 3 + 5 + 7)  # 2:0 | 2:0
+
+        self.bet.away_score = 1
+        self.assertEqual(self.bet.evaluate(), 3 + 7)  # 2:1 | 2:0
+
+        self.bet.home_score = 1
+        self.assertEqual(self.bet.evaluate(), 0)  # 1:1 | 2:0
+
+        self.bet.away_score = 1
+        self.bet.match.away_current_score = 2
+        self.assertEqual(self.bet.evaluate(), 5 + 7)  # 1:1 | 2:2
+
+        self.bet.match.home_current_score = 1
+        self.bet.match.away_current_score = 3
+        self.assertEqual(self.bet.evaluate(), 3)  # 1:1 | 1:3

@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.models.match_data.Goal import Goal
 
 
 class GetGoalAction(Action):
@@ -26,11 +27,31 @@ class GetGoalAction(Action):
     Action that allows retrieving goals from the database
     """
 
-    def __init__(self):
+    def __init__(
+            self,
+            _id: Optional[int] = None,
+            matchday: Optional[int] = None,
+            match_id: Optional[int] = None,
+            player_id: Optional[int] = None,
+            team_id: Optional[int] = None
+    ):
         """
         Initializes the GetGoalAction object
+        :param _id: If provided, returns the goal with the specified ID
+        :param matchday: If provided, will only fetch goals
+                         on the specified matchday
+        :param match_id: If provided, will only fetch goals that occured during the specified match
+        :param player_id: If provided, will only fetch goals from
+                          the specified player
+        :param team_id: If provided, will only fetch goals from
+                        the specified team
         :raises: ActionException if any problems occur
         """
+        self.id = _id
+        self.matchday = matchday
+        self.match_id = match_id
+        self.player_id = player_id
+        self.team_id = team_id
 
     def validate_data(self):
         """
@@ -38,6 +59,11 @@ class GetGoalAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
+        self.check_id_or_filters(
+            self.id,
+            [self.matchday, self.match_id, self.player_id, self.team_id]
+        )
+        self.check_matchday_bounds(self.matchday)
 
     def _execute(self) -> Dict[str, Any]:
         """
@@ -45,6 +71,25 @@ class GetGoalAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
+        if self.id is not None:
+            result = self.handle_id_fetch(self.id, Goal)
+
+        else:
+
+            query = Goal.query
+
+            if self.matchday is not None:
+                query = query.filter(Goal.match.has(matchday=self.matchday))
+            if self.match_id is not None:
+                query = query.filter_by(match_id=self.match_id)
+            if self.player_id is not None:
+                query = query.filter_by(player_id=self.player_id)
+            if self.team_id is not None:
+                query = query.filter(Goal.player.has(team_id=self.team_id))
+
+            result = query.all()
+
+        return {"goals": result}
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):
@@ -54,4 +99,9 @@ class GetGoalAction(Action):
         :return: The generated Action object
         """
         return cls(
+            _id=data.get("id"),
+            matchday=data.get("matchday"),
+            match_id=data.get("match_id"),
+            team_id=data.get("team_id"),
+            player_id=data.get("player_id")
         )
