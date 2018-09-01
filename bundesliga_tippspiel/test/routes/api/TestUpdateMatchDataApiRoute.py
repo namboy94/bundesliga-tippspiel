@@ -60,22 +60,19 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
         with mock.patch(
                 "bundesliga_tippspiel.routes.api.update.update_db_data"
         ) as mocked:
-            self.client.get(self.route_path)
-            mocked.assert_called()
+            resp = self.client.get(self.route_path)
+            self.assertTrue(self.decode_data(resp)["data"]["updated"])
+            self.assertEqual(1, mocked.call_count)
 
-        with mock.patch(
-                "bundesliga_tippspiel.routes.api.update.update_db_data"
-        ) as mocked:
-            self.client.get(self.route_path)
-            mocked.assert_not_called()
+            resp = self.client.get(self.route_path)
+            self.assertFalse(self.decode_data(resp)["data"]["updated"])
+            self.assertEqual(1, mocked.call_count)
 
-        config.last_match_data_update = time.time() - 120
+            config.last_match_data_update = time.time() - 120
 
-        with mock.patch(
-                "bundesliga_tippspiel.routes.api.update.update_db_data"
-        ) as mocked:
-            self.client.get(self.route_path)
-            mocked.assert_called()
+            resp = self.client.get(self.route_path)
+            self.assertTrue(self.decode_data(resp)["data"]["updated"])
+            self.assertEqual(2, mocked.call_count)
 
     def test_unsuccessful_call(self):
         """
