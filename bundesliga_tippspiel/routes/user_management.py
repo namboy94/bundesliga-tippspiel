@@ -20,6 +20,7 @@ LICENSE"""
 from bundesliga_tippspiel import app
 from flask import render_template, request
 from flask_login import login_required, current_user
+from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
@@ -46,7 +47,12 @@ def register():
                       "um die Registrierung abzuschließen."
         return action.execute_with_redirects(
             "index",
-            ActionException(success_msg, success_msg),
+            ActionException(
+                success_msg,
+                success_msg,
+                status_code=200,
+                severity=AlertSeverity.SUCCESS
+            ),
             "register"
         )
 

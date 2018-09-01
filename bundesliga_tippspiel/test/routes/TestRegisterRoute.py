@@ -61,6 +61,7 @@ class TestRegisterRoute(_RouteTestFramework):
                 "password-repeat": "Abc",
                 "g-recaptcha-response": ""
             })
+        self.assertEqual(post.status_code, 200)
         self.assertTrue(b"Siehe in deiner Email-Inbox nach" in post.data)
         self.assertTrue(username_exists("TestUser"))
 
