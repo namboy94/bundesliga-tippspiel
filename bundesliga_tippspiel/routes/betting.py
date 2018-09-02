@@ -23,6 +23,7 @@ from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
+from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
 
 @app.route("/bets", methods=["POST", "GET"])
@@ -38,22 +39,30 @@ def bets(matchday: Optional[int] = None):
         if matchday is None:
             all_matches = GetMatchAction().execute()["matches"]
             filtered = list(filter(lambda x: not x.started, all_matches))
-            print(filtered)
             matchday = min(filtered, key=lambda x: x.matchday).matchday
 
         matchday_bets = GetBetAction(matchday=matchday).execute()["bets"]
         matchday_matches = \
             GetMatchAction(matchday=matchday).execute()["matches"]
 
+        betmap = {}
+        for match in matchday_matches:
+            betmap[match.id] = None
+        for bet in matchday_bets:
+            betmap[bet.match.id] = bet
+
         return render_template(
             "bets.html",
             matchday=matchday,
-            bets=matchday_bets,
+            betmap=betmap,
             matches=matchday_matches
         )
 
     else:  # POST
-        action = None
+        action = PlaceBetsAction.from_site_request()
+        return action.execute_with_redirects(
+            "bets", "Tipps erfolgreich gesetzt", "bets"
+        )
 
 
 @app.route("/leaderboard")

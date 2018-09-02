@@ -47,12 +47,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     </div>
 
     <form class="form-horizontal"
-          action="{{ url_for("place_bets") }}"
+          action="{{ url_for("bets") }}"
           method="post">
         <fieldset>
             <ul class="list-group">
                 {% for match in matches %}
-                    {% with match=match,bet=None %}
+                    {% with match=match, bet=betmap[match.id] %}
                         {% include "bet_row.html" %}
                     {% endwith %}
                 {% endfor %}
