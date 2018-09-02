@@ -137,6 +137,9 @@ class PlaceBetsAction(Action):
                     bets[match_id] = (int(value), bets[match_id][1])
                 elif team == "away":
                     bets[match_id] = (bets[match_id][0], int(value))
+                else:
+                    continue
+
             except (IndexError, ValueError, TypeError):
                 continue
 

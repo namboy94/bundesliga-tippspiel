@@ -42,7 +42,8 @@ def bets(matchday: Optional[int] = None):
             matchday = min(filtered, key=lambda x: x.matchday).matchday
 
         matchday_bets = GetBetAction(matchday=matchday).execute()["bets"]
-        matchday_matches = GetMatchAction(matchday=matchday).execute()["matches"]
+        matchday_matches = \
+            GetMatchAction(matchday=matchday).execute()["matches"]
 
         return render_template(
             "bets.html",

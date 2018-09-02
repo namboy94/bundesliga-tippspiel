@@ -189,6 +189,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
             "Irrelevant": "Stuff",
             "{}-home".format(self.match_three.id): "A",
             "{}-away".format(self.match_three.id): "B",
+            "{}-blabla".format(self.match_three.id): "1"
         }
         action = PlaceBetsAction.from_dict(form_data)
         self.assertEqual(action.bets, {
