@@ -126,12 +126,32 @@ class TestPlaceBetsAction(_ActionTestFramework):
                 self.match_one.id: ("Five", 0),
                 "self.match_two.id": (0, 0),
                 self.match_three.id: (0, 0),
-                100: (3, 4)
+                100: (3, 4),
             }
             resp = self.action.execute()
             self.assertEqual(resp["new"], 0)
             self.assertEqual(resp["updated"], 0)
             self.assertEqual(resp["invalid"], 4)
+
+            bets = Bet.query.filter_by(user_id=self.user.id).all()
+            self.assertEqual(len(bets), 0)
+
+    def test_bets_out_of_bounds(self):
+        """
+        Tests using bets that are out of bounds
+        :return: None
+        """
+        with self.context:
+            self.login_user(self.user)
+
+            self.action.bets = {
+                self.match_one.id: (-1, 0),
+                self.match_three.id: (100, 0)
+            }
+            resp = self.action.execute()
+            self.assertEqual(resp["new"], 0)
+            self.assertEqual(resp["updated"], 0)
+            self.assertEqual(resp["invalid"], 2)
 
             bets = Bet.query.filter_by(user_id=self.user.id).all()
             self.assertEqual(len(bets), 0)
@@ -156,7 +176,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
             bets = Bet.query.filter_by(user_id=self.user.id).all()
             self.assertEqual(len(bets), 1)
 
-    def parsing_form_data(self):
+    def test_parsing_form_data(self):
         """
         Tests if parsing the form data works correctly
         :return: None
@@ -173,7 +193,14 @@ class TestPlaceBetsAction(_ActionTestFramework):
         action = PlaceBetsAction.from_dict(form_data)
         self.assertEqual(action.bets, {
             self.match_one.id: (1, 2),
+            3: (1, None),
+            4: (None, None)
         })
+        action.validate_data()
+        self.assertEqual(action.bets, {
+            self.match_one.id: (1, 2)
+        })
+        self.assertEqual(action.error_count, 2)
 
     def assert_bet(self, match_id: int, home: int, away: int):
         """

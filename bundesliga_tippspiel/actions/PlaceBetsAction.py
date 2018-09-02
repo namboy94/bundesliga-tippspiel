@@ -70,7 +70,7 @@ class PlaceBetsAction(Action):
                         raise ValueError()
                 self.bets[match_id] = (home, away)
 
-            except (ValueError, ActionException):
+            except (ValueError, TypeError, ActionException):
                 self.error_count += 1
                 continue
 
@@ -124,17 +124,20 @@ class PlaceBetsAction(Action):
         """
         bets = {}
 
+        print(data)
         for key, value in data.items():
             try:
                 match_id, team = key.split("-")
+                match_id = int(match_id)
+
                 if match_id not in bets:
                     bets[match_id] = (None, None)
 
                 if team == "home":
-                    bets[int(match_id)] = (int(value), bets[match_id][1])
+                    bets[match_id] = (int(value), bets[match_id][1])
                 elif team == "away":
-                    bets[int(match_id)] = (bets[match_id][0], int(value))
-            except (IndexError, ValueError):
+                    bets[match_id] = (bets[match_id][0], int(value))
+            except (IndexError, ValueError, TypeError):
                 continue
 
         return cls(
