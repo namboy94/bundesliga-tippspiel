@@ -17,37 +17,41 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Tuple, List
+from typing import Dict, Any
+from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
-    _ApiRouteTestFramework
+from bundesliga_tippspiel.test.routes.api.GetterApiRouteTestFramework import \
+    _GetterApiRouteTestFramework
 
 
-class TestGetGoalApiRoute(_ApiRouteTestFramework):
+class TestGetGoalApiRoute(_GetterApiRouteTestFramework):
     """
     Tests the /goal GET API route
     """
 
     @property
-    def route_info(self) -> Tuple[str, List[str], bool]:
+    def keyword(self) -> str:
         """
-        Provides information about the route
-        :return: The path of the route,
-                 A list of supported methods,
-                 Whether or not the API endpoint requires authorization
+        :return: The route keyword.
         """
-        return "/api/v2/goal", ["GET"], True
+        return "goal"
 
-    def test_successful_call(self):
+    @property
+    def sample_filters(self) -> Dict[str, Any]:
         """
-        Tests a successful API call
-        :return: None
+        :return: A sample dictionary of filters with appropriate values
         """
-        pass
+        return {
+            "matchday": 1,
+            "match_id": 1,
+            "player_id": 1,
+            "team_id": 1
+        }
 
-    def test_unsuccessful_call(self):
+    @property
+    def action_cls(self) -> type(Action):
         """
-        Tests an unsuccessful API call
-        :return: None
+        :return: The action class used to fetch data
         """
-        pass
+        return GetGoalAction
