@@ -112,21 +112,6 @@ p {
     margin-left: 10px;
 }
 
-/* Table Formatting */
-
-table, th, td{
-    border: 1px solid black;
-    text-align: center;
-}
-
-th {
-    height: 5em;
-}
-
-td {
-    width: 10em;
-}
-
 .form-container {
     background: lightgray;
     padding: 20px;
@@ -151,4 +136,8 @@ td {
 .bet_row_result_display {
     background: white;
     border-radius: 10px;
+}
+
+.leaderboard-table {
+    background: white;
 }

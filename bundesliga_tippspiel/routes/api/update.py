@@ -30,7 +30,7 @@ def update_match_data():
     """
     Updates the match data. If the last update is less than 100 seconds in the
     past, do not update.
-    :return: None
+    :return: The JSON response
     """
     needs_update = time.time() - config.last_match_data_update > 100
     if needs_update:

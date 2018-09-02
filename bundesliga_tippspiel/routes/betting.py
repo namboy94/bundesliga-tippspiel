@@ -23,6 +23,7 @@ from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
+from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
 
@@ -65,7 +66,16 @@ def bets(matchday: Optional[int] = None):
         )
 
 
-@app.route("/leaderboard")
+@app.route("/leaderboard", methods=["GET"])
 @login_required
 def leaderboard():
-    return render_template("index.html")
+    """
+    Displays a leaderboard.
+    :return: The Response
+    """
+    leaderboard_data = \
+        LeaderboardAction.from_site_request().execute()["leaderboard"]
+    return render_template(
+        "leaderboard.html",
+        leaderboard=enumerate(leaderboard_data)
+    )

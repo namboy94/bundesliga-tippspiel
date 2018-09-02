@@ -90,7 +90,7 @@ class TestLeaderboardAction(_ActionTestFramework):
         Generates a valid LeaderboardAction object
         :return: The generated LeaderboardAction
         """
-        return LeaderboardAction()
+        return LeaderboardAction.from_dict({})
 
     def test_leaderboard(self):
         """
@@ -99,7 +99,6 @@ class TestLeaderboardAction(_ActionTestFramework):
         """
         leaderboard = self.action.execute()["leaderboard"]
         self.assertEqual(len(leaderboard), 3)
-        print(leaderboard)
         self.assertEqual(leaderboard[0], (self.user_two, 15))
         self.assertEqual(leaderboard[1], (self.user_one, 12))
         self.assertEqual(leaderboard[2], (self.user_three, 3))

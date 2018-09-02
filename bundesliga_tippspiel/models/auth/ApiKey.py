@@ -108,7 +108,6 @@ class ApiKey(ModelMixin, db.Model):
         data = {
             "id": self.id,
             "user_id": self.user_id,
-            "key_hash": self.key_hash,
             "creation_time": self.creation_time
         }
         if include_children:

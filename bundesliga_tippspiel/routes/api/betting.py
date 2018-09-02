@@ -17,15 +17,24 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from flask import request
+from flask_login import login_required
+from bundesliga_tippspiel import app
+from bundesliga_tippspiel.utils.json import jsonify_models
+from bundesliga_tippspiel.utils.routes import api, api_login_required
+from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
-def load_routes():
+
+@app.route("/api/v2/leaderboard", methods=["GET"])
+@api_login_required
+@login_required
+@api
+def api_leaderboard():
     """
-    Loads all API routes
-    :return: None
+    Enables retrieving a leaderboard
+    :return: The JSON response
     """
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.user_management
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.update
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.betting
+    action = LeaderboardAction().from_dict(request.get_json())
+    leaderboard = action.execute()
+    jsonified = jsonify_models(leaderboard, True)
+    return jsonified

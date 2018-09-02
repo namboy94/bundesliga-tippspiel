@@ -124,7 +124,6 @@ class PlaceBetsAction(Action):
         """
         bets = {}
 
-        print(data)
         for key, value in data.items():
             try:
                 match_id, team = key.split("-")

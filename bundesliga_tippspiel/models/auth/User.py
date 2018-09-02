@@ -121,9 +121,7 @@ class User(ModelMixin, db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "password_hash": self.password_hash,
-            "confirmed": self.confirmed,
-            "confirmation_hash": self.confirmation_hash
+            "confirmed": self.confirmed
         }
         if include_children:
             pass
