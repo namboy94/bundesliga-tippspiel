@@ -41,11 +41,15 @@ class TestGetMatchAction(_GetActionTestFramework):
         :return: None
         """
         # All
-        self.assertEqual(len(self.action.execute()["matches"]), 2)
+        result = self.action.execute()
+        self.assertEqual(len(result["matches"]), 2)
+        self.assertFalse("match" in result)
 
         # By ID
         self.action.id = self.match_one.id
-        self.assertEqual(self.action.execute()["matches"], self.match_one)
+        result = self.action.execute()
+        self.assertEqual(result["match"], self.match_one)
+        self.assertEqual(result["matches"], [self.match_one])
 
         # Filtered
         self.action.id = None

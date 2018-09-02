@@ -57,7 +57,7 @@ class GetPlayerAction(Action):
         :raises ActionException: if anything went wrong
         """
         if self.id is not None:
-            result = self.handle_id_fetch(self.id, Player)
+            result = [self.handle_id_fetch(self.id, Player)]
 
         else:
 
@@ -69,7 +69,7 @@ class GetPlayerAction(Action):
             result = query.all()
             result.sort(key=lambda x: x.name)
 
-        return {"players": result}
+        return self.prepare_get_response(result, "player")
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):

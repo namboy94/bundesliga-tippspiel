@@ -51,14 +51,14 @@ class GetTeamAction(Action):
         """
 
         if self.id is not None:
-            result = self.handle_id_fetch(self.id, Team)
+            result = [self.handle_id_fetch(self.id, Team)]
 
         else:
             query = Team.query
             result = query.all()
             result.sort(key=lambda x: x.name)
 
-        return {"teams": result}
+        return self.prepare_get_response(result, "team")
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):

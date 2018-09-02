@@ -22,6 +22,7 @@ from flask import abort, redirect, url_for, request
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 
 
 class Action:
@@ -159,3 +160,21 @@ class Action:
                 "Matchday out of bounds",
                 "Den angegebenen Spieltag gibt es nicht"
             )
+
+    def prepare_get_response(self, result: List[ModelMixin], keyword: str) \
+            -> Dict[str, Any]:
+        """
+        Prepares a GetAction response by
+        :param result: The result to wrap in a response dictionary
+        :param keyword: The keyword to use, e.g: bet|match|player etc.
+        :return: The wrapped response dictionary
+        """
+        if keyword in ["match"]:
+            response = {"{}es".format(keyword): result}
+        else:
+            response = {"{}s".format(keyword): result}
+
+        if getattr(self, "id", None) is not None:
+            response[keyword] = result[0]
+
+        return response

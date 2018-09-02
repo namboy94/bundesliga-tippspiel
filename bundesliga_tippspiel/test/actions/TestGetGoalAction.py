@@ -41,11 +41,15 @@ class TestGetGoalAction(_GetActionTestFramework):
         :return: None
         """
         # All
-        self.assertEqual(len(self.action.execute()["goals"]), 2)
+        result = self.action.execute()
+        self.assertEqual(len(result["goals"]), 2)
+        self.assertFalse("goal" in result)
 
         # By ID
         self.action.id = self.goal_one.id
-        self.assertEqual(self.action.execute()["goals"], self.goal_one)
+        result = self.action.execute()
+        self.assertEqual(result["goal"], self.goal_one)
+        self.assertEqual(result["goals"], [self.goal_one])
 
         # Filtered
         self.action.id = None

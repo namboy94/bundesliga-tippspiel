@@ -41,11 +41,15 @@ class TestGetTeamAction(_GetActionTestFramework):
         :return: None
         """
         # All
-        self.assertEqual(len(self.action.execute()["teams"]), 3)
+        result = self.action.execute()
+        self.assertEqual(len(result["teams"]), 3)
+        self.assertFalse("team" in result)
 
         # By ID
         self.action.id = self.team_one.id
-        self.assertEqual(self.action.execute()["teams"], self.team_one)
+        result = self.action.execute()
+        self.assertEqual(result["team"], self.team_one)
+        self.assertEqual(result["teams"], [self.team_one])
 
         # Filtered
         # Has no filters

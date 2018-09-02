@@ -45,11 +45,15 @@ class TestGetBetAction(_GetActionTestFramework):
             self.login_user(self.user_one)
 
             # All
-            self.assertEqual(len(self.action.execute()["bets"]), 3)
+            result = self.action.execute()
+            self.assertEqual(len(result["bets"]), 3)
+            self.assertFalse("bet" in result)
 
             # By ID
             self.action.id = self.bet_one.id
-            self.assertEqual(self.action.execute()["bets"], self.bet_one)
+            result = self.action.execute()
+            self.assertEqual(result["bet"], self.bet_one)
+            self.assertEqual(result["bets"], [self.bet_one])
 
             # Filtered
             self.action.id = None

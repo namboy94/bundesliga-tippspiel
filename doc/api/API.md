@@ -82,6 +82,22 @@ like this:
 For more details on the individual API endpoints, check out the following
 documents:
 
+Account Creation and Management:
+
 * [api_key](endpoints/api_key.md)
 * [authorize](endpoints/authorize.md)
 * [register](endpoints/register.md)
+
+Data Fetching:
+
+* [leaderboard](endpoints/leaderboard.md)
+* [bet](endpoints/bet-get.md)
+* [goal](endpoints/goal.md)
+* [match](endpoints/match.md)
+* [player](endpoints/player.md)
+* [team](endpoints/team.md)
+
+
+Generating user-created content:
+
+* [bet](endpoints/bet-put.md)

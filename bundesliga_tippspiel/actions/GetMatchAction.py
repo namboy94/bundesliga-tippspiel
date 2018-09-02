@@ -57,7 +57,7 @@ class GetMatchAction(Action):
         :raises ActionException: if anything went wrong
         """
         if self.id is not None:
-            result = self.handle_id_fetch(self.id, Match)
+            result = [self.handle_id_fetch(self.id, Match)]
 
         else:
 
@@ -69,7 +69,7 @@ class GetMatchAction(Action):
             result = query.all()
             result.sort(key=lambda x: x.kickoff)
 
-        return {"matches": result}
+        return self.prepare_get_response(result, "match")
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):

@@ -73,7 +73,7 @@ class GetGoalAction(Action):
         :raises ActionException: if anything went wrong
         """
         if self.id is not None:
-            result = self.handle_id_fetch(self.id, Goal)
+            result = [self.handle_id_fetch(self.id, Goal)]
 
         else:
 
@@ -91,7 +91,7 @@ class GetGoalAction(Action):
             result = query.all()
             result.sort(key=lambda x: x.match.kickoff)
 
-        return {"goals": result}
+        return self.prepare_get_response(result, "goal")
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):

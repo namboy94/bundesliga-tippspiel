@@ -12,11 +12,11 @@ Not required
 
 ##### Parameters
 
-* **username**: The username to register
-* **email**: The email address to register
-* **password**: The password to use
-* **password-repeat**: The password again for verification purposes
-* **g-recaptcha-response**: A valid Google ReCaptcha response using the site's site key
+* **username:str**: The username to register
+* **email:str**: The email address to register
+* **password:str**: The password to use
+* **password-repeat:str**: The password again for verification purposes
+* **g-recaptcha-response:str**: A valid Google ReCaptcha response using the site's site key
 
 
     {

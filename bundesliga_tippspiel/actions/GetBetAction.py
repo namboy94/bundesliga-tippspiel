@@ -71,9 +71,9 @@ class GetBetAction(Action):
         :raises ActionException: if anything went wrong
         """
         if self.id is not None:
-            result = self.handle_id_fetch(self.id, Bet)
-            if not result.match.started \
-                    and not current_user.id == result.user.id:
+            result = [self.handle_id_fetch(self.id, Bet)]
+            if not result[0].match.started \
+                    and not current_user.id == result[0].user.id:
                 raise ActionException(
                     "ID not accessible",
                     "Die angegebene ID kann nicht eingesehen werden",
@@ -99,7 +99,7 @@ class GetBetAction(Action):
 
             result.sort(key=lambda x: x.match.kickoff)
 
-        return {"bets": result}
+        return self.prepare_get_response(result, "bet")
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]):

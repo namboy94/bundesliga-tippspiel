@@ -19,8 +19,8 @@ Not required
 
 POST:
 
-* **username**: The username of the user
-* **password**: The password of the user
+* **username:str**: The username of the user
+* **password:str**: The password of the user
 
 
     {
@@ -30,7 +30,7 @@ POST:
     
 DELETE:
 
-* **api_key**: The previously generated API key
+* **api_key:str**: The previously generated API key
 
 
     {
@@ -41,8 +41,8 @@ DELETE:
 
 POST:
 
-* **api_key**: The generated API key
-* **expiration**: The expiration timestamp as a UTC UNIX timestamp
+* **api_key:str**: The generated API key
+* **expiration:int**: The expiration timestamp as a UTC UNIX timestamp
 
     {
         "status": "ok",
