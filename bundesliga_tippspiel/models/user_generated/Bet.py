@@ -102,11 +102,17 @@ class Bet(ModelMixin, db.Model):
             data["match"] = self.match.__json__(include_children)
         return data
 
-    def evaluate(self) -> int:
+    def evaluate(self, when_finished: bool = False) -> int:
         """
         Evaluates the points score on this bet
-        :return: None
+        :param when_finished: Only calculate the value
+                              when the match is finished.
+                              Otherwise, returns 0
+        :return: The calculated points
         """
+        if when_finished and not self.match.finished:
+            return 0
+
         points = 0
         bet_diff = self.home_score - self.away_score
         match_diff = \

@@ -150,3 +150,16 @@ class TestApiKey(_ModelTestFramework):
         self.bet.match.home_current_score = 1
         self.bet.match.away_current_score = 3
         self.assertEqual(self.bet.evaluate(), 3)  # 1:1 | 1:3
+
+    def test_evaluating_unfinished_games(self):
+        """
+        Tests that evaluating unfinished games behaves correctly
+        :return: None
+        """
+        self.bet.home_score = 0
+        self.bet.away_score = 0
+        self.bet.match.home_current_score = 0
+        self.bet.match.away_current_score = 0
+        self.bet.match.finished = False
+        self.assertEqual(self.bet.evaluate(), 15)
+        self.assertEqual(self.bet.evaluate(True), 0)
