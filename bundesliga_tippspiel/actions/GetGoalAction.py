@@ -48,11 +48,11 @@ class GetGoalAction(Action):
                         the specified team
         :raises: ActionException if any problems occur
         """
-        self.id = _id
-        self.matchday = matchday
-        self.match_id = match_id
-        self.player_id = player_id
-        self.team_id = team_id
+        self.id = None if _id is None else int(_id)
+        self.matchday = None if matchday is None else int(matchday)
+        self.match_id = None if match_id is None else int(match_id)
+        self.player_id = None if player_id is None else int(player_id)
+        self.team_id = None if team_id is None else int(team_id)
 
     def validate_data(self):
         """
@@ -94,7 +94,7 @@ class GetGoalAction(Action):
         return self.prepare_get_response(result, "goal")
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

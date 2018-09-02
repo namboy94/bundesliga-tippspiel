@@ -25,6 +25,7 @@ from bundesliga_tippspiel.models.match_data.Team import Team
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework
+from bundesliga_tippspiel.types.exceptions import ActionException
 
 
 class _GetActionTestFramework(_ActionTestFramework):
@@ -124,3 +125,10 @@ class _GetActionTestFramework(_ActionTestFramework):
 
         fetch_id = self.action_cls.from_dict({"id": 1})
         self.assertEqual(fetch_id.id, 1)
+
+        try:
+            wrong_type = self.action_cls.from_dict({"id": "one"})
+            wrong_type.execute()
+            self.fail()
+        except ActionException as e:
+            self.assertEqual(e.reason, "invalid parameters")

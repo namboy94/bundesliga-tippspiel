@@ -39,8 +39,8 @@ class GetPlayerAction(Action):
                         in the selected team
         :raises: ActionException if any problems occur
         """
-        self.id = _id
-        self.team_id = team_id
+        self.id = None if _id is None else int(_id)
+        self.team_id = None if team_id is None else int(team_id)
 
     def validate_data(self):
         """
@@ -72,7 +72,7 @@ class GetPlayerAction(Action):
         return self.prepare_get_response(result, "player")
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

@@ -47,10 +47,10 @@ class GetBetAction(Action):
                          matchday
         :raises: ActionException if any problems occur
         """
-        self.id = _id
-        self.user_id = user_id
-        self.match_id = match_id
-        self.matchday = matchday
+        self.id = None if _id is None else int(_id)
+        self.user_id = None if user_id is None else int(user_id)
+        self.match_id = None if match_id is None else int(match_id)
+        self.matchday = None if matchday is None else int(matchday)
 
     def validate_data(self):
         """
@@ -102,7 +102,7 @@ class GetBetAction(Action):
         return self.prepare_get_response(result, "bet")
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

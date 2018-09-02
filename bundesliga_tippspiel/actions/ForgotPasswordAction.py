@@ -51,10 +51,10 @@ class ForgotPasswordAction(Action):
                                for verifying the recaptcha
         :raises: ActionException if any problems occur
         """
-        self.email = email
-        self.recaptcha_response = recaptcha_response
-        self.host_address = host_address
-        self.client_address = client_address
+        self.email = str(email)
+        self.recaptcha_response = str(recaptcha_response)
+        self.host_address = str(host_address)
+        self.client_address = str(client_address)
 
     def validate_data(self):
         """
@@ -103,7 +103,7 @@ class ForgotPasswordAction(Action):
         return {}
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

@@ -40,9 +40,9 @@ class LoginAction(Action):
         :param remember: If set to true, the login session will be persistent
         :raises: ActionException if any problems occur
         """
-        self.username = username
-        self.password = password
-        self.remember = remember
+        self.username = str(username)
+        self.password = str(password)
+        self.remember = bool(remember)
 
     def validate_data(self):
         """
@@ -88,7 +88,7 @@ class LoginAction(Action):
         return {}
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

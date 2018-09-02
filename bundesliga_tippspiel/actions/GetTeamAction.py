@@ -33,7 +33,7 @@ class GetTeamAction(Action):
         :param _id: If provided, will only fetch the selected ID
         :raises: ActionException if any problems occur
         """
-        self.id = _id
+        self.id = None if _id is None else int(_id)
 
     def validate_data(self):
         """
@@ -61,7 +61,7 @@ class GetTeamAction(Action):
         return self.prepare_get_response(result, "team")
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

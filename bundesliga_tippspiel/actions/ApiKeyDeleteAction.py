@@ -35,7 +35,7 @@ class ApiKeyDeleteAction(Action):
         :param api_key: The API key to delete
         :raises: ActionException if any problems occur
         """
-        self.api_key = api_key
+        self.api_key = str(api_key)
 
     def validate_data(self):
         """
@@ -67,7 +67,7 @@ class ApiKeyDeleteAction(Action):
         return {}
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

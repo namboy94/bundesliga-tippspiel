@@ -53,13 +53,14 @@ class RegisterAction(Action):
         :param password_repeat: If provided, makes sure that passwords match.
         :raises: ActionException if any problems occur
         """
-        self.username = username
-        self.email = email
-        self.password = password
-        self.client_address = client_address
-        self.host_address = host_address
-        self.recaptcha_response = recaptcha_response
-        self.password_repeat = password_repeat
+        self.username = str(username)
+        self.email = str(email)
+        self.password = str(password)
+        self.client_address = str(client_address)
+        self.host_address = str(host_address)
+        self.recaptcha_response = str(recaptcha_response)
+        self.password_repeat = \
+            None if password_repeat is None else str(password_repeat)
 
     def validate_data(self):
         """
@@ -157,7 +158,7 @@ class RegisterAction(Action):
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

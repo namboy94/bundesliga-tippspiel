@@ -40,9 +40,9 @@ class ChangePasswordAction(Action):
         :param password_repeat: The new password repeated
         :raises: ActionException if any problems occur
         """
-        self.old_password = old_password
-        self.new_password = new_password
-        self.password_repeat = password_repeat
+        self.old_password = str(old_password)
+        self.new_password = str(new_password)
+        self.password_repeat = str(password_repeat)
 
     def validate_data(self):
         """
@@ -79,7 +79,7 @@ class ChangePasswordAction(Action):
         return {}
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

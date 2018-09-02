@@ -35,7 +35,7 @@ class DeleteUserAction(Action):
         :param password: The password of the user for verification purposes
         :raises: ActionException if any problems occur
         """
-        self.password = password
+        self.password = str(password)
 
     def validate_data(self):
         """
@@ -67,7 +67,7 @@ class DeleteUserAction(Action):
         return {}
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data

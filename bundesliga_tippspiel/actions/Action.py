@@ -63,6 +63,21 @@ class Action:
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
+        try:
+            return cls._from_dict(data)
+        except (ValueError, TypeError):
+            raise ActionException(
+                "invalid parameters",
+                "Ungültige Parameter"
+            )
+
+    @classmethod
+    def _from_dict(cls, data: Dict[str, Any]):
+        """
+        Generates an action from a dictionary
+        :param data: The dictionary containing the relevant data
+        :return: The generated Action object
+        """
         raise NotImplementedError()  # pragma: no cover
 
     @classmethod

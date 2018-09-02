@@ -39,8 +39,8 @@ class ConfirmAction(Action):
         :param confirm_key: The user's confirmation key
         :raises: ActionException if any problems occur
         """
-        self.user_id = user_id
-        self.confirm_key = confirm_key
+        self.user_id = int(user_id)
+        self.confirm_key = str(confirm_key)
 
     def validate_data(self):
         """
@@ -82,7 +82,7 @@ class ConfirmAction(Action):
         return {}
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def _from_dict(cls, data: Dict[str, Any]):
         """
         Generates an action from a dictionary
         :param data: The dictionary containing the relevant data
