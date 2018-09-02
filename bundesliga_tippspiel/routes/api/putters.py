@@ -24,7 +24,7 @@ from bundesliga_tippspiel.utils.routes import api, api_login_required
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
 
-@app.route("/bet", methods=["PUT"])
+@app.route("/api/v2/bet", methods=["PUT"])
 @api_login_required
 @login_required
 @api

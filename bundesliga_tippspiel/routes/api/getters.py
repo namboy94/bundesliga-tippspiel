@@ -32,8 +32,8 @@ from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 
-@app.route("/bet", methods=["GET"])
-@app.route("/bet/<int:bet_id>", methods=["GET"])
+@app.route("/api/v2/bet", methods=["GET"])
+@app.route("/api/v2/bet/<int:bet_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -46,8 +46,8 @@ def get_bet(bet_id: Optional[int] = None):
     return execute_getter(bet_id, GetBetAction)
 
 
-@app.route("/goal", methods=["GET"])
-@app.route("/goal/<int:goal_id>", methods=["GET"])
+@app.route("/api/v2/goal", methods=["GET"])
+@app.route("/api/v2/goal/<int:goal_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -60,8 +60,8 @@ def get_goal(goal_id: Optional[int] = None):
     return execute_getter(goal_id, GetGoalAction)
 
 
-@app.route("/match", methods=["GET"])
-@app.route("/match/<int:match_id>", methods=["GET"])
+@app.route("/api/v2/match", methods=["GET"])
+@app.route("/api/v2/match/<int:match_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -74,8 +74,8 @@ def get_match(match_id: Optional[int] = None):
     return execute_getter(match_id, GetMatchAction)
 
 
-@app.route("/player", methods=["GET"])
-@app.route("/player/<int:player_id>", methods=["GET"])
+@app.route("/api/v2/player", methods=["GET"])
+@app.route("/api/v2/player/<int:player_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -88,8 +88,8 @@ def get_player(player_id: Optional[int] = None):
     return execute_getter(player_id, GetPlayerAction)
 
 
-@app.route("/team", methods=["GET"])
-@app.route("/team/<int:team_id>", methods=["GET"])
+@app.route("/api/v2/team", methods=["GET"])
+@app.route("/api/v2/team/<int:team_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
