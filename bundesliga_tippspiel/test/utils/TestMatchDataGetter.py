@@ -76,7 +76,12 @@ class TestEnv(_TestFramework):
                 goals = Goal.query.filter_by(match_id=match.id).all()
                 self.assertEqual(goal_count, len(goals))
 
-        self.assertEqual(len(Team.query.all()), 18)
+        all_teams = Team.query.all()
+        self.assertEqual(len(all_teams), 18)
+        for team in all_teams:
+            self.assertTrue(len(team.name) <= 50)
+            self.assertTrue(len(team.short_name) <= 16)
+            self.assertTrue(len(team.abbreviation) == 3)
 
         fcb_tsg = Match.query.get(51121)  # type: Match
         self.assertEqual(3, fcb_tsg.home_current_score)
@@ -86,7 +91,7 @@ class TestEnv(_TestFramework):
         self.assertEqual(len(goals), 4)
         self.assertEqual(goals[0].player.name, "Thomas Müller")
 
-        fcb = fcb_tsg.home_tem
+        fcb = fcb_tsg.home_team
         self.assertEqual(fcb.name, "FC Bayern München")
         self.assertEqual(fcb.short_name, "FC Bayern")
         self.assertEqual(fcb.abbreviation, "FCB")

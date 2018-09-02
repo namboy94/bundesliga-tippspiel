@@ -209,10 +209,14 @@ def store_in_db(objects: List[db.Model], model_cls: type(db.Model)):
     for obj in existing:
         idmap[obj.id] = obj
 
+    tracker = []
     for obj in objects:
+        if obj.id in tracker:
+            continue
         if obj.id in idmap:
             model_cls.query.filter_by(id=obj.id).update(obj.__json__())
         else:
+            tracker.append(obj.id)
             db.session.add(obj)
     db.session.commit()
 
@@ -226,19 +230,19 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
     """
     return {
         "1. FC Nürnberg": (
-            "1. FC Nürnberg", "Nürnberg", "FCN",
+            "1. FC Nürnberg", "1. FC Nürnberg", "FCN",
             wikimedia_icon_urls("commons/f/fa/1._FC_Nürnberg_logo.svg")
         ),
         "1. FSV Mainz 05": (
-            "1. FSV Mainz 05", "Mainz", "M05",
+            "1. FSV Mainz 05", "FSV Mainz 05", "M05",
             wikimedia_icon_urls("commons/0/0b/FSV_Mainz_05_Logo.svg")
         ),
         "Bayer Leverkusen": (
-            "Bayer 04 Leverkusen", "Leverkusen", "B04",
+            "Bayer 04 Leverkusen", "Bayer Leverkusen", "B04",
             wikimedia_icon_urls("de/f/f7/Bayer_Leverkusen_Logo.svg")
         ),
         "Borussia Dortmund": (
-            "Borussia Dortmund", "Dortmund", "BVB",
+            "Borussia Dortmund", "BVB Dortmund", "BVB",
             wikimedia_icon_urls("commons/6/67/Borussia_Dortmund_logo.svg")
         ),
         "Borussia Mönchengladbach": (
@@ -251,16 +255,16 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
             wikimedia_icon_urls("commons/0/04/Eintracht_Frankfurt_Logo.svg")
         ),
         "FC Augsburg": (
-            "FC Augsburg", "Augsburg", "FCA",
+            "FC Augsburg", "FC Augsburg", "FCA",
             wikimedia_icon_urls("de/b/b5/Logo_FC_Augsburg.svg")
         ),
         "FC Bayern": (
-            "FC Bayern München", "Bayern", "FCB",
+            "FC Bayern München", "FC Bayern", "FCB",
             wikimedia_icon_urls("commons/1/1b/"
                                 "FC_Bayern_München_logo_(2017).svg")
         ),
         "FC Schalke 04": (
-            "FC Schalke 04", "Schalke", "S04",
+            "FC Schalke 04", "Schalke 04", "S04",
             wikimedia_icon_urls("commons/6/6d/FC_Schalke_04_Logo.svg")
         ),
         "Fortuna Düsseldorf": (
@@ -268,35 +272,35 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
             wikimedia_icon_urls("commons/9/94/Fortuna_D%C3%BCsseldorf.svg")
         ),
         "Hannover 96": (
-            "Hannover 96", "Hannover", "H96",
+            "Hannover 96", "Hannover 96", "H96",
             wikimedia_icon_urls("commons/c/cd/Hannover_96_Logo.svg")
         ),
         "Hertha BSC": (
-            "Hertha BSC Berlin", "Hertha", "BSC",
+            "Hertha BSC Berlin", "Hertha BSC", "BSC",
             wikimedia_icon_urls("commons/8/81/Hertha_BSC_Logo_2012.svg")
         ),
         "RB Leipzig": (
-            "RB Leibzig", "Leibzig", "RBL",
+            "RB Leibzig", "RB Leibzig", "RBL",
             wikimedia_icon_urls("it/c/cc/RB_Leipzig_primo_logo.svg")
         ),
         "SC Freiburg": (
-            "SC Freiburg", "Freiburg", "SCF",
+            "SC Freiburg", "SC Freiburg", "SCF",
             wikimedia_icon_urls("de/8/88/Logo-SC_Freiburg.svg")
         ),
         "TSG 1899 Hoffenheim": (
-            "TSG 1899 Hoffenheim", "Hoffenheim", "TSG",
+            "TSG 1899 Hoffenheim", "TSG Hoffenheim", "TSG",
             wikimedia_icon_urls("commons/e/e7/Logo_TSG_Hoffenheim.svg")
         ),
         "VfB Stuttgart": (
-            "VFB Stuttgart", "Stuttgart", "VFB",
+            "VFB Stuttgart", "VFB Stuttgart", "VFB",
             wikimedia_icon_urls("commons/e/eb/VfB_Stuttgart_1893_Logo.svg")
         ),
         "VfL Wolfsburg": (
-            "VFL Wolfsburg", "Wolfsburg", "VFL",
+            "VFL Wolfsburg", "VFL Wolfsburg", "VFL",
             wikimedia_icon_urls("commons/c/ce/VfL_Wolfsburg_Logo.svg")
         ),
         "Werder Bremen": (
-            "SV Werder Bremen", "Bremen", "SVW",
+            "SV Werder Bremen", "Werder Bremen", "SVW",
             wikimedia_icon_urls("commons/b/be/SV-Werder-Bremen-Logo.svg")
         )
     }[team_name]

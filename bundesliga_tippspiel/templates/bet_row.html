@@ -15,7 +15,7 @@
                    name="{{ match.id }}-home"
                    title="Home"
                    pattern="[0-9]*"
-                   maxlength="3"
+                   maxlength="2"
                    {% if bet is not none %}value="{{ bet.home_score }}"{% endif %}
                    {% if match.started %} disabled="" {% endif %}
             >
@@ -25,7 +25,7 @@
                    name="{{ match.id }}-away"
                    title="Away"
                    pattern="[0-9]*"
-                   maxlength="3"
+                   maxlength="2"
                    {% if bet is not none %}value="{{ bet.away_score }}"{% endif %}
                    {% if match.started %} disabled="" {% endif %}
             >
