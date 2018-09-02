@@ -71,6 +71,20 @@ class TestBetsRoute(_RouteTestFramework):
         """
         return "/bets", ["POST"], "Spieltag", True
 
+    def test_getting_specific_matchday(self):
+        """
+        Tests retrieving a specific matchday
+        :return: None
+        """
+        self.login()
+        resp = self.client.get(
+            "{}/{}".format(self.route_path, self.match_one.matchday)
+        )
+        self.assertTrue(
+            "Spieltag {}".format(self.match_one.matchday).encode("utf-8") in
+            resp.data
+        )
+
     def test_successful_requests(self):
         """
         Tests (a) successful request(s)
