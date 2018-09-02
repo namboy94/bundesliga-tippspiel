@@ -132,3 +132,23 @@ td {
     padding: 20px;
     border-radius: 10px
 }
+
+.bet_row {
+}
+
+.bet_col {
+    padding: 8px;
+}
+
+.bet_row_logo {
+    max-height: 25px;
+}
+
+.bet_row_input {
+    min-width: 35px;
+}
+
+.bet_row_result_display {
+    background: white;
+    border-radius: 10px;
+}

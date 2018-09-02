@@ -18,15 +18,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Optional
-from flask import render_template
+from flask import render_template, request
 from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 
 
-@app.route("/bets")
-@app.route("/bets/<matchday>")
+@app.route("/bets", methods=["POST", "GET"])
+@app.route("/bets/<int:matchday>", methods=["GET"])
 @login_required
 def bets(matchday: Optional[int] = None):
     """
@@ -34,19 +34,25 @@ def bets(matchday: Optional[int] = None):
     :param matchday: The matchday to display
     :return: None
     """
-    if matchday is None:
-        all_matches = GetMatchAction().execute()["matches"]
-        filtered = list(filter(lambda x: not x.started, all_matches))
-        matchday = min(filtered, key=lambda x: x.matchday)
+    if request.method == "GET":
+        if matchday is None:
+            all_matches = GetMatchAction().execute()["matches"]
+            filtered = list(filter(lambda x: not x.started, all_matches))
+            print(filtered)
+            matchday = min(filtered, key=lambda x: x.matchday).matchday
 
-    matchday_bets = GetBetAction(matchday=matchday).execute()["bets"]
-    matchday_matches = GetMatchAction(matchday=matchday).execute()["matches"]
+        matchday_bets = GetBetAction(matchday=matchday).execute()["bets"]
+        matchday_matches = GetMatchAction(matchday=matchday).execute()["matches"]
 
-    return render_template(
-        "bets.html",
-        bets=matchday_bets,
-        matches=matchday_matches
-    )
+        return render_template(
+            "bets.html",
+            matchday=matchday,
+            bets=matchday_bets,
+            matches=matchday_matches
+        )
+
+    else:  # POST
+        action = None
 
 
 @app.route("/leaderboard")

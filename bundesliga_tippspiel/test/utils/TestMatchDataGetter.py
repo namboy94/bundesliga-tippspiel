@@ -85,3 +85,8 @@ class TestEnv(_TestFramework):
         goals = Goal.query.filter_by(match_id=fcb_tsg.id).all()
         self.assertEqual(len(goals), 4)
         self.assertEqual(goals[0].player.name, "Thomas Müller")
+
+        fcb = fcb_tsg.home_tem
+        self.assertEqual(fcb.name, "FC Bayern München")
+        self.assertEqual(fcb.short_name, "FC Bayern")
+        self.assertEqual(fcb.abbreviation, "FCB")

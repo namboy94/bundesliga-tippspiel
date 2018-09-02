@@ -184,7 +184,7 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
     :param team_data: The team data to parse
     :return: The generated Team object
     """
-    name, abbrev, short_name, icons = get_team_data(team_data["TeamName"])
+    name, short_name, abbrev, icons = get_team_data(team_data["TeamName"])
     svg, png = icons
     return Team(
         id=team_data["TeamId"],
@@ -227,7 +227,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
     return {
         "1. FC Nürnberg": (
             "1. FC Nürnberg", "Nürnberg", "FCN",
-            wikimedia_icon_urls("de/b/b5/Logo_FC_Augsburg.svg")
+            wikimedia_icon_urls("commons/f/fa/1._FC_Nürnberg_logo.svg")
         ),
         "1. FSV Mainz 05": (
             "1. FSV Mainz 05", "Mainz", "M05",
