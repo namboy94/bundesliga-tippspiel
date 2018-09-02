@@ -20,21 +20,18 @@ LICENSE"""
 from flask import request
 from flask_login import login_required
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.utils.json import jsonify_models
 from bundesliga_tippspiel.utils.routes import api, api_login_required
-from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
+from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
 
-@app.route("/api/v2/leaderboard", methods=["GET"])
+@app.route("/bet", methods=["PUT"])
 @api_login_required
 @login_required
 @api
-def api_leaderboard():
+def put_bet():
     """
-    Enables retrieving a leaderboard
-    :return: The JSON response
+    Allows the placement of new bets
+    :return: None
     """
-    action = LeaderboardAction().from_dict(request.get_json())
-    leaderboard = action.execute()
-    jsonified = jsonify_models(leaderboard, True)
-    return jsonified
+    action = PlaceBetsAction.from_dict(request.get_json())
+    return action.execute()

@@ -28,4 +28,6 @@ def load_routes():
     # noinspection PyUnresolvedReferences
     import bundesliga_tippspiel.routes.api.update
     # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.betting
+    import bundesliga_tippspiel.routes.api.getters
+    # noinspection PyUnresolvedReferences
+    import bundesliga_tippspiel.routes.api.putters
