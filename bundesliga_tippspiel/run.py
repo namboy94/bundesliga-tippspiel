@@ -48,3 +48,5 @@ if not app.testing:  # pragma: no cover
     logging_handler.setFormatter(formatter)
     logging_handler.setLevel(logging.INFO)
     app.logger.addHandler(logging_handler)
+
+    app.logger.info("STARTING FLASK")
