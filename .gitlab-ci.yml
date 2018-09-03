@@ -38,7 +38,6 @@ deploy_production:
   stage: deploy
   only:
     - master
-    - develop
   tags:
     - python3
     - bundesliga-tippspiel

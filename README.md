@@ -9,9 +9,9 @@
 Bundesliga Tippspiel is a website using flask and various plugins that allows
 users to bet on Bundesliga matches and compete with one another.
 
-A live version of the page is available on
+A live version of the page is available at
 [hk-tippspiel.com](https://hk-tippspiel.com). A development instance is available
-on [develop.hk-tippspiel.com](https://develop.hk-tippspiel.com)
+at [develop.hk-tippspiel.com](https://develop.hk-tippspiel.com)
 
 ## Documentation
 
