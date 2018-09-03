@@ -18,8 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
+import logging
+from logging.handlers import RotatingFileHandler
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.config import db_user, db_key, db_name
+from bundesliga_tippspiel.config import db_user, db_key, db_name, logging_path
 from bundesliga_tippspiel.utils.initialize import initialize_db, \
     initialize_app, initialize_login_manager
 
@@ -38,3 +40,11 @@ if not app.testing:  # pragma: no cover
     initialize_app()
     initialize_db(uri)
     initialize_login_manager()
+
+    formatter = app.logger.handlers[0].formatter
+    logging_handler = RotatingFileHandler(
+        logging_path, maxBytes=10000, backupCount=3
+    )
+    logging_handler.setFormatter(formatter)
+    logging_handler.setLevel(logging.INFO)
+    app.logger.addHandler(logging_handler)

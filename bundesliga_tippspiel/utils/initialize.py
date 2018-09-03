@@ -87,6 +87,11 @@ def initialize_login_manager():
 
     @login_manager.request_loader
     def load_user_from_request(request) -> Optional[User]:
+        """
+        Loads a user pased on a provided API key
+        :param request: The request containing the API key in the headers
+        :return: The user or None if no valid API key was provided
+        """
 
         if "Authorization" not in request.headers:
             return None

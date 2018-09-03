@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import os
 from bundesliga_tippspiel.utils.env import resolve_env_variable
 
 """
@@ -88,3 +89,8 @@ last_match_data_update = 0
 """
 Keeps track of when the match data was updated last
 """
+
+logging_path = os.path.join(
+    str(resolve_env_variable("PROJECT__ROOT_PATH", default="/tmp")),
+    "tippspiel.log"
+)
