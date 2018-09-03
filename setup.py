@@ -40,6 +40,7 @@ if __name__ == "__main__":
         install_requires=[
             "requests",
             "bcrypt",
+            "werkzeug",
             "flask_login",
             "flask_sqlalchemy",
             "sqlalchemy",

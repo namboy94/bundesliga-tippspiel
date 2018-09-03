@@ -91,6 +91,17 @@ class TestGetBetAction(_GetActionTestFramework):
             self.assertEqual(len(filtered), 1)
             self.assertEqual(filtered[0], self.bet_one)
 
+    def test_fetching_by_match(self):
+        """
+        Explicitly search by match ID, since there was a bug once
+        :return: None
+        """
+        self.action.match_id = self.bet_one.match_id
+        filtered = self.action.execute()["bets"]
+
+        self.assertEqual(len(filtered), 2)
+        self.assertEqual(filtered[0], self.bet_one)
+
     def test_using_filter_and_id(self):
         """
         Tests that using an ID and an explicit filter does not work

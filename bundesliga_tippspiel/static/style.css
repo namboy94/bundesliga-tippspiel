@@ -141,3 +141,25 @@ p {
 .leaderboard-table {
     background: white;
 }
+
+.match_logo {
+    max-height: 40px;
+}
+
+.match_header {
+    padding-top: 30px;
+    background: white;
+    border-radius: 15px;
+}
+
+.goal-icon-normal {
+    color: green;
+}
+
+.goal-icon-penalty {
+    color: blue;
+}
+
+.goal-icon-owngoal {
+    color: red;
+}

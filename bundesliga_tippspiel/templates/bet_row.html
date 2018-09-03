@@ -71,7 +71,9 @@
             </h5>
         </div>
         <div class="col-md-1 bet_col">
-            <i class="fas fa-info-circle"></i>
+            <a href="{{ url_for("match", match_id=match.id) }}">
+                <i class="fas fa-info-circle"></i>
+            </a>
         </div>
     </div>
 </li>

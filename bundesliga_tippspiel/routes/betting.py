@@ -21,8 +21,10 @@ from typing import Optional
 from flask import render_template, request
 from flask_login import login_required
 from bundesliga_tippspiel import app
+from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
+from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
@@ -47,8 +49,8 @@ def bets(matchday: Optional[int] = None):
             GetMatchAction(matchday=matchday).execute()["matches"]
 
         betmap = {}
-        for match in matchday_matches:
-            betmap[match.id] = None
+        for _match in matchday_matches:
+            betmap[_match.id] = None
         for bet in matchday_bets:
             betmap[bet.match.id] = bet
 
@@ -64,6 +66,26 @@ def bets(matchday: Optional[int] = None):
         return action.execute_with_redirects(
             "bets", "Tipps erfolgreich gesetzt", "bets"
         )
+
+
+@app.route("/match/<int:match_id>", methods=["GET"])
+@login_required
+@action_route
+def match(match_id: int):
+    """
+    Displays a single match
+    :param match_id: The ID of the match to display
+    :return: The Response
+    """
+    match_info = GetMatchAction(_id=match_id).execute()["match"]
+    goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
+    bets_info = GetBetAction(match_id=match_id).execute()["bets"]
+    return render_template(
+        "match.html",
+        match=match_info,
+        goals=goals_info,
+        bets=bets_info
+    )
 
 
 @app.route("/leaderboard", methods=["GET"])
