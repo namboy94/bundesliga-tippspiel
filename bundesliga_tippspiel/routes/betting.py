@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Optional
 from flask import render_template, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
@@ -44,7 +44,10 @@ def bets(matchday: Optional[int] = None):
             filtered = list(filter(lambda x: not x.started, all_matches))
             matchday = min(filtered, key=lambda x: x.matchday).matchday
 
-        matchday_bets = GetBetAction(matchday=matchday).execute()["bets"]
+        matchday_bets = GetBetAction(
+            matchday=matchday,
+            user_id=current_user.id
+        ).execute()["bets"]
         matchday_matches = \
             GetMatchAction(matchday=matchday).execute()["matches"]
 
