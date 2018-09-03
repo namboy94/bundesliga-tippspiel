@@ -100,17 +100,25 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <th>{{ bet.user.username }}</th>
                     <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
                     <th>
-                        {% set points=bet.evaluate() %}
-                        {% if points == 0 %}
-                            <span class="badge badge-danger badge-pill">{{ points }}</span>
-                        {% elif points < 6 %}
-                            <span class="badge badge-warning badge-pill">{{ points }}</span>
-                        {% elif points < 11 %}
-                            <span class="badge badge-info badge-pill">{{ points }}</span>
-                        {% elif points < 15 %}
-                            <span class="badge badge-primary badge-pill">{{ points }}</span>
+                        {% if match.started %}
+                            {% set points=bet.evaluate() %}
+                            {% if points == 0 %}
+                                <span class="badge badge-danger badge-pill">{{ points }}</span>
+                            {% elif points <= 3 %}
+                                <span class="badge badge-warning badge-pill">{{ points }}</span>
+                            {% elif points <= 7 %}
+                                <span class="badge badge-light badge-pill">{{ points }}</span>
+                            {% elif points <= 10 %}
+                                <span class="badge badge-info badge-pill">{{ points }}</span>
+                            {% elif points <= 12 %}
+                                <span class="badge badge-primary badge-pill">{{ points }}</span>
+                            {% elif points > 12 %}
+                                <span class="badge badge-success badge-pill">{{ points }}</span>
+                            {% else %}
+                                <span class="badge badge-secondary badge-pill">{{ points }}</span>
+                            {% endif %}
                         {% else %}
-                            <span class="badge badge-success badge-pill">{{ points }}</span>
+                            <span class="badge badge-secondary badge-pill">-</span>
                         {% endif %}
                     </th>
                 </tr>
