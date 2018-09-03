@@ -48,7 +48,6 @@ def bets(matchday: Optional[int] = None):
             matchday=matchday,
             user_id=current_user.id
         ).execute()["bets"]
-        print(matchday_bets)
         matchday_matches = \
             GetMatchAction(matchday=matchday).execute()["matches"]
 
