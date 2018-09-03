@@ -14,6 +14,9 @@ stylecheck:
 
 unittest:
   stage: test
+  only:
+    - develop
+    - master
   tags:
     - python3
     - progstats
