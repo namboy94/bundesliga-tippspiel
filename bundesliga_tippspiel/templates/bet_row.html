@@ -1,0 +1,83 @@
+<li class="list-group-item bet_row">
+    <div class="row text-center">
+        <div class="col-md-3 bet_col">
+            <h5>
+                {{ match.home_team.short_name }}
+                <span>
+                    <img src="{{ match.home_team.icon_svg }}" class="bet_row_logo">
+                </span>
+            </h5>
+        </div>
+
+
+        <div class="col-md-1 bet_col">
+            <input class="form-control text-center bet_row_input"
+                   name="{{ match.id }}-home"
+                   title="Home"
+                   pattern="[0-9]*"
+                   maxlength="2"
+                   {% if bet is not none %}value="{{ bet.home_score }}"{% endif %}
+                   {% if match.started %} disabled="" {% endif %}
+            >
+        </div>
+        <div class="col-md-1 bet_col">
+            <input class="form-control text-center bet_row_input"
+                   name="{{ match.id }}-away"
+                   title="Away"
+                   pattern="[0-9]*"
+                   maxlength="2"
+                   {% if bet is not none %}value="{{ bet.away_score }}"{% endif %}
+                   {% if match.started %} disabled="" {% endif %}
+            >
+        </div>
+
+        <div class="col-md-1 bet_col">
+            {% if not match.started%}
+                <span class="badge badge-secondary badge-pill">-</span>
+            {% elif bet is none %}
+                <span class="badge badge-danger badge-pill">0</span>
+            {% else %}
+                {% set points=bet.evaluate() %}
+                {% if points == 0 %}
+                    <span class="badge badge-danger badge-pill">{{ points }}</span>
+                {% elif points <= 3 %}
+                    <span class="badge badge-warning badge-pill">{{ points }}</span>
+                {% elif points <= 7 %}
+                    <span class="badge badge-light badge-pill">{{ points }}</span>
+                {% elif points <= 10 %}
+                    <span class="badge badge-info badge-pill">{{ points }}</span>
+                {% elif points <= 12 %}
+                    <span class="badge badge-primary badge-pill">{{ points }}</span>
+                {% elif points > 12 %}
+                    <span class="badge badge-success badge-pill">{{ points }}</span>
+                {% else %}
+                    <span class="badge badge-secondary badge-pill">{{ points }}</span>
+                {% endif %}
+            {% endif %}
+        </div>
+
+
+        <div class="col-md-2 bet_col">
+            <h3 class="bet_row_result_display">
+                {% if match.started %}
+                    {{ match.home_current_score }} : {{ match.away_current_score }}
+                {% else %}
+                    - : -
+                {% endif %}
+            </h3>
+        </div>
+        <div class="col-md-3 bet_col">
+            <h5>
+                {{ match.away_team.short_name }}
+                <span>
+                    <img src="{{ match.away_team.icon_svg }}" class="bet_row_logo">
+                </span>
+            </h5>
+        </div>
+        <div class="col-md-1 bet_col">
+            <a href="{{ url_for("match", match_id=match.id) }}">
+                <i class="fas fa-info-circle"></i>
+            </a>
+        </div>
+    </div>
+</li>

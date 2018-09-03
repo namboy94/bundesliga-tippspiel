@@ -17,4 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.router import app as application
+import os
+from bundesliga_tippspiel.utils.env import load_secrets
+
+
+secrets_file = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)), "secrets.json"
+)
+load_secrets(secrets_file)
+os.environ["PROJECT_ROOT_PATH"] = os.path.abspath(os.path.dirname(__file__))
+
+from bundesliga_tippspiel.run import app as application

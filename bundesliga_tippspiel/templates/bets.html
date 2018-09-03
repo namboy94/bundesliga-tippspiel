@@ -1,0 +1,68 @@
+<!--
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+{% extends "base_layout.html" %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <h1>
+                {% if matchday > 1 %}
+                    <a href="{{ "{}/{}".format(url_for("bets"), matchday - 1) }}">
+                        <
+                    </a>
+                {% endif %}
+            </h1>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6"><h1>Spieltag {{ matchday }}</h1></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <h1>
+                {% if matchday < 34 %}
+                    <a href="{{ "{}/{}".format(url_for("bets"), matchday + 1) }}">
+                        >
+                    </a>
+                {% endif %}
+            </h1>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <form class="form-horizontal"
+          action="{{ url_for("bets") }}"
+          method="post">
+        <fieldset>
+            <ul class="list-group">
+                {% for match in matches %}
+                    {% with match=match, bet=betmap[match.id] %}
+                        {% include "bet_row.html" %}
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+            <br>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">Bestätigen</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

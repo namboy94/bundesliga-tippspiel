@@ -1,0 +1,130 @@
+<!--
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+{% extends "base_layout.html" %}
+{% block body %}
+    <div class="row match_header text-center">
+        <div class="col-md-1">
+            <img src="{{ match.home_team.icon_svg }}" class="match_logo">
+        </div>
+        <div class="col-md-4"><h1>{{ match.home_team.short_name }}</h1></div>
+        <div class="col-md-2"><h1>VS</h1></div>
+        <div class="col-md-4"><h1>{{ match.away_team.short_name }}</h1></div>
+        <div class="col-md-1">
+            <img src="{{ match.away_team.icon_svg }}" class="match_logo">
+        </div>
+    </div>
+
+    <br>
+
+    <table class="table table-striped text-center">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Minute</th>
+                <th></th>
+                <th>Schütze</th>
+                <th>Stand</th>
+                <th>Schütze</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for goal in goals %}
+                <tr>
+                    <th>{{ goal.minute }}</th>
+                    {% if goal.player.team.id == match.home_team.id %}
+                        <th>
+                            {% if goal.penalty %}
+                                <i class="far fa-futbol goal-icon-penalty"></i>
+                            {% elif goal.own_goal %}
+                                <i class="far fa-futbol goal-icon-owngoal"></i>
+                            {% else %}
+                                <i class="far fa-futbol goal-icon-normal"></i>
+                            {% endif %}
+                        </th>
+                        <th>{{ goal.player.name }}</th>
+                    {% else %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                    <th>{{ goal.home_score }}:{{ goal.away_score }}</th>
+                    {% if goal.player.team.id == match.away_team.id %}
+                        <th>{{ goal.player.name }}</th>
+                        <th>
+                            {% if goal.penalty %}
+                                <i class="far fa-futbol goal-icon-penalty"></i>
+                            {% elif goal.own_goal %}
+                                <i class="far fa-futbol goal-icon-owngoal"></i>
+                            {% else %}
+                                <i class="far fa-futbol goal-icon-normal"></i>
+                            {% endif %}
+                        </th>
+                    {% else %}
+                        <th></th>
+                        <th></th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <table class="table table-striped text-center">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Spieler</th>
+                <th scope="col">Tipp</th>
+                <th scope="col">Punkte</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bet in bets %}
+                <tr>
+                    <th>{{ bet.user.username }}</th>
+                    <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
+                    <th>
+                        {% if match.started %}
+                            {% set points=bet.evaluate() %}
+                            {% if points == 0 %}
+                                <span class="badge badge-danger badge-pill">{{ points }}</span>
+                            {% elif points <= 3 %}
+                                <span class="badge badge-warning badge-pill">{{ points }}</span>
+                            {% elif points <= 7 %}
+                                <span class="badge badge-light badge-pill">{{ points }}</span>
+                            {% elif points <= 10 %}
+                                <span class="badge badge-info badge-pill">{{ points }}</span>
+                            {% elif points <= 12 %}
+                                <span class="badge badge-primary badge-pill">{{ points }}</span>
+                            {% elif points > 12 %}
+                                <span class="badge badge-success badge-pill">{{ points }}</span>
+                            {% else %}
+                                <span class="badge badge-secondary badge-pill">{{ points }}</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="badge badge-secondary badge-pill">-</span>
+                        {% endif %}
+                    </th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

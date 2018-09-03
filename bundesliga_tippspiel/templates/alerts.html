@@ -1,4 +1,4 @@
-"""LICENSE
+<!--
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,12 +15,17 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-LICENSE"""
+-->
 
-from flask import Flask
-app = Flask(__name__)
-
-
-@app.route("/")
-def index():
-    return "Hello World!"
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

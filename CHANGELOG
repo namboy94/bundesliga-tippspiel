@@ -1,3 +1,7 @@
+V 0.14.0:
+  - Achieved near-parity with PHP version
+  - Implemented API version 2
+  - Achieved 100% Code coverage
 V 0.13.1:
   - Fixed Readme links
 V 0.13.0:

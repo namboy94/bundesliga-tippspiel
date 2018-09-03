@@ -16,3 +16,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
+
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
+app = Flask(__name__)
+"""
+The Flask App
+"""
+
+db = SQLAlchemy()
+"""
+The SQLAlchemy database connection
+"""
+
+login_manager = LoginManager(app)
+"""
+The Flask-Login Login Manager
+"""
+login_manager.session_protection = "strong"
+
+
+if "FLASK_TESTING" in os.environ:  # pragma: no cover
+    app.testing = os.environ["FLASK_TESTING"] == "1"

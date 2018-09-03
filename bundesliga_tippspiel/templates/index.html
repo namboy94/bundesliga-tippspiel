@@ -1,0 +1,86 @@
+<!--
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+{% extends "base_layout.html" %}
+{% block body %}
+    <h1>Tippspiel zur Bundesliga Saison 2018/19</h1>
+    <p>
+        Beim Bundesliga Tippspiel kannst du dein Fußballwissen (und dein Glück)
+        mit deinen Freunden messen! Hast du bereits ein Account, kannst du
+        dich mithilfe der Anmeldefunktion
+        <a href="{{ url_for("login") }}">hier</a>
+        anmelden, ansonsten kannst du dich
+        <a href="{{ url_for("register") }}">hier</a>
+        registrieren.
+    </p>
+    <h3>Punktevergabe</h3>
+    <p>Punkte werden wie folgt vergeben:</p>
+    <ul>
+        <li>
+            Für die richtige Tendenz gibt es <strong>7</strong> Punkte
+        </li>
+        <li>
+            Bei korrekt getippter Tordifferenz gibt es <strong>5</strong>
+            Punkte
+        </li>
+        <li>
+            Wird die Toranzahl von mindestens einem Team korrekt getippt,
+            gibt es <strong>3</strong> Punkte
+        </li>
+    </ul>
+    <p>Es können also maximal 15 Punkte pro Spiel erzielt werden.</p>
+    <h4>Beispiele:</h4>
+
+    <table class="table table-striped text-center">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Ergebnis</th>
+                <th scope="col">Tipp</th>
+                <th scope="col">Punkte</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>3:0</td>
+                <td>1:0</td>
+                <td>7 + 3 = 10</td>
+            </tr>
+            <tr>
+                <td>2:1</td>
+                <td>1:2</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>1:1</td>
+                <td>2:2</td>
+                <td>7 + 5 = 12</td>
+            </tr>
+            <tr>
+                <td>5:0</td>
+                <td>0:0</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4:1</td>
+                <td>3:0</td>
+                <td>7 + 5 = 12</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

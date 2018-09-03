@@ -1,0 +1,94 @@
+<!--
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+    <!-- Logo Button -->
+    <a class="navbar-brand" href="/">
+        <img alt="Bundesliga Tippspiel" class="brand-image"
+             src="{{ url_for('static', filename='logo.png') }}">
+    </a>
+
+    <!-- Toggle Button for mobile layouts -->
+    <button class="navbar-toggler collapsed" type="button"
+            data-toggle="collapse" data-target="#navbar-data"
+            aria-controls="navbars-data" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Content -->
+    <div class="navbar-collapse collapse" id="navbar-data" style="">
+
+        <!-- Navigation Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.path == "/" %} active {% endif %}">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+
+            {% if not current_user.is_authenticated %}
+
+                <li class="nav-item {% if request.path == "/login" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("login") }}">
+                        Anmelden
+                    </a>
+                </li>
+
+                <li class="nav-item {% if request.path == "/register" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("register") }}">
+                        Registrieren
+                    </a>
+                </li>
+
+            {% else %}
+
+                <li class="nav-item {% if request.path == "/bets" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("bets") }}">Spieltag</a>
+                </li>
+                <li class="nav-item {% if request.path == "/leaderboard" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("leaderboard") }}">Rangliste</a>
+                </li>
+                <li class="nav-item {% if request.path == "/profile" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("profile") }}">Profil</a>
+                </li>
+
+            {% endif %}
+        </ul>
+
+        <!-- Login/Logout Data -->
+        <ul class="navbar-nav ml-auto">
+
+            <li>
+                <!-- Login/Logout Button-->
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                {% else %}
+                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for('login') }}">
+                        <input class="form-control mr-sm-2" name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
+                        <input class="form-control mr-sm-2" name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
+                        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>
+                    </form>
+                {% endif %}
+            </li>
+        </ul>
+
+    </div>
+</nav>
