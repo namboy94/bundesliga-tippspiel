@@ -48,8 +48,10 @@ def bets(matchday: Optional[int] = None):
             matchday=matchday,
             user_id=current_user.id
         ).execute()["bets"]
-        matchday_matches = \
-            GetMatchAction(matchday=matchday).execute()["matches"]
+
+        matchday_matches = GetMatchAction(
+            matchday=matchday
+        ).execute()["matches"]
 
         betmap = {}
         for _match in matchday_matches:

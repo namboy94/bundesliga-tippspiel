@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any, Optional
 from flask_login import current_user
+from bundesliga_tippspiel import app
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.types.exceptions import ActionException
@@ -98,6 +99,8 @@ class GetBetAction(Action):
             ))
 
             result.sort(key=lambda x: x.match.kickoff)
+
+        app.logger.info("Fetched bets: {}".format(result))
 
         return self.prepare_get_response(result, "bet")
 
