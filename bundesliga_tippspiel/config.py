@@ -91,6 +91,6 @@ Keeps track of when the match data was updated last
 """
 
 logging_path = os.path.join(
-    str(resolve_env_variable("PROJECT__ROOT_PATH", default="/tmp")),
+    str(resolve_env_variable("PROJECT_ROOT_PATH", default="/tmp")),
     "tippspiel.log"
 )

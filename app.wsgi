@@ -25,5 +25,6 @@ secrets_file = os.path.join(
     os.path.abspath(os.path.dirname(__file__)), "secrets.json"
 )
 load_secrets(secrets_file)
+os.environ["PROJECT_ROOT_PATH"] = os.path.abspath(os.path.dirname(__file__))
 
 from bundesliga_tippspiel.run import app as application
