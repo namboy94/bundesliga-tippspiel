@@ -19,7 +19,6 @@ LICENSE"""
 
 from typing import Dict, Any, Optional
 from flask_login import current_user
-from bundesliga_tippspiel import app
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.types.exceptions import ActionException
@@ -86,7 +85,7 @@ class GetBetAction(Action):
             query = Bet.query
 
             if self.user_id is not None:
-                query = query.filter_by(id=self.user_id)
+                query = query.filter_by(user_id=self.user_id)
             if self.match_id is not None:
                 query = query.filter_by(match_id=self.match_id)
             if self.matchday is not None:
@@ -99,8 +98,6 @@ class GetBetAction(Action):
             ))
 
             result.sort(key=lambda x: x.match.kickoff)
-
-        app.logger.info("Fetched bets: {}".format(result))
 
         return self.prepare_get_response(result, "bet")
 

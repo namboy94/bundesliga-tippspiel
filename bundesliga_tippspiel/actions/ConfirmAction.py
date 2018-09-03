@@ -54,7 +54,7 @@ class ConfirmAction(Action):
                 "Dieser Nutzer existiert nicht"
             )
         else:
-            user = User.query.filter_by(id=self.user_id).first()
+            user = User.query.get(self.user_id)
             if user.confirmed:
                 raise ActionException(
                     "Already Confirmed",
@@ -68,7 +68,7 @@ class ConfirmAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        user = User.query.filter_by(id=self.user_id).first()
+        user = User.query.get(self.user_id)
         verified = verify_password(self.confirm_key, user.confirmation_hash)
 
         if verified:

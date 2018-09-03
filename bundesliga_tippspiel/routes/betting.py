@@ -59,9 +59,6 @@ def bets(matchday: Optional[int] = None):
         for bet in matchday_bets:
             betmap[bet.match.id] = bet
 
-        app.logger.info("Prepared /bets data")
-        app.logger.info("{}".format(betmap))
-
         return render_template(
             "bets.html",
             matchday=matchday,
