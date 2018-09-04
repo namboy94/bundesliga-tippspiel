@@ -45,8 +45,7 @@ if not app.testing:  # pragma: no cover
 
     logging.basicConfig(
         filename=logging_path,
-        level=logging.DEBUG,
-        format=default_handler.formatter
+        level=logging.DEBUG
     )
 
     # logging_handler = RotatingFileHandler(
