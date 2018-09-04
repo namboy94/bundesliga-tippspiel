@@ -55,6 +55,7 @@ class TestForgotPasswordAction(_ActionTestFramework):
             self.user.email, "", "localhost", "localhost"
         )
 
+    @_ActionTestFramework.online_required
     def test_resetting_password(self):
         """
         Tests successfully resetting the password of a user
