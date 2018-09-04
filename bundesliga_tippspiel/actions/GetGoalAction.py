@@ -64,7 +64,7 @@ class GetGoalAction(Action):
             self.id,
             [self.matchday, self.match_id, self.player_id, self.team_id]
         )
-        self.check_matchday_bounds(self.matchday)
+        self.matchday = self.resolve_and_check_matchday(self.matchday)
 
     def _execute(self) -> Dict[str, Any]:
         """

@@ -46,7 +46,7 @@ def api(func: Callable) -> Callable:
 
         try:
             if request.method in ["POST", "PUT"] and \
-                    (not request.content_type == "application/json"
+                    (not request.content_type.startswith("application/json")
                      or not request.is_json
                      or not isinstance(request.get_json(silent=True), dict)):
                 raise ActionException(

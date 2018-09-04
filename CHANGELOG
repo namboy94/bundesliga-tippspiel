@@ -1,3 +1,7 @@
+V 0.14.1:
+  - Fixed API authorization issues
+  - Enabled getting current matchday by providing -1 as matchday
+  - Fixed PNG and SVG files being swapped
 V 0.14.0:
   - Achieved near-parity with PHP version
   - Implemented API version 2

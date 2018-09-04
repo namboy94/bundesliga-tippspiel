@@ -62,7 +62,7 @@ class GetBetAction(Action):
             self.id,
             [self.user_id, self.match_id, self.matchday]
         )
-        self.check_matchday_bounds(self.matchday)
+        self.matchday = self.resolve_and_check_matchday(self.matchday)
 
     def _execute(self) -> Dict[str, Any]:
         """

@@ -18,7 +18,8 @@ The parameters are all optional and act as filters.
 
 * **user_id:int**: Only returns bets from the specified user
 * **match_id:int**: Only returns bets for the specified match
-* **matchday:int**: Only returns bets from the specified matchday
+* **matchday:int**: Only returns bets from the specified matchday.
+                    If set to -1, will use the current matchday.
 
 
 To retrieve an element with a specific ID, append /<ID> to the URL.

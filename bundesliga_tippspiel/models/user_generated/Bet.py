@@ -95,12 +95,42 @@ class Bet(ModelMixin, db.Model):
             "user_id": self.user_id,
             "match_id": self.match_id,
             "home_score": self.home_score,
-            "away_score": self.away_score
+            "away_score": self.away_score,
+            "points": self.evaluate()
         }
         if include_children:
             data["user"] = self.user.__json__(include_children)
             data["match"] = self.match.__json__(include_children)
         return data
+
+    def __repr__(self) -> str:
+        """
+        :return: A string with which the object may be generated
+        """
+        params = ""
+
+        for key, val in self.__json__().items():
+            if key == "points":
+                continue
+            params += "{}={}, ".format(key, repr(val))
+        params = params.rsplit(",", 1)[0]
+
+        return "{}({})".format(self.__class__.__name__, params)
+
+    def __eq__(self, other: Any) -> bool:
+        """
+        Checks the model object for equality with another object
+        :param other: The other object
+        :return: True if the objects are equal, False otherwise
+        """
+        if isinstance(other, Bet):
+            return self.id == other.id \
+                   and self.user_id == other.user_id \
+                   and self.match_id == other.match_id \
+                   and self.home_score == other.home_score \
+                   and self.away_score == other.away_score
+        else:
+            return False  # pragma: no cover
 
     def evaluate(self, when_finished: bool = False) -> int:
         """
