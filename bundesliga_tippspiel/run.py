@@ -41,9 +41,10 @@ if not app.testing:  # pragma: no cover
     initialize_db(uri)
     initialize_login_manager()
 
+    formatter = app.logger.handlers[0].formatter
+
     logging.basicConfig(filename=logging_path, level=logging.DEBUG)
 
-    formatter = app.logger.handlers[0].formatter
     logging_handler = RotatingFileHandler(
         logging_path, maxBytes=10000, backupCount=3,
     )
