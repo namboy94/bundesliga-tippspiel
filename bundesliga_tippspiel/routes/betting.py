@@ -25,7 +25,6 @@ from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
-from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
 
@@ -88,19 +87,4 @@ def match(match_id: int):
         match=match_info,
         goals=goals_info,
         bets=bets_info
-    )
-
-
-@app.route("/leaderboard", methods=["GET"])
-@login_required
-def leaderboard():
-    """
-    Displays a leaderboard.
-    :return: The Response
-    """
-    leaderboard_data = \
-        LeaderboardAction.from_site_request().execute()["leaderboard"]
-    return render_template(
-        "leaderboard.html",
-        leaderboard=enumerate(leaderboard_data)
     )

@@ -27,7 +27,7 @@ def index():
     The index/home page
     :return: The generated HTML
     """
-    return render_template("index.html")
+    return render_template("static/index.html")
 
 
 @app.route("/about")
@@ -36,7 +36,7 @@ def about():
     The about page/"Impressum" for the website
     :return: The generated HTML
     """
-    return render_template("about.html")
+    return render_template("static/about.html")
 
 
 @app.route("/privacy")
@@ -45,4 +45,4 @@ def privacy():
     Page containing a privacy disclaimer
     :return: The generated HTML
     """
-    return render_template("privacy.html")
+    return render_template("static/privacy.html")
