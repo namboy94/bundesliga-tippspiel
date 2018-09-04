@@ -45,6 +45,16 @@ def api(func: Callable) -> Callable:
         response = {"status": "ok"}
 
         try:
+
+            # TODO REMOVE THIS
+            if request.method in ["POST", "PUT"]:
+                if not request.content_type == "application/json":
+                    raise ActionException("WRONG CONTENT TYPE", "")
+                if not request.is_json:
+                    raise ActionException("NOT is_json", "")
+                if not isinstance(request.get_json(silent=True), dict):
+                    raise ActionException("NOT DICT", "")
+
             if request.method in ["POST", "PUT"] and \
                     (not request.content_type == "application/json"
                      or not request.is_json
