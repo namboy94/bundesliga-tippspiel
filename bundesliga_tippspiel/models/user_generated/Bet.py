@@ -95,7 +95,8 @@ class Bet(ModelMixin, db.Model):
             "user_id": self.user_id,
             "match_id": self.match_id,
             "home_score": self.home_score,
-            "away_score": self.away_score
+            "away_score": self.away_score,
+            "points": self.evaluate()
         }
         if include_children:
             data["user"] = self.user.__json__(include_children)
