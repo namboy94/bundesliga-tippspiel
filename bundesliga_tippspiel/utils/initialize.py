@@ -93,31 +93,23 @@ def initialize_login_manager():
         :param request: The request containing the API key in the headers
         :return: The user or None if no valid API key was provided
         """
-
-        app.logger.error(str(request.headers))
-
         if "Authorization" not in request.headers:
             return None
 
         api_key = request.headers["Authorization"].replace("Basic ", "", 1)
 
-        print(api_key)
         try:
             api_key = base64.b64decode(api_key.encode("utf-8")).decode("utf-8")
         except (TypeError, Error):  # pragma: no cover
             pass
-        print(api_key)
 
         db_api_key = ApiKey.query.get(api_key.split(":", 1)[0])
 
         # Check for validity of API key
         if db_api_key is None or not db_api_key.verify_key(api_key):
-            print(db_api_key)
-            print("LALALA")
             return None
 
         elif db_api_key.has_expired():
-            print("EXP")
             db.session.delete(db_api_key)
             db.session.commit()
             return None
