@@ -19,6 +19,7 @@ LICENSE"""
 
 import os
 import logging
+from flask.logging import default_handler
 from logging.handlers import RotatingFileHandler
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.config import db_user, db_key, db_name, logging_path
@@ -41,14 +42,14 @@ if not app.testing:  # pragma: no cover
     initialize_db(uri)
     initialize_login_manager()
 
-    formatter = app.logger.handlers[0].formatter
+    app.logger.removeHandler(default_handler)
 
-    logging.basicConfig(filename=logging_path, level=logging.DEBUG)
+    # logging.basicConfig(filename=logging_path, level=logging.DEBUG)
 
     logging_handler = RotatingFileHandler(
         logging_path, maxBytes=10000, backupCount=3,
     )
-    logging_handler.setFormatter(formatter)
+    logging_handler.setFormatter(default_handler.formatter)
     logging_handler.setLevel(logging.DEBUG)
     app.logger.addHandler(logging_handler)
 
