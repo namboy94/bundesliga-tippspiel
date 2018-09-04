@@ -19,6 +19,7 @@ LICENSE"""
 
 import base64
 import pkg_resources
+from binascii import Error
 from typing import Optional
 from bundesliga_tippspiel.routes import load_routes
 from bundesliga_tippspiel import app, db, login_manager
@@ -99,8 +100,9 @@ def initialize_login_manager():
         api_key = request.headers["Authorization"].replace("Basic ", "", 1)
 
         try:
+            print(api_key)
             api_key = base64.b64decode(api_key.encode("utf-8")).decode("utf-8")
-        except TypeError:  # pragma: no cover
+        except (TypeError, Error):  # pragma: no cover
             pass
 
         db_api_key = ApiKey.query.get(api_key.split(":", 1)[0])
