@@ -19,7 +19,7 @@ LICENSE"""
 
 import os
 import logging
-from logging.handlers import RotatingFileHandler
+from flask.logging import default_handler
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.config import db_user, db_key, db_name, logging_path
 from bundesliga_tippspiel.utils.initialize import initialize_db, \
@@ -41,12 +41,15 @@ if not app.testing:  # pragma: no cover
     initialize_db(uri)
     initialize_login_manager()
 
-    formatter = app.logger.handlers[0].formatter
-    logging_handler = RotatingFileHandler(
-        logging_path, maxBytes=10000, backupCount=3
-    )
-    logging_handler.setFormatter(formatter)
-    logging_handler.setLevel(logging.INFO)
-    app.logger.addHandler(logging_handler)
+    app.logger.removeHandler(default_handler)
 
-    app.logger.error("STARTING FLASK")  # TODO Set this to INFO
+    logging.basicConfig(
+        filename=logging_path,
+        level=logging.DEBUG,
+        format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
+    )
+
+    app.logger.error("STARTING FLASK")
+    app.logger.warning("STARTING FLASK")
+    app.logger.info("STARTING FLASK")
+    app.logger.debug("STARTING FLASK")

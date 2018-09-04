@@ -93,7 +93,6 @@ def initialize_login_manager():
         :param request: The request containing the API key in the headers
         :return: The user or None if no valid API key was provided
         """
-
         if "Authorization" not in request.headers:
             return None
 
