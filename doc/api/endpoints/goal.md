@@ -14,7 +14,8 @@ Required
 
 The parameters are all optional and act as filters.
 
-* **matchday:int**: Only returns goals from the specified matchday
+* **matchday:int**: Only returns goals from the specified matchday.
+                    If set to -1, will use the current matchday.
 * **match_id:int**: Only returns goals for the specified match
 * **player_id:int**: Only returns goals scored by the specified player
 * **team_id:int**: Only returns goals scored by player of the specified team

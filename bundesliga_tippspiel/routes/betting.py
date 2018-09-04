@@ -40,9 +40,7 @@ def bets(matchday: Optional[int] = None):
     """
     if request.method == "GET":
         if matchday is None:
-            all_matches = GetMatchAction().execute()["matches"]
-            filtered = list(filter(lambda x: not x.started, all_matches))
-            matchday = min(filtered, key=lambda x: x.matchday).matchday
+            matchday = -1
 
         matchday_bets = GetBetAction(
             matchday=matchday,

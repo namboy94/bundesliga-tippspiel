@@ -23,6 +23,7 @@ from bundesliga_tippspiel import db
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.models.ModelMixin import ModelMixin
+from bundesliga_tippspiel.models.match_data.Match import Match
 
 
 class Action:
@@ -163,18 +164,24 @@ class Action:
             )
 
     @staticmethod
-    def check_matchday_bounds(matchday: Optional[int]):
+    def resolve_and_check_matchday(matchday: Optional[int]) -> Optional[int]:
         """
         Checks the bound of a matchday
         :param matchday: The matchday to check
         :return: None
         :raises ActionException: If the matchday is invalid
         """
-        if matchday is not None and not 0 < matchday < 35:
-            raise ActionException(
-                "Matchday out of bounds",
-                "Den angegebenen Spieltag gibt es nicht"
-            )
+        if matchday is not None:
+            if matchday == -1:
+                all_matches = Match.query.all()
+                filtered = list(filter(lambda x: not x.started, all_matches))
+                matchday = min(filtered, key=lambda x: x.matchday).matchday
+            elif not 0 < matchday < 35:
+                raise ActionException(
+                    "Matchday out of bounds",
+                    "Den angegebenen Spieltag gibt es nicht"
+                )
+        return matchday
 
     def prepare_get_response(self, result: List[ModelMixin], keyword: str) \
             -> Dict[str, Any]:

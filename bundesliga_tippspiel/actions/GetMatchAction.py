@@ -48,7 +48,7 @@ class GetMatchAction(Action):
         :raises ActionException: if any data discrepancies are found
         """
         self.check_id_or_filters(self.id, [self.matchday])
-        self.check_matchday_bounds(self.matchday)
+        self.matchday = self.resolve_and_check_matchday(self.matchday)
 
     def _execute(self) -> Dict[str, Any]:
         """
