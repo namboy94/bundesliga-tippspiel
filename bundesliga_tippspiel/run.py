@@ -45,15 +45,9 @@ if not app.testing:  # pragma: no cover
 
     logging.basicConfig(
         filename=logging_path,
-        level=logging.DEBUG
+        level=logging.DEBUG,
+        format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
     )
-
-    # logging_handler = RotatingFileHandler(
-    #    logging_path, maxBytes=10000, backupCount=3,
-    # )
-    # logging_handler.setFormatter(default_handler.formatter)
-    # logging_handler.setLevel(logging.DEBUG)
-    # app.logger.addHandler(logging_handler)
 
     app.logger.error("STARTING FLASK")
     app.logger.warning("STARTING FLASK")
