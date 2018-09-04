@@ -322,4 +322,4 @@ def wikimedia_icon_urls(path: str, png_size: int = 500) -> Tuple[str, str]:
         wikimedia, base, specific, png_size, svg_filename
     )
 
-    return png_url, svg_url
+    return svg_url, png_url
