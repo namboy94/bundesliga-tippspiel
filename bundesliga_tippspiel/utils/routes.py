@@ -47,7 +47,8 @@ def api(func: Callable) -> Callable:
         try:
 
             # TODO REMOVE THIS
-            if request.method in ["POST", "PUT"]:
+            from bundesliga_tippspiel import app
+            if request.method in ["POST", "PUT"] and not app.testing:
                 if not request.content_type == "application/json":
                     raise ActionException("WRONG CONTENT TYPE", "")
                 if not request.is_json:
