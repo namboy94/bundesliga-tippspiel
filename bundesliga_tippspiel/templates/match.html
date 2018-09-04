@@ -21,13 +21,25 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% block body %}
     <div class="row match_header text-center">
         <div class="col-md-1">
-            <img src="{{ match.home_team.icon_svg }}" class="match_logo">
+            <a href="{{ url_for("team", team_id=match.home_team.id) }}">
+                <img src="{{ match.home_team.icon_svg }}" class="match_logo">
+            </a>
         </div>
-        <div class="col-md-4"><h1>{{ match.home_team.short_name }}</h1></div>
+        <div class="col-md-4">
+            <a href="{{ url_for("team", team_id=match.home_team.id) }}">
+                <h1>{{ match.home_team.short_name }}</h1>
+            </a>
+        </div>
         <div class="col-md-2"><h1>VS</h1></div>
-        <div class="col-md-4"><h1>{{ match.away_team.short_name }}</h1></div>
+        <div class="col-md-4">
+            <a href="{{ url_for("team", team_id=match.away_team.id) }}">
+                <h1>{{ match.away_team.short_name }}</h1>
+            </a>
+        </div>
         <div class="col-md-1">
-            <img src="{{ match.away_team.icon_svg }}" class="match_logo">
+            <a href="{{ url_for("team", team_id=match.away_team.id) }}">
+                <img src="{{ match.away_team.icon_svg }}" class="match_logo">
+            </a>
         </div>
     </div>
 

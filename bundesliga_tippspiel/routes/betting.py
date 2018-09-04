@@ -58,7 +58,7 @@ def bets(matchday: Optional[int] = None):
 
         return render_template(
             "bets.html",
-            matchday=matchday,
+            matchday=matchday_matches[0].matchday,
             betmap=betmap,
             matches=matchday_matches
         )

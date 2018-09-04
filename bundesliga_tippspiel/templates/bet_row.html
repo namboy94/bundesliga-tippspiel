@@ -69,12 +69,14 @@
             </h3>
         </div>
         <div class="col-md-3 bet_col">
-            <h5>
-                {{ match.away_team.short_name }}
-                <span>
-                    <img src="{{ match.away_team.icon_svg }}" class="bet_row_logo">
-                </span>
-            </h5>
+            <a href="{{ url_for("team", team_id=match.away_team.id) }}">
+                <h5>
+                    {{ match.away_team.short_name }}
+                    <span>
+                        <img src="{{ match.away_team.icon_svg }}" class="bet_row_logo">
+                    </span>
+                </h5>
+            </a>
         </div>
         <div class="col-md-1 bet_col">
             <a href="{{ url_for("match", match_id=match.id) }}">

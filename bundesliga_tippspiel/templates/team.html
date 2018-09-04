@@ -20,17 +20,57 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% extends "components/base_layout.html" %}
 {% block body %}
     <h1>{{ team.name }}</h1>
-    <table class="table table-striped leaderboard-table">
+    <br>
+    <div class="container text-center">
+        <img src="{{ team.icon_svg }}" class="team-page-logo">
+    </div>
+    <br>
+    <h3>Tendenz</h3>
+    <table class="table table-striped table-bordered text-center leaderboard-table">
         <thead class="thead-light">
             <tr>
-                <th scope="col"></th>
-
-                <th scope="col">Name</th>
-                <th scope="col">Punkte</th>
-                <!--th scope="col">Tendenz</th-->
+                <th scope="col">Gegner</th>
+                {% for  opponent_id, opponent_name, _, _ in matches %}
+                    <th scope="col">
+                        <a href="{{ url_for("team", team_id=opponent_id) }}">
+                            {{ opponent_name }}
+                        </a>
+                    </th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td>Ergebnis</td>
+                {% for _, _, score, result in matches %}
+                    {% if result == "win" %}
+                        {% set result_class = "success" %}
+                    {% elif result == "loss" %}
+                        {% set result_class = "danger" %}
+                    {% else %}
+                        {% set result_class = "info" %}
+                    {% endif %}
+                    <td class="table-{{ result_class }}">{{ score }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <h3>Torschützen</h3>
+    <table class="table table-striped table-bordered text-center leaderboard-table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Tore</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player, goal_count in goals %}
+                <tr>
+                    <td>{{ player }}</td>
+                    <td>{{ goal_count }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}
