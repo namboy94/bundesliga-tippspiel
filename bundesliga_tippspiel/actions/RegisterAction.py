@@ -141,7 +141,7 @@ class RegisterAction(Action):
                                   "Ein unbekannter Fehler ist aufgetreten")
 
         email_message = render_template(
-            "registration_email.html",
+            "email/registration_email.html",
             host=self.host_address,
             target=os.path.join(self.host_address, "confirm"),
             username=self.username,

@@ -19,17 +19,17 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 <!DOCTYPE html>
 <html lang="en">
-    {% include "header.html" %}
+    {% include "components/header.html" %}
     <body>
         <div id="container">
-            <div id="header">{% include "navbar.html" %}</div>
+            <div id="header">{% include "components/navbar.html" %}</div>
             <div id="body">
                 <div class="container content">
                     {% include "alerts.html" %}
                     {% block body %}{% endblock %}
                 </div>
             </div>
-            <div id="footer">{% include "footer.html" %}</div>
+            <div id="footer">{% include "components/footer.html" %}</div>
         </div>
     </body>
 </html>

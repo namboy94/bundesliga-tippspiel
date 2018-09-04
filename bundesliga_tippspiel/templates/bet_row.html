@@ -1,12 +1,14 @@
 <li class="list-group-item bet_row">
     <div class="row text-center">
         <div class="col-md-3 bet_col">
-            <h5>
-                {{ match.home_team.short_name }}
-                <span>
-                    <img src="{{ match.home_team.icon_svg }}" class="bet_row_logo">
-                </span>
-            </h5>
+            <a href="{{ url_for("team", team_id=match.home_team.id) }}">
+                <h5>
+                    {{ match.home_team.short_name }}
+                    <span>
+                        <img src="{{ match.home_team.icon_svg }}" class="bet_row_logo">
+                    </span>
+                </h5>
+            </a>
         </div>
 
 
