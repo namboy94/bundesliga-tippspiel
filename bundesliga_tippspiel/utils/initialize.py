@@ -94,6 +94,8 @@ def initialize_login_manager():
         :return: The user or None if no valid API key was provided
         """
 
+        app.logger.error(str(request.headers))
+
         if "Authorization" not in request.headers:
             return None
 

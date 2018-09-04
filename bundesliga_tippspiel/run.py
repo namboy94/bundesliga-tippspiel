@@ -46,7 +46,10 @@ if not app.testing:  # pragma: no cover
         logging_path, maxBytes=10000, backupCount=3
     )
     logging_handler.setFormatter(formatter)
-    logging_handler.setLevel(logging.INFO)
+    logging_handler.setLevel(logging.DEBUG)
     app.logger.addHandler(logging_handler)
 
-    app.logger.error("STARTING FLASK")  # TODO Set this to INFO
+    app.logger.error("STARTING FLASK")
+    app.logger.warning("STARTING FLASK")
+    app.logger.info("STARTING FLASK")
+    app.logger.debug("STARTING FLASK")
