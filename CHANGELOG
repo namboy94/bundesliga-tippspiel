@@ -1,3 +1,6 @@
+V 0.14.2:
+  - Fixed logging issues
+  - Updated Apache config files
 V 0.14.1:
   - Fixed API authorization issues
   - Enabled getting current matchday by providing -1 as matchday
