@@ -39,7 +39,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <tr>
                 {% endif %}
                         <td>{{ index + 1 }}</td>
-                        <td>{{ user.username }}</td>
+                        <td>
+                            <a href="{{ url_for("user", user_id=user.id) }}">
+                                {{ user.username }}
+                            </a>
+                        </td>
                         <td>{{ points }}</td>
                     </tr>
             {% endfor %}
