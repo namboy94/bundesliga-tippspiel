@@ -34,19 +34,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     {% endfor %}
                 ],
                 datasets: [
-                    {% set colors = [
-                        "red", "blue", "yellow", "green", "purple", "orange",
-                        "brown", "black", "gray"
-                    ] %}
-                    {% set color_index = 0 %}
-                    {% for username, positions in leaderboard_data.items() %}
+                    {% for username, (positions, color) in leaderboard_data.items() %}
                         {
                             label: "{{ username }}",
                             data: {{ positions }},
                             fill: false,
-                            borderColor: "{{ colors[color_index + 8 % 10] }}"
+                            borderColor: "{{ color }}"
                         },
-                        {% set color_index = color_index + 1 %}
                     {% endfor %}
                 ]
             },
@@ -55,6 +49,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     yAxes: [{
                         ticks: {
                             begin:1,
+                            min:1,
+                            max:{{ leaderboard_data|length }},
                             reverse: true,
                             callback: function(value) {
                                 if (value % 1 === 0) {return value;}

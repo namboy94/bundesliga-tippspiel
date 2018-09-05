@@ -115,10 +115,15 @@ def user(user_id: int):
         leaderboard_action = LeaderboardAction(matchday=matchday)
         _leaderboard = leaderboard_action.execute()["leaderboard"]
 
+        colors = ["red", "blue", "yellow",
+                  "green", "purple", "orange",
+                  "brown", "black", "gray"]
+
         for i, (_user, points) in enumerate(_leaderboard):
             if _user.username not in leaderboard_data:
-                leaderboard_data[_user.username] = []
-            leaderboard_data[_user.username].append(i + 1)
+                leaderboard_data[_user.username] = \
+                    ([], colors[i % len(_leaderboard)])
+            leaderboard_data[_user.username][0].append(i + 1)
 
     return render_template(
         "info/user.html",
