@@ -52,13 +52,19 @@ class TestLeaderboardAction(_ActionTestFramework):
         )
         self.match_two = Match(
             home_team=self.team_one, away_team=self.team_two,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=2, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
-            started=True, finished=False
+            started=True, finished=True
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_two,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=3, kickoff="2019-01-01:01:02:03",
+            home_current_score=1, away_current_score=1,
+            started=True, finished=False
+        )
+        self.match_four = Match(
+            home_team=self.team_one, away_team=self.team_two,
+            matchday=4, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
             started=False, finished=False
         )
@@ -66,6 +72,7 @@ class TestLeaderboardAction(_ActionTestFramework):
         self.db.session.add(self.match_one)
         self.db.session.add(self.match_two)
         self.db.session.add(self.match_three)
+        self.db.session.add(self.match_four)
         self.db.session.add(self.user_two)
         self.db.session.add(self.user_three)
         self.db.session.commit()
@@ -75,7 +82,12 @@ class TestLeaderboardAction(_ActionTestFramework):
             (self.user_two, 1, 1),
             (self.user_three, 1, 0)
         ]:
-            for match in [self.match_one, self.match_two, self.user_three]:
+            for match in [
+                self.match_one,
+                self.match_two,
+                self.match_three,
+                self.match_four
+            ]:
                 bet = Bet(
                     user_id=user.id, match_id=match.id,
                     home_score=home, away_score=away
@@ -97,6 +109,18 @@ class TestLeaderboardAction(_ActionTestFramework):
         Tests that the leaderboard is generated correctly
         :return: None
         """
+        leaderboard = self.action.execute()["leaderboard"]
+        self.assertEqual(len(leaderboard), 3)
+        self.assertEqual(leaderboard[0], (self.user_two, 30))
+        self.assertEqual(leaderboard[1], (self.user_one, 24))
+        self.assertEqual(leaderboard[2], (self.user_three, 6))
+
+    def test_leaderboard_for_matchday(self):
+        """
+        Tests generating a leaderboard for a specific matchday
+        :return: None
+        """
+        self.action.matchday = 1
         leaderboard = self.action.execute()["leaderboard"]
         self.assertEqual(len(leaderboard), 3)
         self.assertEqual(leaderboard[0], (self.user_two, 15))
