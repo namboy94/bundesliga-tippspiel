@@ -42,7 +42,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     {% for username, positions in leaderboard_data.items() %}
                         {
                             label: "{{ username }}",
-                            data: [3,1,3],
+                            data: {{ positions }},
                             fill: false,
                             borderColor: "{{ colors[color_index + 8 % 10] }}"
                         },
