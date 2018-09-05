@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, List
+from unittest import mock
 from bundesliga_tippspiel.config import smtp_address
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
@@ -48,13 +49,17 @@ class TestForgotApiRoute(_ApiRouteTestFramework):
         user.email = smtp_address
         self.db.session.commit()
 
-        resp = self.client.post(self.route_info[0], json={
-            "email": smtp_address,
-            "g-recaptcha-response": ""
-        }, content_type="application/json")
-        self.assertEqual(resp.status_code, 200)
-        resp_data = self.decode_data(resp)
-        self.assertEqual(resp_data["data"], {})
+        with mock.patch(
+                "bundesliga_tippspiel.actions.ForgotPasswordAction.send_email",
+                lambda x, y, z: self.assertEqual(x, smtp_address)
+        ):
+            resp = self.client.post(self.route_info[0], json={
+                "email": smtp_address,
+                "g-recaptcha-response": ""
+            }, content_type="application/json")
+            self.assertEqual(resp.status_code, 200)
+            resp_data = self.decode_data(resp)
+            self.assertEqual(resp_data["data"], {})
 
     def test_unsuccessful_call(self):
         """

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from unittest import mock
 from typing import Tuple, List
 from bundesliga_tippspiel.config import smtp_address
 # noinspection PyProtectedMember
@@ -44,16 +45,20 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
         Tests a successful API call
         :return: None
         """
-        resp = self.client.post(self.route_info[0], json={
-            "username": "TestUser",
-            "email": smtp_address,
-            "password": "Abc",
-            "password-repeat": "Abc",
-            "g-recaptcha-response": ""
-        }, content_type="application/json")
-        self.assertEqual(resp.status_code, 200)
-        resp_data = self.decode_data(resp)
-        self.assertEqual(resp_data["data"], {})
+        with mock.patch(
+                "bundesliga_tippspiel.actions.RegisterAction.send_email",
+                lambda x, y, z: self.assertEqual(x, smtp_address)
+        ):
+            resp = self.client.post(self.route_info[0], json={
+                "username": "TestUser",
+                "email": smtp_address,
+                "password": "Abc",
+                "password-repeat": "Abc",
+                "g-recaptcha-response": ""
+            }, content_type="application/json")
+            self.assertEqual(resp.status_code, 200)
+            resp_data = self.decode_data(resp)
+            self.assertEqual(resp_data["data"], {})
 
     def test_unsuccessful_call(self):
         """
