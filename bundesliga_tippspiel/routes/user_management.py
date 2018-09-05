@@ -39,7 +39,7 @@ def register():
     """
 
     if request.method == "GET":
-        return render_template("register.html")
+        return render_template("profile/register.html")
     else:  # request.method == "POST"
         action = RegisterAction.from_site_request()
         # Manually generate ActionException for coverage purposes
@@ -79,7 +79,7 @@ def forgot():
     :return: None
     """
     if request.method == "GET":
-        return render_template("forgot.html")
+        return render_template("profile/forgot.html")
 
     else:
         action = ForgotPasswordAction.from_site_request()
@@ -99,7 +99,7 @@ def profile():
     :return: The response
     """
     return render_template(
-        "profile.html",
+        "profile/profile.html",
         username=current_user.username
     )
 

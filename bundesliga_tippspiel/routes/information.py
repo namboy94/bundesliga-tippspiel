@@ -37,7 +37,7 @@ def leaderboard():
     leaderboard_data = \
         LeaderboardAction.from_site_request().execute()["leaderboard"]
     return render_template(
-        "leaderboard.html",
+        "info/leaderboard.html",
         leaderboard=enumerate(leaderboard_data)
     )
 
@@ -86,7 +86,7 @@ def team(team_id: int):
     goal_data.sort(key=lambda x: x[1], reverse=True)
 
     return render_template(
-        "team.html",
+        "info/team.html",
         team=team_data,
         goals=goal_data,
         matches=match_data

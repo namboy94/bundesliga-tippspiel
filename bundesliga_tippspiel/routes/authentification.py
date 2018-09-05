@@ -31,7 +31,7 @@ def login():
     """
 
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("profile/login.html")
     else:  # request.method == "POST"
         action = LoginAction.from_site_request()
         return action.execute_with_redirects(

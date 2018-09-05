@@ -57,7 +57,7 @@ def bets(matchday: Optional[int] = None):
             betmap[bet.match.id] = bet
 
         return render_template(
-            "bets.html",
+            "betting/bets.html",
             matchday=matchday_matches[0].matchday,
             betmap=betmap,
             matches=matchday_matches
@@ -83,7 +83,7 @@ def match(match_id: int):
     goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
     bets_info = GetBetAction(match_id=match_id).execute()["bets"]
     return render_template(
-        "match.html",
+        "info/match.html",
         match=match_info,
         goals=goals_info,
         bets=bets_info
