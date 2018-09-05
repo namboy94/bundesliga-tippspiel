@@ -21,6 +21,7 @@ from flask import render_template
 from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import action_route
+from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
@@ -93,4 +94,36 @@ def team(team_id: int):
         team=team_data,
         goals=goal_data,
         matches=match_data
+    )
+
+
+@app.route("/user/<int:user_id>")
+@login_required
+@action_route
+def user(user_id: int):
+    """
+    Shows a page describing a user/
+    :param user_id: The ID of the user to display
+    :return: The request response
+    """
+    user_data = User.query.get(user_id)
+    current_matchday = LeaderboardAction.resolve_and_check_matchday(-1)
+
+    leaderboard_data = {}
+
+    for matchday in range(1, current_matchday + 1):
+        leaderboard_action = LeaderboardAction(matchday=matchday)
+        _leaderboard = leaderboard_action.execute()["leaderboard"]
+
+        for i, (_user, points) in enumerate(_leaderboard):
+            if _user.username not in leaderboard_data:
+                leaderboard_data[_user.username] = []
+            leaderboard_data[_user.username].append(i + 1)
+
+    return render_template(
+        "info/user.html",
+        user=user_data,
+        leaderboard_data=leaderboard_data,
+        charts=True,
+        matchday=current_matchday
     )
