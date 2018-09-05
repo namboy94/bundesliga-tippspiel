@@ -17,10 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import render_template
+from flask import render_template, abort
 from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import action_route
+from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
@@ -39,9 +40,14 @@ def leaderboard():
     """
     leaderboard_data = \
         LeaderboardAction.from_site_request().execute()["leaderboard"]
+    current_matchday, leaderboard_history = generate_leaderboard_data()
     return render_template(
         "info/leaderboard.html",
-        leaderboard=enumerate(leaderboard_data)
+        leaderboard=enumerate(leaderboard_data),
+        matchday=current_matchday,
+        leaderboard_history=leaderboard_history,
+        show_all=True,
+        charts=True
     )
 
 
@@ -107,28 +113,15 @@ def user(user_id: int):
     :return: The request response
     """
     user_data = User.query.get(user_id)
-    current_matchday = LeaderboardAction.resolve_and_check_matchday(-1)
+    if user_data is None:
+        abort(404)
 
-    leaderboard_data = {}
-
-    for matchday in range(1, current_matchday + 1):
-        leaderboard_action = LeaderboardAction(matchday=matchday)
-        _leaderboard = leaderboard_action.execute()["leaderboard"]
-
-        colors = ["red", "blue", "yellow",
-                  "green", "purple", "orange",
-                  "brown", "black", "gray"]
-
-        for i, (_user, points) in enumerate(_leaderboard):
-            if _user.username not in leaderboard_data:
-                leaderboard_data[_user.username] = \
-                    ([], colors[i % len(_leaderboard)])
-            leaderboard_data[_user.username][0].append(i + 1)
+    current_matchday, leaderboard_history = generate_leaderboard_data()
 
     return render_template(
         "info/user.html",
-        user=user_data,
-        leaderboard_data=leaderboard_data,
         charts=True,
+        user=user_data,
+        leaderboard_history=leaderboard_history,
         matchday=current_matchday
     )

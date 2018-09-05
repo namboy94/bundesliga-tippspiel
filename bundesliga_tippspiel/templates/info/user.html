@@ -20,46 +20,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% extends "components/base_layout.html" %}
 {% block body %}
     <h1>{{ user.username }}</h1>
-    <canvas id="rankings-chart" width="400" height="200"></canvas>
-
-    <!--suppress JSUnusedGlobalSymbols, JSUnusedLocalSymbols -->
-    <script>
-        let ctx = document.getElementById("rankings-chart").getContext("2d");
-        let chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [
-                    {% for i in range(0, matchday) %}
-                        "{{ i + 1 }}",
-                    {% endfor %}
-                ],
-                datasets: [
-                    {% for username, (positions, color) in leaderboard_data.items() %}
-                        {
-                            label: "{{ username }}",
-                            data: {{ positions }},
-                            fill: false,
-                            borderColor: "{{ color }}"
-                        },
-                    {% endfor %}
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            begin:1,
-                            min:1,
-                            max:{{ leaderboard_data|length }},
-                            reverse: true,
-                            callback: function(value) {
-                                if (value % 1 === 0) {return value;}
-                            }
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
-
+    <h3>Positionsentwicklung</h3>
+    {% include "components/ranking_chart.html" %}
 {% endblock %}

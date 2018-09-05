@@ -53,7 +53,7 @@ class LeaderboardAction(Action):
         """
         pointmap = {}
         usermap = {}
-        for user in User.query.all():
+        for user in User.query.filter_by(confirmed=True).all():
             pointmap[user.id] = 0
             usermap[user.id] = user
 

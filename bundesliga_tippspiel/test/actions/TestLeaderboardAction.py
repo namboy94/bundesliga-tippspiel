@@ -42,6 +42,7 @@ class TestLeaderboardAction(_ActionTestFramework):
                              confirmation_hash="AA", confirmed=True)
         self.user_three = User(username="BB", email="BB", password_hash="BB",
                                confirmation_hash="BB", confirmed=True)
+        self.unconfirmed_user = self.generate_sample_user(False)["user"]
         self.team_one, self.team_two, _, _, _ = \
             self.generate_sample_match_data()
         self.match_one = Match(
