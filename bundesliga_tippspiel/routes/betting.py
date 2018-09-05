@@ -31,6 +31,7 @@ from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 @app.route("/bets", methods=["POST", "GET"])
 @app.route("/bets/<int:matchday>", methods=["GET"])
 @login_required
+@action_route
 def bets(matchday: Optional[int] = None):
     """
     Displays all matches for a matchday with entries for betting

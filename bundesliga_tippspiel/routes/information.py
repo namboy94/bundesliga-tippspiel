@@ -20,6 +20,7 @@ LICENSE"""
 from flask import render_template
 from flask_login import login_required
 from bundesliga_tippspiel import app
+from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
@@ -29,6 +30,7 @@ from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 @app.route("/leaderboard", methods=["GET"])
 @login_required
+@action_route
 def leaderboard():
     """
     Displays a leaderboard.
@@ -44,6 +46,7 @@ def leaderboard():
 
 @app.route("/team/<int:team_id>")
 @login_required
+@action_route
 def team(team_id: int):
     """
     Displays information about a single team

@@ -19,9 +19,11 @@ LICENSE"""
 
 from bundesliga_tippspiel import app
 from flask import render_template
+from bundesliga_tippspiel.utils.routes import action_route
 
 
 @app.route("/")
+@action_route
 def index():
     """
     The index/home page
@@ -31,6 +33,7 @@ def index():
 
 
 @app.route("/about")
+@action_route
 def about():
     """
     The about page/"Impressum" for the website
@@ -40,6 +43,7 @@ def about():
 
 
 @app.route("/privacy")
+@action_route
 def privacy():
     """
     Page containing a privacy disclaimer

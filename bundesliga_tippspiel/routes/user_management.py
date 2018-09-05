@@ -20,6 +20,7 @@ LICENSE"""
 from bundesliga_tippspiel import app
 from flask import render_template, request
 from flask_login import login_required, current_user
+from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
@@ -32,6 +33,7 @@ from bundesliga_tippspiel.actions.ChangePasswordAction import \
 
 
 @app.route("/register", methods=["GET", "POST"])
+@action_route
 def register():
     """
     Page that allows a new user to register
@@ -58,6 +60,7 @@ def register():
 
 
 @app.route("/confirm", methods=["GET"])
+@action_route
 def confirm():
     """
     Confirms a user
@@ -73,6 +76,7 @@ def confirm():
 
 
 @app.route("/forgot", methods=["POST", "GET"])
+@action_route
 def forgot():
     """
     Allows a user to reset their password
@@ -93,6 +97,7 @@ def forgot():
 
 @app.route("/profile", methods=["GET"])
 @login_required
+@action_route
 def profile():
     """
     Allows a user to edit their profile details
@@ -106,6 +111,7 @@ def profile():
 
 @app.route("/change_password", methods=["POST"])
 @login_required
+@action_route
 def change_password():
     """
     Allows the user to change their password
@@ -119,6 +125,7 @@ def change_password():
 
 @app.route("/delete_user", methods=["POST"])
 @login_required
+@action_route
 def delete_user():
     """
     Allows a user to delete their account
