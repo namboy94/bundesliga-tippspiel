@@ -87,7 +87,7 @@ class ForgotPasswordAction(Action):
         db.session.commit()
 
         email_message = render_template(
-            "forgot_password_email.html",
+            "email/forgot_password_email.html",
             host=self.host_address,
             target=os.path.join(self.host_address, "login"),
             password=new_pass.decode("utf-8"),

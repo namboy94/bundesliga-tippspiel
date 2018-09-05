@@ -1,3 +1,7 @@
+V 0.15.0:
+  - Implemented user page
+  - Implemented team page
+  - Added charts to leaderboard page
 V 0.14.2:
   - Fixed logging issues
   - Updated Apache config files

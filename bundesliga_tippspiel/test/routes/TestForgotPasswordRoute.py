@@ -54,7 +54,7 @@ class TestForgotPasswordRoute(_RouteTestFramework):
         old_hash = user.password_hash
 
         with mock.patch(
-                "bundesliga_tippspiel.actions.RegisterAction.send_email",
+                "bundesliga_tippspiel.actions.ForgotPasswordAction.send_email",
                 lambda x, y, z: self.assertEqual(x, smtp_address)
         ):
             post = self.client.post("/forgot", follow_redirects=True, data={

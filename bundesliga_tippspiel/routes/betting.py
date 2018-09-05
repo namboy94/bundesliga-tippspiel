@@ -25,13 +25,13 @@ from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
-from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
 
 @app.route("/bets", methods=["POST", "GET"])
 @app.route("/bets/<int:matchday>", methods=["GET"])
 @login_required
+@action_route
 def bets(matchday: Optional[int] = None):
     """
     Displays all matches for a matchday with entries for betting
@@ -58,8 +58,8 @@ def bets(matchday: Optional[int] = None):
             betmap[bet.match.id] = bet
 
         return render_template(
-            "bets.html",
-            matchday=matchday,
+            "betting/bets.html",
+            matchday=matchday_matches[0].matchday,
             betmap=betmap,
             matches=matchday_matches
         )
@@ -84,23 +84,8 @@ def match(match_id: int):
     goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
     bets_info = GetBetAction(match_id=match_id).execute()["bets"]
     return render_template(
-        "match.html",
+        "info/match.html",
         match=match_info,
         goals=goals_info,
         bets=bets_info
-    )
-
-
-@app.route("/leaderboard", methods=["GET"])
-@login_required
-def leaderboard():
-    """
-    Displays a leaderboard.
-    :return: The Response
-    """
-    leaderboard_data = \
-        LeaderboardAction.from_site_request().execute()["leaderboard"]
-    return render_template(
-        "leaderboard.html",
-        leaderboard=enumerate(leaderboard_data)
     )

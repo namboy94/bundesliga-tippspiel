@@ -16,6 +16,8 @@ The parameters are all optional and act as filters.
 
 * **matchday:int**: Only returns matches from the specified matchday
                     If set to -1, will use the current matchday.
+* **team_id:int**: Only returns matches in which the specified team
+                   took part in.
 
 To retrieve an element with a specific ID, append /<ID> to the URL.
 

@@ -17,13 +17,15 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel import app
 from flask import request, url_for, redirect, render_template
 from flask_login import login_required, logout_user
+from bundesliga_tippspiel import app
+from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.LoginAction import LoginAction
 
 
 @app.route("/login", methods=["GET", "POST"])
+@action_route
 def login():
     """
     Page that allows the user to log in
@@ -31,7 +33,7 @@ def login():
     """
 
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("profile/login.html")
     else:  # request.method == "POST"
         action = LoginAction.from_site_request()
         return action.execute_with_redirects(
@@ -41,6 +43,7 @@ def login():
 
 @app.route("/logout")
 @login_required
+@action_route
 def logout():
     """
     Logs out the user

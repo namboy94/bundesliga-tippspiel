@@ -55,6 +55,7 @@ class TestForgotPasswordAction(_ActionTestFramework):
             self.user.email, "", "localhost", "localhost"
         )
 
+    @_ActionTestFramework.online_required
     def test_resetting_password(self):
         """
         Tests successfully resetting the password of a user
@@ -79,6 +80,7 @@ class TestForgotPasswordAction(_ActionTestFramework):
         self.action.email = "a@hk-tippspiel.com"
         self.failed_execute("Email not registered")
 
+    @_ActionTestFramework.online_required
     def test_invalid_recaptcha(self):
         """
         Tests using an invalid ReCaptcha response

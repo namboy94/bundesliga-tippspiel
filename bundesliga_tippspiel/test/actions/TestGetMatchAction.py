@@ -58,6 +58,11 @@ class TestGetMatchAction(_GetActionTestFramework):
         self.assertEqual(len(filtered), 1)
         self.assertEqual(filtered[0], self.match_two)
 
+        self.action.matchday = None
+        self.action.team_id = self.team_one.id
+        filtered = self.action.execute()["matches"]
+        self.assertEqual(len(filtered), 2)
+
     def test_using_filter_and_id(self):
         """
         Tests that using an ID and an explicit filter does not work

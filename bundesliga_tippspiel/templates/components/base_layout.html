@@ -1,4 +1,4 @@
-"""LICENSE
+<!--
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,38 +15,21 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-LICENSE"""
+-->
 
-from bundesliga_tippspiel import app
-from flask import render_template
-from bundesliga_tippspiel.utils.routes import action_route
-
-
-@app.route("/")
-@action_route
-def index():
-    """
-    The index/home page
-    :return: The generated HTML
-    """
-    return render_template("static/index.html")
-
-
-@app.route("/about")
-@action_route
-def about():
-    """
-    The about page/"Impressum" for the website
-    :return: The generated HTML
-    """
-    return render_template("static/about.html")
-
-
-@app.route("/privacy")
-@action_route
-def privacy():
-    """
-    Page containing a privacy disclaimer
-    :return: The generated HTML
-    """
-    return render_template("static/privacy.html")
+<!DOCTYPE html>
+<html lang="en">
+    {% include "components/header.html" %}
+    <body>
+        <div id="container">
+            <div id="header">{% include "components/navbar.html" %}</div>
+            <div id="body">
+                <div class="container content">
+                    {% include "components/alerts.html" %}
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+            <div id="footer">{% include "components/footer.html" %}</div>
+        </div>
+    </body>
+</html>

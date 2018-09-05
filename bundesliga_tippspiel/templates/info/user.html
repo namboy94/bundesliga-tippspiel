@@ -17,19 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!DOCTYPE html>
-<html lang="en">
-    {% include "header.html" %}
-    <body>
-        <div id="container">
-            <div id="header">{% include "navbar.html" %}</div>
-            <div id="body">
-                <div class="container content">
-                    {% include "alerts.html" %}
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
-            <div id="footer">{% include "footer.html" %}</div>
-        </div>
-    </body>
-</html>
+{% extends "components/base_layout.html" %}
+{% block body %}
+    <h1>{{ user.username }}</h1>
+    <h3>Positionsentwicklung</h3>
+    {% include "components/ranking_chart.html" %}
+{% endblock %}

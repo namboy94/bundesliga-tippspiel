@@ -1,0 +1,76 @@
+<!--
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+{% extends "components/base_layout.html" %}
+{% block body %}
+    <h1>{{ team.name }}</h1>
+    <br>
+    <div class="container text-center">
+        <img src="{{ team.icon_svg }}" class="team-page-logo">
+    </div>
+    <br>
+    <h3>Tendenz</h3>
+    <table class="table table-striped table-bordered text-center leaderboard-table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Gegner</th>
+                {% for  opponent_id, opponent_name, _, _ in matches %}
+                    <th scope="col">
+                        <a href="{{ url_for("team", team_id=opponent_id) }}">
+                            {{ opponent_name }}
+                        </a>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ergebnis</td>
+                {% for _, _, score, result in matches %}
+                    {% if result == "win" %}
+                        {% set result_class = "success" %}
+                    {% elif result == "loss" %}
+                        {% set result_class = "danger" %}
+                    {% else %}
+                        {% set result_class = "info" %}
+                    {% endif %}
+                    <td class="table-{{ result_class }}">{{ score }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <h3>Torschützen</h3>
+    <table class="table table-striped table-bordered text-center leaderboard-table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Tore</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player, goal_count in goals %}
+                <tr>
+                    <td>{{ player }}</td>
+                    <td>{{ goal_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

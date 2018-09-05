@@ -1,0 +1,74 @@
+<!--
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
+ Requires the following attributes:
+ matchday: The latest matchday
+ leaderboard_data: list of {username: (color, [position_history])}
+ optional: Either user or show_all == True
+ -->
+
+<canvas id="rankings-chart" width="400" height="200"></canvas>
+
+<!--suppress JSUnusedGlobalSymbols, JSUnusedLocalSymbols, JSDuplicatedDeclaration -->
+<script>
+    let ctx = document.getElementById("rankings-chart").getContext("2d");
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [
+                {% for i in range(0, matchday - 1) %}
+                    "{{ i + 1 }}",
+                {% endfor %}
+            ],
+            datasets: [
+                {% for username, (color, positions) in leaderboard_history.items() %}
+                    {
+                        label: "{{ username }}",
+                        data: {{ positions }},
+                        fill: false,
+                        borderColor: "{{ color }}",
+                        {% if show_all == True
+                           or username == current_user.username
+                           or username == user.username %}
+                            hidden: false,
+                        {% else %}
+                            hidden: true,
+                        {% endif %}
+                    },
+                {% endfor %}
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        begin:1,
+                        min:1,
+                        max:{{ leaderboard_history|length  }},
+                        reverse: true,
+                        callback: function(value) {
+                            if (value % 1 === 0) {return value;}
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>
