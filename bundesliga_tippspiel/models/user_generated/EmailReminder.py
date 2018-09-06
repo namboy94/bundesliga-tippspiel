@@ -53,7 +53,8 @@ class EmailReminder(ModelMixin, db.Model):
     """
 
     user = db.relationship(
-        "User", backref=db.backref("bets", lazy=True, cascade="all,delete")
+        "User",
+        backref=db.backref("email_reminders", lazy=True, cascade="all,delete")
     )
     """
     The user associated with this email reminder
@@ -75,7 +76,8 @@ class EmailReminder(ModelMixin, db.Model):
     """
 
     last_match = db.relationship(
-        "Match", backref=db.backref("bets", lazy=True, cascade="all,delete")
+        "Match",
+        backref=db.backref("email_reminders", lazy=True, cascade="all,delete")
     )
     """
     The last match he user was reminded of
