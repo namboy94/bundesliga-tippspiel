@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from datetime import datetime
 from typing import Dict, Any
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.models.ModelMixin import ModelMixin
@@ -123,6 +124,13 @@ class Match(ModelMixin, db.Model):
     """
     Indicates whether or not the match has finished yet
     """
+
+    @property
+    def kickoff_datetime(self) -> datetime:
+        """
+        :return: A datetime object representing the kickoff time
+        """
+        return datetime.strptime(self.kickoff, "%Y-%m-%dT%H:%M:%SZ")
 
     def __json__(self, include_children: bool = False) -> Dict[str, Any]:
         """
