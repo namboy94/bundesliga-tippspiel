@@ -131,7 +131,8 @@ class EmailReminder(ModelMixin, db.Model):
         match_bets = Bet.query.filter_by(user_id=self.user_id)\
             .filter(Bet.match in due_matches).all()
 
-        betted_matches = list(map(lambda x: x.match_id, match_bets))
+        betted_matches = \
+            list(map(lambda x: x.match_id, match_bets))  # pragma: no cover
         to_remind = list(filter(
             lambda x: x.id not in betted_matches,
             due_matches

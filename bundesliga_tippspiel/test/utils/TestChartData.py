@@ -17,10 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-# noinspection PyProtectedMember
 from bundesliga_tippspiel.models.match_data.Match import Match
-
 from bundesliga_tippspiel.models.auth.User import User
+# noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 
@@ -39,18 +38,27 @@ class TestChartData(_TestFramework):
         user_two = User(username="AA", email="AA", password_hash="AA",
                                  confirmation_hash="AA", confirmed=True)
 
-        team_one, team_two, _, match, _ = self.generate_sample_match_data()
-        self.db.session.add(Match(
+        team_one, team_two, _, old_match, _ = self.generate_sample_match_data()
+        match_one = Match(
             home_team=team_one, away_team=team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=False
-        ))
+        )
+        match_two = Match(
+            home_team=team_one, away_team=team_two,
+            matchday=2, kickoff="2019-01-01:01:02:03",
+            started=False, finished=False
+        )
+        self.db.session.add(match_one)
+        self.db.session.add(match_two)
         self.db.session.add(user_two)
-        self.generate_sample_bet(user_one, match)
-        self.generate_sample_bet(user_two, match)
+        self.generate_sample_bet(user_one, match_one)
+        self.generate_sample_bet(user_one, match_two)
+        self.generate_sample_bet(user_two, match_one)
+        self.generate_sample_bet(user_two, match_two)
         self.db.session.commit()
 
         matchday, data = generate_leaderboard_data()
 
-        self.assertEqual(matchday, 1)
+        self.assertEqual(matchday, 2)
         self.assertEqual(len(data), 2)
