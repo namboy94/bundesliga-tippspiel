@@ -23,9 +23,9 @@ from bundesliga_tippspiel.test.models.ModelTestFramework import \
     _ModelTestFramework
 
 
-class TestApiKey(_ModelTestFramework):
+class TestBet(_ModelTestFramework):
     """
-    Tests the ApiKey SQL model
+    Tests the Bet SQL model
     """
 
     def setUp(self):

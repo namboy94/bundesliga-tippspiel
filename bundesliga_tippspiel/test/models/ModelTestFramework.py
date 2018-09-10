@@ -21,8 +21,10 @@ from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from bundesliga_tippspiel import db
-# noinspection PyProtectedMember
 from bundesliga_tippspiel.models.ModelMixin import ModelMixin
+from bundesliga_tippspiel.models.user_generated.EmailReminder import \
+    EmailReminder
+# noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
 
@@ -45,6 +47,11 @@ class _ModelTestFramework(_TestFramework):
         self.user_two = user_two["user"]
         self.api_key = self.generate_sample_api_key(self.user_one)
         self.bet = self.generate_sample_bet(self.user_one, self.match)
+        self.reminder = EmailReminder(
+            user=self.user_one, reminder_time=1
+        )
+        self.db.session.add(self.reminder)
+        self.db.session.commit()
 
     def _test_missing_column_data(
             self, incomplete_columns: List[db.Model]

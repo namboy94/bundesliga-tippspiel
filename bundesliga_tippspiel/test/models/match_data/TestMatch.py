@@ -17,10 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from datetime import datetime
+from bundesliga_tippspiel.models.match_data.Match import Match
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
     _ModelTestFramework
-from bundesliga_tippspiel.models.match_data.Match import Match
 
 
 class TestMatch(_ModelTestFramework):
@@ -128,3 +129,12 @@ class TestMatch(_ModelTestFramework):
         :return: None
         """
         self._test_string_representation(self.match)
+
+    def test_kickoff_datetime_conversion(self):
+        """
+        Tests the kickoff_datetime metod
+        :return: None
+        """
+        self.match.kickoff = "2018-01-02:22-30-00"
+        date = datetime(year=2018, month=1, day=2, hour=22, minute=30)
+        self.assertEqual(date, self.match.kickoff_datetime)

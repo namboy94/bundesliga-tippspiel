@@ -112,7 +112,7 @@ class TestUser(_ModelTestFramework):
         :return: None
         """
         self._test_deleting_from_db([
-            (self.user_one, [self.api_key]),
+            (self.user_one, [self.api_key, self.reminder]),
             (self.user_two, [])
         ])
 

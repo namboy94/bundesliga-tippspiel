@@ -130,7 +130,7 @@ class Match(ModelMixin, db.Model):
         """
         :return: A datetime object representing the kickoff time
         """
-        return datetime.strptime(self.kickoff, "%Y-%m-%dT%H:%M:%SZ")
+        return datetime.strptime(self.kickoff, "%Y-%m-%d:%H-%M-%S")
 
     def __json__(self, include_children: bool = False) -> Dict[str, Any]:
         """
