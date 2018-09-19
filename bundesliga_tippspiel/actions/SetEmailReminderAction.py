@@ -86,5 +86,5 @@ class SetEmailReminderAction(Action):
         """
         return cls(
             hours=data["hours"],
-            active=data["active"]
+            active=data.get("active") in ["on", True]
         )

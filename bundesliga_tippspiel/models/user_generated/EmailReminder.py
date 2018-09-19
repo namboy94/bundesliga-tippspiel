@@ -157,7 +157,8 @@ class EmailReminder(ModelMixin, db.Model):
             message = render_template(
                 "email/reminder.html",
                 user=self.user,
-                matches=due
+                matches=due,
+                hours=int(self.reminder_time / 3600)
             )
             send_email(self.user.email, "Tippspiel Erinnerung", message)
             last_match = max(due, key=lambda x: x.kickoff)

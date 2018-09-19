@@ -97,5 +97,5 @@ class LoginAction(Action):
         return cls(
             data["username"],
             data["password"],
-            data.get("remember_me") == "on"
+            data.get("remember_me") in ["on", True]
         )
