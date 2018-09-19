@@ -50,9 +50,9 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         """
         return SetEmailReminderAction(hours=24, active=True)
 
-    def test_setting_and_deleting_reminder(self):
+    def test_setting_updating_and_deleting_reminder(self):
         """
-        Tests setting a reminder and deleting it afterwards
+        Tests setting a reminder, updating it and deleting it afterwards
         :return: None
         """
         reminder = EmailReminder(
@@ -65,7 +65,15 @@ class TestSetEmailReminderAction(_ActionTestFramework):
             self.action.execute()
             self.assertEqual(EmailReminder.query.all(), [reminder])
 
+            self.action.hours = 48
+            reminder.reminder_time = 48 * 60 * 60
+            self.action.execute()
+            self.assertEqual(EmailReminder.query.all(), [reminder])
+
             self.action.active = False
+            self.action.execute()
+            self.assertEqual(EmailReminder.query.all(), [])
+
             self.action.execute()
             self.assertEqual(EmailReminder.query.all(), [])
 
