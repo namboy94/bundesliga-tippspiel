@@ -30,6 +30,8 @@ from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
+from bundesliga_tippspiel.actions.GetEmailReminderAction import \
+    GetEmailReminderAction
 
 
 @app.route("/api/v2/bet", methods=["GET"])
@@ -44,6 +46,18 @@ def get_bet(bet_id: Optional[int] = None):
     :return: The results
     """
     return execute_getter(bet_id, GetBetAction)
+
+
+@app.route("/api/v2/email_reminder", methods=["GET"])
+@api_login_required
+@login_required
+@api
+def get_email_reminder():
+    """
+    Allows an authenticated user to get their email reminder data
+    :return: The results
+    """
+    return execute_getter(None, GetEmailReminderAction)
 
 
 @app.route("/api/v2/goal", methods=["GET"])

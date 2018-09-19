@@ -61,6 +61,41 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <br>
 
+    <h2>Email Erinnerungen</h2>
+
+    <div class="container form-container">
+        <form method="post" action="{{ url_for("set_email_reminder") }}">
+            <div class="form-group">
+                <label for="hours_input">Stunden vor Spielbeginn</label>
+                <input class="form-control"
+                       type="number"
+                       min="1"
+                       max="48"
+                       step="1"
+                       {% if email_reminder is none %}
+                           value="24"
+                       {% else %}
+                           value="{{ (email_reminder.reminder_time / 3600)|int }}"
+                       {% endif %}
+                       id="hours_input"
+                       aria-label="hours"
+                       name="hours">
+            </div>
+            <div class="form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="active_check"
+                       name="active"
+                       {% if email_reminder is not none %}
+                           checked
+                       {% endif %}
+                       >
+                <label class="form-check-label" for="active_check">Aktiv</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Aktualisieren</button>
+        </form>
+    </div>
+
     <h2>Account löschen</h2>
 
     <div class="container form-container">

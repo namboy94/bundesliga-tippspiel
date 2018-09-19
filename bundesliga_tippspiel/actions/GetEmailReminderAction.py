@@ -17,24 +17,17 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any, Optional
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from typing import Dict, Any
+from flask_login import current_user
 from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.models.user_generated.EmailReminder import \
+    EmailReminder
 
 
-class LeaderboardAction(Action):
+class GetEmailReminderAction(Action):
     """
-    Action that allows fetching a sorted leaderboard
+    Action that allows retrieving the user's email reminder
     """
-
-    def __init__(self, matchday: Optional[int] = None):
-        """
-        Initializes the LeaderboardAction object
-        :param matchday: The matchday for which to generate the leaderboard.
-                         If None, will use the most current matchday
-        """
-        self.matchday = None if matchday is None else int(matchday)
 
     def validate_data(self):
         """
@@ -42,37 +35,16 @@ class LeaderboardAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if self.matchday is not None:
-            self.matchday = self.resolve_and_check_matchday(self.matchday)
+        pass
 
     def _execute(self) -> Dict[str, Any]:
         """
-        Confirms a previously registered user
+        Registers an unconfirmed user in the database
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        pointmap = {}
-        usermap = {}
-        for user in User.query.filter_by(confirmed=True).all():
-            pointmap[user.id] = 0
-            usermap[user.id] = user
-
-        bets = Bet.query.all()
-        if self.matchday is not None:
-            bets = list(filter(
-                lambda x: x.match.matchday <= self.matchday,
-                bets
-            ))
-
-        for bet in bets:
-            pointmap[bet.user_id] += bet.evaluate(True)
-
-        leaderboard = []
-        for user_id, points in pointmap.items():
-            leaderboard.append((usermap[user_id], points))
-
-        leaderboard.sort(key=lambda x: x[1], reverse=True)
-        return {"leaderboard": leaderboard}
+        reminder = EmailReminder.query.filter_by(user=current_user).first()
+        return {"email_reminder": reminder}
 
     @classmethod
     def _from_dict(cls, data: Dict[str, Any]):

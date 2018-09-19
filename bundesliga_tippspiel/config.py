@@ -90,6 +90,11 @@ last_match_data_update = 0
 Keeps track of when the match data was updated last
 """
 
+last_reminder_sending = 0
+"""
+Keeps track of when reminders were last sent out
+"""
+
 logging_path = os.path.join(
     str(resolve_env_variable("PROJECT_ROOT_PATH", default="/tmp")),
     "tippspiel.log"

@@ -26,7 +26,7 @@ from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.match_data.Goal import Goal
 
 
-class TestEnv(_TestFramework):
+class TestMatchDataGetter(_TestFramework):
     """
     Unit test class that tests the match_data_getter script
     """

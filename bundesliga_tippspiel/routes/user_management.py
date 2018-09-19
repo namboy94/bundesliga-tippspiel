@@ -20,16 +20,21 @@ LICENSE"""
 from bundesliga_tippspiel import app
 from flask import render_template, request
 from flask_login import login_required, current_user
+
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.actions.DeleteUserAction import DeleteUserAction
+from bundesliga_tippspiel.actions.GetEmailReminderAction import \
+    GetEmailReminderAction
 from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
 from bundesliga_tippspiel.actions.ChangePasswordAction import \
     ChangePasswordAction
+from bundesliga_tippspiel.actions.SetEmailReminderAction import \
+    SetEmailReminderAction
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -103,9 +108,11 @@ def profile():
     Allows a user to edit their profile details
     :return: The response
     """
+    email_reminder = GetEmailReminderAction().execute()["email_reminder"]
     return render_template(
         "profile/profile.html",
-        username=current_user.username
+        username=current_user.username,
+        email_reminder=email_reminder
     )
 
 
@@ -120,6 +127,20 @@ def change_password():
     action = ChangePasswordAction.from_site_request()
     return action.execute_with_redirects(
         "profile", "Dein Passwort wurde erfolgreich geändert.", "profile"
+    )
+
+
+@app.route("/set_email_reminder", methods=["POST"])
+@login_required
+@action_route
+def set_email_reminder():
+    """
+    Allows the user to set an email reminder
+    :return: The response
+    """
+    action = SetEmailReminderAction.from_site_request()
+    return action.execute_with_redirects(
+        "profile", "Erinnerungsdaten gespeichert", "profile"
     )
 
 

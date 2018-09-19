@@ -96,8 +96,10 @@ Data Fetching:
 * [match](endpoints/match.md)
 * [player](endpoints/player.md)
 * [team](endpoints/team.md)
+* [reminder](endpoints/email-reminder-get.md)
 
 
 Generating user-created content:
 
 * [bet](endpoints/bet-put.md)
+* [reminder](endpoints/email-reminder-put.md)
