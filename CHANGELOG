@@ -1,3 +1,6 @@
+V 0.16.0:
+  - Implemented email reminders
+  - Fixed charts
 V 0.15.0:
   - Implemented user page
   - Implemented team page
