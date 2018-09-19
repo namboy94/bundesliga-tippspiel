@@ -30,6 +30,8 @@ from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
 from bundesliga_tippspiel.actions.ChangePasswordAction import \
     ChangePasswordAction
+from bundesliga_tippspiel.actions.SetEmailReminderAction import \
+    SetEmailReminderAction
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -120,6 +122,20 @@ def change_password():
     action = ChangePasswordAction.from_site_request()
     return action.execute_with_redirects(
         "profile", "Dein Passwort wurde erfolgreich geändert.", "profile"
+    )
+
+
+@app.route("/set_reminder", methods=["POST"])
+@login_required
+@action_route
+def set_reminder():
+    """
+    Allows the user to set a reminder
+    :return: The response
+    """
+    action = SetEmailReminderAction.from_site_request()
+    return action.execute_with_redirects(
+        "profile", "Erinnerungsdaten gespeichert", "profile"
     )
 
 

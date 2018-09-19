@@ -22,6 +22,8 @@ import bundesliga_tippspiel.config as config
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
+from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
+    SendDueEmailRemindersAction
 
 
 @app.route("/api/v2/update_match_data", methods=["GET"])
@@ -36,4 +38,18 @@ def update_match_data():
     if needs_update:
         update_db_data()
         config.last_match_data_update = time.time()
+    return {"updated": needs_update}
+
+
+@app.route("/api/v2/send_due_reminders", methods=["GET"])
+@api
+def send_due_reminders():
+    """
+    Sends out all due reminders
+    :return: The JSON response
+    """
+    needs_update = time.time() - config.last_reminder_sending > 1800
+    if needs_update:
+        SendDueEmailRemindersAction().execute()
+        config.last_reminder_sending = time.time()
     return {"updated": needs_update}

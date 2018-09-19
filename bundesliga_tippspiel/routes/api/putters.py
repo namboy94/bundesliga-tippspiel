@@ -22,6 +22,8 @@ from flask_login import login_required
 from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api, api_login_required
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
+from bundesliga_tippspiel.actions.SetEmailReminderAction import \
+    SetEmailReminderAction
 
 
 @app.route("/api/v2/bet", methods=["PUT"])
@@ -34,4 +36,17 @@ def put_bet():
     :return: None
     """
     action = PlaceBetsAction.from_dict(request.get_json())
+    return action.execute()
+
+
+@app.route("/api/v2/email_reminder", methods=["PUT"])
+@api_login_required
+@login_required
+@api
+def put_email_reminder():
+    """
+    Allows the creation or updating of an email reminder
+    :return: None
+    """
+    action = SetEmailReminderAction.from_dict(request.get_json())
     return action.execute()
