@@ -51,7 +51,7 @@ class TestSetEmailReminderRoute(_RouteTestFramework):
         self.login()
         resp = self.client.post(self.route_path, follow_redirects=True, data={
             "hours": 10,
-            "active": True
+            "active": "on"
         })
         self.assertTrue(b"Erinnerungsdaten gespeichert" in resp.data)
         self.assertEqual(len(EmailReminder.query.all()), 1)

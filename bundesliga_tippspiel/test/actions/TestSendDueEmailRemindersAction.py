@@ -94,12 +94,13 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         Tests running the action with a due reminder
         :return: None
         """
-        with mock.patch("bundesliga_tippspiel.models.user_generated."
-                        "EmailReminder.send_email") as mocked:
-            self.action.execute()
-            self.assertEqual(1, mocked.call_count)
-            self.action.execute()
-            self.assertEqual(1, mocked.call_count)
+        with self.context:
+            with mock.patch("bundesliga_tippspiel.models.user_generated."
+                            "EmailReminder.send_email") as mocked:
+                self.action.execute()
+                self.assertEqual(1, mocked.call_count)
+                self.action.execute()
+                self.assertEqual(1, mocked.call_count)
 
     def test_from_dict(self):
         """

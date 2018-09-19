@@ -147,15 +147,16 @@ class TestEmailReminder(_ModelTestFramework):
         self.assertEqual(reminder_one.get_due_matches(), [])
         self.assertEqual(reminder_two.get_due_matches(), [match_one])
 
-        with mock.patch("bundesliga_tippspiel.models.user_generated."
-                        "EmailReminder.send_email") as mocked:
-            reminder_one.send_reminder()
-            self.assertEqual(0, mocked.call_count)
-            reminder_two.send_reminder()
-            self.assertEqual(1, mocked.call_count)
-            reminder_one.send_reminder()
-            reminder_two.send_reminder()
-            self.assertEqual(1, mocked.call_count)
+        with self.context:
+            with mock.patch("bundesliga_tippspiel.models.user_generated."
+                            "EmailReminder.send_email") as mocked:
+                reminder_one.send_reminder()
+                self.assertEqual(0, mocked.call_count)
+                reminder_two.send_reminder()
+                self.assertEqual(1, mocked.call_count)
+                reminder_one.send_reminder()
+                reminder_two.send_reminder()
+                self.assertEqual(1, mocked.call_count)
 
         self.assertEqual(reminder_one.get_due_matches(), [])
         self.assertEqual(reminder_two.get_due_matches(), [])
@@ -168,12 +169,13 @@ class TestEmailReminder(_ModelTestFramework):
         self.assertEqual(reminder_two.get_due_matches(),
                          [match_one, match_two])
 
-        with mock.patch("bundesliga_tippspiel.models.user_generated."
-                        "EmailReminder.send_email") as mocked:
-            reminder_one.send_reminder()
-            self.assertEqual(1, mocked.call_count)
-            reminder_two.send_reminder()
-            self.assertEqual(2, mocked.call_count)
-            reminder_one.send_reminder()
-            reminder_two.send_reminder()
-            self.assertEqual(2, mocked.call_count)
+        with self.context:
+            with mock.patch("bundesliga_tippspiel.models.user_generated."
+                            "EmailReminder.send_email") as mocked:
+                reminder_one.send_reminder()
+                self.assertEqual(1, mocked.call_count)
+                reminder_two.send_reminder()
+                self.assertEqual(2, mocked.call_count)
+                reminder_one.send_reminder()
+                reminder_two.send_reminder()
+                self.assertEqual(2, mocked.call_count)
