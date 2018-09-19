@@ -71,7 +71,7 @@ class EmailReminder(ModelMixin, db.Model):
     Unit: seconds
     """
 
-    last_reminder = db.Column(db.String, nullable=False,
+    last_reminder = db.Column(db.String(19), nullable=False,
                               default="1970-01-01:01-01-01")
     """
     The time when the last reminder was sent. Format in the form
