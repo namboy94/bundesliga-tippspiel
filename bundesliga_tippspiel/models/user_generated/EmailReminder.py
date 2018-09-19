@@ -102,6 +102,7 @@ class EmailReminder(ModelMixin, db.Model):
         data = {
             "id": self.id,
             "user_id": self.user_id,
+            "reminder_time": self.reminder_time,
             "last_reminder": self.last_reminder
         }
         if include_children:
@@ -158,7 +159,7 @@ class EmailReminder(ModelMixin, db.Model):
                 user=self.user,
                 matches=due
             )
-            send_email(self.user.email, "Erinnerung", message)
+            send_email(self.user.email, "Tippspiel Erinnerung", message)
             last_match = max(due, key=lambda x: x.kickoff)
             self.last_reminder = last_match.kickoff
             db.session.commit()

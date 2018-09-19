@@ -18,27 +18,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from flask_login import current_user
-from bundesliga_tippspiel import db
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.types.exceptions import ActionException
 from bundesliga_tippspiel.models.user_generated.EmailReminder import \
     EmailReminder
 
 
-class SetEmailReminderAction(Action):
+class SendDueEmailRemindersAction(Action):
     """
-    Action that allows setting an email reminder
+    Action that sends all due reminders
     """
-
-    def __init__(self, hours: int, active: bool):
-        """
-        Initializes the SetEmailReminderAction object
-        :param hours: How many hours before the match the user wants a reminder
-        :param active: Defines whether or not the reminder is active or not
-        """
-        self.hours = int(hours)
-        self.active = bool(active)
 
     def validate_data(self):
         """
@@ -46,35 +34,16 @@ class SetEmailReminderAction(Action):
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if not 0 < self.hours < 49:
-            raise ActionException(
-                "invalid reminder hours",
-                "Ungültige Anzahl Stunden eingegeben"
-            )
+        pass
 
     def _execute(self) -> Dict[str, Any]:
         """
-        Confirms a previously registered user
+        Sends out the due email reminders
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        reminder = \
-            EmailReminder.query.filter_by(user_id=current_user.id).first()
-
-        if self.active:
-
-            if reminder is None:
-                reminder = EmailReminder(user=current_user)
-                db.session.add(reminder)
-
-            reminder.reminder_time = self.hours * 60 * 60
-
-        else:
-            if reminder is not None:
-                db.session.delete(reminder)
-
-        db.session.commit()
-
+        for reminder in EmailReminder.query.all():
+            reminder.send_reminder()
         return {}
 
     @classmethod
@@ -84,7 +53,4 @@ class SetEmailReminderAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        return cls(
-            hours=data["hours"],
-            active=data["active"]
-        )
+        return cls()
