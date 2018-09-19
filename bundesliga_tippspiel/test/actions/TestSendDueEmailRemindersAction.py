@@ -100,3 +100,10 @@ class TestSetEmailReminderAction(_ActionTestFramework):
             self.assertEqual(1, mocked.call_count)
             self.action.execute()
             self.assertEqual(1, mocked.call_count)
+
+    def test_from_dict(self):
+        """
+        "Tests" the from_dict method
+        :return: None
+        """
+        SendDueEmailRemindersAction.from_dict({})
