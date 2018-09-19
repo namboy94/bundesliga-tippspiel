@@ -125,12 +125,12 @@ def change_password():
     )
 
 
-@app.route("/set_reminder", methods=["POST"])
+@app.route("/set_email_reminder", methods=["POST"])
 @login_required
 @action_route
-def set_reminder():
+def set_email_reminder():
     """
-    Allows the user to set a reminder
+    Allows the user to set an email reminder
     :return: The response
     """
     action = SetEmailReminderAction.from_site_request()
