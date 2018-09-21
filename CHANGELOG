@@ -1,3 +1,5 @@
+V 0.16.1:
+  - Fixed email reminders
 V 0.16.0:
   - Implemented email reminders
   - Fixed charts
