@@ -51,8 +51,6 @@ def bets(matchday: Optional[int] = None):
             matchday=matchday
         ).execute()["matches"]
 
-        print(matchday_matches)
-
         betmap = {}
         for _match in matchday_matches:
             betmap[_match.id] = None

@@ -19,7 +19,6 @@ LICENSE"""
 
 from unittest import mock
 from datetime import datetime, timedelta
-
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.match_data.Match import Match
 from bundesliga_tippspiel.models.user_generated.EmailReminder import \
@@ -179,3 +178,35 @@ class TestEmailReminder(_ModelTestFramework):
                 reminder_one.send_reminder()
                 reminder_two.send_reminder()
                 self.assertEqual(2, mocked.call_count)
+
+    def test_due_when_bets_placed(self):
+        """
+        Tests if the is_due method works correctly when bets are placed
+        :return: None
+        """
+        now = datetime.utcnow()
+        reminder = EmailReminder(user=self.user_two, reminder_time=600)
+
+        match_one = Match(home_team=self.team_one, away_team=self.team_two,
+                          matchday=1,
+                          kickoff=(now + timedelta(minutes=5))
+                          .strftime("%Y-%m-%d:%H-%M-%S"),
+                          started=False, finished=False)
+        match_two = Match(home_team=self.team_one, away_team=self.team_two,
+                          matchday=1,
+                          kickoff=(now + timedelta(minutes=7))
+                          .strftime("%Y-%m-%d:%H-%M-%S"),
+                          started=False, finished=False)
+
+        self.db.session.delete(self.match)
+        self.db.session.add(match_one)
+        self.db.session.add(match_two)
+        self.db.session.commit()
+
+        self.assertEqual(len(reminder.get_due_matches()), 2)
+
+        self.generate_sample_bet(self.user_two, match_one)
+        self.assertEqual(len(reminder.get_due_matches()), 1)
+
+        self.generate_sample_bet(self.user_two, match_two)
+        self.assertEqual(len(reminder.get_due_matches()), 0)
