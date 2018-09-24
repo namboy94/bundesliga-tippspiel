@@ -126,6 +126,55 @@ class Match(ModelMixin, db.Model):
     """
 
     @property
+    def minute_display(self) -> str:
+        """
+        This generates a string for displaying the current match minute.
+        Sadly, since OpenligaDB does not provide information on the current
+        minute, this can only offer an approcimation.
+        :return: A formatted string displaying the current match minute
+        """
+        delta = (datetime.utcnow() - self.kickoff_datetime).total_seconds()
+        delta = int(delta / 60)
+
+        print(delta)
+
+        if self.finished:
+            return "Ende"
+        elif 0 <= delta <= 44:
+            return "{}.".format(delta + 1)
+        elif 45 <= delta < 47:  # buffer for ET
+            return "45."
+        elif 47 <= delta <= 64:
+            return "HZ"
+        elif 65 <= delta <= 109:
+            return "{}.".format(delta - 65 + 1 + 45)
+        elif delta >= 110:
+            return "90."
+        else:
+            return "-"
+
+    @property
+    def current_score(self) -> str:
+        """
+        :return: The current score formatted as a string
+        """
+        return "{}:{}".format(self.home_current_score, self.away_current_score)
+
+    @property
+    def ht_score(self) -> str:
+        """
+        :return: The half time score formatted as a string
+        """
+        return "{}:{}".format(self.home_ht_score, self.away_ht_score)
+
+    @property
+    def ft_score(self) -> str:
+        """
+        :return: The full time score formatted as a string
+        """
+        return "{}:{}".format(self.home_ft_score, self.away_ft_score)
+
+    @property
     def kickoff_datetime(self) -> datetime:
         """
         :return: A datetime object representing the kickoff time

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from bundesliga_tippspiel.models.match_data.Match import Match
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
@@ -138,3 +138,50 @@ class TestMatch(_ModelTestFramework):
         self.match.kickoff = "2018-01-02:22-30-00"
         date = datetime(year=2018, month=1, day=2, hour=22, minute=30)
         self.assertEqual(date, self.match.kickoff_datetime)
+
+    def test_minute_representation(self):
+        """
+        Tests the representation of the current minute of the match
+        :return: None
+        """
+        now = datetime.utcnow()
+
+        match = Match(finished=True, kickoff=now.strftime("%Y-%m-%d:%H-%M-%S"))
+        self.assertEqual(match.minute_display, "Ende")
+
+        match.finished = False
+        match.kickoff = (now + timedelta(days=1)).strftime("%Y-%m-%d:%H-%M-%S")
+        self.assertEqual(match.minute_display, "-")
+
+        match.kickoff = (now - timedelta(days=1)).strftime("%Y-%m-%d:%H-%M-%S")
+        self.assertEqual(match.minute_display, "90.")
+
+        match.kickoff = (now - timedelta(minutes=20))\
+            .strftime("%Y-%m-%d:%H-%M-%S")
+        self.assertEqual(match.minute_display, "21.")
+
+        match.kickoff = (now - timedelta(minutes=46)) \
+            .strftime("%Y-%m-%d:%H-%M-%S")
+        self.assertEqual(match.minute_display, "45.")
+
+        match.kickoff = (now - timedelta(minutes=50)) \
+            .strftime("%Y-%m-%d:%H-%M-%S")
+        self.assertEqual(match.minute_display, "HZ")
+
+        match.kickoff = (now - timedelta(minutes=80)) \
+            .strftime("%Y-%m-%d:%H-%M-%S")
+        self.assertEqual(match.minute_display, "61.")
+
+    def test_score_representations(self):
+        """
+        Tests the score representation attributes
+        :return: None
+        """
+        match = Match(
+            home_ht_score=0, away_ht_score=1,
+            home_ft_score=2, away_ft_score=3,
+            home_current_score=4, away_current_score=5
+        )
+        self.assertEqual(match.ht_score, "0:1")
+        self.assertEqual(match.ft_score, "2:3")
+        self.assertEqual(match.current_score, "4:5")
