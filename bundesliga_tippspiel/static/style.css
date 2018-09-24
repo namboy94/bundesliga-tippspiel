@@ -19,6 +19,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Basic Structure */
 
+table {
+    table-layout: fixed;
+    overflow: hidden;
+}
+
 html, body {
     margin:0;
     padding:0;
