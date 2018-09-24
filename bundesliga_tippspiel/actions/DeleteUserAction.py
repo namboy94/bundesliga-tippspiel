@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import current_user, logout_user
-from bundesliga_tippspiel import db
+from bundesliga_tippspiel import app, db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.types.exceptions import ActionException
 
@@ -61,9 +61,13 @@ class DeleteUserAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
+        app.logger.info("Deleting user {}.".format(current_user.username))
         db.session.delete(current_user)
         db.session.commit()
+
+        app.logger.info("User {} logged out.".format(current_user.username))
         logout_user()
+
         return {}
 
     @classmethod
