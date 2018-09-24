@@ -84,7 +84,9 @@ def team(team_id: int):
             result = "draw"
 
         score = "{}:{}".format(own_score, opponent_score)
-        match_data.append((opponent.id, opponent.short_name, score, result))
+        match_data.append((
+            opponent.id, opponent.short_name, score, result, match.id
+        ))
 
     players = GetPlayerAction(team_id=team_id).execute()["players"]
 
