@@ -19,11 +19,17 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Basic Structure */
 
+table {
+    table-layout: fixed;
+    overflow: hidden;
+}
+
 html, body {
     margin:0;
     padding:0;
     height:100%;
-    background: lightgray;
+    background: url(background.jpg) repeat #49c14e;
+    background-size: cover;
 }
 
 footer {
@@ -44,7 +50,7 @@ footer a {
 #body {
     padding-bottom: 60px;   /* Height of the footer */
     margin: 0 auto;
-    width: 80%;
+    /*width: 80%;*/
     min-height: calc(100vh - 100px);
 }
 
@@ -61,7 +67,7 @@ footer a {
     padding-bottom: 20px;
     padding-left: 3em;
     padding-right: 3em;
-    background: darkgray;
+    background: #f8f9fa;
     min-height: calc(100vh - 60px);
     margin-bottom: -20px;
 }
@@ -113,7 +119,7 @@ p {
 }
 
 .form-container {
-    background: lightgray;
+    background: #d7f2d8;
     padding: 20px;
     border-radius: 10px
 }
@@ -142,14 +148,30 @@ p {
     background: white;
 }
 
-.match_logo {
+.match-logo {
     max-height: 40px;
 }
 
-.match_header {
+.match-header {
     padding-top: 30px;
     background: white;
     border-radius: 15px;
+    border: 3px solid black;
+}
+
+.match-header-goal-display-wrapper {
+    text-align: center;
+}
+
+.match-header-goal-display {
+    display: inline-block;
+    background: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    font-size: 15pt;
+    border: 1px solid black;
 }
 
 .goal-icon-normal {
