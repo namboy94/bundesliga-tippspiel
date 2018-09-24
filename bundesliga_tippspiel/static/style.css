@@ -23,7 +23,8 @@ html, body {
     margin:0;
     padding:0;
     height:100%;
-    background: lightgray;
+    background: url(background.jpg) repeat #49c14e;
+    background-size: cover;
 }
 
 footer {
@@ -44,7 +45,7 @@ footer a {
 #body {
     padding-bottom: 60px;   /* Height of the footer */
     margin: 0 auto;
-    width: 80%;
+    /*width: 80%;*/
     min-height: calc(100vh - 100px);
 }
 
@@ -61,7 +62,7 @@ footer a {
     padding-bottom: 20px;
     padding-left: 3em;
     padding-right: 3em;
-    background: darkgray;
+    background: #f8f9fa;
     min-height: calc(100vh - 60px);
     margin-bottom: -20px;
 }
@@ -113,7 +114,7 @@ p {
 }
 
 .form-container {
-    background: lightgray;
+    background: #d7f2d8;
     padding: 20px;
     border-radius: 10px
 }

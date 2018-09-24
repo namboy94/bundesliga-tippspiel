@@ -26,7 +26,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <h1>
                 {% if matchday > 1 %}
                     <a href="{{ "{}/{}".format(url_for("bets"), matchday - 1) }}">
-                        <
+                        <i class="fas fa-arrow-left"></i>
                     </a>
                 {% endif %}
             </h1>
@@ -38,7 +38,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <h1>
                 {% if matchday < 34 %}
                     <a href="{{ "{}/{}".format(url_for("bets"), matchday + 1) }}">
-                        >
+                        <i class="fas fa-arrow-right"></i>
                     </a>
                 {% endif %}
             </h1>
