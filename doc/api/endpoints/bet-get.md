@@ -40,6 +40,7 @@ Examples:
   * **match:<Match>**: The match that this bet was placed for
   * **home_score:int**: The score bet on the home team
   * **away_score:int**: The score bet on the away team
+  * **points:int**: The points scored by the user for this bet
 * **bet:<Bet>**: A single bet, only available when specific ID was provided
 
 
@@ -54,7 +55,8 @@ Examples:
                     "match_id": int,
                     "match": <Match>,
                     "home_score": int,
-                    "away_score": int
+                    "away_score": int,
+                    "points": int
                 }
             ],
             "bet": <Bet>
