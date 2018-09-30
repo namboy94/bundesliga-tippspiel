@@ -94,4 +94,5 @@ class TestApiKeyGenAction(_ActionTestFramework):
                 int(key.creation_time) + ApiKey.MAX_AGE,
                 key_data["expiration"]
             )
+            self.assertEqual(key_data["user"], self.confirmed_user.__json__())
             self.assertTrue(key.verify_key(key_data["api_key"]))

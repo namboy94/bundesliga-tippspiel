@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import login_user, current_user
+from bundesliga_tippspiel import app
 from bundesliga_tippspiel.types.enums import AlertSeverity
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.types.exceptions import ActionException
@@ -80,11 +81,17 @@ class LoginAction(Action):
 
         if verified:
             login_user(user, remember=self.remember)
+            app.logger.info("User {} successfully logged in."
+                            .format(self.username))
         else:
+            app.logger.info("Unsuccessful login attempt for user {}."
+                            .format(self.username))
+
             raise ActionException(
                 "Invalid Password",
                 "Das angegebene Password ist inkorrekt."
             )
+
         return {}
 
     @classmethod
