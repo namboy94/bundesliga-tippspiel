@@ -42,12 +42,14 @@ DELETE:
 POST:
 
 * **api_key:str**: The generated API key
+* **user:<User>**: The user of the API key
 * **expiration:int**: The expiration timestamp as a UTC UNIX timestamp
 
     {
         "status": "ok",
         "data": {
             "api_key": str,
+            "user": <User>,
             "expiration": int
         }
     }

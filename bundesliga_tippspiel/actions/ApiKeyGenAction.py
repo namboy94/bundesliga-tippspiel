@@ -82,7 +82,8 @@ class ApiKeyGenAction(Action):
 
         return {
             "api_key": "{}:{}".format(api_key.id, key.decode("utf-8")),
-            "expiration": int(api_key.creation_time) + ApiKey.MAX_AGE
+            "expiration": int(api_key.creation_time) + ApiKey.MAX_AGE,
+            "user": user.__json__(True)
         }
 
     @classmethod
