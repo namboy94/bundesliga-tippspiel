@@ -1,3 +1,6 @@
+V 0.16.4:
+  - Fixed unclickable links in emails
+  - Removed comments from rendered HTML templates
 V 0.16.3:
   - Added user data to api generation
 V 0.16.2:

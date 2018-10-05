@@ -1,4 +1,4 @@
-<!--
+{#
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
--->
+#}
 
 <h1>Tippspiel Erinnerung</h1>
 
@@ -24,7 +24,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     Besuch schnell den untenstehenden Link um zu tippen:
 </p>
 
-<h3><a href="{{ "{}/bets".format(request.host) }}">
+<h3><a href="https://{{ "{}/bets".format(request.host) }}">
     {{ "{}/bets".format(request.host) }}
 </a></h3>
 

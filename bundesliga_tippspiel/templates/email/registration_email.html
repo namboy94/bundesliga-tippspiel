@@ -1,4 +1,4 @@
-<!--
+{#
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,12 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
--->
+#}
 
-<h1>Registrierung für das <a href="{{ host }}">Bundesliga Tippspiel</a></h1>
+<h1>Registrierung für das <a href="https://{{ host }}">Bundesliga Tippspiel</a></h1>
 <p>
     Hallo {{ username }}! Vielen Dank dass du dich dazu entschieden hast, dich
-    bei <a href="{{ host }}">{{ host }}</a> zu registrieren.
+    bei <a href="https://{{ host }}">{{ host }}</a> zu registrieren.
 </p>
 
 <p>
@@ -28,7 +28,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     besuche bitte den untenstehenden Link:
 </p>
 
-<a href="{{ target }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}">
+<a href="https://{{ target }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}">
     {{ target }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}
 </a>
 
