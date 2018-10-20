@@ -1,3 +1,5 @@
+V 0.16.5:
+  - Fixed issues with updating match data
 V 0.16.4:
   - Fixed unclickable links in emails
   - Removed comments from rendered HTML templates

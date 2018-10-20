@@ -17,25 +17,19 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.routes.api import load_routes as load_api_routes
+# from flask import redirect, url_for, flash
+# from bundesliga_tippspiel import app
+# from bundesliga_tippspiel.types.enums import AlertSeverity
 
 
-def load_routes():
-    """
-    Loads all application routes
-    :return: None
-    """
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.user_management
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.static
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.authentification
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.betting
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.information
-    # noinspection PyUnresolvedReferences
-    # import bundesliga_tippspiel.routes.errors
-
-    load_api_routes()
+# @app.errorhandler(401)
+# def unauthorized(_):
+#     """
+#     Custom redirect for 401 errors
+#     :return: A redirect to the login page
+#     """
+#     flash(
+#         "Du bist nicht angemeldet. Bitte melde dich an.",
+#         AlertSeverity.DANGER.value
+#     )
+#     return redirect(url_for("login"))

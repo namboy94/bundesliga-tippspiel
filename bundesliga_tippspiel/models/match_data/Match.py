@@ -136,8 +136,6 @@ class Match(ModelMixin, db.Model):
         delta = (datetime.utcnow() - self.kickoff_datetime).total_seconds()
         delta = int(delta / 60)
 
-        print(delta)
-
         if self.finished:
             return "Ende"
         elif 0 <= delta <= 44:
