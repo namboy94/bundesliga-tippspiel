@@ -146,6 +146,12 @@ def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
         return None
 
     minute = goal_data["MatchMinute"]
+
+    # Minute defaults to 0 in case the minute data is missing.
+    # This keeps the entire thing from imploding.
+    if minute is None:
+        minute = 0
+
     minute_et = 0
     if minute > 90:
         minute_et = minute - 90
