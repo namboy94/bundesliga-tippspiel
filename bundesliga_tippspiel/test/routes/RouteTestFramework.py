@@ -108,7 +108,11 @@ class _RouteTestFramework(_TestFramework):
                 unauthorized = self.client.get(
                     self.route_path, follow_redirects=True
                 )
-                self.assertEqual(unauthorized.status_code, 401)
+                self.assertEqual(unauthorized.status_code, 200)
+                self.assertTrue(
+                    b"Du bist nicht angemeldet. Bitte melde dich an."
+                    in unauthorized.data
+                )
                 self.login()
 
             static = self.client.get(self.route_path, follow_redirects=True)
@@ -152,4 +156,4 @@ class _RouteTestFramework(_TestFramework):
             else:
                 continue
 
-            self.assertEqual(malformed.status_code, 400)
+            self.assertTrue(b"Error 400" in malformed.data)

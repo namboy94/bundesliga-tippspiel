@@ -67,9 +67,12 @@ class TestMatchRoute(_RouteTestFramework):
         Tests (an) unsuccessful request(s)
         :return: None
         """
-        resp = self.client.get(self.route_path)
-        self.assertEqual(resp.status_code, 401)
+        resp = self.client.get(self.route_path, follow_redirects=True)
+        self.assertTrue(
+            b"Du bist nicht angemeldet. Bitte melde dich an."
+            in resp.data
+        )
 
         self.login()
         resp = self.client.get("/match/1000")
-        self.assertEqual(resp.status_code, 404)
+        self.assertTrue(b"Error 404"in resp.data)

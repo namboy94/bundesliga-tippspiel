@@ -81,4 +81,4 @@ class TestUserRoute(_RouteTestFramework):
         """
         self.login()
         resp = self.client.get("/user/1000000000")
-        self.assertEqual(resp.status_code, 404)
+        self.assertTrue(b"Error 404" in resp.data)
