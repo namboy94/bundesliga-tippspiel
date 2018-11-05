@@ -1,3 +1,6 @@
+V 0.17.0:
+  - Introduced custom HTTP error pages
+  - Fixed issues with updating match data
 V 0.16.5:
   - Fixed issues with updating match data
 V 0.16.4:
