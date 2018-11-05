@@ -157,7 +157,7 @@ def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
         minute_et = minute - 90
         minute = 90
 
-    return Goal(
+    goal = Goal(
         id=goal_data["GoalID"],
         match_id=match_id,
         player_id=goal_data["GoalGetterID"],
@@ -168,6 +168,11 @@ def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
         own_goal=goal_data["IsOwnGoal"],
         penalty=goal_data["IsPenalty"]
     )
+
+    if goal.home_score == 0 and goal.away_score == 0:
+        return None
+    else:
+        return goal
 
 
 def parse_player(goal_data: Dict[str, Any], team_id: int) -> Player:
