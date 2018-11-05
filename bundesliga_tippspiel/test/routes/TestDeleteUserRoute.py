@@ -54,8 +54,11 @@ class TestDeleteUserRoute(_RouteTestFramework):
         self.assertTrue(b"Dein Account wurde erfolgreich gel" in resp.data)
         self.assertFalse(User.query.get(self.user.id))
 
-        unauthorized = self.client.post(self.route_path)
-        self.assertEqual(unauthorized.status_code, 401)
+        unauthorized = self.client.post(self.route_path, follow_redirects=True)
+        self.assertTrue(
+            b"Du bist nicht angemeldet. Bitte melde dich an."
+            in unauthorized.data
+        )
 
     def test_unsuccessful_requests(self):
         """
