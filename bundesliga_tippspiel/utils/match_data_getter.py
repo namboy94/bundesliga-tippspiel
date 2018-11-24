@@ -274,6 +274,11 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
             wikimedia_icon_urls("commons/1/1b/"
                                 "FC_Bayern_München_logo_(2017).svg")
         ),
+        "FC Bayern München": (
+            "FC Bayern München", "FC Bayern", "FCB",
+            wikimedia_icon_urls("commons/1/1b/"
+                                "FC_Bayern_München_logo_(2017).svg")
+        ),
         "FC Schalke 04": (
             "FC Schalke 04", "Schalke 04", "S04",
             wikimedia_icon_urls("commons/6/6d/FC_Schalke_04_Logo.svg")
