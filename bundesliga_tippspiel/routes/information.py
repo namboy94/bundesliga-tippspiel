@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import time
 from flask import render_template, abort
 from flask_login import login_required
 from bundesliga_tippspiel import app
@@ -38,9 +39,14 @@ def leaderboard():
     Displays a leaderboard.
     :return: The Response
     """
+    start = time.time()
+    app.logger.debug("Start generating leaderboard data")
     leaderboard_data = \
         LeaderboardAction.from_site_request().execute()["leaderboard"]
     current_matchday, leaderboard_history = generate_leaderboard_data()
+    delta = "%.2f" % (time.time() - start)
+    app.logger.debug("Generated leaderboard data in {}s".format(delta))
+
     return render_template(
         "info/leaderboard.html",
         leaderboard=enumerate(leaderboard_data),
