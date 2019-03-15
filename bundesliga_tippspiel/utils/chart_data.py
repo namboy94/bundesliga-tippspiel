@@ -18,6 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List, Tuple, Dict
+from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 
@@ -29,7 +31,6 @@ def generate_leaderboard_data() \
              and the leaderboard data:
                  username: (colour, list of positions per matchday)
     """
-
     chart_colors = ["red", "blue", "yellow",
                     "green", "purple", "orange",
                     "brown", "black", "gray"]
@@ -37,12 +38,10 @@ def generate_leaderboard_data() \
     leaderboard_action = LeaderboardAction()
     current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
+    leaderboard_history = load_leaderboard_history()
     leaderboard_data = {}
 
-    for matchday in range(1, current_matchday + 1):
-
-        leaderboard_action.matchday = matchday
-        leaderboard = leaderboard_action.execute()["leaderboard"]
+    for leaderboard in leaderboard_history:
 
         for index, (user, points) in enumerate(leaderboard):
 
@@ -54,3 +53,43 @@ def generate_leaderboard_data() \
             leaderboard_data[user.username][1].append(position)
 
     return current_matchday, leaderboard_data
+
+
+def load_leaderboard_history() -> List[List[Tuple[User, int]]]:
+    """
+    Generates historical leaderboard data for chart generation
+    :return: The list of leaderboard lists
+    """
+
+    history = []
+
+    leaderboard_action = LeaderboardAction()
+    current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
+
+    bets = Bet.query.all()
+    users = User.query.filter_by(confirmed=True).all()
+
+    for matchday in range(1, current_matchday + 1):
+
+        pointmap = {}
+        usermap = {}
+        for user in users:
+            pointmap[user.id] = 0
+            usermap[user.id] = user
+
+        matchday_bets = list(filter(
+            lambda x: x.match.matchday <= matchday,
+            bets
+        ))
+
+        for bet in matchday_bets:
+            pointmap[bet.user_id] += bet.evaluate(True)
+
+        leaderboard = []
+        for user_id, points in pointmap.items():
+            leaderboard.append((usermap[user_id], points))
+        leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+        history.append(leaderboard)
+
+    return history
