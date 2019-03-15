@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import time
 from typing import List, Tuple, Dict
+from bundesliga_tippspiel import app
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 
@@ -29,6 +31,8 @@ def generate_leaderboard_data() \
              and the leaderboard data:
                  username: (colour, list of positions per matchday)
     """
+    start = time.time()
+    app.logger.debug("Analyzing chart generation:")
 
     chart_colors = ["red", "blue", "yellow",
                     "green", "purple", "orange",
@@ -39,10 +43,17 @@ def generate_leaderboard_data() \
 
     leaderboard_data = {}
 
+    app.logger.debug("%.2f" % (time.time() - start))
+
     for matchday in range(1, current_matchday + 1):
+
+        app.logger.debug("Matchday {}".format(matchday))
+        app.logger.debug("%.2f" % (time.time() - start))
 
         leaderboard_action.matchday = matchday
         leaderboard = leaderboard_action.execute()["leaderboard"]
+
+        app.logger.debug("%.2f" % (time.time() - start))
 
         for index, (user, points) in enumerate(leaderboard):
 
@@ -52,5 +63,7 @@ def generate_leaderboard_data() \
 
             position = index + 1
             leaderboard_data[user.username][1].append(position)
+
+        app.logger.debug("%.2f" % (time.time() - start))
 
     return current_matchday, leaderboard_data
