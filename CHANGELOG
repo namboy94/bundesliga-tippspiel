@@ -1,3 +1,5 @@
+V 0.17.4:
+  - Vastly improved load times of the leaderboard page
 V 0.17.3:
   - Now logs how long a leaderboard query takes
 V 0.17.2:

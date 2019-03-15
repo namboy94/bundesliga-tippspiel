@@ -17,9 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import time
 from typing import List, Tuple, Dict
-from bundesliga_tippspiel import app
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
@@ -33,9 +31,6 @@ def generate_leaderboard_data() \
              and the leaderboard data:
                  username: (colour, list of positions per matchday)
     """
-    start = time.time()
-    app.logger.debug("Analyzing chart generation:")
-
     chart_colors = ["red", "blue", "yellow",
                     "green", "purple", "orange",
                     "brown", "black", "gray"]
@@ -43,21 +38,10 @@ def generate_leaderboard_data() \
     leaderboard_action = LeaderboardAction()
     current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
-    app.logger.debug("%.2f" % (time.time() - start))
-
     leaderboard_history = load_leaderboard_history()
     leaderboard_data = {}
 
-    app.logger.debug("%.2f" % (time.time() - start))
-
-    for matchday in range(1, current_matchday + 1):
-
-        app.logger.debug("Matchday {}".format(matchday))
-        app.logger.debug("%.2f" % (time.time() - start))
-
-        leaderboard = leaderboard_history[matchday - 1]
-
-        app.logger.debug("%.2f" % (time.time() - start))
+    for leaderboard in leaderboard_history:
 
         for index, (user, points) in enumerate(leaderboard):
 
@@ -68,12 +52,14 @@ def generate_leaderboard_data() \
             position = index + 1
             leaderboard_data[user.username][1].append(position)
 
-        app.logger.debug("%.2f" % (time.time() - start))
-
     return current_matchday, leaderboard_data
 
 
 def load_leaderboard_history() -> List[List[Tuple[User, int]]]:
+    """
+    Generates historical leaderboard data for chart generation
+    :return: The list of leaderboard lists
+    """
 
     history = []
 
