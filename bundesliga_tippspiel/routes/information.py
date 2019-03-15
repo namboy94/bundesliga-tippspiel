@@ -43,6 +43,7 @@ def leaderboard():
     app.logger.debug("Start generating leaderboard data")
     leaderboard_data = \
         LeaderboardAction.from_site_request().execute()["leaderboard"]
+    app.logger.debug("%.2f" % (time.time() - start))
     current_matchday, leaderboard_history = generate_leaderboard_data()
     delta = "%.2f" % (time.time() - start)
     app.logger.debug("Generated leaderboard data in {}s".format(delta))
