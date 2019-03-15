@@ -20,6 +20,8 @@ LICENSE"""
 import time
 from typing import List, Tuple, Dict
 from bundesliga_tippspiel import app
+from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 
@@ -41,6 +43,9 @@ def generate_leaderboard_data() \
     leaderboard_action = LeaderboardAction()
     current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
+    app.logger.debug("%.2f" % (time.time() - start))
+
+    leaderboard_history = load_leaderboard_history()
     leaderboard_data = {}
 
     app.logger.debug("%.2f" % (time.time() - start))
@@ -50,8 +55,7 @@ def generate_leaderboard_data() \
         app.logger.debug("Matchday {}".format(matchday))
         app.logger.debug("%.2f" % (time.time() - start))
 
-        leaderboard_action.matchday = matchday
-        leaderboard = leaderboard_action.execute()["leaderboard"]
+        leaderboard = leaderboard_history[matchday - 1]
 
         app.logger.debug("%.2f" % (time.time() - start))
 
@@ -67,3 +71,39 @@ def generate_leaderboard_data() \
         app.logger.debug("%.2f" % (time.time() - start))
 
     return current_matchday, leaderboard_data
+
+
+def load_leaderboard_history() -> List[List[Tuple[User, int]]]:
+
+    history = []
+
+    leaderboard_action = LeaderboardAction()
+    current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
+
+    bets = Bet.query.all()
+    users = User.query.filter_by(confirmed=True).all()
+
+    for matchday in range(1, current_matchday + 1):
+
+        pointmap = {}
+        usermap = {}
+        for user in users:
+            pointmap[user.id] = 0
+            usermap[user.id] = user
+
+        matchday_bets = list(filter(
+            lambda x: x.match.matchday <= matchday,
+            bets
+        ))
+
+        for bet in matchday_bets:
+            pointmap[bet.user_id] += bet.evaluate(True)
+
+        leaderboard = []
+        for user_id, points in pointmap.items():
+            leaderboard.append((usermap[user_id], points))
+        leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+        history.append(leaderboard)
+
+    return history
