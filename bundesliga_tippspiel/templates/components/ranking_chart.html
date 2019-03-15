@@ -27,7 +27,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 <canvas id="rankings-chart" width="400" height="200"></canvas>
 
 <!--suppress JSUnusedGlobalSymbols, JSUnusedLocalSymbols, JSDuplicatedDeclaration -->
-<script>
+<script async>
     let ctx = document.getElementById("rankings-chart").getContext("2d");
     let chart = new Chart(ctx, {
         type: 'line',
