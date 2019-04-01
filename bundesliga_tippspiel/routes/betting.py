@@ -57,7 +57,7 @@ def bets(matchday: Optional[int] = None):
             betmap[_match.id] = None
         for bet in matchday_bets:
             betmap[bet.match.id] = bet
-            matchday_points += bet.evaluate()
+            matchday_points += bet.evaluate(when_finished=True)
 
         return render_template(
             "betting/bets.html",
