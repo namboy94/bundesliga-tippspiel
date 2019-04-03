@@ -58,7 +58,24 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 {% endfor %}
             </ul>
             <br>
-            <h3>Erreichte Punktzahl:</h3>
+            <h3>
+                Erreichte Punktzahl:
+                {% if matchday_points == 0 %}
+                    <span class="badge badge-danger badge-pill">{{ matchday_points }}</span>
+                {% elif matchday_points <= 20 %}
+                    <span class="badge badge-warning badge-pill">{{ matchday_points }}</span>
+                {% elif matchday_points <= 40 %}
+                    <span class="badge badge-light badge-pill">{{ matchday_points }}</span>
+                {% elif matchday_points <= 60 %}
+                    <span class="badge badge-info badge-pill">{{ matchday_points }}</span>
+                {% elif matchday_points <= 80 %}
+                    <span class="badge badge-primary badge-pill">{{ matchday_points }}</span>
+                {% elif matchday_points > 100 %}
+                    <span class="badge badge-success badge-pill">{{ matchday_points }}</span>
+                {% else %}
+                    <span class="badge badge-secondary badge-pill">{{ matchday_points }}</span>
+                {% endif %}
+            </h3>
             <p>{{ matchday_points }}</p>
             <br>
             <div class="form-group">
