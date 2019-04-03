@@ -45,7 +45,8 @@ class TestUserRoute(_RouteTestFramework):
         self.db.session.add(Match(
             home_team=team_one, away_team=team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
-            started=False, finished=False
+            started=False, finished=False,
+            home_current_score=0, away_current_score=0
         ))
         self.db.session.commit()
 

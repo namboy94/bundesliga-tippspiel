@@ -47,7 +47,9 @@ class _GetActionTestFramework(_ActionTestFramework):
             matchday=18,
             kickoff="2019-01-01:01:02:03",
             started=False,
-            finished=False
+            finished=False,
+            home_current_score=0,
+            away_current_score=0
         )
         self.user_one, self.user_two = self.generate_sample_users()
         self.user_one = self.user_one["user"]

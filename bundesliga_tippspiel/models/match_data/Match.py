@@ -78,12 +78,12 @@ class Match(ModelMixin, db.Model):
     The match day of the match
     """
 
-    home_current_score = db.Column(db.Integer)
+    home_current_score = db.Column(db.Integer, nullable=False)
     """
     The current score of the home team.
     """
 
-    away_current_score = db.Column(db.Integer)
+    away_current_score = db.Column(db.Integer, nullable=False)
     """
     The current score of the away team.
     """
