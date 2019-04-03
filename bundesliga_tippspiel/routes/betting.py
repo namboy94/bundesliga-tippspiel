@@ -52,16 +52,19 @@ def bets(matchday: Optional[int] = None):
         ).execute()["matches"]
 
         betmap = {}
+        matchday_points = 0
         for _match in matchday_matches:
             betmap[_match.id] = None
         for bet in matchday_bets:
             betmap[bet.match.id] = bet
+            matchday_points += bet.evaluate(when_finished=True)
 
         return render_template(
             "betting/bets.html",
             matchday=matchday_matches[0].matchday,
             betmap=betmap,
-            matches=matchday_matches
+            matches=matchday_matches,
+            matchday_points=matchday_points
         )
 
     else:  # POST

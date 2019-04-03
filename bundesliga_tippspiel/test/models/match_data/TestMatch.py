@@ -45,22 +45,36 @@ class TestMatch(_ModelTestFramework):
         self._test_missing_column_data([
             Match(away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
-                  started=False, finished=False),
+                  started=False, finished=False,
+                  home_current_score=0, away_current_score=0),
             Match(home_team=self.team_one,
                   matchday=1, kickoff="2019-01-01:01:02:03",
-                  started=False, finished=False),
+                  started=False, finished=False,
+                  home_current_score=0, away_current_score=0),
             Match(home_team=self.team_one, away_team=self.team_two,
                   kickoff="2019-01-01:01:02:03",
-                  started=False, finished=False),
+                  started=False, finished=False,
+                  home_current_score=0, away_current_score=0),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1,
-                  started=False, finished=False),
+                  started=False, finished=False,
+                  home_current_score=0, away_current_score=0),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
-                  finished=False),
+                  finished=False,
+                  home_current_score=0, away_current_score=0),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
-                  started=False)
+                  started=False,
+                  home_current_score=0, away_current_score=0),
+            Match(home_team=self.team_one, away_team=self.team_two,
+                  matchday=1, kickoff="2019-01-01:01:02:03",
+                  started=False, finished=False,
+                  away_current_score=0),
+            Match(home_team=self.team_one, away_team=self.team_two,
+                  matchday=1, kickoff="2019-01-01:01:02:03",
+                  started=False, finished=False,
+                  home_current_score=0)
         ])
 
     def test_auto_increment(self):
@@ -72,7 +86,8 @@ class TestMatch(_ModelTestFramework):
             (1, self.match),
             (2, Match(home_team=self.team_one, away_team=self.team_two,
                       matchday=1, kickoff="2019-01-01:01:02:03",
-                      started=False, finished=False))
+                      started=False, finished=False,
+                      home_current_score=0, away_current_score=0))
         ])
 
     def test_uniqueness(self):

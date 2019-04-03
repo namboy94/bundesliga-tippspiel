@@ -42,17 +42,20 @@ class TestPlaceBetsAction(_ActionTestFramework):
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
-            started=False, finished=True
+            started=False, finished=True,
+            home_current_score=0, away_current_score=0
         )
         self.match_two = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
-            started=False, finished=False
+            started=False, finished=False,
+            home_current_score=0, away_current_score=0
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
-            started=True, finished=False
+            started=True, finished=False,
+            home_current_score=0, away_current_score=0
         )
         self.db.session.add(self.match_one)
         self.db.session.add(self.match_two)
