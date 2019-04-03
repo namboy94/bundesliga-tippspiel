@@ -1,3 +1,6 @@
+V 0.18.0:
+  - Added points per matchday on bets page
+  - Added constraint to Match model that current score may not be NULL
 V 0.17.4:
   - Vastly improved load times of the leaderboard page
 V 0.17.3:
