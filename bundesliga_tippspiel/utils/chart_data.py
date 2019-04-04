@@ -17,16 +17,21 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 
-def generate_leaderboard_data() \
-        -> Tuple[int, Dict[str, Tuple[str, List[int]]]]:
+def generate_leaderboard_data(
+        current_matchday: Optional[int] = None,
+        bets: Optional[List[Bet]] = None
+) -> Tuple[int, Dict[str, Tuple[str, List[int]]]]:
     """
     Generates leaderboard data for the rankings chart
+    :param current_matchday: The current matchday
+    :param bets: A list of bets to work on. If not provided, will
+                 load all bets in the database
     :return: A tuple consisting of the matchday to display
              and the leaderboard data:
                  username: (colour, list of positions per matchday)
@@ -35,10 +40,14 @@ def generate_leaderboard_data() \
                     "green", "purple", "orange",
                     "brown", "black", "gray"]
 
-    leaderboard_action = LeaderboardAction()
-    current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
+    if current_matchday is None:
+        leaderboard_action = LeaderboardAction()
+        current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
-    leaderboard_history = load_leaderboard_history()
+    leaderboard_history = load_leaderboard_history(
+        current_matchday=current_matchday,
+        bets=bets
+    )
     leaderboard_data = {}
 
     for leaderboard in leaderboard_history:
@@ -55,18 +64,26 @@ def generate_leaderboard_data() \
     return current_matchday, leaderboard_data
 
 
-def load_leaderboard_history() -> List[List[Tuple[User, int]]]:
+def load_leaderboard_history(
+        current_matchday: Optional[int] = None,
+        bets: Optional[List[Bet]] = None
+) -> List[List[Tuple[User, int]]]:
     """
     Generates historical leaderboard data for chart generation
+    :param current_matchday: The current matchday
+    :param bets: A list of bets to work on. If not provided, will
+                 load all bets in the database
     :return: The list of leaderboard lists
     """
 
     history = []
 
-    leaderboard_action = LeaderboardAction()
-    current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
+    if current_matchday is None:
+        leaderboard_action = LeaderboardAction()
+        current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
-    bets = Bet.query.all()
+    if bets is None:
+        bets = Bet.query.all()
     users = User.query.filter_by(confirmed=True).all()
 
     for matchday in range(1, current_matchday + 1):

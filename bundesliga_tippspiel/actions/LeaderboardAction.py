@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.Action import Action
@@ -28,13 +28,18 @@ class LeaderboardAction(Action):
     Action that allows fetching a sorted leaderboard
     """
 
-    def __init__(self, matchday: Optional[int] = None):
+    def __init__(
+            self,
+            matchday: Optional[int] = None,
+            bets: Optional[List[Bet]] = None
+    ):
         """
         Initializes the LeaderboardAction object
         :param matchday: The matchday for which to generate the leaderboard.
                          If None, will use the most current matchday
         """
         self.matchday = None if matchday is None else int(matchday)
+        self.bets = bets
 
     def validate_data(self):
         """
@@ -57,14 +62,16 @@ class LeaderboardAction(Action):
             pointmap[user.id] = 0
             usermap[user.id] = user
 
-        bets = Bet.query.all()
+        if self.bets is None:
+            self.bets = Bet.query.all()
+
         if self.matchday is not None:
-            bets = list(filter(
+            self.bets = list(filter(
                 lambda x: x.match.matchday <= self.matchday,
-                bets
+                self.bets
             ))
 
-        for bet in bets:
+        for bet in self.bets:
             pointmap[bet.user_id] += bet.evaluate(True)
 
         leaderboard = []
@@ -81,4 +88,6 @@ class LeaderboardAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        return cls()
+        return cls(
+            matchday=data.get("matchday")
+        )

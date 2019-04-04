@@ -24,6 +24,7 @@ from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.models.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
@@ -42,9 +43,13 @@ def leaderboard():
     start = time.time()
 
     app.logger.debug("Start generating leaderboard data")
-    leaderboard_data = \
-        LeaderboardAction.from_site_request().execute()["leaderboard"]
-    current_matchday, leaderboard_history = generate_leaderboard_data()
+    leaderboard_action = LeaderboardAction.from_site_request()
+    leaderboard_data = leaderboard_action.execute()["leaderboard"]
+
+    # Re-use the previously queried bets
+    bets = leaderboard_action.bets
+    current_matchday, leaderboard_history = \
+        generate_leaderboard_data(bets=bets)
 
     delta = "%.2f" % (time.time() - start)
     app.logger.debug("Generated leaderboard data in {}s".format(delta))
@@ -126,7 +131,9 @@ def user(user_id: int):
     if user_data is None:
         abort(404)
 
-    current_matchday, leaderboard_history = generate_leaderboard_data()
+    bets = Bet.query.all()
+    current_matchday, leaderboard_history = \
+        generate_leaderboard_data(bets=bets)
 
     return render_template(
         "info/user.html",
