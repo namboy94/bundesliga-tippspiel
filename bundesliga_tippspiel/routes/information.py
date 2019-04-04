@@ -153,8 +153,8 @@ def stats():
     :return: The Response
     """
     bets = Bet.query.all()
-    first_half = list(filter(lambda x: x.matchday <= 17, bets))
-    second_half = list(filter(lambda x: x.matchday > 17, bets))
+    first_half = list(filter(lambda x: x.match.matchday <= 17, bets))
+    second_half = list(filter(lambda x: x.match.matchday > 17, bets))
 
     first_leaderboard_action = LeaderboardAction.from_site_request()
     first_leaderboard_action.matchday = 17
