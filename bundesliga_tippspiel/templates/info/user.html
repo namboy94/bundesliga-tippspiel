@@ -25,7 +25,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         {% include "components/ranking_chart.html" %}
     </div>
     <div class="row">
-        {% include "components/points_distribution_pie_chart.html" %}
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% include "components/points_distribution_pie_chart.html" %}
+        </div>
+        <div class="col-md-3"></div>
     </div>
     <div class="row">
         <h3>Punkte pro Team</h3>
