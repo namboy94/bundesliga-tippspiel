@@ -33,7 +33,7 @@ def get_team_points_data(bets: Optional[List[Bet]] = None) \
     :return: A dictionary mapping users to dictionaries mapping teams to points
     """
     stats = {}
-    for user in User.query.all():
+    for user in User.query.filter_by(confirmed=True):
         stats[user] = {}
         for team in Team.query.all():
             stats[user][team] = 0
@@ -99,7 +99,7 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
         bets = list(filter(lambda x: x.match.finished, bets))
 
     distribution = {}
-    for user in User.query.all():
+    for user in User.query.filter_by(confirmed=True):
         distribution[user] = {}
 
     for bet in bets:
@@ -112,7 +112,7 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
 
 
 def create_participation_ranking(bets: Optional[List[Bet]] = None) \
-        -> [List[Tuple[User, int]]]:
+        -> [List[Tuple[User, str]]]:
     """
     Creates a ranking of user's participation percentages
     :param bets: The bets to analyze. If not provided, will analyze all bets
@@ -139,3 +139,33 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
 
     ranking.sort(key=lambda x: x[1], reverse=True)
     return ranking
+
+
+def create_point_average_ranking(bets: Optional[List[Bet]] = None) \
+        -> List[Tuple[User, str]]:
+    """
+    Creates a ranking of points averages
+    :param bets: The bets to analyze
+    :return: The ranking
+    """
+    distribution = generate_points_distributions(bets)
+    averages = []
+
+    for user, points_distrib in distribution.items():
+        total_points = 0
+        count = 0
+
+        for value, occurences in points_distrib.items():
+            total_points += (value * occurences)
+            count += occurences
+
+        try:
+            ratio = total_points / count
+        except ZeroDivisionError:
+            ratio = 0
+
+        averages.append((user, ratio))
+
+    averages.sort(key=lambda x: x[1], reverse=True)
+    averages = list(map(lambda x: (x[0], "%.2f" % x[1]), averages))
+    return averages

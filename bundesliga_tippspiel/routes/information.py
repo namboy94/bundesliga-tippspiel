@@ -32,7 +32,8 @@ from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_team_points_table, get_total_points_per_team, \
-    generate_points_distributions, create_participation_ranking
+    generate_points_distributions, create_participation_ranking, \
+    create_point_average_ranking
 
 
 @app.route("/leaderboard", methods=["GET"])
@@ -135,14 +136,38 @@ def user(user_id: int):
         abort(404)
 
     bets = Bet.query.all()
+    total_bets = len(list(filter(lambda x: x.user_id == user_id, bets)))
     bets = list(filter(lambda x: x.match.finished, bets))
+    rr_bets = list(filter(lambda x: x.match.matchday > 17, bets))
+
     current_matchday, leaderboard_history = \
         generate_leaderboard_data(bets=bets)
+    _, rr_history = generate_leaderboard_data(bets=rr_bets)
+
+    bets = list(filter(lambda x: x.user_id == user_id, bets))
+
+    total_points = 0
+    for bet in bets:
+        total_points += bet.evaluate(True)
 
     team_points = get_team_points_data(bets)[user_data]
     team_points = generate_team_points_table(team_points)
 
     points_distribution = generate_points_distributions(bets)[user_data]
+    average_points = create_point_average_ranking(bets)[0][1]
+    participation = create_participation_ranking(bets)[0][1]
+
+    placements = leaderboard_history[user_data.username][1]
+    rr_placements = rr_history[user_data.username][1]
+    current_placement = "N/A"
+    if len(placements) >= 1:
+        current_placement = placements[len(placements) - 1]
+    hinrunde_placement = "N/A"
+    if len(placements) >= 17:
+        hinrunde_placement = placements[16]
+    ruckrunde_placement = "N/A"
+    if len(rr_placements) >= 1:
+        ruckrunde_placement = rr_placements[len(rr_placements) - 1]
 
     return render_template(
         "info/user.html",
@@ -151,7 +176,20 @@ def user(user_id: int):
         leaderboard_history=leaderboard_history,
         matchday=current_matchday,
         team_points=enumerate(team_points),
-        points_distribution=points_distribution
+        points_distribution=points_distribution,
+        player_points=total_points,
+        player_bet_count=total_bets,
+        player_avg_points=average_points,
+        player_participation=participation,
+        player_correct_bets_count=points_distribution.get(15, 0),
+        player_incorrect_bets_count=points_distribution.get(0, 0),
+        player_best_team=team_points[0][0].name,
+        player_worst_team=team_points[len(team_points) - 1][0].name,
+        player_current_placement=current_placement,
+        player_hinrunde_placement=hinrunde_placement,
+        player_ruckrunde_placement=ruckrunde_placement,
+        player_best_placement=min(placements),
+        player_worst_placement=max(placements)
     )
 
 
@@ -192,6 +230,7 @@ def stats():
             points_distribution[key] += value
 
     participation_ranking = create_participation_ranking(finished_bets)
+    average_ranking = create_point_average_ranking(finished_bets)
 
     return render_template(
         "info/stats.html",
@@ -202,6 +241,7 @@ def stats():
         team_points=enumerate(team_points),
         points_distribution=points_distribution,
         participation_ranking=enumerate(participation_ranking),
+        average_ranking=enumerate(average_ranking),
         show_all=True,
         charts=True
     )

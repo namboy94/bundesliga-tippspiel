@@ -25,11 +25,68 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         {% include "components/ranking_chart.html" %}
     </div>
     <div class="row">
-        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h3>Übersicht</h3>
+            <table class="table table-striped table-bordered leaderboard-table">
+                <tbody>
+                    <tr>
+                        <td>Position</td>
+                        <td>{{ player_current_placement }}</td>
+                    </tr>
+                    <tr>
+                        <td>Position (Hinrunde)</td>
+                        <td>{{ player_hinrunde_placement }}</td>
+                    </tr>
+                    <tr>
+                        <td>Position (Rückrunde)</td>
+                        <td>{{ player_ruckrunde_placement }}</td>
+                    </tr>
+                    <tr>
+                        <td>Beste Position</td>
+                        <td>{{ player_best_placement }}</td>
+                    </tr>
+                    <tr>
+                        <td>Schlechteste Position</td>
+                        <td>{{ player_worst_placement }}</td>
+                    </tr>
+                    <tr>
+                        <td>Punkte</td>
+                        <td>{{ player_points }}</td>
+                    </tr>
+                    <tr>
+                        <td>Anzahl Tipps</td>
+                        <td>{{ player_bet_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Punkteschnitt</td>
+                        <td>{{ player_avg_points }}</td>
+                    </tr>
+                    <tr>
+                        <td>Teilnahme</td>
+                        <td>{{ player_participation }}</td>
+                    </tr>
+                    <tr>
+                        <td>Korrekte Tipps</td>
+                        <td>{{ player_correct_bets_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Komplett falsche Tipps</td>
+                        <td>{{ player_incorrect_bets_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bestes Team</td>
+                        <td>{{ player_best_team }}</td>
+                    </tr>
+                    <tr>
+                        <td>Schlechtestes Team</td>
+                        <td>{{ player_worst_team }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="col-md-6">
             {% include "components/points_distribution_pie_chart.html" %}
         </div>
-        <div class="col-md-3"></div>
     </div>
     <div class="row">
         <h3>Punkte pro Team</h3>
