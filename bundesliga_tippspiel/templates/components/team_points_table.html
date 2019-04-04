@@ -17,11 +17,25 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/base_layout.html" %}
-{% block body %}
-    <h1>Rangliste</h1>
-    {% set count=False %}
-    {% include "components/ranking_table.html" %}
-    <br>
-    {% include "components/ranking_chart.html" %}
-{% endblock %}
+<table class="table table-striped table-bordered leaderboard-table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Team</th>
+            <th scope="col">Punkte</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for index, (team, points) in team_points %}
+            <tr>
+                <td>{{ index + 1 }}</td>
+                <td>
+                    <a href="{{ url_for("team", team_id=team.id) }}">
+                        {{ team.name }}
+                    </a>
+                </td>
+                <td>{{ points }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

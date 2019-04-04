@@ -64,6 +64,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <li class="nav-item {% if request.path == "/leaderboard" %} active {% endif %}">
                     <a class="nav-link" href="{{ url_for("leaderboard") }}">Rangliste</a>
                 </li>
+                <li class="nav-item {% if request.path == "/stats" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("stats") }}">Statistiken</a>
+                </li>
                 <li class="nav-item {% if request.path == "/profile" %} active {% endif %}">
                     <a class="nav-link" href="{{ url_for("profile") }}">Profil</a>
                 </li>
