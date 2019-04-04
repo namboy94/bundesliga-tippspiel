@@ -35,8 +35,16 @@ class TestStatsRoute(_RouteTestFramework):
         :return: None
         """
         super().setUp()
-        _, _, _, match, _ = self.generate_sample_match_data()
+        team_one, team_two, _, match, _ = self.generate_sample_match_data()
+        finished_match = self.db.session.add(Match(
+            home_team=team_one, away_team=team_two,
+            matchday=1, kickoff="2019-01-01:01:02:03",
+            started=True, finished=True,
+            home_current_score=0, away_current_score=0
+        ))
+        self.db.session.commit()
         self.generate_sample_bet(self.user, match)
+        self.generate_sample_bet(self.user, finished_match)
 
     @property
     def route_info(self) -> Tuple[str, List[str], Optional[str], bool]:
