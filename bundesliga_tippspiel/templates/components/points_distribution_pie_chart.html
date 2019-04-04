@@ -1,0 +1,58 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<canvas id="points-pie" width="300" height="300"></canvas>
+
+<!--suppress JSUnusedGlobalSymbols, JSUnusedLocalSymbols, JSDuplicatedDeclaration -->
+<script async>
+    new Chart(document.getElementById("points-pie"), {
+        type: "doughnut",
+        data: {
+            labels: ["0", "3", "7", "10", "12", "15"],
+            datasets: [
+                {
+                    label: "Punkte",
+                    backgroundColor: [
+                        "#ff6384",
+                        "#ff9f40",
+                        "#ffcd56",
+                        "#4bc0c0",
+                        "#36a2eb",
+                        "#9966ff"
+                    ],
+                    data: [
+                        {{ points_distribution.get(0, 0) }},
+                        {{ points_distribution.get(3, 0) }},
+                        {{ points_distribution.get(7, 0) }},
+                        {{ points_distribution.get(10, 0) }},
+                        {{ points_distribution.get(12, 0) }},
+                        {{ points_distribution.get(15, 0) }}
+                    ]
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                fontSize: 24,
+                text: "Punkteverteilung"
+            }
+        }
+    });
+</script>

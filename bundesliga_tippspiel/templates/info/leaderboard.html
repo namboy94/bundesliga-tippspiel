@@ -20,7 +20,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% extends "components/base_layout.html" %}
 {% block body %}
     <h1>Rangliste</h1>
-    {% set count=False %}
+    {% set unit="Punkte" %}
     {% include "components/ranking_table.html" %}
     <br>
     {% include "components/ranking_chart.html" %}
