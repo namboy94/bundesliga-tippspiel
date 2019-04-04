@@ -164,7 +164,7 @@ def stats():
     leaderboards = []
     for _filter, bets_data, count in [
         (lambda x: x.match.matchday <= 17, bets, False),
-        (lambda x: x.match.matchday <= 17, bets, False),
+        (lambda x: x.match.matchday > 17, bets, False),
         (lambda x: x.evaluate() == 15, finished_bets, True),
         (lambda x: x.evaluate() == 0, finished_bets, True)
     ]:
