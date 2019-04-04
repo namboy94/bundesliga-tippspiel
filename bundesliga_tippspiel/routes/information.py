@@ -167,6 +167,7 @@ def stats():
         leaderboard_action = LeaderboardAction.from_site_request()
         leaderboard_action.matchday = 34
         leaderboard_action.bets = dataset
+        leaderboard_action.count = count
         leaderboards.append(leaderboard_action.execute()["leaderboard"])
 
     return render_template(
