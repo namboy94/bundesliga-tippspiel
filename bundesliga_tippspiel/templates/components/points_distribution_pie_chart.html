@@ -29,20 +29,20 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 {
                     label: "Punkte",
                     backgroundColor: [
-                        "#3e95cd",
-                        "#8e5ea2",
-                        "#3cba9f",
-                        "#e8c3b9",
-                        "#c45850",
-                        "#000000"
+                        "#ff6384",
+                        "#ff9f40",
+                        "#ffcd56",
+                        "#4bc0c0",
+                        "#36a2eb",
+                        "#9966ff"
                     ],
                     data: [
-                        {{ points_distribution[0] }},
-                        {{ points_distribution[3] }},
-                        {{ points_distribution[7] }},
-                        {{ points_distribution[10] }},
-                        {{ points_distribution[12] }},
-                        {{ points_distribution[15] }}
+                        {{ points_distribution.get(0, 0) }},
+                        {{ points_distribution.get(3, 0) }},
+                        {{ points_distribution.get(7, 0) }},
+                        {{ points_distribution.get(10, 0) }},
+                        {{ points_distribution.get(12, 0) }},
+                        {{ points_distribution.get(15, 0) }}
                     ]
                 }
             ]

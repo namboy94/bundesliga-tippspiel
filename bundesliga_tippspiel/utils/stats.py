@@ -21,6 +21,7 @@ from typing import Optional, List, Dict, Tuple
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.match_data.Team import Team
 from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.models.match_data.Match import Match
 
 
 def get_team_points_data(bets: Optional[List[Bet]] = None) \
@@ -86,6 +87,13 @@ def generate_team_points_table(team_points: Dict[Team, int]) \
 
 def generate_points_distributions(bets: Optional[List[Bet]] = None) \
         -> Dict[User, Dict[int, int]]:
+    """
+    Generates a distribution detailing how often a given amount of points
+    a user earned while betting
+    :param bets: The bets to analyze. If not provided, will analyze all bets
+    :return: A dictionary mapping users to point amounts to their
+             appearance count
+    """
     if bets is None:
         bets = Bet.query.all()
         bets = list(filter(lambda x: x.match.finished, bets))
@@ -101,3 +109,32 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
         distribution[bet.user][points] += 1
 
     return distribution
+
+
+def create_participation_ranking(bets: Optional[List[Bet]] = None) \
+        -> [List[Tuple[User, int]]]:
+    """
+    Creates a ranking of user's participation percentages
+    :param bets: The bets to analyze. If not provided, will analyze all bets
+    :return: A sorted list of tuples detailing the participation ranking
+    """
+    matches = Match.query.all()
+    matches = list(filter(lambda x: x.finished, matches))
+
+    if bets is None:
+        bets = Bet.query.all()
+        bets = list(filter(lambda x: x.match.finished, bets))
+
+    participation_stats = {}
+    for user in User.query.filter_by(confirmed=True):
+        participation_stats[user] = 0
+
+    for bet in bets:
+        participation_stats[bet.user] += 1
+
+    ranking = []
+    for user, betcount in participation_stats.items():
+        ranking.append((user, "%.2f" % (betcount / len(matches)) + "%"))
+
+    ranking.sort(key=lambda x: x[1], reverse=True)
+    return ranking

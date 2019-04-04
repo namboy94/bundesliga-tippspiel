@@ -32,7 +32,7 @@ from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_team_points_table, get_total_points_per_team, \
-    generate_points_distributions
+    generate_points_distributions, create_participation_ranking
 
 
 @app.route("/leaderboard", methods=["GET"])
@@ -191,6 +191,8 @@ def stats():
                 points_distribution[key] = 0
             points_distribution[key] += value
 
+    participation_ranking = create_participation_ranking(finished_bets)
+
     return render_template(
         "info/stats.html",
         first_leaderboard=enumerate(leaderboards[0]),
@@ -199,6 +201,7 @@ def stats():
         zero_leaderboard=enumerate(leaderboards[3]),
         team_points=enumerate(team_points),
         points_distribution=points_distribution,
+        participation_ranking=enumerate(participation_ranking),
         show_all=True,
         charts=True
     )
