@@ -73,3 +73,10 @@ class ModelMixin:
             return other.__json__() == self.__json__()
         else:
             return False  # pragma: no cover
+
+    def __hash__(self) -> int:
+        """
+        Creates a hash so that the model objects can be used as keys
+        :return: None
+        """
+        return hash(repr(self))
