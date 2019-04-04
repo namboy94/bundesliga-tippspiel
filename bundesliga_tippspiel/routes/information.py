@@ -153,23 +153,28 @@ def stats():
     :return: The Response
     """
     bets = Bet.query.all()
-    first_half = list(filter(lambda x: x.match.matchday <= 17, bets))
-    second_half = list(filter(lambda x: x.match.matchday > 17, bets))
+    finished_bets = list(filter(lambda x: x.match.finished, bets))
 
-    first_leaderboard_action = LeaderboardAction.from_site_request()
-    first_leaderboard_action.matchday = 17
-    first_leaderboard_action.bets = first_half
-    first_leaderboard = first_leaderboard_action.execute()["leaderboard"]
+    leaderboards = []
+    for _filter, bets_data, count in [
+        (lambda x: x.match.matchday <= 17, bets, False),
+        (lambda x: x.match.matchday <= 17, bets, False),
+        (lambda x: x.evaluate() == 15, finished_bets, True),
+        (lambda x: x.evaluate() == 0, finished_bets, True)
+    ]:
+        dataset = list(filter(_filter, bets_data))
 
-    second_leaderboard_action = LeaderboardAction.from_site_request()
-    second_leaderboard_action.matchday = 34
-    second_leaderboard_action.bets = second_half
-    second_leaderboard = second_leaderboard_action.execute()["leaderboard"]
+        leaderboard_action = LeaderboardAction.from_site_request()
+        leaderboard_action.matchday = 34
+        leaderboard_action.bets = dataset
+        leaderboards.append(leaderboard_action.execute()["leaderboard"])
 
     return render_template(
         "info/stats.html",
-        first_leaderboard=enumerate(first_leaderboard),
-        second_leaderboard=enumerate(second_leaderboard),
+        first_leaderboard=enumerate(leaderboards[0]),
+        second_leaderboard=enumerate(leaderboards[1]),
+        max_leaderboard=enumerate(leaderboards[2]),
+        zero_leaderboard=enumerate(leaderboards[3]),
         show_all=True,
         charts=True
     )

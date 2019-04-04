@@ -19,6 +19,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "components/base_layout.html" %}
 {% block body %}
+    {% set count=False %}
     <div class="row">
         <div class="col-md-6">
             <h1>Rangliste Hinrunde</h1>
@@ -28,6 +29,19 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="col-md-6">
             <h1>Rangliste Rückrunde</h1>
             {% set leaderboard=second_leaderboard %}
+            {% include "components/ranking_table.html" %}
+        </div>
+    </div>
+    {% set count=True %}
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Korrekte Tipps</h1>
+            {% set leaderboard=max_leaderboard %}
+            {% include "components/ranking_table.html" %}
+        </div>
+        <div class="col-md-6">
+            <h1>Komplett falsche Tipps</h1>
+            {% set leaderboard=zero_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
     </div>

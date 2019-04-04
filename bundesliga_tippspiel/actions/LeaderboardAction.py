@@ -31,16 +31,20 @@ class LeaderboardAction(Action):
     def __init__(
             self,
             matchday: Optional[int] = None,
-            bets: Optional[List[Bet]] = None
+            bets: Optional[List[Bet]] = None,
+            count: bool = False
     ):
         """
         Initializes the LeaderboardAction object
         :param matchday: The matchday for which to generate the leaderboard.
                          If None, will use the most current matchday
         :param bets: limits the leaderboard to a given set of bets
+        :param count: If set to true, will count the amount of bets instead
+                      of evaluating their points
         """
         self.matchday = None if matchday is None else int(matchday)
         self.bets = bets
+        self.count = count
 
     def validate_data(self):
         """
@@ -73,7 +77,10 @@ class LeaderboardAction(Action):
             ))
 
         for bet in self.bets:
-            pointmap[bet.user_id] += bet.evaluate(True)
+            if self.count:
+                pointmap[bet.user_id] += 1
+            else:
+                pointmap[bet.user_id] += bet.evaluate(True)
 
         leaderboard = []
         for user_id, points in pointmap.items():
