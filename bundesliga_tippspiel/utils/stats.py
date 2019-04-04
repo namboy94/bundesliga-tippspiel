@@ -82,3 +82,22 @@ def generate_team_points_table(team_points: Dict[Team, int]) \
         table.append((team, points))
     table.sort(key=lambda x: x[1], reverse=True)
     return table
+
+
+def generate_points_distributions(bets: Optional[List[Bet]] = None) \
+        -> Dict[User, Dict[int, int]]:
+    if bets is None:
+        bets = Bet.query.all()
+        bets = list(filter(lambda x: x.match.finished, bets))
+
+    distribution = {}
+    for user in User.query.all():
+        distribution[user] = {}
+
+    for bet in bets:
+        points = bet.evaluate(True)
+        if points not in distribution[bet.user]:
+            distribution[bet.user][points] = 0
+        distribution[bet.user][points] += 1
+
+    return distribution

@@ -31,7 +31,8 @@ from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
-    generate_team_points_table, get_total_points_per_team
+    generate_team_points_table, get_total_points_per_team, \
+    generate_points_distributions
 
 
 @app.route("/leaderboard", methods=["GET"])
@@ -134,11 +135,14 @@ def user(user_id: int):
         abort(404)
 
     bets = Bet.query.all()
+    bets = list(filter(lambda x: x.match.finished, bets))
     current_matchday, leaderboard_history = \
         generate_leaderboard_data(bets=bets)
 
     team_points = get_team_points_data(bets)[user_data]
     team_points = generate_team_points_table(team_points)
+
+    points_distribution = generate_points_distributions(bets)[user_data]
 
     return render_template(
         "info/user.html",
@@ -146,7 +150,8 @@ def user(user_id: int):
         user=user_data,
         leaderboard_history=leaderboard_history,
         matchday=current_matchday,
-        team_points=enumerate(team_points)
+        team_points=enumerate(team_points),
+        points_distribution=points_distribution
     )
 
 
@@ -179,6 +184,13 @@ def stats():
     team_points = get_total_points_per_team(finished_bets)
     team_points = generate_team_points_table(team_points)
 
+    points_distribution = {}
+    for _, distrib in generate_points_distributions(finished_bets).items():
+        for key, value in distrib.items():
+            if key not in points_distribution:
+                points_distribution[key] = 0
+            points_distribution[key] += value
+
     return render_template(
         "info/stats.html",
         first_leaderboard=enumerate(leaderboards[0]),
@@ -186,6 +198,7 @@ def stats():
         max_leaderboard=enumerate(leaderboards[2]),
         zero_leaderboard=enumerate(leaderboards[3]),
         team_points=enumerate(team_points),
+        points_distribution=points_distribution,
         show_all=True,
         charts=True
     )

@@ -22,12 +22,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     {% set count=False %}
     <div class="row">
         <div class="col-md-6">
-            <h1>Rangliste Hinrunde</h1>
+            <h3>Rangliste Hinrunde</h3>
             {% set leaderboard=first_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
         <div class="col-md-6">
-            <h1>Rangliste Rückrunde</h1>
+            <h3>Rangliste Rückrunde</h3>
             {% set leaderboard=second_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
@@ -35,18 +35,22 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     {% set count=True %}
     <div class="row">
         <div class="col-md-6">
-            <h1>Korrekte Tipps</h1>
+            <h3>Korrekte Tipps</h3>
             {% set leaderboard=max_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
         <div class="col-md-6">
-            <h1>Komplett falsche Tipps</h1>
+            <h3>Komplett falsche Tipps</h3>
             {% set leaderboard=zero_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
     </div>
     <div class="row">
-        <h1>Punkte pro Team</h1>
+        {% include "components/points_distribution_pie_chart.html" %}
+    </div>
+    <br>
+    <div class="row">
+        <h3>Punkte pro Team</h3>
         {% include "components/team_points_table.html" %}
     </div>
 {% endblock %}
