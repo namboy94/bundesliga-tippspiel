@@ -135,9 +135,10 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
     ranking = []
     for user, betcount in participation_stats.items():
         percentage = int((betcount / len(matches)) * 100)
-        ranking.append((user, "{}%".format(percentage)))
+        ranking.append((user, percentage))
 
     ranking.sort(key=lambda x: x[1], reverse=True)
+    ranking = list(map(lambda x: (x[0], "{}%".format(x[1])), ranking))
     return ranking
 
 
