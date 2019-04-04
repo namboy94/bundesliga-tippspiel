@@ -19,8 +19,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "components/base_layout.html" %}
 {% block body %}
-    <h1>Rangliste</h1>
-    {% include "components/ranking_table.html" %}
-    <br>
-    {% include "components/ranking_chart.html" %}
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Rangliste Hinrunde</h1>
+            {% set leaderboard=first_leaderboard %}
+            {% include "components/ranking_table.html" %}
+        </div>
+        <div class="col-md-6">
+            <h1>Rangliste Rückrunde</h1>
+            {% set leaderboard=second_leaderboard %}
+            {% include "components/ranking_table.html" %}
+        </div>
+    </div>
 {% endblock %}

@@ -142,3 +142,34 @@ def user(user_id: int):
         leaderboard_history=leaderboard_history,
         matchday=current_matchday
     )
+
+
+@app.route("/stats", methods=["GET"])
+@login_required
+@action_route
+def stats():
+    """
+    Displays a statistics page.
+    :return: The Response
+    """
+    bets = Bet.query.all()
+    first_half = list(filter(lambda x: x.matchday <= 17, bets))
+    second_half = list(filter(lambda x: x.matchday > 17, bets))
+
+    first_leaderboard_action = LeaderboardAction.from_site_request()
+    first_leaderboard_action.matchday = 17
+    first_leaderboard_action.bets = first_half
+    first_leaderboard = first_leaderboard_action.execute()["leaderboard"]
+
+    second_leaderboard_action = LeaderboardAction.from_site_request()
+    second_leaderboard_action.matchday = 34
+    second_leaderboard_action.bets = second_half
+    second_leaderboard = second_leaderboard_action.execute()["leaderboard"]
+
+    return render_template(
+        "info/stats.html",
+        first_leaderboard=enumerate(first_leaderboard),
+        second_leaderboard=enumerate(second_leaderboard),
+        show_all=True,
+        charts=True
+    )

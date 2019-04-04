@@ -37,6 +37,7 @@ class LeaderboardAction(Action):
         Initializes the LeaderboardAction object
         :param matchday: The matchday for which to generate the leaderboard.
                          If None, will use the most current matchday
+        :param bets: limits the leaderboard to a given set of bets
         """
         self.matchday = None if matchday is None else int(matchday)
         self.bets = bets
