@@ -80,5 +80,5 @@ def generate_team_points_table(team_points: Dict[Team, int]) \
     table = []
     for team, points in team_points.items():
         table.append((team, points))
-    table.sort(key=lambda x: x[1])
+    table.sort(key=lambda x: x[1], reverse=True)
     return table

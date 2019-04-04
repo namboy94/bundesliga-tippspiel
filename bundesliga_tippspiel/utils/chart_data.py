@@ -40,7 +40,7 @@ def generate_leaderboard_data(
                     "green", "purple", "orange",
                     "brown", "black", "gray"]
 
-    if current_matchday is None:
+    if current_matchday is None:  # pragma: no cover
         leaderboard_action = LeaderboardAction()
         current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
@@ -78,7 +78,7 @@ def load_leaderboard_history(
 
     history = []
 
-    if current_matchday is None:
+    if current_matchday is None:  # pragma: no cover
         leaderboard_action = LeaderboardAction()
         current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
