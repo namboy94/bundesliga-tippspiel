@@ -175,7 +175,10 @@ class Action:
             if matchday == -1:
                 all_matches = Match.query.all()
                 filtered = list(filter(lambda x: not x.started, all_matches))
-                matchday = min(filtered, key=lambda x: x.matchday).matchday
+                if len(filtered) > 0:
+                    matchday = min(filtered, key=lambda x: x.matchday).matchday
+                else:
+                    matchday = 34
             elif not 0 < matchday < 35:
                 raise ActionException(
                     "Matchday out of bounds",
