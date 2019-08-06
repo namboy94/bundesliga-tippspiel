@@ -37,9 +37,9 @@ class TestMatchDataGetter(_TestFramework):
         Tests populating the database. Twice.
         :return: None
         """
-        update_db_data()
+        update_db_data(season="2018")
         self.assert_db_state()
-        update_db_data()
+        update_db_data(season="2018")
         self.assert_db_state()
 
     @_TestFramework.online_required
