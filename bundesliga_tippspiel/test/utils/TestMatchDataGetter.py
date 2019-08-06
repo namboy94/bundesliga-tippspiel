@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import time
 import requests
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
@@ -52,6 +53,9 @@ class TestMatchDataGetter(_TestFramework):
         for team in Team.query.all():
             for url in [team.icon_svg, team.icon_png]:
                 resp = requests.head(url)
+                if resp.status_code == 429:
+                    time.sleep(5)
+                    resp = requests.head(url)
                 self.assertEqual(resp.status_code, 200)
 
     def assert_db_state(self):
