@@ -24,7 +24,7 @@ import sphinx_rtd_theme
 from sphinx.ext.autodoc import between
 
 # noinspection PyShadowingBuiltins
-copyright = '2018 Hermann Krumrey'
+copyright = '2017 Hermann Krumrey'
 author = 'Hermann Krumrey'
 project = 'bundesliga-tippspiel'
 
