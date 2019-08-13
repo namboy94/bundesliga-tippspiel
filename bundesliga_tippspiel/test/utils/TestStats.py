@@ -22,7 +22,8 @@ from bundesliga_tippspiel.models.match_data.Match import Match
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
-    generate_team_points_table, get_total_points_per_team
+    generate_team_points_table, get_total_points_per_team, \
+    create_participation_ranking, create_point_average_ranking
 
 
 class TestStats(_TestFramework):
@@ -73,3 +74,15 @@ class TestStats(_TestFramework):
         self.assertNotEqual(table_two, table_all)
 
         self.assertEqual(table_all[0][1], total_points)
+
+    def test_rankings_before_season(self):
+        """
+        Tests the generation of rankings before the season has started
+        :return: None
+        """
+        self.generate_sample_user(True)
+        try:
+            create_point_average_ranking()
+            create_participation_ranking()
+        except ZeroDivisionError:
+            self.fail()
