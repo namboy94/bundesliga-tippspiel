@@ -43,6 +43,7 @@ docgen:
   stage: stats
   tags: [docker]
   script:
+    - pip install flask
     - sphinx-docgen
 
 deploy_develop:
@@ -53,6 +54,7 @@ deploy_develop:
     - python3 -m venv virtual
     - source virtual/bin/activate
     - pip install ci-scripts
+    - pip install flask
   script:
     - export TIPPSPIEL_ENV=develop
     - deploy-flask $BUNDESLIGA_TIPPSPIEL_DEVELOP_HOME
@@ -65,6 +67,7 @@ deploy_production:
     - python3 -m venv virtual
     - source virtual/bin/activate
     - pip install ci-scripts
+    - pip install flask
   script:
     - export TIPPSPIEL_ENV=production
     - deploy-flask $BUNDESLIGA_TIPPSPIEL_HOME
