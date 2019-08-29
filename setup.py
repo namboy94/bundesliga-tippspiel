@@ -38,13 +38,13 @@ if __name__ == "__main__":
         license="GNU GPL3",
         packages=find_packages(),
         install_requires=[
+            "flask",
             "requests",
             "bcrypt",
             "werkzeug",
             "flask_login",
             "flask_sqlalchemy",
             "sqlalchemy",
-            "flask"
         ],
         include_package_data=True,
         zip_safe=False
