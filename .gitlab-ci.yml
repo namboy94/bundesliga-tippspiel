@@ -33,6 +33,18 @@ unittest:
   script:
     - python-unittest
 
+gitstats:
+  stage: stats
+  tags: [docker]
+  script:
+    - gitstats-gen
+
+docgen:
+  stage: stats
+  tags: [docker]
+  script:
+    - sphinx-docgen
+
 deploy_develop:
   stage: deploy
   only: [develop]
@@ -71,15 +83,3 @@ pypi_upload:
   tags: [docker]
   script:
     - pypi-upload
-
-gitstats:
-  stage: stats
-  tags: [docker]
-  script:
-    - gitstats-gen
-
-docgen:
-  stage: stats
-  tags: [docker]
-  script:
-    - sphinx-docgen
