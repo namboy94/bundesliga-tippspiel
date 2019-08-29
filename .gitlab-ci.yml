@@ -1,4 +1,5 @@
 stages:
+  - mirror
   - test
   - stats
   - deploy
@@ -9,6 +10,15 @@ default:
   before_script:
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
+
+github_mirror:
+  stage: mirror
+  tags: [docker]
+  before_script:
+    - echo "$GITHUB_SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 0600 ~/.ssh/id_rsa
+  script:
+    - git-mirror-pusher git@github.com:namboy94/hk-tippspiel.git master develop
 
 stylecheck:
   stage: test
