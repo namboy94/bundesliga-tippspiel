@@ -1,3 +1,5 @@
+V 1.0.3:
+  - Fixed leaderboard API endpoint breaking without any parameters
 V 1.0.2:
   - Now uses docker in CI
 V 1.0.1:
