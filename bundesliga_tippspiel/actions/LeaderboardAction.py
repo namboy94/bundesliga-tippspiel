@@ -96,8 +96,6 @@ class LeaderboardAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        if data is None:
-            data = {}
         return cls(
             matchday=data.get("matchday")
         )
