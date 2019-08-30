@@ -31,6 +31,7 @@ stylecheck:
 unittest:
   stage: test
   tags: [docker]
+  only: [master, develop]
   script:
     - python-unittest
 
