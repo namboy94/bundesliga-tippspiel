@@ -125,6 +125,8 @@ def api_leaderboard():
     Enables retrieving a leaderboard
     :return: The JSON response
     """
+    app.logger.info(request)
+    app.logger.info(request.data)
     action = LeaderboardAction().from_dict(request.get_json())
     leaderboard = action.execute()
     jsonified = jsonify_models(leaderboard, True)
