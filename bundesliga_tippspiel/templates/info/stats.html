@@ -48,16 +48,17 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </div>
     </div>
 
-    {% set unit="%" %}
     <div class="row">
         <div class="col-md-6">
             <h3>Punkte/Tipp</h3>
             {% set leaderboard=average_ranking %}
+            {% set unit="Punkte/Tipp" %}
             {% include "components/ranking_table.html" %}
         </div>
         <div class="col-md-6">
             <h3>Teilnahme</h3>
             {% set leaderboard=participation_ranking %}
+            {% set unit="%" %}
             {% include "components/ranking_table.html" %}
         </div>
     </div>
