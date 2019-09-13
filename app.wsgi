@@ -29,7 +29,8 @@ secrets_file = os.path.join(
 load_secrets(secrets_file)
 os.environ["PROJECT_ROOT_PATH"] = os.path.abspath(os.path.dirname(__file__))
 
-from bundesliga_tippspiel.run import version, sentry_dsn, app as application
+from bundesliga_tippspiel import version, sentry_dsn
+from bundesliga_tippspiel.run import app as application
 
 sentry_sdk.init(
     sentry_dsn,
