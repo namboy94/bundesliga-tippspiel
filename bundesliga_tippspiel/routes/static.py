@@ -50,3 +50,12 @@ def privacy():
     :return: The generated HTML
     """
     return render_template("static/privacy.html")
+
+
+@app.route("/error")
+def privacy():
+    """
+    Page containing a privacy disclaimer
+    :return: The generated HTML
+    """
+    1/0

@@ -44,7 +44,8 @@ if __name__ == "__main__":
             "bcrypt",
             "sqlalchemy",
             "werkzeug",
-            "flask"
+            "flask",
+            "sentry-sdk"
         ],
         include_package_data=True,
         zip_safe=False

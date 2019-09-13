@@ -18,11 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import base64
-import pkg_resources
 from binascii import Error
 from typing import Optional
 from bundesliga_tippspiel.routes import load_routes
-from bundesliga_tippspiel import app, db, login_manager
+from bundesliga_tippspiel import app, db, login_manager, version
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
 
@@ -39,8 +38,6 @@ def initialize_app():
         in templates
         :return: The dictionary to inject
         """
-        version = \
-            pkg_resources.get_distribution("bundesliga-tippspiel").version
         return {
             "version": version,
             "env": app.env
