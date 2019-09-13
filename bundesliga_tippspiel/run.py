@@ -49,7 +49,4 @@ if not app.testing:  # pragma: no cover
         format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
     )
 
-    app.logger.error("STARTING FLASK")
-    app.logger.warning("STARTING FLASK")
     app.logger.info("STARTING FLASK")
-    app.logger.debug("STARTING FLASK")
