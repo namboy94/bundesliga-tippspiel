@@ -22,8 +22,6 @@ import pkg_resources
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
 
 app = Flask(__name__)
 """
@@ -45,15 +43,14 @@ version = pkg_resources.get_distribution("bundesliga-tippspiel").version
 The current version of the application
 """
 
+sentry_dsn = "https://e91e468e84424758bd74e6908af2c565@sentry.namibsun.net/6"
+"""
+The sentry DSN used for exception logging
+"""
+
 # Config
 app.config["TRAP_HTTP_EXCEPTIONS"] = True
 login_manager.session_protection = "strong"
-
-sentry_sdk.init(
-    "https://e91e468e84424758bd74e6908af2c565@sentry.namibsun.net/6",
-    release="bundesliga-tippspiel-" + version,
-    integrations=[FlaskIntegration()]
-)
 
 
 if "FLASK_TESTING" in os.environ:  # pragma: no cover
