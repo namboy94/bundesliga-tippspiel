@@ -53,7 +53,7 @@ def privacy():
 
 
 @app.route("/error")
-def privacy():
+def error():
     """
     Page containing a privacy disclaimer
     :return: The generated HTML
