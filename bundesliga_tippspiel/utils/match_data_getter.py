@@ -321,7 +321,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
         ),
         "1. FC Union Berlin": (
             "1. FC Union Berlin", "Union Berlin", "SCU",
-            wikimedia_icon_urls("en/f/fe/1._FC_Union_Berlin_logo.svg")
+            wikimedia_icon_urls("commons/4/44/1._FC_Union_Berlin_Logo.svg")
         ),
         "SC Paderborn 07": (
             "SC Paderborn 07", "Paderborn", "PAD",
