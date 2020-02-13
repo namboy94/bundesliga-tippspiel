@@ -23,7 +23,7 @@ from flask import render_template, request
 from sqlalchemy.exc import SQLAlchemyError
 from bundesliga_tippspiel import db
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.email import send_email
 from bundesliga_tippspiel.utils.recaptcha import verify_recaptcha
 from bundesliga_tippspiel.utils.db import username_exists, email_exists

@@ -20,8 +20,8 @@ LICENSE"""
 from typing import Dict, Any, Optional, List
 from flask import abort, redirect, url_for, request
 from bundesliga_tippspiel import db
-from bundesliga_tippspiel.types.enums import AlertSeverity
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.enums import AlertSeverity
+from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.models.ModelMixin import ModelMixin
 from bundesliga_tippspiel.models.match_data.Match import Match
 

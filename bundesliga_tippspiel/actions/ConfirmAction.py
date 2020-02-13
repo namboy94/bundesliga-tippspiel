@@ -19,9 +19,9 @@ LICENSE"""
 
 from typing import Dict, Any
 from bundesliga_tippspiel import db
-from bundesliga_tippspiel.types.enums import AlertSeverity
+from bundesliga_tippspiel.enums import AlertSeverity
 from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.db import user_exists
 from bundesliga_tippspiel.utils.crypto import verify_password
 from bundesliga_tippspiel.actions.Action import Action

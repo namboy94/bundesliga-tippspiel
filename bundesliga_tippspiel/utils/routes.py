@@ -22,7 +22,7 @@ from functools import wraps
 from typing import Callable
 from flask import jsonify, make_response, request
 from werkzeug.exceptions import Unauthorized
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 
 
 def api(func: Callable) -> Callable:

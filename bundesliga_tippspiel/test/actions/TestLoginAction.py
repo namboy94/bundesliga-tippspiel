@@ -19,7 +19,7 @@ LICENSE"""
 
 from bundesliga_tippspiel.models.auth.User import User
 from flask_login import current_user, logout_user
-from bundesliga_tippspiel.types.enums import AlertSeverity
+from bundesliga_tippspiel.enums import AlertSeverity
 from bundesliga_tippspiel.actions.LoginAction import LoginAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \

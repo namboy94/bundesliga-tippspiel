@@ -25,7 +25,7 @@ from bundesliga_tippspiel.models.match_data.Team import Team
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 
 
 class _GetActionTestFramework(_ActionTestFramework):

@@ -20,7 +20,7 @@ LICENSE"""
 from flask import redirect, url_for, flash, render_template
 from werkzeug.exceptions import HTTPException
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.types.enums import AlertSeverity
+from bundesliga_tippspiel.enums import AlertSeverity
 
 
 @app.errorhandler(HTTPException)

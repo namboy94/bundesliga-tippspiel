@@ -26,7 +26,7 @@ from bundesliga_tippspiel.utils.crypto import generate_random, generate_hash
 from bundesliga_tippspiel.utils.recaptcha import verify_recaptcha
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 
 
 class ForgotPasswordAction(Action):

@@ -22,7 +22,7 @@ from bundesliga_tippspiel import db
 from bundesliga_tippspiel.models.auth.User import User
 from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.crypto import verify_password, generate_hash, \
     generate_random
 
