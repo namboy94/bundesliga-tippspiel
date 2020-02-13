@@ -5,4 +5,4 @@ cover/
 *.egg-info/
 dist/
 build/
-./secrets.json
+.env

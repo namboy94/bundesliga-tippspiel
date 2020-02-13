@@ -17,23 +17,26 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
-import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
-from bundesliga_tippspiel.utils.env import load_secrets
+import cherrypy
+from bundesliga_tippspiel.run import app
 
+if __name__ == '__main__':
 
-secrets_file = os.path.join(
-    os.path.abspath(os.path.dirname(__file__)), "secrets.json"
-)
-load_secrets(secrets_file)
-os.environ["PROJECT_ROOT_PATH"] = os.path.abspath(os.path.dirname(__file__))
+    # init()
 
-from bundesliga_tippspiel import version, sentry_dsn
-from bundesliga_tippspiel.run import app as application
+    cherrypy.tree.graft(app, "/")
 
-sentry_sdk.init(
-    sentry_dsn,
-    release="bundesliga-tippspiel-" + version,
-    integrations=[FlaskIntegration()]
-)
+    cherrypy.server.unsubscribe()
+
+    # noinspection PyProtectedMember
+    server = cherrypy._cpserver.Server()
+
+    # Configure the server object
+    server.socket_host = "0.0.0.0"
+    server.socket_port = 8000
+    server.thread_pool = 30
+
+    server.subscribe()
+
+    cherrypy.engine.start()
+    cherrypy.engine.block()

@@ -46,7 +46,8 @@ if __name__ == "__main__":
             "sentry-sdk",
             "sqlalchemy",
             "werkzeug",
-            "flask"
+            "flask",
+            "cherrypy"
         ],
         include_package_data=True,
         zip_safe=False

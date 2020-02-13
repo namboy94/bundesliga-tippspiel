@@ -50,27 +50,31 @@ docgen:
 
 deploy_develop:
   stage: deploy
+  tags: [privileged]
   only: [develop]
-  tags: [hk-tippspiel-develop]
-  before_script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - pip install ci-scripts
+  before_script: []
   script:
-    - export TIPPSPIEL_ENV=develop
-    - deploy-flask $BUNDESLIGA_TIPPSPIEL_DEVELOP_HOME
+    - docker build -f docker/Dockerfile
+      -t bundesliga-tippspiel-dev . --no-cache
+    - echo "$ENV_FILE" > .env
+    - docker-compose -f docker/docker-compose-dev.yml up -d --no-recreate
+    - docker-compose -f docker/docker-compose-dev.yml up -d --no-deps
+      bundesliga-tippspiel-dev-app
+    - rm .env
 
 deploy_production:
   stage: deploy
+  tags: [privileged]
   only: [master]
-  tags: [hk-tippspiel]
-  before_script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - pip install ci-scripts
+  before_script: []
   script:
-    - export TIPPSPIEL_ENV=production
-    - deploy-flask $BUNDESLIGA_TIPPSPIEL_HOME
+    - docker build -f docker/Dockerfile
+      -t bundesliga-tippspiel-prod . --no-cache
+    - echo "$ENV_FILE" > .env
+    - docker-compose -f docker/docker-compose-prod.yml up -d --no-recreate
+    - docker-compose -f docker/docker-compose-prod.yml up -d --no-deps
+      bundesliga-tippspiel-prod-app
+    - rm .env
 
 release_upload:
   stage: release

@@ -60,17 +60,27 @@ recaptcha_secret_key = resolve_env_variable("RECAPTCHA_SECRET_KEY")
 The secret recaptcha key used to validate the recaptcha result
 """
 
-db_user = resolve_env_variable("DB_USER")
+db_host = resolve_env_variable("DB_HOST", default="localhost")
+"""
+The database host
+"""
+
+db_port = resolve_env_variable("DB_PORT", _type=int, default=3306)
+"""
+The database port
+"""
+
+db_user = resolve_env_variable("MYSQL_USER")
 """
 The database user
 """
 
-db_name = resolve_env_variable("DB_NAME")
+db_name = resolve_env_variable("MYSQL_DATABASE")
 """
 The database name
 """
 
-db_key = resolve_env_variable("DB_KEY")
+db_key = resolve_env_variable("MYSQL_PASSWORD")
 """
 The database key
 """

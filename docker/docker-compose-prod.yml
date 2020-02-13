@@ -1,0 +1,21 @@
+version: "3.2"
+networks:
+  bundesliga-tippspiel-prod-net:
+    driver: bridge
+services:
+  bundesliga-tippspiel-prod-app:
+    image: "bundesliga-tippspiel-prod"
+    container_name: "bundesliga-tippspiel-prod-app-container"
+    depends_on:
+      - bundesliga-tippspiel-prod-db
+    networks:
+      - bundesliga-tippspiel-prod-net
+    ports:
+      - "${PROD_HTTP_PORT}:8000"
+    env_file: .env
+  bundesliga-tippspiel-prod-db:
+    image: "mariadb:latest"
+    container_name: "bundesliga-tippspiel-prod-db-container"
+    env_file: .env
+    networks:
+      - bundesliga-tippspiel-prod-net

@@ -1,3 +1,5 @@
+V 1.2.0:
+  - Website now runs in docker
 V 1.1.1:
   - Integrated sentry
 V 1.1.0:

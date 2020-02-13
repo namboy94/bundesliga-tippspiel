@@ -21,7 +21,8 @@ import os
 import logging
 from flask.logging import default_handler
 from bundesliga_tippspiel import app
-from bundesliga_tippspiel.config import db_user, db_key, db_name, logging_path
+from bundesliga_tippspiel.config import db_user, db_key, db_name, \
+    db_port, db_host, logging_path
 from bundesliga_tippspiel.utils.initialize import initialize_db, \
     initialize_app, initialize_login_manager
 
@@ -31,8 +32,8 @@ if not app.testing:  # pragma: no cover
     app.secret_key = os.environ["FLASK_SECRET"]
 
     if app.config["ENV"] == "production":
-        uri = "mysql://{}:{}@localhost:3306/{}".format(
-            db_user, db_key, db_name
+        uri = "mysql://{}:{}@{}:{}/{}".format(
+            db_user, db_key, db_host, db_port, db_name
         )
     else:
         uri = "sqlite:////tmp/bundesliga_tippspiel.db"
