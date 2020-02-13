@@ -54,7 +54,9 @@ def api_forgot():
     return action.execute()
 
 
-@user_management_api_blueprint.route("/api/v2/api_key", methods=["POST", "DELETE"])
+@user_management_api_blueprint.route(
+    "/api/v2/api_key", methods=["POST", "DELETE"]
+)
 @api
 def api_api_key():
     """
@@ -93,7 +95,9 @@ def api_delete_user():
     return action.execute()
 
 
-@user_management_api_blueprint.route("/api/v2/change_password", methods=["POST"])
+@user_management_api_blueprint.route(
+    "/api/v2/change_password", methods=["POST"]
+)
 @api_login_required
 @login_required
 @api
