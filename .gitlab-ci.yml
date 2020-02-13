@@ -33,6 +33,9 @@ unittest:
   tags: [docker]
   only: [master, develop]
   script:
+    - echo "$ENV_FILE" > .env
+    - export $(grep -v '^#' .env | xargs)
+    - rm .env
     - python-unittest
 
 gitstats:
