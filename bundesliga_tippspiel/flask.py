@@ -17,24 +17,26 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import redirect, url_for, flash, render_template
-from werkzeug.exceptions import HTTPException
-from bundesliga_tippspiel import app
-from bundesliga_tippspiel.enums import AlertSeverity
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
+app = Flask(__name__)
+"""
+The Flask App
+"""
 
-@app.errorhandler(HTTPException)
-def error_handling(error: HTTPException):
-    """
-    Custom redirect for 401 errors
-    :param error: The error that caused the error handler to be called
-    :return: A redirect to the login page
-    """
-    if error.code == 401:
-        flash(
-            "Du bist nicht angemeldet. Bitte melde dich an.",
-            AlertSeverity.DANGER.value
-        )
-        return redirect(url_for("login"))
-    else:
-        return render_template("static/error_page.html", error=error)
+db = SQLAlchemy()
+"""
+The SQLAlchemy database connection
+"""
+
+login_manager = LoginManager(app)
+"""
+The Flask-Login Login Manager
+"""
+
+sentry_dsn = "https://e91e468e84424758bd74e6908af2c565@sentry.namibsun.net/6"
+"""
+The sentry DSN used for exception logging
+"""

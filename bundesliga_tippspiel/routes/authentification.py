@@ -17,14 +17,16 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request, url_for, redirect, render_template
+from flask import request, url_for, redirect, render_template, Blueprint
 from flask_login import login_required, logout_user, current_user
-from bundesliga_tippspiel import app
+from bundesliga_tippspiel.flask import app
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.LoginAction import LoginAction
 
+authentification_blueprint = Blueprint("authentication", __name__)
 
-@app.route("/login", methods=["GET", "POST"])
+
+@authentification_blueprint.route("/login", methods=["GET", "POST"])
 @action_route
 def login():
     """
@@ -37,11 +39,13 @@ def login():
     else:  # request.method == "POST"
         action = LoginAction.from_site_request()
         return action.execute_with_redirects(
-            "index", "Du hast dich erfolgreich angemeldet.", "login"
+            "static.index",
+            "Du hast dich erfolgreich angemeldet.",
+            "authentication.login"
         )
 
 
-@app.route("/logout")
+@authentification_blueprint.route("/logout")
 @login_required
 @action_route
 def logout():
@@ -51,4 +55,4 @@ def logout():
     """
     app.logger.info("User {} logged out.".format(current_user.username))
     logout_user()
-    return redirect(url_for("index"))
+    return redirect(url_for("static.index"))

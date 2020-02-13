@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel import app
-from flask import render_template, request
+from flask import render_template, request, Blueprint
 from flask_login import login_required, current_user
-
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.enums import AlertSeverity
 from bundesliga_tippspiel.exceptions import ActionException
@@ -36,8 +34,10 @@ from bundesliga_tippspiel.actions.ChangePasswordAction import \
 from bundesliga_tippspiel.actions.SetEmailReminderAction import \
     SetEmailReminderAction
 
+user_management_blueprint = Blueprint("user_management", __name__)
 
-@app.route("/register", methods=["GET", "POST"])
+
+@user_management_blueprint.route("/register", methods=["GET", "POST"])
 @action_route
 def register():
     """
@@ -53,18 +53,18 @@ def register():
         success_msg = "Siehe in deiner Email-Inbox nach, " \
                       "um die Registrierung abzuschließen."
         return action.execute_with_redirects(
-            "index",
+            "static.index",
             ActionException(
                 success_msg,
                 success_msg,
                 status_code=200,
                 severity=AlertSeverity.SUCCESS
             ),
-            "register"
+            "user_management.register"
         )
 
 
-@app.route("/confirm", methods=["GET"])
+@user_management_blueprint.route("/confirm", methods=["GET"])
 @action_route
 def confirm():
     """
@@ -73,14 +73,14 @@ def confirm():
     """
     action = ConfirmAction.from_site_request()
     return action.execute_with_redirects(
-        "login",
+        "authentication.login",
         "Benutzer wurde erfolgreich registriert. "
         "Du kannst dich jetzt anmelden.",
-        "index"
+        "static.index"
     )
 
 
-@app.route("/forgot", methods=["POST", "GET"])
+@user_management_blueprint.route("/forgot", methods=["POST", "GET"])
 @action_route
 def forgot():
     """
@@ -93,14 +93,14 @@ def forgot():
     else:
         action = ForgotPasswordAction.from_site_request()
         return action.execute_with_redirects(
-            "login",
+            "authentication.login",
             "Passwort erfolgreich zurückgesetzt. "
             "Sehe in deinem Email-Postfach nach.",
-            "forgot"
+            "user_management.forgot"
         )
 
 
-@app.route("/profile", methods=["GET"])
+@user_management_blueprint.route("/profile", methods=["GET"])
 @login_required
 @action_route
 def profile():
@@ -116,7 +116,7 @@ def profile():
     )
 
 
-@app.route("/change_password", methods=["POST"])
+@user_management_blueprint.route("/change_password", methods=["POST"])
 @login_required
 @action_route
 def change_password():
@@ -126,11 +126,13 @@ def change_password():
     """
     action = ChangePasswordAction.from_site_request()
     return action.execute_with_redirects(
-        "profile", "Dein Passwort wurde erfolgreich geändert.", "profile"
+        "user_management.profile",
+        "Dein Passwort wurde erfolgreich geändert.",
+        "user_management.profile"
     )
 
 
-@app.route("/set_email_reminder", methods=["POST"])
+@user_management_blueprint.route("/set_email_reminder", methods=["POST"])
 @login_required
 @action_route
 def set_email_reminder():
@@ -140,11 +142,13 @@ def set_email_reminder():
     """
     action = SetEmailReminderAction.from_site_request()
     return action.execute_with_redirects(
-        "profile", "Erinnerungsdaten gespeichert", "profile"
+        "user_management.profile",
+        "Erinnerungsdaten gespeichert",
+        "user_management.profile"
     )
 
 
-@app.route("/delete_user", methods=["POST"])
+@user_management_blueprint.route("/delete_user", methods=["POST"])
 @login_required
 @action_route
 def delete_user():
@@ -154,5 +158,7 @@ def delete_user():
     """
     action = DeleteUserAction.from_site_request()
     return action.execute_with_redirects(
-        "index", "Dein Account wurde erfolgreich gelöscht", "profile"
+        "static.index",
+        "Dein Account wurde erfolgreich gelöscht",
+        "user_management.profile"
     )

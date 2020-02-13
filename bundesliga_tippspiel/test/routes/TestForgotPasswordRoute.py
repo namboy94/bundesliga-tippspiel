@@ -19,7 +19,7 @@ LICENSE"""
 
 from unittest import mock
 from typing import List, Optional, Tuple
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.config import Config
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
@@ -48,17 +48,17 @@ class TestForgotPasswordRoute(_RouteTestFramework):
         :return: None
         """
         user = self.generate_sample_user(True)["user"]
-        user.email = smtp_address
+        user.email = Config().smtp_address
         self.db.session.commit()
 
         old_hash = user.password_hash
 
         with mock.patch(
                 "bundesliga_tippspiel.actions.ForgotPasswordAction.send_email",
-                lambda x, y, z: self.assertEqual(x, smtp_address)
+                lambda x, y, z: self.assertEqual(x, Config().smtp_address)
         ):
             post = self.client.post("/forgot", follow_redirects=True, data={
-                "email": smtp_address,
+                "email": Config().smtp_address,
                 "g-recaptcha-response": ""
             })
 
@@ -74,7 +74,7 @@ class TestForgotPasswordRoute(_RouteTestFramework):
             "/forgot",
             follow_redirects=True,
             data={
-                "email": smtp_address,
+                "email": Config().smtp_address,
                 "g-recaptcha-response": ""
             }
         )

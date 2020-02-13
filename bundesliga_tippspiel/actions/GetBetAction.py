@@ -20,7 +20,7 @@ LICENSE"""
 from typing import Dict, Any, Optional
 from flask_login import current_user
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.exceptions import ActionException
 
 

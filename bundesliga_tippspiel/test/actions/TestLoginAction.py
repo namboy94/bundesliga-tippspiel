@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.auth.User import User
 from flask_login import current_user, logout_user
 from bundesliga_tippspiel.enums import AlertSeverity
 from bundesliga_tippspiel.actions.LoginAction import LoginAction

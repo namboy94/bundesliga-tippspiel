@@ -20,7 +20,7 @@ LICENSE"""
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
     _ModelTestFramework
-from bundesliga_tippspiel.models.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Player import Player
 
 
 class TestPlayer(_ModelTestFramework):

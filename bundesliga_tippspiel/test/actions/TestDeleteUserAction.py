@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask_login import current_user, logout_user
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.actions.DeleteUserAction import DeleteUserAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \

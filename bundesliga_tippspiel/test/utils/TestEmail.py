@@ -21,7 +21,7 @@ import time
 from bundesliga_tippspiel.utils.email import send_email, get_inbox_count
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.config import Config
 
 
 class TestEmail(_TestFramework):
@@ -36,7 +36,7 @@ class TestEmail(_TestFramework):
         :return: None
         """
         before = get_inbox_count()
-        send_email(smtp_address, "TEST", "<h1>Test</h1>")
+        send_email(Config().smtp_address, "TEST", "<h1>Test</h1>")
         time.sleep(1)
         after = get_inbox_count()
         self.assertEqual(before + 1, after)

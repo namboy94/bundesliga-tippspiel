@@ -28,26 +28,26 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     {% if current_user.is_authenticated %}
         <p>
             Um zu tippen, besuche die
-            <a href="{{ url_for("bets") }}">Spieltag</a>
+            <a href="{{ url_for("betting.bets") }}">Spieltag</a>
             Seite.
         </p>
         <p>
             Eine Rangliste aller Spieler kann man auf der
-            <a href="{{ url_for("leaderboard") }}">Rangliste</a>
+            <a href="{{ url_for("information.leaderboard") }}">Rangliste</a>
             Seite einsehen.
         </p>
         <p>
             Um Änderungen an deinem Profil vorzunehmen, kannst du die
-            <a href="{{ url_for("profile") }}">Profile</a>
+            <a href="{{ url_for("user_management.profile") }}">Profile</a>
             Seite benutzen.
         </p>
     {% else %}
         <p>
             Hast du bereits ein Account, kannst du
             dich mithilfe der Anmeldefunktion
-            <a href="{{ url_for("login") }}">hier</a>
+            <a href="{{ url_for("authentication.login") }}">hier</a>
             anmelden, ansonsten kannst du dich
-            <a href="{{ url_for("register") }}">hier</a>
+            <a href="{{ url_for("user_management.register") }}">hier</a>
             registrieren.
         </p>
     {% endif %}

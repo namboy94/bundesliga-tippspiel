@@ -27,7 +27,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <br>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("login") }}">
+        <form method="post" action="{{ url_for("authentication.login") }}">
             <div class="form-group">
                 <label for="username_input">Benutzername</label>
                 <input class="form-control"
@@ -65,7 +65,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <p>
         Wenn du dein Passwort vergessen hast, kannst du es
-        <a href="{{ url_for("forgot") }}">hier</a>
+        <a href="{{ url_for("user_management.forgot") }}">hier</a>
         zurücksetzen.
     </p>
 

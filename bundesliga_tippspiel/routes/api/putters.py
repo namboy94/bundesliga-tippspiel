@@ -17,16 +17,17 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request
+from flask import request, Blueprint
 from flask_login import login_required
-from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api, api_login_required
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 from bundesliga_tippspiel.actions.SetEmailReminderAction import \
     SetEmailReminderAction
 
+putters_blueprint = Blueprint("putters", __name__)
 
-@app.route("/api/v2/bet", methods=["PUT"])
+
+@putters_blueprint.route("/api/v2/bet", methods=["PUT"])
 @api_login_required
 @login_required
 @api
@@ -39,7 +40,7 @@ def put_bet():
     return action.execute()
 
 
-@app.route("/api/v2/email_reminder", methods=["PUT"])
+@putters_blueprint.route("/api/v2/email_reminder", methods=["PUT"])
 @api_login_required
 @login_required
 @api

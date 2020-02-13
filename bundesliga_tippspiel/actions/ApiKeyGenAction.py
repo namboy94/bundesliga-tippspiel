@@ -18,9 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+from bundesliga_tippspiel.flask import db
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.crypto import verify_password, generate_hash, \

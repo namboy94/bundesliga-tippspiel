@@ -18,10 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Optional, List, Dict, Tuple
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
-from bundesliga_tippspiel.models.match_data.Match import Match
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 def get_team_points_data(bets: Optional[List[Bet]] = None) \

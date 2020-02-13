@@ -18,94 +18,125 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-from bundesliga_tippspiel.utils.env import resolve_env_variable
-
-"""
-This file contains environment specific configuration information
-All of this information is found using environment variables
-"""
+import pkg_resources
+from typing import Optional
 
 
-smtp_address = resolve_env_variable(
-    "SMTP_ADDRESS", default="noreply@hk-tippspiel.com"
-)
-"""
-The SMTP username used for sending emails
-"""
+class Config:
+    """
+    Class that stores configuration data
+    """
 
-smtp_server = resolve_env_variable("SMTP_SERVER", default="smtp.strato.de")
-"""
-The SMTP server used for sending emails
-"""
+    @property
+    def version(self) -> str:
+        """
+        :return: The version of the program
+        """
+        return pkg_resources.get_distribution("bundesliga_tippspiel").version
 
-smtp_port = resolve_env_variable("SMTP_PORT", int, default=587)
-"""
-The SMTP server port used for sending emails
-"""
+    @property
+    def recaptcha_site_key(self) -> Optional[str]:
+        """
+        :return: The (public) recaptcha site key
+        """
+        return os.environ.get("RECAPTCHA_SITE_KEY")
 
-smtp_password = resolve_env_variable("SMTP_PASSWORD")
-"""
-The password of the SMTP account
-"""
+    @property
+    def recaptcha_secret_key(self) -> Optional[str]:
+        """
+        :return: The secret recaptcha key used to validate the recaptcha result
+        """
+        return os.environ.get("RECAPTCHA_SECRET_KEY")
 
-recaptcha_site_key = resolve_env_variable(
-    "RECAPTCHA_SITE_KEY", default="6Le5xGkUAAAAABOfWC_-qAxU0vVCnHGHQPdpVv-_"
-)
-"""
-The (public) recaptcha site key
-"""
+    @property
+    def db_uri(self) -> str:
+        """
+        :return: The database URI to use in this application
+        """
+        db_mode = os.environ.get("DB_MODE", "sqlite")
 
-recaptcha_secret_key = resolve_env_variable("RECAPTCHA_SECRET_KEY")
-"""
-The secret recaptcha key used to validate the recaptcha result
-"""
+        if os.environ.get("FLASK_TESTING") or os.environ.get("TESTING"):
+            db_mode = "sqlite"
 
-db_host = resolve_env_variable("DB_HOST", default="localhost")
-"""
-The database host
-"""
+        if db_mode == "sqlite":
+            return "sqlite:///" + Config.sqlite_path
+        else:
+            prefix = db_mode.upper()
 
-db_port = resolve_env_variable("DB_PORT", _type=int, default=3306)
-"""
-The database port
-"""
+            default_port = 3306
 
-db_user = resolve_env_variable("MYSQL_USER")
-"""
-The database user
-"""
+            return "{}://{}:{}@{}:{}/{}".format(
+                db_mode,
+                os.environ[prefix + "_USER"],
+                os.environ[prefix + "_PASSWORD"],
+                os.environ.get(prefix + "_HOST", "localhost"),
+                os.environ.get(prefix + "_PORT", default_port),
+                os.environ[prefix + "_DATABASE"],
+            )
 
-db_name = resolve_env_variable("MYSQL_DATABASE")
-"""
-The database name
-"""
+    @property
+    def smtp_host(self) -> str:
+        """
+        :return: The SMTP host used for outbound emails
+        """
+        return os.environ["SMTP_HOST"]
 
-db_key = resolve_env_variable("MYSQL_PASSWORD")
-"""
-The database key
-"""
+    @property
+    def smtp_port(self) -> str:
+        """
+        :return: The SMTP host used for outbound emails
+        """
+        return os.environ["SMTP_PORT"]
 
-openligadb_season = resolve_env_variable("OPENLIGADB_SEASON", default="2019")
-"""
-The openligadb.de season to populate the data with
-"""
+    @property
+    def smtp_address(self) -> str:
+        """
+        :return: The SMTP host used for outbound emails
+        """
+        return os.environ["SMTP_ADDRESS"]
 
-openligadb_league = resolve_env_variable("OPENLIGADB_LEAGUE", default="bl1")
-"""
-The openligadb.de league to populate the data with
-"""
+    @property
+    def smtp_password(self) -> str:
+        """
+        :return: The SMTP host used for outbound emails
+        """
+        return os.environ["SMTP_PASSWORD"]
 
-last_match_data_update = 0
-"""
-Keeps track of when the match data was updated last
-"""
+    @property
+    def logging_path(self) -> str:
+        """
+        :return: The file in which to store logging data
+        """
+        return os.path.join(
+            os.environ.get("LOGGING_PATH", default="/tmp"),
+            "fat_ffipd.log"
+        )
 
-last_reminder_sending = 0
-"""
-Keeps track of when reminders were last sent out
-"""
+    @property
+    def openligadb_season(self) -> str:
+        """
+        :return: The OpenligaDB season to use
+        """
+        return os.environ.get("OPENLIGADB_SEASON", "2019")
 
-logging_path = os.path.join(
-    str(resolve_env_variable("PROJECT_ROOT_PATH", default="/tmp")),
-    "tippspiel.log"
-)
+    @property
+    def openligadb_league(self) -> str:
+        """
+        :return: The OpenligaDB league to use
+        """
+        return os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+
+    last_match_data_update = 0
+    """
+    Keeps track of when the match data was updated last
+    """
+
+    last_reminder_sending = 0
+    """
+    Keeps track of when reminders were last sent out
+    """
+
+    sqlite_path = "/tmp/bundesliga-tippspiel.db"
+    """
+    The path to the SQLite database file
+    """

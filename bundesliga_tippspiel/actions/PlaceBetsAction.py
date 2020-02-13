@@ -19,11 +19,11 @@ LICENSE"""
 
 from flask_login import current_user
 from typing import Dict, Any, Tuple
-from bundesliga_tippspiel import db
+from bundesliga_tippspiel.flask import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
 
 class PlaceBetsAction(Action):

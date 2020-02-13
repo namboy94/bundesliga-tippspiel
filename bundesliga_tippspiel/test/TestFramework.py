@@ -18,22 +18,22 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-import bundesliga_tippspiel
+import bundesliga_tippspiel.flask as bundesliga_tippspiel
 from functools import wraps
 from unittest import TestCase
 from typing import Tuple, Callable, Dict
 from flask_login import login_user
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.models.match_data.Player import Player
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Goal import Goal
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Goal import Goal
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
 from bundesliga_tippspiel.utils.crypto import generate_random
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
-from bundesliga_tippspiel.utils.initialize import initialize_app, \
-    initialize_login_manager, initialize_db
+from bundesliga_tippspiel.config import Config
+from bundesliga_tippspiel.run import init
 
 
 class _TestFramework(TestCase):
@@ -51,8 +51,10 @@ class _TestFramework(TestCase):
         Sets up the SQLite database
         :return: None
         """
+        os.environ["FLASK_TESTING"] = "1"
         bundesliga_tippspiel.app.config["TESTING"] = True
         self.db_path = os.path.join(os.path.abspath("."), "test.db")
+        Config.sqlite_path = self.db_path
 
         self.cleanup()
 
@@ -61,10 +63,8 @@ class _TestFramework(TestCase):
 
         self.app.secret_key = generate_random(20)
 
-        initialize_app()
-        initialize_db("sqlite:///{}".format(self.db_path))
+        init()
         self.app.app_context().push()
-        initialize_login_manager()
 
         self.client = self.app.test_client()
         self.context = self.app.test_request_context()

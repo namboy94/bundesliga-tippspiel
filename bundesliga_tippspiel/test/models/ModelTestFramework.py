@@ -20,9 +20,9 @@ LICENSE"""
 from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.models.ModelMixin import ModelMixin
-from bundesliga_tippspiel.models.user_generated.EmailReminder import \
+from bundesliga_tippspiel.flask import db
+from bundesliga_tippspiel.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
@@ -173,18 +173,18 @@ class _ModelTestFramework(_TestFramework):
         )
 
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+        from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.auth.User import User
+        from bundesliga_tippspiel.db.auth.User import User
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.match_data.Player import Player
+        from bundesliga_tippspiel.db.match_data.Player import Player
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.match_data.Team import Team
+        from bundesliga_tippspiel.db.match_data.Team import Team
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.match_data.Goal import Goal
+        from bundesliga_tippspiel.db.match_data.Goal import Goal
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.match_data.Match import Match
+        from bundesliga_tippspiel.db.match_data.Match import Match
         # noinspection PyUnresolvedReferences
-        from bundesliga_tippspiel.models.user_generated.Bet import Bet
+        from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
         exec("self.assertEqual(model, {})".format(repr(model)))

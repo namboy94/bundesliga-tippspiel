@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
+from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.actions.ApiKeyDeleteAction import ApiKeyDeleteAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \

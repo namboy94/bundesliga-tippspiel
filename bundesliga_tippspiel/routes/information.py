@@ -18,13 +18,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from flask import render_template, abort
+from flask import render_template, abort, Blueprint
 from flask_login import login_required
-from bundesliga_tippspiel import app
+from bundesliga_tippspiel.flask import app
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
@@ -35,8 +35,10 @@ from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_points_distributions, create_participation_ranking, \
     create_point_average_ranking
 
+information_blueprint = Blueprint("information", __name__)
 
-@app.route("/leaderboard", methods=["GET"])
+
+@information_blueprint.route("/leaderboard", methods=["GET"])
 @login_required
 @action_route
 def leaderboard():
@@ -68,7 +70,7 @@ def leaderboard():
     )
 
 
-@app.route("/team/<int:team_id>")
+@information_blueprint.route("/team/<int:team_id>")
 @login_required
 @action_route
 def team(team_id: int):
@@ -122,7 +124,7 @@ def team(team_id: int):
     )
 
 
-@app.route("/user/<int:user_id>")
+@information_blueprint.route("/user/<int:user_id>")
 @login_required
 @action_route
 def user(user_id: int):
@@ -193,7 +195,7 @@ def user(user_id: int):
     )
 
 
-@app.route("/stats", methods=["GET"])
+@information_blueprint.route("/stats", methods=["GET"])
 @login_required
 @action_route
 def stats():

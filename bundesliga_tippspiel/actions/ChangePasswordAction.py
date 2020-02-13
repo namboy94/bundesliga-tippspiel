@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import current_user
-from bundesliga_tippspiel import db
+from bundesliga_tippspiel.flask import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.crypto import generate_hash

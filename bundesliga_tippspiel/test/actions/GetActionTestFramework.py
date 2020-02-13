@@ -18,10 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Goal import Goal
-from bundesliga_tippspiel.models.match_data.Player import Player
-from bundesliga_tippspiel.models.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Goal import Goal
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Team import Team
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework

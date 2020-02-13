@@ -26,7 +26,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h2>Passwort ändern</h2>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("change_password") }}">
+        <form method="post" action="{{ url_for("user_management.change_password") }}">
             <div class="form-group">
                 <label for="old_password_input">Derzeitiges Passwort</label>
                 <input class="form-control"
@@ -66,7 +66,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h2>Email Erinnerungen</h2>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("set_email_reminder") }}">
+        <form method="post" action="{{ url_for("user_management.set_email_reminder") }}">
             <div class="form-group">
                 <label for="hours_input">Stunden vor Spielbeginn</label>
                 <input class="form-control"
@@ -124,7 +124,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h2>Account löschen</h2>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("delete_user") }}">
+        <form method="post" action="{{ url_for("user_management.delete_user") }}">
             <div class="form-group">
                 <label for="password_input">Derzeitiges Passwort</label>
                 <input class="form-control"

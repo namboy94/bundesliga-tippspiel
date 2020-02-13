@@ -19,7 +19,7 @@ LICENSE"""
 
 from unittest import mock
 from typing import Tuple, List
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.config import Config
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework
@@ -47,11 +47,11 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
         """
         with mock.patch(
                 "bundesliga_tippspiel.actions.RegisterAction.send_email",
-                lambda x, y, z: self.assertEqual(x, smtp_address)
+                lambda x, y, z: self.assertEqual(x, Config().smtp_address)
         ):
             resp = self.client.post(self.route_info[0], json={
                 "username": "TestUser",
-                "email": smtp_address,
+                "email": Config().smtp_address,
                 "password": "Abc",
                 "password-repeat": "Abc",
                 "g-recaptcha-response": ""
@@ -67,7 +67,7 @@ class TestRegisterApiRoute(_ApiRouteTestFramework):
         """
         resp = self.client.post(self.route_info[0], json={
             "username": "TestUser",
-            "email": smtp_address,
+            "email": Config().smtp_address,
             "password": "Abc",
             "password-repeat": "Def",
             "g-recaptcha-response": ""

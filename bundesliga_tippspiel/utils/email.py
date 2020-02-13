@@ -21,8 +21,7 @@ import imaplib
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from bundesliga_tippspiel.config import smtp_address, smtp_password, \
-    smtp_port, smtp_server
+from bundesliga_tippspiel.config import Config
 
 
 def send_email(address: str, title: str, message: str):
@@ -33,19 +32,19 @@ def send_email(address: str, title: str, message: str):
     :param message: The message to send
     :return: None
     """
-    connection = smtplib.SMTP(smtp_server, smtp_port)
+    connection = smtplib.SMTP(Config().smtp_host, Config().smtp_port)
     connection.ehlo()
     connection.starttls()
     connection.ehlo()
-    connection.login(smtp_address, smtp_password)
+    connection.login(Config().smtp_address, Config().smtp_password)
 
     msg = MIMEMultipart("alternative")
     msg["subject"] = title
-    msg["From"] = smtp_address
+    msg["From"] = Config().smtp_address
     msg["To"] = address
     msg.attach(MIMEText(message, "html"))
 
-    connection.sendmail(smtp_address, address, msg.as_string())
+    connection.sendmail(Config().smtp_address, address, msg.as_string())
     connection.quit()
 
 
@@ -54,8 +53,8 @@ def get_inbox_count() -> int:
     Checks the amount of emails in the IMAP inbox of the SMTP mail account
     :return: The amount of emails
     """
-    server = imaplib.IMAP4_SSL(smtp_server.replace("smtp", "imap"), 993)
-    server.login(smtp_address, smtp_password)
+    server = imaplib.IMAP4_SSL(Config().smtp_host.replace("smtp", "imap"), 993)
+    server.login(Config().smtp_address, Config().smtp_password)
     counted = int(server.select("Inbox")[1][0])
     server.close()
     server.logout()

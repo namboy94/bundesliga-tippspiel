@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, List
-from bundesliga_tippspiel.models.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Match import Match
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework

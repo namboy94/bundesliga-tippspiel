@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, List
-from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework

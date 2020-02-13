@@ -21,16 +21,17 @@ import json
 import requests
 from datetime import datetime
 from typing import Dict, Any, Optional, List, Tuple
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Goal import Goal
-from bundesliga_tippspiel.models.match_data.Player import Player
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.config import openligadb_league, openligadb_season
+from bundesliga_tippspiel.flask import db
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Goal import Goal
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.config import Config
 
 
 def update_db_data(
-        league: str = openligadb_league, season: str = openligadb_season
+        league: str = Config().openligadb_league,
+        season: str = Config().openligadb_season
 ):
     """
     Updates the database with the match data for

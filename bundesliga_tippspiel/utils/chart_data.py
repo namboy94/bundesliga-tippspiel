@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List, Tuple, Dict, Optional
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 

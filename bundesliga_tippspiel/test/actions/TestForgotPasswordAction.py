@@ -19,8 +19,8 @@ LICENSE"""
 
 import time
 from bundesliga_tippspiel.utils.email import get_inbox_count
-from bundesliga_tippspiel.config import smtp_address
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.config import Config
+from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.utils.crypto import verify_password
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import\
@@ -43,7 +43,7 @@ class TestForgotPasswordAction(_ActionTestFramework):
         user = self.generate_sample_user(True)
         self.user = user["user"]  # type: User
         self.password = user["pass"]
-        self.user.email = smtp_address
+        self.user.email = Config().smtp_address
         self.db.session.commit()
 
     def generate_action(self) -> ForgotPasswordAction:

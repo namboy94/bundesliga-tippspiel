@@ -21,8 +21,8 @@ import os
 from typing import Dict, Any, Optional
 from flask import render_template, request
 from sqlalchemy.exc import SQLAlchemyError
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.flask import db
+from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.email import send_email
 from bundesliga_tippspiel.utils.recaptcha import verify_recaptcha

@@ -45,13 +45,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% if not current_user.is_authenticated %}
 
                 <li class="nav-item {% if request.path == "/login" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("login") }}">
+                    <a class="nav-link" href="{{ url_for("authentication.login") }}">
                         Anmelden
                     </a>
                 </li>
 
                 <li class="nav-item {% if request.path == "/register" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("register") }}">
+                    <a class="nav-link" href="{{ url_for("user_management.register") }}">
                         Registrieren
                     </a>
                 </li>
@@ -59,16 +59,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% else %}
 
                 <li class="nav-item {% if request.path == "/bets" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("bets") }}">Spieltag</a>
+                    <a class="nav-link" href="{{ url_for("betting.bets") }}">Spieltag</a>
                 </li>
                 <li class="nav-item {% if request.path == "/leaderboard" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("leaderboard") }}">Rangliste</a>
+                    <a class="nav-link" href="{{ url_for("information.leaderboard") }}">Rangliste</a>
                 </li>
                 <li class="nav-item {% if request.path == "/stats" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("stats") }}">Statistiken</a>
+                    <a class="nav-link" href="{{ url_for("information.stats") }}">Statistiken</a>
                 </li>
                 <li class="nav-item {% if request.path == "/profile" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("profile") }}">Profil</a>
+                    <a class="nav-link" href="{{ url_for("user_management.profile") }}">Profil</a>
                 </li>
 
             {% endif %}
@@ -80,11 +80,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <li>
                 <!-- Login/Logout Button-->
                 {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('logout') }}">
+                    <a href="{{ url_for("authentication.logout") }}">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for('login') }}">
+                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for("authentication.login") }}">
                         <input class="form-control mr-sm-2" name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
                         <input class="form-control mr-sm-2" name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
                         <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>

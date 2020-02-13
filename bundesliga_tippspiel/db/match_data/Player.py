@@ -18,15 +18,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.models.ModelMixin import ModelMixin
+from bundesliga_tippspiel.flask import db
+from bundesliga_tippspiel.db.ModelMixin import ModelMixin
 
 
-class Team(ModelMixin, db.Model):
+class Player(ModelMixin, db.Model):
     """
-    Model that describes the 'teams' SQL table
-    A Team is the most basic data for a match, it relies on no other data,
-    only primitives
+    Model that describes the "players" SQL table
     """
 
     def __init__(self, *args, **kwargs):
@@ -37,37 +35,31 @@ class Team(ModelMixin, db.Model):
         """
         super().__init__(*args, **kwargs)
 
-    __tablename__ = "teams"
+    __tablename__ = "players"
     """
-    The name of the table
-    """
-
-    name = db.Column(db.String(50), nullable=False, unique=True)
-    """
-    The full name of the team. Has to be unique.
-    Example: FC Bayern München
+    The name of the database table
     """
 
-    short_name = db.Column(db.String(16), nullable=False, unique=True)
+    team_id = db.Column(
+        db.Integer,
+        db.ForeignKey("teams.id", ondelete="CASCADE", onupdate="CASCADE"),
+        nullable=False
+    )
     """
-    The shortened version of the team's name. Has to be unique.
-    Example: Bayern
-    """
-
-    abbreviation = db.Column(db.String(3), nullable=False, unique=True)
-    """
-    A three-letter abbreviation of the team's name. Has to be unique.
-    Example: FCB
+    The ID of the team the player is affiliated with.
+    Acts as a foreign key to the 'teams' table.
     """
 
-    icon_svg = db.Column(db.String(255), nullable=False)
+    team = db.relationship(
+        "Team", backref=db.backref("players", lazy=True, cascade="all,delete"),
+    )
     """
-    The URL of an image file representing the team's logo in SVG format
+    The team the player is affiliated with.
     """
 
-    icon_png = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
     """
-    The URL of an image file representing the team's logo in PNG format
+    The name of the player
     """
 
     def __json__(self, include_children: bool = False) -> Dict[str, Any]:
@@ -79,12 +71,9 @@ class Team(ModelMixin, db.Model):
         """
         data = {
             "id": self.id,
-            "name": self.name,
-            "short_name": self.short_name,
-            "abbreviation": self.abbreviation,
-            "icon_svg": self.icon_svg,
-            "icon_png": self.icon_png
+            "team_id": self.team_id,
+            "name": self.name
         }
         if include_children:
-            pass
+            data["team"] = self.team.__json__(include_children)
         return data

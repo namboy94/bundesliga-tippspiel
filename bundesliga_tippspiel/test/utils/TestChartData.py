@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.auth.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data

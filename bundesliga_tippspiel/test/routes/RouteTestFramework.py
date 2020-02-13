@@ -20,7 +20,7 @@ LICENSE"""
 from typing import Tuple, List, Optional
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.auth.User import User
 
 
 class _RouteTestFramework(_TestFramework):

@@ -20,10 +20,10 @@ LICENSE"""
 from flask import render_template
 from typing import Dict, Any, List
 from datetime import timedelta, datetime
-from bundesliga_tippspiel import app, db
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.ModelMixin import ModelMixin
+from bundesliga_tippspiel.flask import app, db
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.utils.email import send_email
 
 

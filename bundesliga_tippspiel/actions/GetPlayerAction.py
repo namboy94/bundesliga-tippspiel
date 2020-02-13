@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any, Optional
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Player import Player
 
 
 class GetPlayerAction(Action):

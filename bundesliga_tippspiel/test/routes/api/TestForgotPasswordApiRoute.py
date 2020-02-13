@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Tuple, List
 from unittest import mock
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.config import Config
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework
@@ -46,15 +46,15 @@ class TestForgotApiRoute(_ApiRouteTestFramework):
         :return: None
         """
         user = self.generate_sample_user(True)["user"]
-        user.email = smtp_address
+        user.email = Config().smtp_address
         self.db.session.commit()
 
         with mock.patch(
                 "bundesliga_tippspiel.actions.ForgotPasswordAction.send_email",
-                lambda x, y, z: self.assertEqual(x, smtp_address)
+                lambda x, y, z: self.assertEqual(x, Config().smtp_address)
         ):
             resp = self.client.post(self.route_info[0], json={
-                "email": smtp_address,
+                "email": Config().smtp_address,
                 "g-recaptcha-response": ""
             }, content_type="application/json")
             self.assertEqual(resp.status_code, 200)
@@ -67,7 +67,7 @@ class TestForgotApiRoute(_ApiRouteTestFramework):
         :return: None
         """
         resp = self.client.post(self.route_info[0], json={
-            "email": smtp_address,
+            "email": Config().smtp_address,
             "g-recaptcha-response": ""
         }, content_type="application/json")
         self.assertEqual(resp.status_code, 400)

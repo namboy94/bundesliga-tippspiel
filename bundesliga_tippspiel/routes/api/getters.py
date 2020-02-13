@@ -17,10 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request
+from flask import request, Blueprint
 from flask_login import login_required
 from typing import Optional, Dict, Any
-from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.json import jsonify_models
 from bundesliga_tippspiel.utils.routes import api, api_login_required
 from bundesliga_tippspiel.actions.Action import Action
@@ -33,9 +32,11 @@ from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.actions.GetEmailReminderAction import \
     GetEmailReminderAction
 
+getters_blueprint = Blueprint("getters", __name__)
 
-@app.route("/api/v2/bet", methods=["GET"])
-@app.route("/api/v2/bet/<int:bet_id>", methods=["GET"])
+
+@getters_blueprint.route("/api/v2/bet", methods=["GET"])
+@getters_blueprint.route("/api/v2/bet/<int:bet_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -48,7 +49,7 @@ def get_bet(bet_id: Optional[int] = None):
     return execute_getter(bet_id, GetBetAction)
 
 
-@app.route("/api/v2/email_reminder", methods=["GET"])
+@getters_blueprint.route("/api/v2/email_reminder", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -60,8 +61,8 @@ def get_email_reminder():
     return execute_getter(None, GetEmailReminderAction)
 
 
-@app.route("/api/v2/goal", methods=["GET"])
-@app.route("/api/v2/goal/<int:goal_id>", methods=["GET"])
+@getters_blueprint.route("/api/v2/goal", methods=["GET"])
+@getters_blueprint.route("/api/v2/goal/<int:goal_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -74,8 +75,8 @@ def get_goal(goal_id: Optional[int] = None):
     return execute_getter(goal_id, GetGoalAction)
 
 
-@app.route("/api/v2/match", methods=["GET"])
-@app.route("/api/v2/match/<int:match_id>", methods=["GET"])
+@getters_blueprint.route("/api/v2/match", methods=["GET"])
+@getters_blueprint.route("/api/v2/match/<int:match_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -88,8 +89,8 @@ def get_match(match_id: Optional[int] = None):
     return execute_getter(match_id, GetMatchAction)
 
 
-@app.route("/api/v2/player", methods=["GET"])
-@app.route("/api/v2/player/<int:player_id>", methods=["GET"])
+@getters_blueprint.route("/api/v2/player", methods=["GET"])
+@getters_blueprint.route("/api/v2/player/<int:player_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -102,8 +103,8 @@ def get_player(player_id: Optional[int] = None):
     return execute_getter(player_id, GetPlayerAction)
 
 
-@app.route("/api/v2/team", methods=["GET"])
-@app.route("/api/v2/team/<int:team_id>", methods=["GET"])
+@getters_blueprint.route("/api/v2/team", methods=["GET"])
+@getters_blueprint.route("/api/v2/team/<int:team_id>", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -116,7 +117,7 @@ def get_team(team_id: Optional[int] = None):
     return execute_getter(team_id, GetTeamAction)
 
 
-@app.route("/api/v2/leaderboard", methods=["GET"])
+@getters_blueprint.route("/api/v2/leaderboard", methods=["GET"])
 @api_login_required
 @login_required
 @api

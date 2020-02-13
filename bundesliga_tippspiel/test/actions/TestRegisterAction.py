@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
 from bundesliga_tippspiel.utils.email import get_inbox_count
 # noinspection PyProtectedMember
@@ -38,7 +38,8 @@ class TestRegisterAction(_ActionTestFramework):
         :return: The generated RegisterAction
         """
         return RegisterAction(
-            "TestUser", smtp_address, "Abc", "localhost", "localhost", ""
+            "TestUser", Config().smtp_address,
+            "Abc", "localhost", "localhost", ""
         )
 
     # noinspection PyUnresolvedReferences

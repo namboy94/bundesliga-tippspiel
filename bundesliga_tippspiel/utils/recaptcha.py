@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import requests
-from bundesliga_tippspiel.config import recaptcha_secret_key
+from bundesliga_tippspiel.config import Config
 
 
 def verify_recaptcha(client_ip: str, recaptcha_response: str) -> bool:
@@ -33,7 +33,7 @@ def verify_recaptcha(client_ip: str, recaptcha_response: str) -> bool:
     return client_ip in ["localhost", "127.0.0.1"] or requests.post(
         "https://www.google.com/recaptcha/api/siteverify",
         data={
-            "secret": recaptcha_secret_key,
+            "secret": Config().recaptcha_secret_key,
             "response": recaptcha_response,
             "remoteip": client_ip
         }

@@ -18,10 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-import bundesliga_tippspiel.config as config
 from unittest import mock
 from typing import Tuple, List
 # noinspection PyProtectedMember
+from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework
 
@@ -68,7 +68,7 @@ class TestUpdateMatchDataApiRoute(_ApiRouteTestFramework):
             self.assertFalse(self.decode_data(resp)["data"]["updated"])
             self.assertEqual(1, mocked.call_count)
 
-            config.last_match_data_update = time.time() - 120
+            Config.last_match_data_update = time.time() - 120
 
             resp = self.client.get(self.route_path)
             self.assertTrue(self.decode_data(resp)["data"]["updated"])

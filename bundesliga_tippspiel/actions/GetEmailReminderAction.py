@@ -20,7 +20,7 @@ LICENSE"""
 from typing import Dict, Any
 from flask_login import current_user
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.user_generated.EmailReminder import \
+from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
 
 

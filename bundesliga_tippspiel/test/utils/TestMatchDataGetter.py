@@ -22,9 +22,9 @@ import requests
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.models.match_data.Goal import Goal
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 
 class TestMatchDataGetter(_TestFramework):

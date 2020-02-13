@@ -20,7 +20,7 @@ LICENSE"""
 from sqlalchemy import or_
 from typing import Dict, Any, Optional
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 class GetMatchAction(Action):

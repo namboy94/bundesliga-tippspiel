@@ -21,8 +21,8 @@ import json
 from base64 import b64encode
 from flask import Response
 from typing import Tuple, List, Dict, Any, Optional
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
+from bundesliga_tippspiel.db.auth.User import User
+from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 

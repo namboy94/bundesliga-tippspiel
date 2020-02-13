@@ -17,9 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import request
+from flask import request, Blueprint
 from flask_login import login_required
-from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import api, api_login_required
 from bundesliga_tippspiel.actions.DeleteUserAction import DeleteUserAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
@@ -30,8 +29,10 @@ from bundesliga_tippspiel.actions.ChangePasswordAction import \
 from bundesliga_tippspiel.actions.ForgotPasswordAction import \
     ForgotPasswordAction
 
+user_management_api_blueprint = Blueprint("user_management_api", __name__)
 
-@app.route("/api/v2/register", methods=["POST"])
+
+@user_management_api_blueprint.route("/api/v2/register", methods=["POST"])
 @api
 def api_register():
     """
@@ -42,7 +43,7 @@ def api_register():
     return action.execute()
 
 
-@app.route("/api/v2/forgot", methods=["POST"])
+@user_management_api_blueprint.route("/api/v2/forgot", methods=["POST"])
 @api
 def api_forgot():
     """
@@ -53,7 +54,7 @@ def api_forgot():
     return action.execute()
 
 
-@app.route("/api/v2/api_key", methods=["POST", "DELETE"])
+@user_management_api_blueprint.route("/api/v2/api_key", methods=["POST", "DELETE"])
 @api
 def api_api_key():
     """
@@ -67,7 +68,7 @@ def api_api_key():
     return action.execute()
 
 
-@app.route("/api/v2/authorize", methods=["GET"])
+@user_management_api_blueprint.route("/api/v2/authorize", methods=["GET"])
 @api_login_required
 @login_required
 @api
@@ -79,7 +80,7 @@ def api_authorize():
     return {}  # Checks done by @login_required
 
 
-@app.route("/api/v2/delete_user", methods=["POST"])
+@user_management_api_blueprint.route("/api/v2/delete_user", methods=["POST"])
 @api_login_required
 @login_required
 @api
@@ -92,7 +93,7 @@ def api_delete_user():
     return action.execute()
 
 
-@app.route("/api/v2/change_password", methods=["POST"])
+@user_management_api_blueprint.route("/api/v2/change_password", methods=["POST"])
 @api_login_required
 @login_required
 @api

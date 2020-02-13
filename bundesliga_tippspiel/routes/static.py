@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel import app
-from flask import render_template
+from flask import render_template, Blueprint
 from bundesliga_tippspiel.utils.routes import action_route
 
+static_blueprint = Blueprint("static", __name__)
 
-@app.route("/")
+
+@static_blueprint.route("/")
 @action_route
 def index():
     """
@@ -32,7 +33,7 @@ def index():
     return render_template("static/index.html")
 
 
-@app.route("/about")
+@static_blueprint.route("/about")
 @action_route
 def about():
     """
@@ -42,7 +43,7 @@ def about():
     return render_template("static/about.html")
 
 
-@app.route("/privacy")
+@static_blueprint.route("/privacy")
 @action_route
 def privacy():
     """

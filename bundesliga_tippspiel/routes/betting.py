@@ -18,18 +18,19 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Optional
-from flask import render_template, request
+from flask import render_template, request, Blueprint
 from flask_login import login_required, current_user
-from bundesliga_tippspiel import app
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
+betting_blueprint = Blueprint("betting", __name__)
 
-@app.route("/bets", methods=["POST", "GET"])
-@app.route("/bets/<int:matchday>", methods=["GET"])
+
+@betting_blueprint.route("/bets", methods=["POST", "GET"])
+@betting_blueprint.route("/bets/<int:matchday>", methods=["GET"])
 @login_required
 @action_route
 def bets(matchday: Optional[int] = None):
@@ -70,11 +71,11 @@ def bets(matchday: Optional[int] = None):
     else:  # POST
         action = PlaceBetsAction.from_site_request()
         return action.execute_with_redirects(
-            "bets", "Tipps erfolgreich gesetzt", "bets"
+            "betting.bets", "Tipps erfolgreich gesetzt", "betting.bets"
         )
 
 
-@app.route("/match/<int:match_id>", methods=["GET"])
+@betting_blueprint.route("/match/<int:match_id>", methods=["GET"])
 @login_required
 @action_route
 def match(match_id: int):

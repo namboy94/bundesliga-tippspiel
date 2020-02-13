@@ -19,9 +19,9 @@ LICENSE"""
 
 from typing import Tuple, Optional, List
 
-from bundesliga_tippspiel.models.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Match import Match
 
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.auth.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
