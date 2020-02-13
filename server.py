@@ -18,11 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import cherrypy
-from bundesliga_tippspiel.run import app
+from bundesliga_tippspiel.run import app, init
 
 if __name__ == '__main__':
 
-    # init()
+    init()
 
     cherrypy.tree.graft(app, "/")
 
