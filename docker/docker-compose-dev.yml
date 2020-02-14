@@ -13,7 +13,11 @@ services:
     ports:
       - "${DEV_HTTP_PORT}:8000"
     env_file: ../.env
-  bundesliga-tippspiel-dev-db:
+    environment:
+      - DB_MODE=mysql
+      - MYSQL_HOST=bundesliga-tippspiel-dev-db-container
+      - MYSQL_PORT=3306
+  bundesliga-tippspiel-db:
     image: "mariadb:latest"
     container_name: "bundesliga-tippspiel-dev-db-container"
     env_file: ../.env
