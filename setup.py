@@ -41,7 +41,6 @@ if __name__ == "__main__":
             "flask_login",
             "flask_sqlalchemy",
             "requests",
-            "bcrypt",
             "blinker",
             "sentry-sdk",
             "sqlalchemy",
