@@ -23,8 +23,7 @@ from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
-from bundesliga_tippspiel.utils.crypto import verify_password, generate_hash, \
-    generate_random
+from puffotter.crypto import generate_random, generate_hash, verify_password
 
 
 class ApiKeyGenAction(Action):
@@ -74,14 +73,14 @@ class ApiKeyGenAction(Action):
         user = User.query.filter_by(username=self.username).first()
 
         key = generate_random(20)
-        hashed = generate_hash(key).decode("utf-8")
+        hashed = generate_hash(key)
         api_key = ApiKey(user=user, key_hash=hashed)
 
         db.session.add(api_key)
         db.session.commit()
 
         return {
-            "api_key": "{}:{}".format(api_key.id, key.decode("utf-8")),
+            "api_key": "{}:{}".format(api_key.id, key),
             "expiration": int(api_key.creation_time) + ApiKey.MAX_AGE,
             "user": user.__json__(True)
         }

@@ -24,7 +24,7 @@ from bundesliga_tippspiel.enums import AlertSeverity
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.db import username_exists
-from bundesliga_tippspiel.utils.crypto import verify_password
+from puffotter.crypto import verify_password
 from bundesliga_tippspiel.actions.Action import Action
 
 

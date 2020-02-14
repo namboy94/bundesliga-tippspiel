@@ -22,7 +22,7 @@ from flask_login import current_user
 from bundesliga_tippspiel.flask import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
-from bundesliga_tippspiel.utils.crypto import generate_hash
+from puffotter.crypto import generate_hash
 
 
 class ChangePasswordAction(Action):
@@ -74,7 +74,7 @@ class ChangePasswordAction(Action):
         :raises ActionException: if anything went wrong
         """
         current_user.password_hash = \
-            generate_hash(self.new_password).decode("utf-8")
+            generate_hash(self.new_password)
         db.session.commit()
         return {}
 

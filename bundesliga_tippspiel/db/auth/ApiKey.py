@@ -21,7 +21,7 @@ import time
 from typing import Dict, Any
 from bundesliga_tippspiel.flask import db
 from bundesliga_tippspiel.db.ModelMixin import ModelMixin
-from bundesliga_tippspiel.utils.crypto import verify_password
+from puffotter.crypto import verify_password
 
 
 class ApiKey(ModelMixin, db.Model):

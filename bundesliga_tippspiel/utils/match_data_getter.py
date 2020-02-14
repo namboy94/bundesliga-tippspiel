@@ -20,7 +20,7 @@ LICENSE"""
 import json
 import requests
 from datetime import datetime
-from typing import Dict, Any, Optional, List, Tuple
+from typing import Dict, Any, Optional, List, Tuple, Type
 from bundesliga_tippspiel.flask import db
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
@@ -80,14 +80,10 @@ def update_db_data(
     for team_data in team_data:
         teams.append(parse_team(team_data))
 
-    # Store in DB
-    for data, cls in [
-        (teams, Team),
-        (players, Player),
-        (matches, Match),
-        (goals, Goal)
-    ]:
-        store_in_db(data, cls)
+    store_in_db(teams, Team)
+    store_in_db(players, Player)
+    store_in_db(matches, Match)
+    store_in_db(goals, Goal)
 
 
 def parse_match(match_data: Dict[str, Any]) -> Match:
@@ -208,7 +204,7 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
     )
 
 
-def store_in_db(objects: List[db.Model], model_cls: type(db.Model)):
+def store_in_db(objects: List[db.Model], model_cls: Type[db.Model]):
     """
     Stores a list of objects in the database. While doing so, will
     either update existing objects or create new one if they don't exist
@@ -221,7 +217,7 @@ def store_in_db(objects: List[db.Model], model_cls: type(db.Model)):
     for obj in existing:
         idmap[obj.id] = obj
 
-    tracker = []
+    tracker: List[int] = []
     for obj in objects:
         if obj.id in tracker:
             continue

@@ -52,7 +52,8 @@ class TestRegisterRoute(_RouteTestFramework):
 
         with mock.patch(
                 "bundesliga_tippspiel.actions.RegisterAction.send_email",
-                lambda x, y, z: self.assertEqual(x, Config().smtp_address)
+                lambda x, y, z, a, b, c, d:
+                self.assertEqual(x, Config().smtp_address)
         ):
             post = self.client.post("/register", follow_redirects=True, data={
                 "username": "TestUser",

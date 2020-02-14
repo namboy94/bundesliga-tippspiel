@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
+from typing import Union
 from flask import render_template, abort, Blueprint
 from flask_login import login_required
 from bundesliga_tippspiel.flask import app
@@ -152,8 +153,8 @@ def user(user_id: int):
     for bet in bets:
         total_points += bet.evaluate(True)
 
-    team_points = get_team_points_data(bets)[user_data]
-    team_points = generate_team_points_table(team_points)
+    _team_points = get_team_points_data(bets)[user_data]
+    team_points = generate_team_points_table(_team_points)
 
     points_distribution = generate_points_distributions(bets)[user_data]
     average_points = create_point_average_ranking(bets)[0][1]
@@ -161,13 +162,13 @@ def user(user_id: int):
 
     placements = leaderboard_history[user_data.username][1]
     rr_placements = rr_history[user_data.username][1]
-    current_placement = "N/A"
+    current_placement: Union[str, int] = "N/A"
     if len(placements) >= 1:
         current_placement = placements[len(placements) - 1]
-    hinrunde_placement = "N/A"
+    hinrunde_placement: Union[str, int] = "N/A"
     if len(placements) >= 17:
         hinrunde_placement = placements[16]
-    ruckrunde_placement = "N/A"
+    ruckrunde_placement: Union[str, int] = "N/A"
     if len(rr_placements) >= 1:
         ruckrunde_placement = rr_placements[len(rr_placements) - 1]
 

@@ -21,7 +21,7 @@ import time
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction
-from bundesliga_tippspiel.utils.email import get_inbox_count
+from puffotter.imap import get_inbox_count
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework
@@ -49,7 +49,11 @@ class TestRegisterAction(_ActionTestFramework):
         Tests registering a new user
         :return: None
         """
-        emails_before = get_inbox_count()
+        emails_before = get_inbox_count(
+            Config().smtp_host.replace("smtp", "imap"),
+            Config().smtp_address,
+            Config().smtp_password
+        )
         self.assertEqual(
             len(User.query.filter_by(username=self.action.username).all()), 0
         )
@@ -58,7 +62,11 @@ class TestRegisterAction(_ActionTestFramework):
         self.assertEqual(
             len(User.query.filter_by(username=self.action.username).all()), 1
         )
-        emails_after = get_inbox_count()
+        emails_after = get_inbox_count(
+            Config().smtp_host.replace("smtp", "imap"),
+            Config().smtp_address,
+            Config().smtp_password
+        )
         self.assertEqual(emails_before + 1, emails_after)
 
     def test_too_long_username(self):

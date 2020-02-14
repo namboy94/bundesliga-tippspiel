@@ -38,6 +38,12 @@ unittest:
     - rm .env
     - python-unittest
 
+type_check:
+  stage: test
+  tags: [docker]
+  script:
+    - python-static-type-check
+
 gitstats:
   stage: stats
   tags: [docker]

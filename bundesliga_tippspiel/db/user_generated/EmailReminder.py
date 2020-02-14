@@ -21,10 +21,11 @@ from flask import render_template
 from typing import Dict, Any, List
 from datetime import timedelta, datetime
 from bundesliga_tippspiel.flask import app, db
+from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.ModelMixin import ModelMixin
-from bundesliga_tippspiel.utils.email import send_email
+from puffotter.smtp import send_email
 
 
 class EmailReminder(ModelMixin, db.Model):
@@ -158,7 +159,15 @@ class EmailReminder(ModelMixin, db.Model):
                 matches=due,
                 hours=int(self.reminder_time / 3600)
             )
-            send_email(self.user.email, "Tippspiel Erinnerung", message)
+            send_email(
+                self.user.email,
+                "Tippspiel Erinnerung",
+                message,
+                Config().smtp_host,
+                Config().smtp_address,
+                Config().smtp_password,
+                Config().smtp_port
+            )
             last_match = max(due, key=lambda x: x.kickoff)
             self.last_reminder = last_match.kickoff
             db.session.commit()

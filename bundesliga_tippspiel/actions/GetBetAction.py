@@ -19,12 +19,12 @@ LICENSE"""
 
 from typing import Dict, Any, Optional
 from flask_login import current_user
-from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.exceptions import ActionException
 
 
-class GetBetAction(Action):
+class GetBetAction(GetAction):
     """
     Action that allows retrieving bets from the database
     """
@@ -47,7 +47,7 @@ class GetBetAction(Action):
                          matchday
         :raises: ActionException if any problems occur
         """
-        self.id = None if _id is None else int(_id)
+        super().__init__(_id)
         self.user_id = None if user_id is None else int(user_id)
         self.match_id = None if match_id is None else int(match_id)
         self.matchday = None if matchday is None else int(matchday)

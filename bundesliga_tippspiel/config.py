@@ -82,11 +82,11 @@ class Config:
         return os.environ["SMTP_HOST"]
 
     @property
-    def smtp_port(self) -> str:
+    def smtp_port(self) -> int:
         """
         :return: The SMTP host used for outbound emails
         """
-        return os.environ["SMTP_PORT"]
+        return int(os.environ["SMTP_PORT"])
 
     @property
     def smtp_address(self) -> str:

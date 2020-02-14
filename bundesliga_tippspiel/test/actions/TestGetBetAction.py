@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Type
 from flask_login import logout_user
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 # noinspection PyProtectedMember
@@ -30,7 +31,7 @@ class TestGetBetAction(_GetActionTestFramework):
     """
 
     @property
-    def action_cls(self) -> type(GetBetAction):
+    def action_cls(self) -> Type[GetBetAction]:
         """
         :return: The tested Action class
         """

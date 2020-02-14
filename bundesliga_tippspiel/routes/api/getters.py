@@ -19,10 +19,10 @@ LICENSE"""
 
 from flask import request, Blueprint
 from flask_login import login_required
-from typing import Optional, Dict, Any
-from bundesliga_tippspiel.utils.json import jsonify_models
+from typing import Optional, Dict, Any, Type
+from puffotter.json import jsonify_models
 from bundesliga_tippspiel.utils.routes import api, api_login_required
-from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
@@ -47,18 +47,6 @@ def get_bet(bet_id: Optional[int] = None):
     :return: The results
     """
     return execute_getter(bet_id, GetBetAction)
-
-
-@getters_blueprint.route("/api/v2/email_reminder", methods=["GET"])
-@api_login_required
-@login_required
-@api
-def get_email_reminder():
-    """
-    Allows an authenticated user to get their email reminder data
-    :return: The results
-    """
-    return execute_getter(None, GetEmailReminderAction)
 
 
 @getters_blueprint.route("/api/v2/goal", methods=["GET"])
@@ -135,7 +123,7 @@ def api_leaderboard():
     return jsonified
 
 
-def execute_getter(_id: Optional[int], action_cls: type(Action)) \
+def execute_getter(_id: Optional[int], action_cls: Type[GetAction]) \
         -> Dict[str, Any]:
     """
     Executes a getter API method using a Getter Action and an optional ID

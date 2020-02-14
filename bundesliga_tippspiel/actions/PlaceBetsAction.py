@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask_login import current_user
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Union, Optional
 from bundesliga_tippspiel.flask import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
@@ -31,7 +31,13 @@ class PlaceBetsAction(Action):
     Action that allows placing bets
     """
 
-    def __init__(self, bets: Dict[str or int, Tuple[str or int, str or int]]):
+    def __init__(
+            self,
+            bets: Dict[
+                Union[str, int],
+                Tuple[Optional[Union[str, int]], Optional[Union[str, int]]]
+            ]
+    ):
         """
         Initializes the PlaceBetsAction object
         :param bets: a dictionary mapping match IDs to tuples containing the
@@ -122,12 +128,15 @@ class PlaceBetsAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        bets = {}
+        bets: Dict[
+            Union[str, int],
+            Tuple[Optional[Union[str, int]], Optional[Union[str, int]]]
+        ] = {}
 
         for key, value in data.items():
             try:
-                match_id, team = key.split("-")
-                match_id = int(match_id)
+                _match_id, team = key.split("-")
+                match_id = int(_match_id)
 
                 if match_id not in bets:
                     bets[match_id] = (None, None)

@@ -18,10 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from bundesliga_tippspiel.utils.email import get_inbox_count
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.db.auth.User import User
-from bundesliga_tippspiel.utils.crypto import verify_password
+from puffotter.crypto import verify_password
+from puffotter.imap import get_inbox_count
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import\
     _ActionTestFramework
@@ -64,13 +64,22 @@ class TestForgotPasswordAction(_ActionTestFramework):
         self.assertTrue(
             verify_password(self.password, self.user.password_hash)
         )
-        before_count = get_inbox_count()
+        before_count = get_inbox_count(
+            Config().smtp_host.replace("smtp", "imap"),
+            Config().smtp_address,
+            Config().smtp_password
+        )
         self.action.execute()
         self.assertFalse(
             verify_password(self.password, self.user.password_hash)
         )
         time.sleep(1)
-        self.assertEqual(before_count + 1, get_inbox_count())
+        after_count = get_inbox_count(
+            Config().smtp_host.replace("smtp", "imap"),
+            Config().smtp_address,
+            Config().smtp_password
+        )
+        self.assertEqual(before_count + 1, after_count)
 
     def test_non_existant_email(self):
         """

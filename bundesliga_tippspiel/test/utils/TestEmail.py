@@ -18,7 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from bundesliga_tippspiel.utils.email import send_email, get_inbox_count
+from puffotter.smtp import send_email
+from puffotter.imap import get_inbox_count
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.config import Config
@@ -35,8 +36,24 @@ class TestEmail(_TestFramework):
         Tests sending an email message
         :return: None
         """
-        before = get_inbox_count()
-        send_email(Config().smtp_address, "TEST", "<h1>Test</h1>")
+        before = get_inbox_count(
+            Config().smtp_host.replace("smtp", "imap"),
+            Config().smtp_address,
+            Config().smtp_password
+        )
+        send_email(
+            Config().smtp_address,
+            "TEST",
+            "<h1>Test</h1>",
+            Config().smtp_host,
+            Config().smtp_address,
+            Config().smtp_password,
+            Config().smtp_port
+        )
         time.sleep(1)
-        after = get_inbox_count()
+        after = get_inbox_count(
+            Config().smtp_host.replace("smtp", "imap"),
+            Config().smtp_address,
+            Config().smtp_password
+        )
         self.assertEqual(before + 1, after)

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Type
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
@@ -72,7 +73,7 @@ class _GetActionTestFramework(_ActionTestFramework):
         self.db.session.commit()
 
     @property
-    def action_cls(self) -> type(Action):
+    def action_cls(self) -> Type[Action]:
         """
         :return: The tested Action class
         """

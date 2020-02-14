@@ -51,7 +51,8 @@ class TestForgotApiRoute(_ApiRouteTestFramework):
 
         with mock.patch(
                 "bundesliga_tippspiel.actions.ForgotPasswordAction.send_email",
-                lambda x, y, z: self.assertEqual(x, Config().smtp_address)
+                lambda x, y, z, a, b, c, d:
+                self.assertEqual(x, Config().smtp_address)
         ):
             resp = self.client.post(self.route_info[0], json={
                 "email": Config().smtp_address,

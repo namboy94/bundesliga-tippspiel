@@ -20,10 +20,11 @@ LICENSE"""
 import os
 from typing import Dict, Any
 from flask import render_template, request
+from puffotter.recaptcha import verify_recaptcha
+from puffotter.crypto import generate_random, generate_hash
+from puffotter.smtp import send_email
 from bundesliga_tippspiel.flask import db
-from bundesliga_tippspiel.utils.email import send_email
-from bundesliga_tippspiel.utils.crypto import generate_random, generate_hash
-from bundesliga_tippspiel.utils.recaptcha import verify_recaptcha
+from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
@@ -68,7 +69,9 @@ class ForgotPasswordAction(Action):
                 "Diese Email Addresse wurde nicht registriert"
             )
         elif not verify_recaptcha(
-                self.client_address, self.recaptcha_response
+                self.client_address,
+                self.recaptcha_response,
+                Config().recaptcha_secret_key
         ):
             raise ActionException(
                 "Invalid ReCaptcha Response",
@@ -90,14 +93,18 @@ class ForgotPasswordAction(Action):
             "email/forgot_password_email.html",
             host=self.host_address,
             target=os.path.join(self.host_address, "login"),
-            password=new_pass.decode("utf-8"),
+            password=new_pass,
             username=user.username
         )
 
         send_email(
             self.email,
             "Passwort Zurückgesetzt",
-            email_message
+            email_message,
+            Config().smtp_host,
+            Config().smtp_address,
+            Config().smtp_password,
+            Config().smtp_port
         )
 
         return {}

@@ -17,10 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Optional
+from typing import Optional, Dict
 from flask import render_template, request, Blueprint
 from flask_login import login_required, current_user
 from bundesliga_tippspiel.utils.routes import action_route
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
@@ -52,7 +53,7 @@ def bets(matchday: Optional[int] = None):
             matchday=matchday
         ).execute()["matches"]
 
-        betmap = {}
+        betmap: Dict[int, Optional[Bet]] = {}
         matchday_points = 0
         for _match in matchday_matches:
             betmap[_match.id] = None

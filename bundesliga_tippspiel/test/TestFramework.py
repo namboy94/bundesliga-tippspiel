@@ -21,7 +21,7 @@ import os
 import bundesliga_tippspiel.flask as bundesliga_tippspiel
 from functools import wraps
 from unittest import TestCase
-from typing import Tuple, Callable, Dict
+from typing import Tuple, Callable, Dict, Union
 from flask_login import login_user
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Team import Team
@@ -30,7 +30,7 @@ from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
-from bundesliga_tippspiel.utils.crypto import generate_random
+from puffotter.crypto import generate_random
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.run import init
@@ -44,7 +44,7 @@ class _TestFramework(TestCase):
     # Constants
     API_KEY = "apikey"
     API_KEY_HASH = \
-        b"$2b$12$hZgUP0mzn6pZsQ45FYkiJuZFIRDCo.MbDb7e2fGHAJJq/jqn9yf9e"
+        "$2b$12$hZgUP0mzn6pZsQ45FYkiJuZFIRDCo.MbDb7e2fGHAJJq/jqn9yf9e"
 
     def setUp(self):
         """
@@ -136,7 +136,8 @@ class _TestFramework(TestCase):
         self.db.session.commit()
         return bet
 
-    def generate_sample_user(self, confirmed: bool) -> Dict[str, User or str]:
+    def generate_sample_user(self, confirmed: bool) \
+            -> Dict[str, Union[User, str]]:
         """
         Generates a sample user
         Instead of hashing the passwords each time, we simply use hard-coded
@@ -147,16 +148,16 @@ class _TestFramework(TestCase):
         if confirmed:
             password = "samplepass1"
             hashed = \
-                b"$2b$12$BiB2kya1Ly3wuY/Pr4JGD.JSmmd1ocTWoAH9OPAbSqyT.CQ5./pUi"
+                "$2b$12$BiB2kya1Ly3wuY/Pr4JGD.JSmmd1ocTWoAH9OPAbSqyT.CQ5./pUi"
             user = User(username="TestA", email="a@hk-tippspiel.com",
-                        password_hash=hashed.decode("utf-8"), confirmed=True,
+                        password_hash=hashed, confirmed=True,
                         confirmation_hash=hashed)
         else:
             password = "samplepass2"
             hashed = \
-                b"$2b$12$ygmgJH2JFaMqGwBO5F3w.u7ROKuwnC0V/Erneb5Udklgqjija8kfS"
+                "$2b$12$ygmgJH2JFaMqGwBO5F3w.u7ROKuwnC0V/Erneb5Udklgqjija8kfS"
             user = User(username="TestB", email="b@hk-tippspiel.com",
-                        password_hash=hashed.decode("utf-8"), confirmed=False,
+                        password_hash=hashed, confirmed=False,
                         confirmation_hash=hashed)
 
         self.db.session.add(user)
@@ -165,7 +166,7 @@ class _TestFramework(TestCase):
         return {"user": user, "pass": password}
 
     def generate_sample_users(self) \
-            -> Tuple[Dict[str, User or str], Dict[str, User or str]]:
+            -> Tuple[Dict[str, Union[User, str]], Dict[str, Union[User, str]]]:
         """
         Generates two users, one confirmed, one unconfirmed
         :return: The two users as tuple
@@ -180,7 +181,7 @@ class _TestFramework(TestCase):
         :param user: The user for which to generate the API key
         :return: The Api key object
         """
-        obj = ApiKey(user=user, key_hash=self.API_KEY_HASH.decode("utf-8"))
+        obj = ApiKey(user=user, key_hash=self.API_KEY_HASH)
         self.db.session.add(obj)
         self.db.session.commit()
         return obj

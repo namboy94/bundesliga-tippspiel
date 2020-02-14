@@ -19,11 +19,11 @@ LICENSE"""
 
 from sqlalchemy import or_
 from typing import Dict, Any, Optional
-from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 
-class GetMatchAction(Action):
+class GetMatchAction(GetAction):
     """
     Action that enables getting Matches
     """
@@ -41,7 +41,7 @@ class GetMatchAction(Action):
         :param team_id: If provided, will return all matches of a team
         :raises: ActionException if any problems occur
         """
-        self.id = None if _id is None else int(_id)
+        super().__init__(_id)
         self.matchday = None if matchday is None else int(matchday)
         self.team_id = None if team_id is None else int(team_id)
 
