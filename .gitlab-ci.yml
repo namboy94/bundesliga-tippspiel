@@ -67,8 +67,7 @@ deploy_develop:
     - export HTTP_PORT=$DEV_HTTP_PORT
     - export DEPLOY_MODE=dev
     - docker-compose -p bundesliga_tippspiel_dev build
-    - docker-compose -p bundesliga_tippspiel_dev up -d --no-recreate
-    - docker-compose -p bundesliga_tippspiel_dev up -d --no-deps app
+    - docker-compose -p bundesliga_tippspiel_dev up -d
     - rm .env
 
 deploy_production:
@@ -81,8 +80,7 @@ deploy_production:
     - export HTTP_PORT=$PROD_HTTP_PORT
     - export DEPLOY_MODE=prod
     - docker-compose -p bundesliga_tippspiel_prod build
-    - docker-compose -p bundesliga_tippspiel_prod up -d --no-recreate
-    - docker-compose -p bundesliga_tippspiel_prod up -d --no-deps app
+    - docker-compose -p bundesliga_tippspiel_prod up -d
     - rm .env
 
 release_upload:

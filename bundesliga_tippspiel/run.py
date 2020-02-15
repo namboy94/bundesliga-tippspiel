@@ -78,6 +78,11 @@ def init():
 
     app.config["SQLALCHEMY_DATABASE_URI"] = Config().db_uri
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    # Makes sure that we don't get errors because
+    # of an idle database connection
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}
+
     db.init_app(app)
 
     register_blueprints(app)

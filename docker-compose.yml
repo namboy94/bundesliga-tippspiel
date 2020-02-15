@@ -20,11 +20,15 @@ services:
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
       - LOGGING_PATH=/var/logs
-    restart: on-failure
+    restart: always
   db:
-    image: "mariadb:latest"
+    image: "mariadb:10.1"
     env_file: .env
     networks:
       - net
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
 volumes:
   logs: ~
+  db_data: ~
