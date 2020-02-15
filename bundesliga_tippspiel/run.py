@@ -1,20 +1,20 @@
 """LICENSE
-Copyright 2020 Hermann Krumrey <hermann@krumreyh.com>
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
-This file is part of fat-ffipd.
+This file is part of bundesliga-tippspiel.
 
-fat-ffipd is free software: you can redistribute it and/or modify
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-fat-ffipd is distributed in the hope that it will be useful,
+bundesliga-tippspiel is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with fat-ffipd.  If not, see <http://www.gnu.org/licenses/>.
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
@@ -41,6 +41,15 @@ def init():
     Initializes the Flask application
     :return:
     """
+    app.logger.removeHandler(default_handler)
+
+    logging.basicConfig(
+        filename=Config().logging_path,
+        level=logging.DEBUG,
+        format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
+    )
+
+    app.logger.info("STARTING FLASK")
 
     app.config["TRAP_HTTP_EXCEPTIONS"] = True
     login_manager.session_protection = "strong"
@@ -131,16 +140,3 @@ def init():
             return redirect(url_for("authentication.login"))
         else:
             return render_template("static/error_page.html", error=error)
-
-    app.logger.removeHandler(default_handler)
-
-    logging.basicConfig(
-        filename=Config().logging_path,
-        level=logging.DEBUG,
-        format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
-    )
-
-    app.logger.error("STARTING FLASK")
-    app.logger.warning("STARTING FLASK")
-    app.logger.info("STARTING FLASK")
-    app.logger.debug("STARTING FLASK")
