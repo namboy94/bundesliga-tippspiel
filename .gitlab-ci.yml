@@ -63,14 +63,12 @@ deploy_develop:
   only: [develop]
   before_script: []
   script:
-    - docker build -f docker/Dockerfile
-      -t bundesliga-tippspiel-dev . --no-cache
     - echo "$ENV_FILE" > .env
-    - docker-compose -p bundesliga-tippspiel-dev
-      -f docker/docker-compose-dev.yml up -d --no-recreate
-    - docker-compose -p bundesliga-tippspiel-dev
-      -f docker/docker-compose-dev.yml up -d --no-deps
-      bundesliga-tippspiel-dev-app
+    - export HTTP_PORT=$DEV_HTTP_PORT
+    - export DEPLOY_MODE=dev
+    - docker-compose -p bundesliga_tippspiel_dev build
+    - docker-compose -p bundesliga_tippspiel_dev up -d --no-recreate
+    - docker-compose -p bundesliga_tippspiel_dev up -d --no-deps app
     - rm .env
 
 deploy_production:
@@ -79,14 +77,12 @@ deploy_production:
   only: [master]
   before_script: []
   script:
-    - docker build -f docker/Dockerfile
-      -t bundesliga-tippspiel-prod . --no-cache
     - echo "$ENV_FILE" > .env
-    - docker-compose -p bundesliga-tippspiel-prod
-      -f docker/docker-compose-prod.yml up -d --no-recreate
-    - docker-compose -p bundesliga-tippspiel-prod
-      -f docker/docker-compose-prod.yml up -d --no-deps
-      bundesliga-tippspiel-prod-app
+    - export HTTP_PORT=$PROD_HTTP_PORT
+    - export DEPLOY_MODE=prod
+    - docker-compose -p bundesliga_tippspiel_prod build
+    - docker-compose -p bundesliga_tippspiel_prod up -d --no-recreate
+    - docker-compose -p bundesliga_tippspiel_prod up -d --no-deps app
     - rm .env
 
 release_upload:
