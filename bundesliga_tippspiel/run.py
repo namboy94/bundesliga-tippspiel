@@ -36,26 +36,36 @@ from bundesliga_tippspiel.flask import app, db, login_manager
 from bundesliga_tippspiel.routes.blueprints import register_blueprints
 
 
-def init():
+def init_logging():
     """
-    Initializes the Flask application
-    :return:
+    Sets up logging
+    :return: None
     """
     app.logger.removeHandler(default_handler)
-
     logging.basicConfig(
         filename=Config().logging_path,
         level=logging.DEBUG,
         format="[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
     )
-
     app.logger.info("STARTING FLASK")
 
-    app.config["TRAP_HTTP_EXCEPTIONS"] = True
-    login_manager.session_protection = "strong"
 
-    if "FLASK_TESTING" in os.environ:
-        app.testing = os.environ["FLASK_TESTING"] == "1"
+def init_app():
+    """
+    Initializes the flask app
+    :return: None
+    """
+    app.testing = os.environ.get("FLASK_TESTING") == "1"
+    app.config["TRAP_HTTP_EXCEPTIONS"] = True
+
+    try:
+        app.secret_key = os.environ["FLASK_SECRET"]
+    except KeyError:
+        app.secret_key = "".join(random.choice(string.ascii_letters)
+                                 for _ in range(0, 32))
+        app.logger.warning("No secret key provided")
+
+    register_blueprints(app)
 
     @app.context_processor
     def inject_template_variables():
@@ -66,16 +76,47 @@ def init():
         """
         return {
             "version": Config().version,
-            "env": app.env
+            "env": app.env,
+            "config": Config()
         }
 
-    try:
-        app.secret_key = os.environ["FLASK_SECRET"]
-    except KeyError:
-        app.secret_key = "".join(random.choice(string.ascii_letters)
-                                 for _ in range(0, 32))
-        app.logger.warning("No secret key provided")
+    @app.errorhandler(HTTPException)
+    def error_handling(error: HTTPException):
+        """
+        Custom redirect for 401 errors
+        :param error: The error that caused the error handler to be called
+        :return: A redirect to the login page
+        """
+        if error.code == 401:
+            flash(
+                "Du bist nicht angemeldet. Bitte melde dich an.",
+                AlertSeverity.DANGER.value
+            )
+            return redirect(url_for("authentication.login"))
+        else:
+            return render_template("static/error_page.html", error=error)
 
+    @app.errorhandler(Exception)
+    def exception_handling(e: Exception):
+        """
+        Handles any uncaught exceptions and shows an error 500 page
+        :param e: The caught exception
+        :return: None
+        """
+        error = HTTPException("The server encountered an internal error and "
+                              "was unable to complete your request. "
+                              "Either the server is overloaded or there "
+                              "is an error in the application.")
+        error.code = 500
+        app.logger.error("Caught exception: {}".format(e))
+        return render_template("static/error_page.html", error=error)
+
+
+def init_db():
+    """
+    Initializes the database
+    :return: None
+    """
     app.config["SQLALCHEMY_DATABASE_URI"] = Config().db_uri
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -85,8 +126,15 @@ def init():
 
     db.init_app(app)
 
-    register_blueprints(app)
     create_tables(app, db)
+
+
+def init_login_manager():
+    """
+    Initializes the login manager
+    :return: None
+    """
+    login_manager.session_protection = "strong"
 
     # Set up login manager
     @login_manager.user_loader
@@ -115,7 +163,7 @@ def init():
                 api_key.encode("utf-8")
             ).decode("utf-8")
         except (TypeError, Error):
-            pass
+            return None
 
         db_api_key = ApiKey.query.get(api_key.split(":", 1)[0])
 
@@ -130,18 +178,13 @@ def init():
 
         return User.query.get(db_api_key.user_id)
 
-    @app.errorhandler(HTTPException)
-    def error_handling(error: HTTPException):
-        """
-        Custom redirect for 401 errors
-        :param error: The error that caused the error handler to be called
-        :return: A redirect to the login page
-        """
-        if error.code == 401:
-            flash(
-                "Du bist nicht angemeldet. Bitte melde dich an.",
-                AlertSeverity.DANGER.value
-            )
-            return redirect(url_for("authentication.login"))
-        else:
-            return render_template("static/error_page.html", error=error)
+
+def init():
+    """
+    Initializes the Flask application
+    :return: None
+    """
+    init_logging()
+    init_app()
+    init_db()
+    init_login_manager()

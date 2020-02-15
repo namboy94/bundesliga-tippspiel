@@ -27,7 +27,6 @@ from bundesliga_tippspiel.routes.user_management import \
     user_management_blueprint
 from bundesliga_tippspiel.routes.api.putters import putters_blueprint
 from bundesliga_tippspiel.routes.api.getters import getters_blueprint
-from bundesliga_tippspiel.routes.api.update import update_blueprint
 from bundesliga_tippspiel.routes.api.user_management import \
     user_management_api_blueprint
 
@@ -46,7 +45,6 @@ def register_blueprints(app: Flask):
         user_management_blueprint,
         putters_blueprint,
         getters_blueprint,
-        update_blueprint,
         user_management_api_blueprint
     ]:
         app.register_blueprint(blueprint)

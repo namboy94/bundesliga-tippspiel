@@ -17,41 +17,35 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import time
-from flask import Blueprint
-from bundesliga_tippspiel.config import Config
-from bundesliga_tippspiel.utils.routes import api
+from typing import Dict, Tuple, Callable
+from bundesliga_tippspiel.flask import app
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
 from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
     SendDueEmailRemindersAction
 
-update_blueprint = Blueprint("update", __name__)
 
-
-@update_blueprint.route("/api/v2/update_match_data", methods=["GET"])
-@api
-def update_match_data():
+def _update_db_data():
     """
-    Updates the match data. If the last update is less than 100 seconds in the
-    past, do not update.
-    :return: The JSON response
+    Updates database data
+    :return: None
     """
-    needs_update = time.time() - Config.last_match_data_update > 100
-    if needs_update:
+    with app.app_context():
         update_db_data()
-        Config.last_match_data_update = time.time()
-    return {"updated": needs_update}
 
 
-@update_blueprint.route("/api/v2/send_due_reminders", methods=["GET"])
-@api
-def send_due_reminders():
+def _send_due_email_reminders():
     """
-    Sends out all due reminders
-    :return: The JSON response
+    Sends out due email reminders
+    :return: None
     """
-    needs_update = time.time() - Config.last_reminder_sending > 1800
-    if needs_update:
+    with app.app_context():
         SendDueEmailRemindersAction().execute()
-        Config.last_reminder_sending = time.time()
-    return {"updated": needs_update}
+
+
+bg_tasks: Dict[str, Tuple[int, Callable]] = {
+    "update_db_data": (30, _update_db_data),
+    "send_due_reminders": (60, _send_due_email_reminders)
+}
+"""
+A dictionary containing background tasks for the flask application
+"""

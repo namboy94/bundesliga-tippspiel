@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
+from bundesliga_tippspiel.flask import app
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
@@ -42,6 +43,7 @@ class SendDueEmailRemindersAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
+        app.logger.info("Checking for new email reminders")
         for reminder in EmailReminder.query.all():
             reminder.send_reminder()
         return {}

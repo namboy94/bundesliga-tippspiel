@@ -21,7 +21,7 @@ import json
 import requests
 from datetime import datetime
 from typing import Dict, Any, Optional, List, Tuple, Type
-from bundesliga_tippspiel.flask import db
+from bundesliga_tippspiel.flask import db, app
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.match_data.Player import Player
@@ -40,6 +40,7 @@ def update_db_data(
     :param season: The season for which to update the data
     :return: None
     """
+    app.logger.info("Updating match data")
 
     # Fetch Data
     base_url = "https://www.openligadb.de/api/{}/{}/{}"

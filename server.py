@@ -18,11 +18,17 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import cherrypy
+from cherrypy.process.plugins import BackgroundTask
 from bundesliga_tippspiel.run import app, init
+from bundesliga_tippspiel.bg_tasks import bg_tasks
 
 if __name__ == '__main__':
 
     init()
+    for name, (delay, function) in bg_tasks.items():
+        app.logger.info("Starting background task {}".format(name))
+        task = BackgroundTask(delay, function)
+        task.start()
 
     cherrypy.tree.graft(app, "/")
 
@@ -31,7 +37,6 @@ if __name__ == '__main__':
     # noinspection PyProtectedMember
     server = cherrypy._cpserver.Server()
 
-    # Configure the server object
     server.socket_host = "0.0.0.0"
     server.socket_port = 8000
     server.thread_pool = 30
