@@ -66,8 +66,10 @@ deploy_develop:
     - docker build -f docker/Dockerfile
       -t bundesliga-tippspiel-dev . --no-cache
     - echo "$ENV_FILE" > .env
-    - docker-compose -f docker/docker-compose-dev.yml up -d --no-recreate
-    - docker-compose -f docker/docker-compose-dev.yml up -d --no-deps
+    - docker-compose -p bundesliga-tippspiel-dev
+      -f docker/docker-compose-dev.yml up -d --no-recreate
+    - docker-compose -p bundesliga-tippspiel-dev
+      -f docker/docker-compose-dev.yml up -d --no-deps
       bundesliga-tippspiel-dev-app
     - rm .env
 
@@ -80,8 +82,10 @@ deploy_production:
     - docker build -f docker/Dockerfile
       -t bundesliga-tippspiel-prod . --no-cache
     - echo "$ENV_FILE" > .env
-    - docker-compose -f docker/docker-compose-prod.yml up -d --no-recreate
-    - docker-compose -f docker/docker-compose-prod.yml up -d --no-deps
+    - docker-compose -p bundesliga-tippspiel-prod
+      -f docker/docker-compose-prod.yml up -d --no-recreate
+    - docker-compose -p bundesliga-tippspiel-prod
+      -f docker/docker-compose-prod.yml up -d --no-deps
       bundesliga-tippspiel-prod-app
     - rm .env
 

@@ -20,6 +20,7 @@ LICENSE"""
 import os
 import pkg_resources
 from typing import Optional
+from bundesliga_tippspiel.flask import app
 
 
 class Config:
@@ -59,6 +60,7 @@ class Config:
             db_mode = "sqlite"
 
         if db_mode == "sqlite":
+            app.logger.warning("Using SQLite database")
             return "sqlite:///" + Config.sqlite_path
         else:
             prefix = db_mode.upper()
