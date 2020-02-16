@@ -23,6 +23,8 @@ from functools import wraps
 from unittest import TestCase
 from typing import Tuple, Callable, Dict, Union
 from flask_login import login_user
+from puffotter.crypto import generate_random
+from puffotter.env import load_env_file
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Player import Player
@@ -30,7 +32,6 @@ from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
-from puffotter.crypto import generate_random
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.run import init
@@ -51,6 +52,7 @@ class _TestFramework(TestCase):
         Sets up the SQLite database
         :return: None
         """
+        load_env_file()
         os.environ["FLASK_TESTING"] = "1"
         bundesliga_tippspiel.app.config["TESTING"] = True
         self.db_path = os.path.join(os.path.abspath("."), "test.db")

@@ -34,9 +34,8 @@ unittest:
   only: [master, develop]
   script:
     - echo "$ENV_FILE" > .env
-    - export $(grep -v '^#' .env | xargs)
-    - rm .env
     - python-unittest
+    - rm .env
 
 type_check:
   stage: test
