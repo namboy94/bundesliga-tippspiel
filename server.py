@@ -33,7 +33,8 @@ if __name__ == '__main__':
             :return: None
             """
             try:
-                function()
+                with app.app_context():
+                    function()
             except Exception as e:
                 app.logger.error("Encountered exception in background thread "
                                  "{} - {}".format(name, e))
