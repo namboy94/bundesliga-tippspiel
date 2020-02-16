@@ -26,8 +26,21 @@ if __name__ == '__main__':
 
     init()
     for name, (delay, function) in bg_tasks.items():
+
+        def task_function():
+            """
+            Makes sure that thread doesn't die if there was an exception
+            :return: None
+            """
+            try:
+                function()
+            except Exception as e:
+                app.logger.error("Encountered exception in background thread "
+                                 "{} - {}".format(name, e))
+
+
         app.logger.info("Starting background task {}".format(name))
-        task = BackgroundTask(delay, function)
+        task = BackgroundTask(delay, task_function)
         task.start()
 
     cherrypy.tree.graft(app, "/")
