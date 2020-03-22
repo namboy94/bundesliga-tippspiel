@@ -22,7 +22,7 @@ from typing import Dict, Any, Optional
 from flask import render_template, request
 from sqlalchemy.exc import SQLAlchemyError
 from puffotter.recaptcha import verify_recaptcha
-from bundesliga_tippspiel.flask import db
+from puffotter.flask.base import db
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.exceptions import ActionException
@@ -144,7 +144,7 @@ class RegisterAction(Action):
                                   "Ein unbekannter Fehler ist aufgetreten")
 
         email_message = render_template(
-            "email/registration_email.html",
+            "email/registration.html",
             host=self.host_address,
             target=os.path.join(self.host_address, "confirm"),
             username=self.username,

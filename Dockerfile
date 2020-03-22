@@ -5,14 +5,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
     apt install -y python3 python3-pip python3-mysqldb && \
-    pip3 install Flask cherrypy
+    pip3 install flask
 
 ADD . flask-app
-
 RUN cd flask-app && python3 setup.py install
-
 WORKDIR flask-app
-
 EXPOSE 8000
-
 CMD ["/usr/bin/python3", "server.py"]

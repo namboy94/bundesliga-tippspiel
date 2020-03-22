@@ -20,8 +20,8 @@ LICENSE"""
 from typing import Dict, Any, Optional, List, Type
 from flask import abort, redirect, url_for, request
 from werkzeug.wrappers import Response
-from bundesliga_tippspiel.flask import db
-from bundesliga_tippspiel.enums import AlertSeverity
+from puffotter.flask.base import db
+from puffotter.flask.enums import AlertSeverity
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Match import Match

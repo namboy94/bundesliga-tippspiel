@@ -23,7 +23,7 @@ from flask import render_template, request
 from puffotter.recaptcha import verify_recaptcha
 from puffotter.crypto import generate_random, generate_hash
 from puffotter.smtp import send_email
-from bundesliga_tippspiel.flask import db
+from puffotter.flask.base import db
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.actions.Action import Action
@@ -90,7 +90,7 @@ class ForgotPasswordAction(Action):
         db.session.commit()
 
         email_message = render_template(
-            "email/forgot_password_email.html",
+            "email/forgot_password.html",
             host=self.host_address,
             target=os.path.join(self.host_address, "login"),
             password=new_pass,

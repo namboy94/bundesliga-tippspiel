@@ -20,7 +20,7 @@ LICENSE"""
 from flask import render_template, request, Blueprint
 from flask_login import login_required, current_user
 from bundesliga_tippspiel.utils.routes import action_route
-from bundesliga_tippspiel.enums import AlertSeverity
+from puffotter.flask.enums import AlertSeverity
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 from bundesliga_tippspiel.actions.RegisterAction import RegisterAction

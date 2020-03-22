@@ -20,7 +20,7 @@ LICENSE"""
 from flask import render_template
 from typing import Dict, Any, List
 from datetime import timedelta, datetime
-from bundesliga_tippspiel.flask import app, db
+from puffotter.flask.base import app, db
 from bundesliga_tippspiel.config import Config
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match

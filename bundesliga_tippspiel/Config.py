@@ -17,30 +17,34 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from enum import Enum
+import os
+from typing import Type
+from puffotter.flask.Config import Config as BaseConfig
 
 
-class AlertSeverity(Enum):
+class Config(BaseConfig):
     """
-    Enumeration that defines the various levels of severity an alert can have
+    Configuration for the flask application
     """
-
-    SUCCESS = "success"
+    OPENLIGADB_SEASON: str
     """
-    Translates to a green alert
-    """
-
-    INFO = "info"
-    """
-    Translates to a blue alert
+    The openligadb season to use
     """
 
-    WARNING = "warning"
+    OPENLIGADB_LEAGUE: str
     """
-    Translates to a yellow alert
+    The openligadb league to use
     """
 
-    DANGER = "danger"
-    """
-    Translates to a red alert
-    """
+    @classmethod
+    def _load_extras(cls, parent: Type[BaseConfig]):
+        """
+        Loads non-standard configuration variables
+        :param parent: The base configuration
+        :return: None
+        """
+        Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
+        Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+        parent.STRINGS.update({
+            "401_message": "Du bist nicht angemeldet. Bitte melde dich an."
+        })

@@ -38,6 +38,7 @@ if __name__ == "__main__":
         license="GNU GPL3",
         packages=find_packages(),
         install_requires=[
+            "flask",
             "flask_login",
             "flask_sqlalchemy",
             "requests",
@@ -45,9 +46,8 @@ if __name__ == "__main__":
             "sentry-sdk",
             "sqlalchemy",
             "werkzeug",
-            "flask",
             "cherrypy",
-            "puffotter"
+            "puffotter[flask,crypto]"
         ],
         include_package_data=True,
         zip_safe=False

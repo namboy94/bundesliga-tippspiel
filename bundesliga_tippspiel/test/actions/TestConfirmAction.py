@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.db.auth.User import User
-from bundesliga_tippspiel.enums import AlertSeverity
+from puffotter.flask.enums import AlertSeverity
 from bundesliga_tippspiel.actions.ConfirmAction import ConfirmAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \

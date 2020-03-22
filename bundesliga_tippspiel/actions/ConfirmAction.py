@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from bundesliga_tippspiel.flask import db
-from bundesliga_tippspiel.enums import AlertSeverity
+from puffotter.flask.base import db
+from puffotter.flask.enums import AlertSeverity
 from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.utils.db import user_exists

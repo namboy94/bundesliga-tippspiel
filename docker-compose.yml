@@ -19,11 +19,15 @@ services:
       - DB_MODE=mysql
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
-      - LOGGING_PATH=/var/logs
+      - MYSQL_DATABASE=appdata
+      - LOGGING_PATH=/var/logs/bundesliga_tippspiel.log
+      - FLASK_PORT=8000
     restart: always
   db:
     image: "mariadb:10.1"
     env_file: .env
+    environment:
+      - MYSQL_DATABASE=appdata
     networks:
       - net
     volumes:

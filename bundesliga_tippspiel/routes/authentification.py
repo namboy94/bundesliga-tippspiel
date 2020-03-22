@@ -19,7 +19,7 @@ LICENSE"""
 
 from flask import request, url_for, redirect, render_template, Blueprint
 from flask_login import login_required, logout_user, current_user
-from bundesliga_tippspiel.flask import app
+from puffotter.flask.base import app
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.actions.LoginAction import LoginAction
 

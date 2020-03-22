@@ -20,7 +20,7 @@ LICENSE"""
 from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
-from bundesliga_tippspiel.flask import db
+from puffotter.flask.base import db
 from bundesliga_tippspiel.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder

@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from bundesliga_tippspiel.flask import app
+from puffotter.flask.base import app
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
