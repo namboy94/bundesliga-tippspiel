@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.db.auth.User import User
+from puffotter.flask.db.User import User
 
 """
 A collection of functions to simplify common database operations

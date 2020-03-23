@@ -45,7 +45,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% if not current_user.is_authenticated %}
 
                 <li class="nav-item {% if request.path == "/login" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("authentication.login") }}">
+                    <a class="nav-link" href="{{ url_for("user_management.login") }}">
                         Anmelden
                     </a>
                 </li>
@@ -80,11 +80,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <li>
                 <!-- Login/Logout Button-->
                 {% if current_user.is_authenticated %}
-                    <a href="{{ url_for("authentication.logout") }}">
+                    <a href="{{ url_for("user_management.logout") }}">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for("authentication.login") }}">
+                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for("user_management.login") }}">
                         <input class="form-control mr-sm-2" name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
                         <input class="form-control mr-sm-2" name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
                         <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>

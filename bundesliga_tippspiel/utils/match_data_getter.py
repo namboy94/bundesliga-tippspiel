@@ -26,12 +26,12 @@ from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.match_data.Player import Player
 from bundesliga_tippspiel.db.match_data.Team import Team
-from bundesliga_tippspiel.config import Config
+from bundesliga_tippspiel.Config import Config
 
 
 def update_db_data(
-        league: str = Config().openligadb_league,
-        season: str = Config().openligadb_season
+        league: str = Config.OPENLIGADB_LEAGUE,
+        season: str = Config.OPENLIGADB_SEASON
 ):
     """
     Updates the database with the match data for

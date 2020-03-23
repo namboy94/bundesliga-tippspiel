@@ -52,9 +52,10 @@ class _GetActionTestFramework(_ActionTestFramework):
             home_current_score=0,
             away_current_score=0
         )
-        self.user_one, self.user_two = self.generate_sample_users()
-        self.user_one = self.user_one["user"]
-        self.user_two = self.user_two["user"]
+        self.user_one, self.passwd_one, self.confirm_one = \
+            self.generate_sample_user(True)
+        self.user_two, self.passwd_two, self.confirm_two = \
+            self.generate_sample_user(True)
         self.bet_one = self.generate_sample_bet(self.user_one, self.match_one)
         self.bet_two = self.generate_sample_bet(self.user_two, self.match_one)
         self.bet_three = \

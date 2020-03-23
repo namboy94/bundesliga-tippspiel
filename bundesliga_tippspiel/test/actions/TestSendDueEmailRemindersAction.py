@@ -19,7 +19,6 @@ LICENSE"""
 
 from unittest import mock
 from datetime import datetime, timedelta
-from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
 from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
@@ -40,14 +39,13 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         :return: None
         """
         super().setUp()
-        generated = self.generate_sample_user(True)
+        self.user = self.generate_sample_user(True)[0]
 
         now = datetime.utcnow()
         now_str = now.strftime("%Y-%m-%d:%H-%M-%S")
         then = now + timedelta(hours=24)
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
-        self.user = generated["user"]  # type: User
         self.reminder = EmailReminder(
             id=1, user_id=self.user.id,
             last_reminder=now_str,

@@ -32,7 +32,6 @@ class TestMatchDataGetter(_TestFramework):
     Unit test class that tests the match_data_getter script
     """
 
-    @_TestFramework.online_required
     def test_populating_twice(self):
         """
         Tests populating the database. Twice.
@@ -43,7 +42,6 @@ class TestMatchDataGetter(_TestFramework):
         update_db_data(season="2018")
         self.assert_db_state()
 
-    @_TestFramework.online_required
     def test_icon_urls(self):
         """
         Tests if all team icon URLs are valid

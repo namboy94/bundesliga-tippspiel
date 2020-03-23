@@ -16,3 +16,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
+
+from typing import List
+from puffotter.flask.base import db
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Goal import Goal
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.user_generated.EmailReminder import EmailReminder
+
+models: List[db.Model] = [
+    Player,
+    Goal,
+    Match,
+    Team,
+    Bet,
+    EmailReminder
+]
+"""
+The database models of the application
+"""

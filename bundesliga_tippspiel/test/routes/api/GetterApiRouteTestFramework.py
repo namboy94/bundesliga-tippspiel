@@ -112,9 +112,10 @@ class _GetterApiRouteTestFramework(_ApiRouteTestFramework):
         Tests an unsuccessful API call
         :return: None
         """
-        failed = self.decode_data(self.client.get(
+        resp = self.client.get(
             "{}/1000".format(self.route_path), headers=self.generate_headers()
-        ))
+        )
+        failed = self.decode_data(resp)
         self.assertEqual(failed["status"], "error")
         self.assertEqual(failed["reason"], "ID does not exist")
 

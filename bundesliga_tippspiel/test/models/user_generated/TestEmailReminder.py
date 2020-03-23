@@ -19,7 +19,7 @@ LICENSE"""
 
 from unittest import mock
 from datetime import datetime, timedelta
-from bundesliga_tippspiel.db.auth.User import User
+from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder

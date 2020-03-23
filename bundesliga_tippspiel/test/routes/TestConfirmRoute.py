@@ -45,12 +45,10 @@ class TestConfirmRoute(_RouteTestFramework):
         Tests (a) successful request(s)
         :return: None
         """
-        userdata = self.generate_sample_users()[1]
-        user = userdata["user"]
-        pw = userdata["pass"]
+        user, _, confirm_key = self.generate_sample_user(False)
 
         valid = self.client.get(
-            "/confirm?user_id={}&confirm_key={}".format(user.id, pw),
+            "/confirm?user_id={}&confirm_key={}".format(user.id, confirm_key),
             follow_redirects=True
         )
         self.assertTrue(b"Du kannst dich jetzt anmelden" in valid.data)

@@ -43,15 +43,14 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
         Tests a successful API call
         :return: None
         """
-        api_key = self.generate_sample_api_key(
-            self.generate_sample_user(True)["user"]
-        )
+        user = self.generate_sample_user(True)[0]
+        api_key = self.generate_api_key(user)[1]
+        headers = self.generate_api_key_headers(api_key)
 
         resp = self.client.get(
             self.route_info[0],
-            headers=self.generate_headers(
-                "{}:{}".format(api_key.id, self.API_KEY)
-            )
+            headers=headers,
+            json={}
         )
         self.assertEqual(resp.status_code, 200)
         data = self.decode_data(resp)
@@ -62,10 +61,10 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
         Tests an unsuccessful API call
         :return: None
         """
-        resp = self.client.get(
-            self.route_info[0],
-            headers=self.generate_headers("1:{}".format(self.API_KEY))
+        headers = self.generate_headers(
+            f"{self.api_key_obj.id + 1}:{self.api_key.split(':')[1]}"
         )
+        resp = self.client.get(self.route_info[0], headers=headers)
         self.assertEqual(resp.status_code, 401)
         data = self.decode_data(resp)
         self.assertEqual(data["status"], "error")
@@ -75,8 +74,8 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
         Tests using an expired API key
         :return: None
         """
-        api_key = self.generate_sample_api_key(
-            self.generate_sample_user(True)["user"]
+        api_key, api_key_value, _ = self.generate_api_key(
+            self.generate_sample_user(True)[0]
         )
         api_key.creation_time = 0
         self.db.session.commit()
@@ -84,7 +83,7 @@ class TestAuthorizeApiRoute(_ApiRouteTestFramework):
         resp = self.client.get(
             self.route_info[0],
             headers=self.generate_headers(
-                "{}:{}".format(api_key.id, self.API_KEY)
+                "{}:{}".format(api_key.id, api_key_value)
             )
         )
         self.assertEqual(resp.status_code, 401)

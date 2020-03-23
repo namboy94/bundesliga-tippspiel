@@ -26,12 +26,12 @@ class Config(BaseConfig):
     """
     Configuration for the flask application
     """
-    OPENLIGADB_SEASON: str
+    OPENLIGADB_SEASON: str = os.environ.get("OPENLIGADB_SEASON", "2019")
     """
     The openligadb season to use
     """
 
-    OPENLIGADB_LEAGUE: str
+    OPENLIGADB_LEAGUE: str = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
     """
     The openligadb league to use
     """
@@ -43,8 +43,46 @@ class Config(BaseConfig):
         :param parent: The base configuration
         :return: None
         """
-        Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
-        Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+        from bundesliga_tippspiel.template_extras import profile_extras
+        parent.API_VERSION = "2"
         parent.STRINGS.update({
-            "401_message": "Du bist nicht angemeldet. Bitte melde dich an."
+            "401_message": "Du bist nicht angemeldet. Bitte melde dich an.",
+            "500_message": "The server encountered an internal error and "
+                           "was unable to complete your request. "
+                           "Either the server is overloaded or there "
+                           "is an error in the application.",
+            "user_does_not_exist": "Dieser Nutzer existiert nicht",
+            "user_already_logged_in": "Du bist bereits angemeldet.",
+            "user_already_confirmed": "Dieser Nutzer ist bereits "
+                                      "bestätigt worden.",
+            "user_is_not_confirmed": "Dieser Nutzer wurde "
+                                     "noch nicht bestätigt",
+            "invalid_password": "Das angegebene Passwort ist inkorrekt.",
+            "logged_in": "Du hast dich erfolgreich angemeldet",
+            "logged_out": "Erfolgreich ausgeloggt",
+            "username_length": "Username zu lang: Der Username muss zwischen "
+                               "{} und {} Zeichen lang sein.",
+            "passwords_do_not_match": "Die angegebenen Passwörter stimmen "
+                                      "nicht miteinander überein.",
+            "email_already_in_use": "Die gewählte Email-Address wird bereits "
+                                    "verwendet.",
+            "username_already_exists": "Der ausgewählte Username existiert "
+                                       "bereits.",
+            "recaptcha_incorrect": "Bitte löse das ReCaptcha.",
+            "registration_successful": "Siehe in deiner Email-Inbox nach, "
+                                       "um die Registrierung abzuschließen.",
+            "registration_email_title": "Tippspiel Registrierung",
+            "confirmation_key_invalid": "Der angegebene Bestätigungsschlüssel "
+                                        "ist inkorrekt.",
+            "user_confirmed_successfully": "Benutzer wurde erfolgreich "
+                                           "registriert. "
+                                           "Du kannst dich jetzt anmelden.",
+            "password_reset_email_title": "Password Zurücksetzen",
+            "password_was_reset": "Passwort erfolgreich zurückgesetzt. "
+                                  "Sehe in deinem Email-Postfach nach.",
+            "password_changed": "Dein Passwort wurde erfolgreich geändert.",
+            "user_was_deleted": "Dein Account wurde erfolgreich gelöscht"
+        })
+        parent.TEMPLATE_EXTRAS.update({
+            "profile": profile_extras
         })

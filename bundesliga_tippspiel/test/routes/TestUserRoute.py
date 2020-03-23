@@ -21,7 +21,7 @@ from typing import Tuple, Optional, List
 
 from bundesliga_tippspiel.db.match_data.Match import Match
 
-from bundesliga_tippspiel.db.auth.User import User
+from puffotter.flask.db.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework

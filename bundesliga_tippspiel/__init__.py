@@ -17,7 +17,15 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import os
+
+
 sentry_dsn = "https://e91e468e84424758bd74e6908af2c565@sentry.namibsun.net/6"
 """
 The sentry DSN used for exception logging
+"""
+
+root_path: str = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+"""
+The root path of the application
 """

@@ -22,7 +22,7 @@ from puffotter.smtp import send_email
 from puffotter.imap import get_inbox_count
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.config import Config
+from bundesliga_tippspiel.Config import Config
 
 
 class TestEmail(_TestFramework):
@@ -30,30 +30,29 @@ class TestEmail(_TestFramework):
     Tests email functionality
     """
 
-    @_TestFramework.online_required
     def test_emailing(self):
         """
         Tests sending an email message
         :return: None
         """
         before = get_inbox_count(
-            Config().smtp_host.replace("smtp", "imap"),
-            Config().smtp_address,
-            Config().smtp_password
+            Config.SMTP_HOST.replace("smtp", "imap"),
+            Config.SMTP_ADDRESS,
+            Config.SMTP_PASSWORD
         )
         send_email(
-            Config().smtp_address,
+            Config.SMTP_ADDRESS,
             "TEST",
             "<h1>Test</h1>",
-            Config().smtp_host,
-            Config().smtp_address,
-            Config().smtp_password,
-            Config().smtp_port
+            Config.SMTP_HOST,
+            Config.SMTP_ADDRESS,
+            Config.SMTP_PASSWORD,
+            Config.SMTP_PORT
         )
         time.sleep(1)
         after = get_inbox_count(
-            Config().smtp_host.replace("smtp", "imap"),
-            Config().smtp_address,
-            Config().smtp_password
+            Config.SMTP_HOST.replace("smtp", "imap"),
+            Config.SMTP_ADDRESS,
+            Config.SMTP_PASSWORD
         )
         self.assertEqual(before + 1, after)

@@ -19,7 +19,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "components/base_layout.html" %}
 {% block body %}
-    <h1>{{ username }}</h1>
+    <h1>{{ current_user.username }}</h1>
 
     <hr>
 
@@ -66,7 +66,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h2>Email Erinnerungen</h2>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.set_email_reminder") }}">
+        <form method="post" action="{{ url_for("email_reminder.set_email_reminder") }}">
             <div class="form-group">
                 <label for="hours_input">Stunden vor Spielbeginn</label>
                 <input class="form-control"

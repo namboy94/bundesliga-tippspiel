@@ -21,8 +21,8 @@ import json
 from base64 import b64encode
 from flask import Response
 from typing import Tuple, List, Dict, Any, Optional
-from bundesliga_tippspiel.db.auth.User import User
-from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
+from puffotter.flask.db.User import User
+from puffotter.flask.db.ApiKey import ApiKey
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
@@ -125,7 +125,7 @@ class _ApiRouteTestFramework(_TestFramework):
                 self.assertEqual(resp.status_code, 400)
                 data = self.decode_data(resp)
                 self.assertEqual(data["status"], "error")
-                self.assertEqual(data["reason"], "Not in JSON format")
+                self.assertEqual(data["reason"], "not in json format")
 
     def test_successful_call(self):
         """
@@ -159,8 +159,4 @@ class _ApiRouteTestFramework(_TestFramework):
         """
         if api_key is None:
             api_key = self.api_key
-
-        encoded = b64encode(api_key.encode("utf-8")).decode("utf-8")
-        return {
-            "Authorization": "Basic {}".format(encoded)
-        }
+        return self.generate_api_key_headers(api_key)

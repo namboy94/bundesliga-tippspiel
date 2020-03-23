@@ -45,8 +45,7 @@ class TestLoginRoute(_RouteTestFramework):
         Tests (a) successful request(s)
         :return: None
         """
-        userdata = self.generate_sample_users()[0]
-        user, password = userdata["user"], userdata["pass"]
+        user, password, _ = self.generate_sample_user(True)
 
         success = self.client.post("/login", follow_redirects=True, data={
             "username": user.username,
@@ -69,5 +68,5 @@ class TestLoginRoute(_RouteTestFramework):
             b"Du hast dich erfolgreich angemeldet" in failure.data
         )
         self.assertTrue(
-            b"Dieser User ist nicht registriert" in failure.data
+            b"Dieser Nutzer existiert nicht" in failure.data
         )

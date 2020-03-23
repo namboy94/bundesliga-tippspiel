@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, List
-from bundesliga_tippspiel.db.auth.ApiKey import ApiKey
+from puffotter.flask.db.ApiKey import ApiKey
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.api.ApiRouteTestFramework import \
     _ApiRouteTestFramework
@@ -37,17 +37,17 @@ class TestApiKeyApiRoute(_ApiRouteTestFramework):
                  A list of supported methods,
                  Whether or not the API endpoint requires authorization
         """
-        return "/api/v2/api_key", ["POST", "DELETE"], False
+        return "/api/v2/key", ["POST", "DELETE"], False
 
     def test_successful_call(self):
         """
         Tests a successful API call
         :return: None
         """
-        user = self.generate_sample_user(True)
+        user, password, _ = self.generate_sample_user(True)
         generated = self.client.post(self.route_info[0], json={
-            "username": user["user"].username,
-            "password": user["pass"]
+            "username": user.username,
+            "password": password
         })
         generated = self.decode_data(generated)
         self.assertTrue("api_key" in generated["data"])
@@ -75,15 +75,15 @@ class TestApiKeyApiRoute(_ApiRouteTestFramework):
             "username": "A",
             "password": "B"
         })
-        self.assertEqual(generated.status_code, 400)
+        self.assertEqual(generated.status_code, 401)
         generated = self.decode_data(generated)
         self.assertEqual(generated["status"], "error")
-        self.assertEqual(generated["reason"], "User does not exist")
+        self.assertEqual(generated["reason"], "user does not exist")
 
         deleted = self.client.delete(self.route_info[0], json={
             "api_key": "A"
         })
-        self.assertEqual(deleted.status_code, 400)
+        self.assertEqual(deleted.status_code, 401)
         deleted = self.decode_data(deleted)
         self.assertEqual(deleted["status"], "error")
-        self.assertEqual(deleted["reason"], "API Key does not exist")
+        self.assertEqual(deleted["reason"], "api key does not exist")
