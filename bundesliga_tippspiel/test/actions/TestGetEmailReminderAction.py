@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.db.auth.User import User
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
 from bundesliga_tippspiel.actions.GetEmailReminderAction import \
@@ -38,10 +37,8 @@ class TestGetEmailReminderAction(_ActionTestFramework):
         :return: None
         """
         super().setUp()
-        generated = self.generate_sample_user(True)
-        self.user = generated["user"]  # type: User
-        self.pw = generated["pass"]
-        self.login_user(self.user)
+        self.user, self.password, _ = self.generate_sample_user(True)
+        self.login_user(self.user, self.password, False)
         self.reminder = EmailReminder(
             id=1, user_id=self.user.id,
             last_reminder="1970-01-01:01-01-01",

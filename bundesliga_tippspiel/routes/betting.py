@@ -27,70 +27,77 @@ from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 
-betting_blueprint = Blueprint("betting", __name__)
 
-
-@betting_blueprint.route("/bets", methods=["POST", "GET"])
-@betting_blueprint.route("/bets/<int:matchday>", methods=["GET"])
-@login_required
-@action_route
-def bets(matchday: Optional[int] = None):
+def define_blueprint(blueprint_name: str) -> Blueprint:
     """
-    Displays all matches for a matchday with entries for betting
-    :param matchday: The matchday to display
-    :return: None
+    Defines the blueprint for this route
+    :param blueprint_name: The name of the blueprint
+    :return: The blueprint
     """
-    if request.method == "GET":
-        if matchday is None:
-            matchday = -1
+    blueprint = Blueprint(blueprint_name, __name__)
 
-        matchday_bets = GetBetAction(
-            matchday=matchday,
-            user_id=current_user.id
-        ).execute()["bets"]
+    @blueprint.route("/bets", methods=["POST", "GET"])
+    @blueprint.route("/bets/<int:matchday>", methods=["GET"])
+    @login_required
+    @action_route
+    def bets(matchday: Optional[int] = None):
+        """
+        Displays all matches for a matchday with entries for betting
+        :param matchday: The matchday to display
+        :return: None
+        """
+        if request.method == "GET":
+            if matchday is None:
+                matchday = -1
 
-        matchday_matches = GetMatchAction(
-            matchday=matchday
-        ).execute()["matches"]
+            matchday_bets = GetBetAction(
+                matchday=matchday,
+                user_id=current_user.id
+            ).execute()["bets"]
 
-        betmap: Dict[int, Optional[Bet]] = {}
-        matchday_points = 0
-        for _match in matchday_matches:
-            betmap[_match.id] = None
-        for bet in matchday_bets:
-            betmap[bet.match.id] = bet
-            matchday_points += bet.evaluate(when_finished=True)
+            matchday_matches = GetMatchAction(
+                matchday=matchday
+            ).execute()["matches"]
 
+            betmap: Dict[int, Optional[Bet]] = {}
+            matchday_points = 0
+            for _match in matchday_matches:
+                betmap[_match.id] = None
+            for bet in matchday_bets:
+                betmap[bet.match.id] = bet
+                matchday_points += bet.evaluate(when_finished=True)
+
+            return render_template(
+                "betting/bets.html",
+                matchday=matchday_matches[0].matchday,
+                betmap=betmap,
+                matches=matchday_matches,
+                matchday_points=matchday_points
+            )
+
+        else:  # POST
+            action = PlaceBetsAction.from_site_request()
+            return action.execute_with_redirects(
+                "betting.bets", "Tipps erfolgreich gesetzt", "betting.bets"
+            )
+
+    @blueprint.route("/match/<int:match_id>", methods=["GET"])
+    @login_required
+    @action_route
+    def match(match_id: int):
+        """
+        Displays a single match
+        :param match_id: The ID of the match to display
+        :return: The Response
+        """
+        match_info = GetMatchAction(_id=match_id).execute()["match"]
+        goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
+        bets_info = GetBetAction(match_id=match_id).execute()["bets"]
         return render_template(
-            "betting/bets.html",
-            matchday=matchday_matches[0].matchday,
-            betmap=betmap,
-            matches=matchday_matches,
-            matchday_points=matchday_points
+            "info/match.html",
+            match=match_info,
+            goals=goals_info,
+            bets=bets_info
         )
 
-    else:  # POST
-        action = PlaceBetsAction.from_site_request()
-        return action.execute_with_redirects(
-            "betting.bets", "Tipps erfolgreich gesetzt", "betting.bets"
-        )
-
-
-@betting_blueprint.route("/match/<int:match_id>", methods=["GET"])
-@login_required
-@action_route
-def match(match_id: int):
-    """
-    Displays a single match
-    :param match_id: The ID of the match to display
-    :return: The Response
-    """
-    match_info = GetMatchAction(_id=match_id).execute()["match"]
-    goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
-    bets_info = GetBetAction(match_id=match_id).execute()["bets"]
-    return render_template(
-        "info/match.html",
-        match=match_info,
-        goals=goals_info,
-        bets=bets_info
-    )
+    return blueprint

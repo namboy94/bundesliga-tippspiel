@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from bundesliga_tippspiel.flask import db
-from bundesliga_tippspiel.db.ModelMixin import ModelMixin
+from puffotter.flask.base import db
+from puffotter.flask.db.ModelMixin import ModelMixin
 
 
 class Player(ModelMixin, db.Model):

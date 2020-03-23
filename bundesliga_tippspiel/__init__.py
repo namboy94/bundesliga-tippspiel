@@ -18,40 +18,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-import pkg_resources
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
 
-app = Flask(__name__)
-"""
-The Flask App
-"""
-
-db = SQLAlchemy()
-"""
-The SQLAlchemy database connection
-"""
-
-login_manager = LoginManager(app)
-"""
-The Flask-Login Login Manager
-"""
-
-version = pkg_resources.get_distribution("bundesliga-tippspiel").version
-"""
-The current version of the application
-"""
 
 sentry_dsn = "https://e91e468e84424758bd74e6908af2c565@sentry.namibsun.net/6"
 """
 The sentry DSN used for exception logging
 """
 
-# Config
-app.config["TRAP_HTTP_EXCEPTIONS"] = True
-login_manager.session_protection = "strong"
-
-
-if "FLASK_TESTING" in os.environ:  # pragma: no cover
-    app.testing = os.environ["FLASK_TESTING"] == "1"
+root_path: str = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+"""
+The root path of the application
+"""

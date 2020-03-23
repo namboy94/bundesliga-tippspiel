@@ -75,4 +75,4 @@ class TestMatchRoute(_RouteTestFramework):
 
         self.login()
         resp = self.client.get("/match/1000")
-        self.assertTrue(b"Error 404"in resp.data)
+        self.assertTrue(b"Error 404" in resp.data)

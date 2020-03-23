@@ -19,8 +19,8 @@ LICENSE"""
 
 from datetime import datetime
 from typing import Dict, Any
-from bundesliga_tippspiel.flask import db
-from bundesliga_tippspiel.db.ModelMixin import ModelMixin
+from puffotter.flask.base import db
+from puffotter.flask.db.ModelMixin import ModelMixin
 
 
 class Match(ModelMixin, db.Model):

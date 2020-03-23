@@ -17,26 +17,28 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from puffotter.env import load_env_file
+from puffotter.flask.initialize import init_flask
+from puffotter.flask.wsgi import start_server
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel import sentry_dsn, root_path
+from bundesliga_tippspiel.bg_tasks import bg_tasks
+from bundesliga_tippspiel.db import models
+from bundesliga_tippspiel.routes import blueprint_generators
 
-app = Flask(__name__)
-"""
-The Flask App
-"""
 
-db = SQLAlchemy()
-"""
-The SQLAlchemy database connection
-"""
-
-login_manager = LoginManager(app)
-"""
-The Flask-Login Login Manager
-"""
-
-sentry_dsn = "https://e91e468e84424758bd74e6908af2c565@sentry.namibsun.net/6"
-"""
-The sentry DSN used for exception logging
-"""
+def main():
+    """
+    Initializes and starts the flask application
+    :return: None
+    """
+    load_env_file()
+    init_flask(
+        "bundesliga_tippspiel",
+        sentry_dsn,
+        root_path,
+        Config,
+        models,
+        blueprint_generators
+    )
+    start_server(Config, bg_tasks)

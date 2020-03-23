@@ -43,7 +43,7 @@ class TestGetBetAction(_GetActionTestFramework):
         :return: None
         """
         with self.context:
-            self.login_user(self.user_one)
+            self.login_user(self.user_one, self.passwd_one, False)
 
             # All
             result = self.action.execute()
@@ -69,7 +69,7 @@ class TestGetBetAction(_GetActionTestFramework):
             # Reset and switch user
             logout_user()
             self.user_two.confirmed = True
-            self.login_user(self.user_two)
+            self.login_user(self.user_two, self.passwd_two, False)
             self.action.id = None
             self.action.matchday = None
             self.action.user_id = None

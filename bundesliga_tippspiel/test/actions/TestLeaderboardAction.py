@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.db.auth.User import User
+from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
@@ -37,12 +37,12 @@ class TestLeaderboardAction(_ActionTestFramework):
         :return: None
         """
         super().setUp()
-        self.user_one = self.generate_sample_user(True)["user"]
+        self.user_one = self.generate_sample_user(True)[0]
         self.user_two = User(username="AA", email="AA", password_hash="AA",
                              confirmation_hash="AA", confirmed=True)
         self.user_three = User(username="BB", email="BB", password_hash="BB",
                                confirmation_hash="BB", confirmed=True)
-        self.unconfirmed_user = self.generate_sample_user(False)["user"]
+        self.unconfirmed_user = self.generate_sample_user(False)[0]
         self.team_one, self.team_two, _, _, _ = \
             self.generate_sample_match_data()
         self.match_one = Match(

@@ -16,3 +16,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
+
+from typing import Dict, Any
+from bundesliga_tippspiel.actions.GetEmailReminderAction import \
+    GetEmailReminderAction
+
+
+def profile_extras() -> Dict[str, Any]:
+    """
+    Makes sure that the profile page has access to information on email
+    reminders.
+    :return: The variables to forward to the template
+    """
+    return {
+        "email_reminder": GetEmailReminderAction().execute()["email_reminder"]
+    }
