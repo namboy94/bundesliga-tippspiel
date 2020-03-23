@@ -38,7 +38,7 @@ class _TestFramework(Framework):
     Class that models a testing framework for the flask application
     """
 
-    module_name = "fat_ffipd"
+    module_name = "bundesliga_tippspiel"
     root_path = root_path
     models = models
     config = Config

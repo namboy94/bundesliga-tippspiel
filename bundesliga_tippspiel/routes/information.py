@@ -36,6 +36,7 @@ from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_points_distributions, create_participation_ranking, \
     create_point_average_ranking
 
+
 def define_blueprint(blueprint_name: str) -> Blueprint:
     """
     Defines the blueprint for this route
