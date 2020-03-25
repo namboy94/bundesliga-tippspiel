@@ -25,29 +25,47 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         mit deinen Freunden messen!
     </p>
 
+    {% set covid = True %}
+
+    {% if covid %}
+
+        Wegen COVID-19 ist der Spielbetrieb der Bundesliga derzeit angehalten.
+        Aufgrund technischer Komplikation die daraus resultieren, könnte es
+        Unstimmigkeiten auf der Webseite geben.
+
+        Alle bereits getätigten Tipps sind allerdings sicher.
+
+        In der Zwischenzeit tut euer Bestes um die Ausbreitung von COVID-19
+        zu verlangsamen.
+
+        <br>
+
+        <img style="display:block; margin: 20px auto auto;" alt="covid" src="https://www.sportwetten24.com/wp-content/uploads/2020/03/sportwetten_corona_ausfall_wettangebot-wetten.jpg">
+
+    {% else %}
     {% if current_user.is_authenticated %}
         <p>
             Um zu tippen, besuche die
-            <a href="{{ url_for("bets") }}">Spieltag</a>
+            <a href="{{ url_for("betting.bets") }}">Spieltag</a>
             Seite.
         </p>
         <p>
             Eine Rangliste aller Spieler kann man auf der
-            <a href="{{ url_for("leaderboard") }}">Rangliste</a>
+            <a href="{{ url_for("information.leaderboard") }}">Rangliste</a>
             Seite einsehen.
         </p>
         <p>
             Um Änderungen an deinem Profil vorzunehmen, kannst du die
-            <a href="{{ url_for("profile") }}">Profile</a>
+            <a href="{{ url_for("user_management.profile") }}">Profile</a>
             Seite benutzen.
         </p>
     {% else %}
         <p>
             Hast du bereits ein Account, kannst du
             dich mithilfe der Anmeldefunktion
-            <a href="{{ url_for("login") }}">hier</a>
+            <a href="{{ url_for("user_management.login") }}">hier</a>
             anmelden, ansonsten kannst du dich
-            <a href="{{ url_for("register") }}">hier</a>
+            <a href="{{ url_for("user_management.register") }}">hier</a>
             registrieren.
         </p>
     {% endif %}
@@ -108,4 +126,5 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}

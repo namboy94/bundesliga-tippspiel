@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Type
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.GetActionTestFramework import \
@@ -29,7 +30,7 @@ class TestGetPlayerAction(_GetActionTestFramework):
     """
 
     @property
-    def action_cls(self) -> type(GetPlayerAction):
+    def action_cls(self) -> Type[GetPlayerAction]:
         """
         :return: The tested Action class
         """

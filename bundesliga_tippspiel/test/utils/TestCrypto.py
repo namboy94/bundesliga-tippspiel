@@ -19,8 +19,7 @@ LICENSE"""
 
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.utils.crypto import generate_hash, generate_random, \
-    verify_password
+from puffotter.crypto import generate_hash, generate_random, verify_password
 
 
 class TestCrypto(_TestFramework):
@@ -68,7 +67,7 @@ class TestCrypto(_TestFramework):
         """
         password = str(generate_random(30))
         _hash = generate_hash(password)
-        self.assertTrue(verify_password(password, _hash.decode("utf-8")))
+        self.assertTrue(verify_password(password, _hash))
 
     def test_verifying_with_invalid_hash(self):
         """

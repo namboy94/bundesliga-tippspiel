@@ -16,18 +16,3 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
-
-
-def load_routes():
-    """
-    Loads all API routes
-    :return: None
-    """
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.user_management
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.update
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.getters
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.api.putters

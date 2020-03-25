@@ -23,7 +23,7 @@ from typing import List, Optional, Tuple
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
 from bundesliga_tippspiel.utils.db import username_exists
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.Config import Config
 
 
 class TestRegisterRoute(_RouteTestFramework):
@@ -51,12 +51,13 @@ class TestRegisterRoute(_RouteTestFramework):
         self.assertFalse(username_exists("TestUser"))
 
         with mock.patch(
-                "bundesliga_tippspiel.actions.RegisterAction.send_email",
-                lambda x, y, z: self.assertEqual(x, smtp_address)
+                "puffotter.flask.routes.user_management.send_email",
+                lambda x, y, z, a, b, c, d:
+                self.assertEqual(x, Config.SMTP_ADDRESS)
         ):
             post = self.client.post("/register", follow_redirects=True, data={
                 "username": "TestUser",
-                "email": smtp_address,
+                "email": Config.SMTP_ADDRESS,
                 "password": "Abc",
                 "password-repeat": "Abc",
                 "g-recaptcha-response": ""
@@ -76,7 +77,7 @@ class TestRegisterRoute(_RouteTestFramework):
             follow_redirects=True,
             data={
                 "username": "TestUser",
-                "email": smtp_address,
+                "email": Config.SMTP_ADDRESS,
                 "password": "Abc",
                 "password-repeat": "Def",
                 "g-recaptcha-response": ""

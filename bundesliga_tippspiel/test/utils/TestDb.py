@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.models.auth.User import User
+from puffotter.flask.db.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.db import user_exists, username_exists, \
@@ -34,7 +34,7 @@ class TestDb(_TestFramework):
         Tests functions that check if a user exists or not
         :return: None
         """
-        existing = self.generate_sample_users()[0]["user"]  # type: User
+        existing = self.generate_sample_user()[0]
         not_existing = User(id=3, username="NA", email="na@na.com")
 
         self.assertTrue(user_exists(existing.id))

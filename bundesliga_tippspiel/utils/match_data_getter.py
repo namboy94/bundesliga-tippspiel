@@ -20,17 +20,18 @@ LICENSE"""
 import json
 import requests
 from datetime import datetime
-from typing import Dict, Any, Optional, List, Tuple
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Goal import Goal
-from bundesliga_tippspiel.models.match_data.Player import Player
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.config import openligadb_league, openligadb_season
+from typing import Dict, Any, Optional, List, Tuple, Type
+from puffotter.flask.base import db, app
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Goal import Goal
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.Config import Config
 
 
 def update_db_data(
-        league: str = openligadb_league, season: str = openligadb_season
+        league: str = Config.OPENLIGADB_LEAGUE,
+        season: str = Config.OPENLIGADB_SEASON
 ):
     """
     Updates the database with the match data for
@@ -39,6 +40,7 @@ def update_db_data(
     :param season: The season for which to update the data
     :return: None
     """
+    app.logger.info("Updating match data")
 
     # Fetch Data
     base_url = "https://www.openligadb.de/api/{}/{}/{}"
@@ -79,14 +81,10 @@ def update_db_data(
     for team_data in team_data:
         teams.append(parse_team(team_data))
 
-    # Store in DB
-    for data, cls in [
-        (teams, Team),
-        (players, Player),
-        (matches, Match),
-        (goals, Goal)
-    ]:
-        store_in_db(data, cls)
+    store_in_db(teams, Team)
+    store_in_db(players, Player)
+    store_in_db(matches, Match)
+    store_in_db(goals, Goal)
 
 
 def parse_match(match_data: Dict[str, Any]) -> Match:
@@ -207,7 +205,7 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
     )
 
 
-def store_in_db(objects: List[db.Model], model_cls: type(db.Model)):
+def store_in_db(objects: List[db.Model], model_cls: Type[db.Model]):
     """
     Stores a list of objects in the database. While doing so, will
     either update existing objects or create new one if they don't exist
@@ -220,7 +218,7 @@ def store_in_db(objects: List[db.Model], model_cls: type(db.Model)):
     for obj in existing:
         idmap[obj.id] = obj
 
-    tracker = []
+    tracker: List[int] = []
     for obj in objects:
         if obj.id in tracker:
             continue
@@ -321,7 +319,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
         ),
         "1. FC Union Berlin": (
             "1. FC Union Berlin", "Union Berlin", "SCU",
-            wikimedia_icon_urls("en/f/fe/1._FC_Union_Berlin_logo.svg")
+            wikimedia_icon_urls("commons/4/44/1._FC_Union_Berlin_Logo.svg")
         ),
         "SC Paderborn 07": (
             "SC Paderborn 07", "Paderborn", "PAD",

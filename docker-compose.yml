@@ -1,0 +1,35 @@
+version: "3.2"
+networks:
+  net:
+    driver: bridge
+services:
+  app:
+    build: .
+    image: "bundesliga-tippspiel-${DEPLOY_MODE}"
+    depends_on:
+      - db
+    networks:
+      - net
+    volumes:
+      - logs:/var/logs
+    ports:
+      - "${HTTP_PORT}:8000"
+    env_file: .env
+    environment:
+      - DB_MODE=mysql
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - LOGGING_PATH=/var/logs/bundesliga_tippspiel.log
+      - FLASK_PORT=8000
+    restart: always
+  db:
+    image: "mariadb:10.1"
+    env_file: .env
+    networks:
+      - net
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+volumes:
+  logs: ~
+  db_data: ~

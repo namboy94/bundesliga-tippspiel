@@ -19,7 +19,7 @@ LICENSE"""
 
 from unittest import mock
 from typing import List, Optional, Tuple
-from bundesliga_tippspiel.config import smtp_address
+from bundesliga_tippspiel.Config import Config
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
@@ -47,18 +47,19 @@ class TestForgotPasswordRoute(_RouteTestFramework):
         Tests (a) successful request(s)
         :return: None
         """
-        user = self.generate_sample_user(True)["user"]
-        user.email = smtp_address
+        user = self.generate_sample_user(True)[0]
+        user.email = Config.SMTP_ADDRESS
         self.db.session.commit()
 
         old_hash = user.password_hash
 
         with mock.patch(
-                "bundesliga_tippspiel.actions.ForgotPasswordAction.send_email",
-                lambda x, y, z: self.assertEqual(x, smtp_address)
+                "puffotter.flask.routes.user_management.send_email",
+                lambda x, y, z, a, b, c, d:
+                self.assertEqual(x, Config.SMTP_ADDRESS)
         ):
             post = self.client.post("/forgot", follow_redirects=True, data={
-                "email": smtp_address,
+                "email": Config.SMTP_ADDRESS,
                 "g-recaptcha-response": ""
             })
 
@@ -74,11 +75,8 @@ class TestForgotPasswordRoute(_RouteTestFramework):
             "/forgot",
             follow_redirects=True,
             data={
-                "email": smtp_address,
+                "email": Config.SMTP_ADDRESS,
                 "g-recaptcha-response": ""
             }
         )
-        self.assertFalse(b"Passwort erfolgreich zur" in failed_post.data)
-        self.assertTrue(
-            b"Diese Email Addresse wurde nicht registriert" in failed_post.data
-        )
+        self.assertTrue(b"Passwort erfolgreich zur" in failed_post.data)

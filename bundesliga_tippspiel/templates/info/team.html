@@ -34,7 +34,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <th scope="col">Gegner</th>
                 {% for  opponent_id, opponent_name, _, _, _ in matches %}
                     <th scope="col">
-                        <a href="{{ url_for("team", team_id=opponent_id) }}">
+                        <a href="{{ url_for("information.team", team_id=opponent_id) }}">
                             {{ opponent_name }}
                         </a>
                     </th>
@@ -53,7 +53,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         {% set result_class = "info" %}
                     {% endif %}
                     <td class="table-{{ result_class }}">
-                        <a href="{{ url_for("match", match_id=match_id) }}">
+                        <a href="{{ url_for("betting.match", match_id=match_id) }}">
                             {{ score }}
                         </a>
                     </td>

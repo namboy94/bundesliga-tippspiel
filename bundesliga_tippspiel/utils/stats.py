@@ -18,10 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Optional, List, Dict, Tuple
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
-from bundesliga_tippspiel.models.match_data.Match import Match
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 def get_team_points_data(bets: Optional[List[Bet]] = None) \
@@ -32,7 +32,7 @@ def get_team_points_data(bets: Optional[List[Bet]] = None) \
     :param bets: The bets to analyze. If not provided, will analyze all bets
     :return: A dictionary mapping users to dictionaries mapping teams to points
     """
-    stats = {}
+    stats: Dict[User, Dict[Team, int]] = {}
     for user in User.query.filter_by(confirmed=True):
         stats[user] = {}
         for team in Team.query.all():
@@ -59,7 +59,7 @@ def get_total_points_per_team(bets: Optional[List[Bet]] = None) \
     """
 
     all_stats = get_team_points_data(bets)
-    total_stats = {}
+    total_stats: Dict[Team, int] = {}
 
     for _, team_stats in all_stats.items():
         for team, points in team_stats.items():
@@ -98,7 +98,7 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
         bets = Bet.query.all()
         bets = list(filter(lambda x: x.match.finished, bets))
 
-    distribution = {}
+    distribution: Dict[User, Dict[int, int]] = {}
     for user in User.query.filter_by(confirmed=True):
         distribution[user] = {}
 
@@ -112,7 +112,7 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
 
 
 def create_participation_ranking(bets: Optional[List[Bet]] = None) \
-        -> [List[Tuple[User, str]]]:
+        -> List[Tuple[User, str]]:
     """
     Creates a ranking of user's participation percentages
     :param bets: The bets to analyze. If not provided, will analyze all bets
@@ -137,12 +137,14 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
         try:
             percentage = int((betcount / len(matches)) * 100)
         except ZeroDivisionError:
-            percentage = 100.0
+            percentage = 100
         ranking.append((user, percentage))
 
     ranking.sort(key=lambda x: x[1], reverse=True)
-    ranking = list(map(lambda x: (x[0], "{}%".format(x[1])), ranking))
-    return ranking
+    return list(map(
+        lambda x: (x[0], "{}%".format(x[1])),
+        ranking
+    ))
 
 
 def create_point_average_ranking(bets: Optional[List[Bet]] = None) \
@@ -171,5 +173,7 @@ def create_point_average_ranking(bets: Optional[List[Bet]] = None) \
         averages.append((user, ratio))
 
     averages.sort(key=lambda x: x[1], reverse=True)
-    averages = list(map(lambda x: (x[0], "%.2f" % x[1]), averages))
-    return averages
+    return list(map(
+        lambda x: (x[0], "%.2f" % x[1]),
+        averages
+    ))

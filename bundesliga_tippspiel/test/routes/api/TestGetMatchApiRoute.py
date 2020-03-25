@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
+from typing import Dict, Any, Type
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 # noinspection PyProtectedMember
@@ -45,7 +45,7 @@ class TestGetMatchApiRoute(_GetterApiRouteTestFramework):
         return {"matchday": 1}
 
     @property
-    def action_cls(self) -> type(Action):
+    def action_cls(self) -> Type[Action]:
         """
         :return: The action class used to fetch data
         """

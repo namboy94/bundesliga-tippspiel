@@ -17,13 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Type
 from flask import abort, redirect, url_for, request
-from bundesliga_tippspiel import db
-from bundesliga_tippspiel.types.enums import AlertSeverity
-from bundesliga_tippspiel.types.exceptions import ActionException
-from bundesliga_tippspiel.models.ModelMixin import ModelMixin
-from bundesliga_tippspiel.models.match_data.Match import Match
+from werkzeug.wrappers import Response
+from puffotter.flask.base import db
+from puffotter.flask.enums import AlertSeverity
+from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.exceptions import ActionException
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 class Action:
@@ -105,7 +106,7 @@ class Action:
             success_url: str,
             success_msg: ActionException,
             failure_url: str
-    ) -> str:
+    ) -> Response:
         """
         Executes the action and subsequently redirects accordingly
         :param success_url: The URL to which to redirect upon success
@@ -129,7 +130,7 @@ class Action:
             return redirect(url_for(failure_url))
 
     @staticmethod
-    def handle_id_fetch(_id: int, query_cls: type(db.Model)) -> db.Model:
+    def handle_id_fetch(_id: int, query_cls: Type[db.Model]) -> db.Model:
         """
         Handles fetching a single object by using it's ID
         Raises an ActionException if an ID does not exist
@@ -194,12 +195,25 @@ class Action:
         :param keyword: The keyword to use, e.g: bet|match|player etc.
         :return: The wrapped response dictionary
         """
+        key = "{}s".format(keyword)
         if keyword in ["match"]:
-            response = {"{}es".format(keyword): result}
-        else:
-            response = {"{}s".format(keyword): result}
+            key = "{}es".format(keyword)
+
+        response: Dict[str, Any] = {key: result}
 
         if getattr(self, "id", None) is not None:
             response[keyword] = result[0]
 
         return response
+
+
+# noinspection PyAbstractClass
+class GetAction(Action):
+    """
+    Special Action class for 'Get' Actions
+    """
+    def __init__(self, _id: Optional[int]):
+        """
+        :param _id: The ID to get
+        """
+        self.id = None if _id is None else int(_id)

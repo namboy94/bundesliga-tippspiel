@@ -23,11 +23,42 @@ page
 
 # Deployment notes:
 
-Since this site uses MySQL, `python3-mysql` (Ubuntu) needs to be installed.
+You can deploy the website using docker and docker-compose.
+To do this run the following commands:
 
-To correctly function, a lot of environment variables must be set and
-written to a JSON file using the [generate_secrets.py](generate_secrets.py)
-file. Consult that file to see which variables need to be set.
+    # Builds the docker image
+    docker build -f docker/Dockerfile -t bundesliga-tippspiel-prod . --no-chache
+    # Starts the container and the database container
+    docker-compose -f docker/docker-compose-prod.yml up -d
+    # If you want to use an updated image
+    docker-compose -f docker/docker-compose-prod.yml up -d --no-deps bundesliga-tippspiel-prod-app
+
+The .env file must contain the following variables:
+
+* MYSQL_ROOT_PASSWORD
+* MYSQL_USER
+* MYSQL_PASSWORD
+* MYSQL_DATABASE
+* FLASK_SECRET
+* RECAPTCHA_SITE_KEY
+* RECAPTCHA_SECRET_KEY
+* SMTP_ADDRESS
+* SMTP_PASSWORD
+* SMTP_PORT
+* SMTP_HOST
+* OPENLIGADB_SEASON
+* OPENLIGADB_LEAGUE
+
+# Backing up and restoring
+
+All the data is stored in the mysql/mariadb database, so you can backup the
+database using the following command:
+
+    docker exec bundesliga-tippspiel-prod-db-container mysqldump --user root --password=$MYSQL_ROOT_PASSWORD bundesliga_tippspiel > $BACKUPS_DIR/bundesliga_tippspiel-$(date --iso-8601).db
+
+And restoring can be done like this:
+
+    docker exec bundesliga-tippspiel-prod-db-container mysql -u root --password=$MYSQL_ROOT_PASSWORD bundesliga_tippspiel < $BACKUP_FILE
 
 ## Further Information
 

@@ -30,7 +30,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <tr>
                 <td>{{ index + 1 }}</td>
                 <td>
-                    <a href="{{ url_for("team", team_id=team.id) }}">
+                    <a href="{{ url_for("information.team", team_id=team.id) }}">
                         {{ team.name }}
                     </a>
                 </td>

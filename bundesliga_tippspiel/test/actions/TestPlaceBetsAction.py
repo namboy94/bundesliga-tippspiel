@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import\
@@ -36,7 +36,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
         :return: None
         """
         super().setUp()
-        self.user = self.generate_sample_user(True)["user"]
+        self.user, self.passwd, _ = self.generate_sample_user(True)
         self.team_one, self.team_two, _, _, _ = \
             self.generate_sample_match_data()
         self.match_one = Match(
@@ -80,7 +80,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
         :return:
         """
         with self.context:
-            self.login_user(self.user)
+            self.login_user(self.user, self.passwd, False)
 
             resp = self.action.execute()
             self.assertEqual(resp["new"], 2)
@@ -99,7 +99,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
         :return: None
         """
         with self.context:
-            self.login_user(self.user)
+            self.login_user(self.user, self.passwd, False)
 
             self.action.execute()
             self.action.bets = {
@@ -123,7 +123,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
         :return: None
         """
         with self.context:
-            self.login_user(self.user)
+            self.login_user(self.user, self.passwd, False)
 
             self.action.bets = {
                 self.match_one.id: ("Five", 0),
@@ -145,7 +145,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
         :return: None
         """
         with self.context:
-            self.login_user(self.user)
+            self.login_user(self.user, self.passwd, False)
 
             self.action.bets = {
                 self.match_one.id: (-1, 0),
@@ -165,7 +165,7 @@ class TestPlaceBetsAction(_ActionTestFramework):
         :return: None
         """
         with self.context:
-            self.login_user(self.user)
+            self.login_user(self.user, self.passwd, False)
 
             self.action.bets = {
                 self.match_one.id: (5, 0),

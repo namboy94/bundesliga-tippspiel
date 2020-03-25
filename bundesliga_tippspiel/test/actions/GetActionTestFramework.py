@@ -17,15 +17,16 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Type
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Goal import Goal
-from bundesliga_tippspiel.models.match_data.Player import Player
-from bundesliga_tippspiel.models.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Goal import Goal
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Team import Team
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework
-from bundesliga_tippspiel.types.exceptions import ActionException
+from bundesliga_tippspiel.exceptions import ActionException
 
 
 class _GetActionTestFramework(_ActionTestFramework):
@@ -51,9 +52,10 @@ class _GetActionTestFramework(_ActionTestFramework):
             home_current_score=0,
             away_current_score=0
         )
-        self.user_one, self.user_two = self.generate_sample_users()
-        self.user_one = self.user_one["user"]
-        self.user_two = self.user_two["user"]
+        self.user_one, self.passwd_one, self.confirm_one = \
+            self.generate_sample_user(True)
+        self.user_two, self.passwd_two, self.confirm_two = \
+            self.generate_sample_user(True)
         self.bet_one = self.generate_sample_bet(self.user_one, self.match_one)
         self.bet_two = self.generate_sample_bet(self.user_two, self.match_one)
         self.bet_three = \
@@ -72,7 +74,7 @@ class _GetActionTestFramework(_ActionTestFramework):
         self.db.session.commit()
 
     @property
-    def action_cls(self) -> type(Action):
+    def action_cls(self) -> Type[Action]:
         """
         :return: The tested Action class
         """

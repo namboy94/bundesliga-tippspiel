@@ -1,3 +1,7 @@
+V 1.2.0:
+  - Website now runs in docker
+V 1.1.1:
+  - Integrated sentry
 V 1.1.0:
   - Activated Telegram Reminder
 V 1.0.4:

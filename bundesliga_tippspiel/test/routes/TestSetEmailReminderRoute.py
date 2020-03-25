@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, Optional, List
-from bundesliga_tippspiel.models.user_generated.EmailReminder import \
+from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \

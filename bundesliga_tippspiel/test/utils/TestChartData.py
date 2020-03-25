@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.auth.User import User
+from bundesliga_tippspiel.db.match_data.Match import Match
+from puffotter.flask.db.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
@@ -34,7 +34,7 @@ class TestChartData(_TestFramework):
         Tests generating leaderboard data
         :return: None
         """
-        user_one = self.generate_sample_user(True)["user"]
+        user_one = self.generate_sample_user(True)[0]
         user_two = User(username="AA", email="AA", password_hash="AA",
                                  confirmation_hash="AA", confirmed=True)
 

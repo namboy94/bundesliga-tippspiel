@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.types.enums import AlertSeverity
-from bundesliga_tippspiel.types.exceptions import ActionException
+from puffotter.flask.enums import AlertSeverity
+from bundesliga_tippspiel.exceptions import ActionException
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 

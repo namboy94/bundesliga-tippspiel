@@ -20,7 +20,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 <li class="list-group-item bet_row">
     <div class="row text-center">
         <div class="col-md-3 bet_col">
-            <a href="{{ url_for("team", team_id=match.home_team.id) }}">
+            <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
                 <h5>
                     {{ match.home_team.short_name }}
                     <span>
@@ -88,7 +88,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </h3>
         </div>
         <div class="col-md-3 bet_col">
-            <a href="{{ url_for("team", team_id=match.away_team.id) }}">
+            <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
                 <h5>
                     {{ match.away_team.short_name }}
                     <span>
@@ -98,7 +98,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </a>
         </div>
         <div class="col-md-1 bet_col">
-            <a href="{{ url_for("match", match_id=match.id) }}">
+            <a href="{{ url_for("betting.match", match_id=match.id) }}">
                 <i class="fas fa-info-circle"></i>
             </a>
         </div>

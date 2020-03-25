@@ -18,11 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any, Optional
-from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.models.match_data.Team import Team
+from bundesliga_tippspiel.actions.Action import GetAction
+from bundesliga_tippspiel.db.match_data.Team import Team
 
 
-class GetTeamAction(Action):
+class GetTeamAction(GetAction):
     """
     Action that allows retrieving teams from the database
     """
@@ -33,7 +33,7 @@ class GetTeamAction(Action):
         :param _id: If provided, will only fetch the selected ID
         :raises: ActionException if any problems occur
         """
-        self.id = None if _id is None else int(_id)
+        super().__init__(_id)
 
     def validate_data(self):
         """

@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List, Tuple, Dict, Optional
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 
 
@@ -48,7 +48,7 @@ def generate_leaderboard_data(
         current_matchday=current_matchday,
         bets=bets
     )
-    leaderboard_data = {}
+    leaderboard_data: Dict[str, Tuple[str, List[int]]] = {}
 
     for leaderboard in leaderboard_history:
 
@@ -61,7 +61,7 @@ def generate_leaderboard_data(
             position = index + 1
             leaderboard_data[user.username][1].append(position)
 
-    return current_matchday, leaderboard_data
+    return current_matchday, leaderboard_data  # type: ignore
 
 
 def load_leaderboard_history(
@@ -86,7 +86,7 @@ def load_leaderboard_history(
         bets = Bet.query.all()
     users = User.query.filter_by(confirmed=True).all()
 
-    for matchday in range(1, current_matchday + 1):
+    for matchday in range(1, current_matchday + 1):  # type: ignore
 
         pointmap = {}
         usermap = {}

@@ -17,25 +17,27 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.routes.api import load_routes as load_api_routes
+from bundesliga_tippspiel.routes.betting import define_blueprint as __betting
+from bundesliga_tippspiel.routes.information import define_blueprint \
+    as __information
+from bundesliga_tippspiel.routes.email_reminder import define_blueprint \
+    as __email_reminder
+from bundesliga_tippspiel.routes.api.putters import define_blueprint \
+    as __putters
+from bundesliga_tippspiel.routes.api.getters import define_blueprint \
+    as __getters
 
+from flask.blueprints import Blueprint
+from typing import List, Tuple, Callable
 
-def load_routes():
-    """
-    Loads all application routes
-    :return: None
-    """
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.user_management
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.static
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.authentification
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.betting
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.information
-    # noinspection PyUnresolvedReferences
-    import bundesliga_tippspiel.routes.errors
-
-    load_api_routes()
+blueprint_generators: List[Tuple[Callable[[str], Blueprint], str]] = [
+    (__email_reminder, "email_reminder"),
+    (__information, "information"),
+    (__putters, "putters"),
+    (__getters, "getters"),
+    (__betting, "betting")
+]
+"""
+Defines the functions used to create the various blueprints
+as well as their names
+"""

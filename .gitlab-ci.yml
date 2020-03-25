@@ -6,7 +6,7 @@ stages:
   - release
 
 default:
-  image: namboy94/ci-docker-environment:0.3.0
+  image: namboy94/ci-docker-environment:0.8.0
   before_script:
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
@@ -33,7 +33,15 @@ unittest:
   tags: [docker]
   only: [master, develop]
   script:
+    - echo "$ENV_FILE" > .env
     - python-unittest
+    - rm .env
+
+type_check:
+  stage: test
+  tags: [docker]
+  script:
+    - python-static-type-check
 
 gitstats:
   stage: stats
@@ -50,27 +58,29 @@ docgen:
 
 deploy_develop:
   stage: deploy
+  tags: [privileged]
   only: [develop]
-  tags: [hk-tippspiel-develop]
-  before_script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - pip install ci-scripts
+  before_script: []
   script:
-    - export TIPPSPIEL_ENV=develop
-    - deploy-flask $BUNDESLIGA_TIPPSPIEL_DEVELOP_HOME
+    - echo "$ENV_FILE" > .env
+    - export HTTP_PORT=$DEV_HTTP_PORT
+    - export DEPLOY_MODE=dev
+    - docker-compose -p bundesliga_tippspiel_dev build
+    - docker-compose -p bundesliga_tippspiel_dev up -d
+    - rm .env
 
 deploy_production:
   stage: deploy
+  tags: [privileged]
   only: [master]
-  tags: [hk-tippspiel]
-  before_script:
-    - python3 -m venv virtual
-    - source virtual/bin/activate
-    - pip install ci-scripts
+  before_script: []
   script:
-    - export TIPPSPIEL_ENV=production
-    - deploy-flask $BUNDESLIGA_TIPPSPIEL_HOME
+    - echo "$ENV_FILE" > .env
+    - export HTTP_PORT=$PROD_HTTP_PORT
+    - export DEPLOY_MODE=prod
+    - docker-compose -p bundesliga_tippspiel_prod build
+    - docker-compose -p bundesliga_tippspiel_prod up -d
+    - rm .env
 
 release_upload:
   stage: release

@@ -17,74 +17,32 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import os
-import bundesliga_tippspiel
-from functools import wraps
-from unittest import TestCase
-from typing import Tuple, Callable, Dict
-from flask_login import login_user
-from bundesliga_tippspiel.models.user_generated.Bet import Bet
-from bundesliga_tippspiel.models.match_data.Team import Team
-from bundesliga_tippspiel.models.match_data.Player import Player
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.match_data.Goal import Goal
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.auth.ApiKey import ApiKey
-from bundesliga_tippspiel.utils.crypto import generate_random
+# noinspection PyProtectedMember
+from puffotter.flask.test.TestFramework import _TestFramework as Framework
+from typing import Tuple
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Player import Player
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
-from bundesliga_tippspiel.utils.initialize import initialize_app, \
-    initialize_login_manager, initialize_db
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel import root_path
+from bundesliga_tippspiel.routes import blueprint_generators
+from bundesliga_tippspiel.main import models
 
 
-class _TestFramework(TestCase):
+class _TestFramework(Framework):
     """
     Class that models a testing framework for the flask application
     """
 
-    # Constants
-    API_KEY = "apikey"
-    API_KEY_HASH = \
-        b"$2b$12$hZgUP0mzn6pZsQ45FYkiJuZFIRDCo.MbDb7e2fGHAJJq/jqn9yf9e"
-
-    def setUp(self):
-        """
-        Sets up the SQLite database
-        :return: None
-        """
-        bundesliga_tippspiel.app.config["TESTING"] = True
-        self.db_path = os.path.join(os.path.abspath("."), "test.db")
-
-        self.cleanup()
-
-        self.app = bundesliga_tippspiel.app
-        self.db = bundesliga_tippspiel.db
-
-        self.app.secret_key = generate_random(20)
-
-        initialize_app()
-        initialize_db("sqlite:///{}".format(self.db_path))
-        self.app.app_context().push()
-        initialize_login_manager()
-
-        self.client = self.app.test_client()
-        self.context = self.app.test_request_context()
-
-    def tearDown(self):
-        """
-        Deletes the test database if it exists
-        :return: None
-        """
-        self.cleanup()
-
-    def cleanup(self):
-        """
-        Deletes the SQLite database file
-        :return: None
-        """
-        try:
-            os.remove(self.db_path)
-        except FileNotFoundError:
-            pass
+    module_name = "bundesliga_tippspiel"
+    root_path = root_path
+    models = models
+    config = Config
+    blueprint_generators = blueprint_generators
 
     def generate_sample_match_data(self) \
             -> Tuple[Team, Team, Player, Match, Goal]:
@@ -135,82 +93,6 @@ class _TestFramework(TestCase):
         self.db.session.add(bet)
         self.db.session.commit()
         return bet
-
-    def generate_sample_user(self, confirmed: bool) -> Dict[str, User or str]:
-        """
-        Generates a sample user
-        Instead of hashing the passwords each time, we simply use hard-coded
-        values.
-        :return: A dictionary containing the sample user as well as their
-                 password. The password doubles as a confirmation key
-        """
-        if confirmed:
-            password = "samplepass1"
-            hashed = \
-                b"$2b$12$BiB2kya1Ly3wuY/Pr4JGD.JSmmd1ocTWoAH9OPAbSqyT.CQ5./pUi"
-            user = User(username="TestA", email="a@hk-tippspiel.com",
-                        password_hash=hashed.decode("utf-8"), confirmed=True,
-                        confirmation_hash=hashed)
-        else:
-            password = "samplepass2"
-            hashed = \
-                b"$2b$12$ygmgJH2JFaMqGwBO5F3w.u7ROKuwnC0V/Erneb5Udklgqjija8kfS"
-            user = User(username="TestB", email="b@hk-tippspiel.com",
-                        password_hash=hashed.decode("utf-8"), confirmed=False,
-                        confirmation_hash=hashed)
-
-        self.db.session.add(user)
-        self.db.session.commit()
-
-        return {"user": user, "pass": password}
-
-    def generate_sample_users(self) \
-            -> Tuple[Dict[str, User or str], Dict[str, User or str]]:
-        """
-        Generates two users, one confirmed, one unconfirmed
-        :return: The two users as tuple
-        """
-        return \
-            self.generate_sample_user(True),\
-            self.generate_sample_user(False)
-
-    def generate_sample_api_key(self, user: User):
-        """
-        Generates an API key for a user
-        :param user: The user for which to generate the API key
-        :return: The Api key object
-        """
-        obj = ApiKey(user=user, key_hash=self.API_KEY_HASH.decode("utf-8"))
-        self.db.session.add(obj)
-        self.db.session.commit()
-        return obj
-
-    @staticmethod
-    def online_required(func: Callable):
-        """
-        Decorator that skips tests that require online connectivity if
-        the NO_ONLINE environment variable is set to 1
-        :param func: The function to wrap
-        :return: The wrapper function
-        """
-
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            if "NO_ONLINE" in os.environ and os.environ["NO_ONLINE"] == "1":
-                pass
-            else:
-                func(*args, **kwargs)
-
-        return wrapper
-
-    def login_user(self, user: User):
-        """
-        Logs in a user in the local context
-        :param user: The user to log in
-        :return: None
-        """
-        with self.context:
-            login_user(user)
 
     @staticmethod
     def load_real_match_data():

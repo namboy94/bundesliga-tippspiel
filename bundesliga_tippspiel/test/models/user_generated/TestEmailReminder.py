@@ -19,9 +19,9 @@ LICENSE"""
 
 from unittest import mock
 from datetime import datetime, timedelta
-from bundesliga_tippspiel.models.auth.User import User
-from bundesliga_tippspiel.models.match_data.Match import Match
-from bundesliga_tippspiel.models.user_generated.EmailReminder import \
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
@@ -149,7 +149,7 @@ class TestEmailReminder(_ModelTestFramework):
         self.assertEqual(reminder_two.get_due_matches(), [match_one])
 
         with self.context:
-            with mock.patch("bundesliga_tippspiel.models.user_generated."
+            with mock.patch("bundesliga_tippspiel.db.user_generated."
                             "EmailReminder.send_email") as mocked:
                 reminder_one.send_reminder()
                 self.assertEqual(0, mocked.call_count)
@@ -171,7 +171,7 @@ class TestEmailReminder(_ModelTestFramework):
                          [match_one, match_two])
 
         with self.context:
-            with mock.patch("bundesliga_tippspiel.models.user_generated."
+            with mock.patch("bundesliga_tippspiel.db.user_generated."
                             "EmailReminder.send_email") as mocked:
                 reminder_one.send_reminder()
                 self.assertEqual(1, mocked.call_count)
