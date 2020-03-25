@@ -25,6 +25,24 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         mit deinen Freunden messen!
     </p>
 
+    {% set covid = True %}
+
+    {% if covid %}
+
+        Wegen COVID-19 ist der Spielbetrieb der Bundesliga derzeit angehalten.
+        Aufgrund technischer Komplikation die daraus resultieren, könnte es
+        Unstimmigkeiten auf der Webseite geben.
+
+        Alle bereits getätigten Tipps sind allerdings sicher.
+
+        In der Zwischenzeit tut euer Bestes um die Ausbreitung von COVID-19
+        zu verlangsamen.
+
+        <br>
+
+        <img style="display:block; margin: 20px auto auto;" alt="covid" src="https://www.sportwetten24.com/wp-content/uploads/2020/03/sportwetten_corona_ausfall_wettangebot-wetten.jpg">
+
+    {% else %}
     {% if current_user.is_authenticated %}
         <p>
             Um zu tippen, besuche die
@@ -108,4 +126,5 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}
