@@ -64,7 +64,7 @@ deploy_app:
   script:
     - echo "$ENV_FILE" > .env
     - docker-compose build
-    - bin/.backup.sh backup.tar.gz
+    - bin/backup.sh backup.tar.gz
     - docker-compose up -d
     - rm .env
   artifacts:
