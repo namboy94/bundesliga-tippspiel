@@ -41,7 +41,7 @@ class SeasonWinner(ModelMixin, db.Model):
     The name of the table
     """
 
-    season = db.Column(db.Integer, primary_key=True, nullable=False)
+    season = db.Column(db.Integer, unique=True, nullable=False)
     """
     The season for which this is the winner
     """
