@@ -66,7 +66,8 @@ class _TestFramework(Framework):
             home_team=team_one, away_team=team_two,
             home_current_score=1, away_current_score=0,
             home_ht_score=0, away_ht_score=0,
-            home_ft_score=1, away_ft_score=0
+            home_ft_score=1, away_ft_score=0,
+            season=2016
         )
         goal = Goal(
             match=match, player=player, minute=67, minute_et=None,

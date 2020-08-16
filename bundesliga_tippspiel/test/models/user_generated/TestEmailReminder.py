@@ -131,13 +131,15 @@ class TestEmailReminder(_ModelTestFramework):
                           kickoff=(now + timedelta(minutes=30))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
-                          home_current_score=0, away_current_score=0)
+                          home_current_score=0, away_current_score=0,
+                          season=2018)
         match_two = Match(home_team=self.team_one, away_team=self.team_two,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=120))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
-                          home_current_score=0, away_current_score=0)
+                          home_current_score=0, away_current_score=0,
+                          season=2018)
 
         self.db.session.delete(self.match)
         self.db.session.add(match_one)
@@ -194,13 +196,15 @@ class TestEmailReminder(_ModelTestFramework):
                           kickoff=(now + timedelta(minutes=5))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
-                          home_current_score=0, away_current_score=0)
+                          home_current_score=0, away_current_score=0,
+                          season=2018)
         match_two = Match(home_team=self.team_one, away_team=self.team_two,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=7))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
-                          home_current_score=0, away_current_score=0)
+                          home_current_score=0, away_current_score=0,
+                          season=2018)
 
         self.db.session.delete(self.match)
         self.db.session.add(match_one)

@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 # imports
+import os
 from setuptools import setup, find_packages
 
 
@@ -37,6 +38,7 @@ if __name__ == "__main__":
         author_email="hermann@krumreyh.com",
         license="GNU GPL3",
         packages=find_packages(),
+        scripts=list(map(lambda x: os.path.join("bin", x), os.listdir("bin"))),
         install_requires=[
             "flask",
             "flask_login",
@@ -47,7 +49,8 @@ if __name__ == "__main__":
             "sqlalchemy",
             "werkzeug",
             "cherrypy",
-            "puffotter[flask,crypto]"
+            "puffotter[flask,crypto]",
+            "beautifulsoup4"
         ],
         include_package_data=True,
         zip_safe=False

@@ -1,3 +1,8 @@
+V 1.3.0:
+  - Integrated telegram support
+  - Better support for changing season
+  - Season start email script
+  - Backup/Restore scripts
 V 1.2.0:
   - Website now runs in docker
 V 1.1.1:

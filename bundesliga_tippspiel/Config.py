@@ -37,6 +37,15 @@ class Config(BaseConfig):
     """
 
     @classmethod
+    def season_string(cls) -> str:
+        """
+        :return: The season string, e.g. 2020/21 for 2020
+        """
+        first = int(cls.OPENLIGADB_SEASON)
+        second = str(first + 1)[-2:]
+        return f"{first}/{second}"
+
+    @classmethod
     def _load_extras(cls, parent: Type[BaseConfig]):
         """
         Loads non-standard configuration variables
@@ -81,7 +90,9 @@ class Config(BaseConfig):
             "password_was_reset": "Passwort erfolgreich zurückgesetzt. "
                                   "Sehe in deinem Email-Postfach nach.",
             "password_changed": "Dein Passwort wurde erfolgreich geändert.",
-            "user_was_deleted": "Dein Account wurde erfolgreich gelöscht"
+            "user_was_deleted": "Dein Account wurde erfolgreich gelöscht",
+            "telegram_chat_id_set": "Telegram Chat ID wurde erfolgreich"
+                                    "gesetzt"
         })
         parent.TEMPLATE_EXTRAS.update({
             "profile": profile_extras

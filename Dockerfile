@@ -9,6 +9,6 @@ RUN apt update && \
 
 ADD . flask-app
 RUN cd flask-app && python3 setup.py install
+
 WORKDIR flask-app
-EXPOSE 8000
 CMD ["/usr/bin/python3", "server.py"]

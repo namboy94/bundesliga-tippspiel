@@ -19,9 +19,11 @@ LICENSE"""
 
 from flask import render_template
 from typing import Dict, Any, List
+from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from puffotter.flask.base import app, db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from puffotter.flask.db.TelegramChatId import TelegramChatId
 from puffotter.smtp import send_email
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
@@ -168,6 +170,13 @@ class EmailReminder(ModelMixin, db.Model):
                 Config.SMTP_PASSWORD,
                 Config.SMTP_PORT
             )
+
+            telegram = TelegramChatId.query.filter_by(user=self.user).first()
+            if telegram is not None:
+                message = BeautifulSoup(message, "html.parser").text
+                message = "\n".join([x.strip() for x in message.split("\n")])
+                telegram.send_message(message)
+
             last_match = max(due, key=lambda x: x.kickoff)
             self.last_reminder = last_match.kickoff
             db.session.commit()

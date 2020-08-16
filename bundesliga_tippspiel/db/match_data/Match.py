@@ -125,6 +125,11 @@ class Match(ModelMixin, db.Model):
     Indicates whether or not the match has finished yet
     """
 
+    season = db.Column(db.Integer, nullable=False)
+    """
+    The season of the match
+    """
+
     @property
     def minute_display(self) -> str:
         """
@@ -199,7 +204,8 @@ class Match(ModelMixin, db.Model):
             "away_ft_score": self.away_ft_score,
             "kickoff": self.kickoff,
             "started": self.started,
-            "finished": self.finished
+            "finished": self.finished,
+            "season": self.season
         }
         if include_children:
             data["home_team"] = self.home_team.__json__(include_children)

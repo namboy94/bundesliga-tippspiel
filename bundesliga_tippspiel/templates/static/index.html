@@ -19,13 +19,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "components/base_layout.html" %}
 {% block body %}
-    <h1>Tippspiel zur Bundesliga Saison 2019/20</h1>
+    <h1>Tippspiel zur Bundesliga Saison {{ config.season_string() }}</h1>
     <p>
         Beim Bundesliga Tippspiel kannst du dein Fußballwissen (und dein Glück)
         mit deinen Freunden messen!
     </p>
 
-    {% set covid = True %}
+    {% set covid = False %}
 
     {% if covid %}
 

@@ -46,35 +46,35 @@ class TestMatch(_ModelTestFramework):
             Match(away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0),
+                  home_current_score=0, away_current_score=0, season=2018),
             Match(home_team=self.team_one,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0),
+                  home_current_score=0, away_current_score=0, season=2018),
             Match(home_team=self.team_one, away_team=self.team_two,
                   kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0),
+                  home_current_score=0, away_current_score=0, season=2018),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1,
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0),
+                  home_current_score=0, away_current_score=0, season=2018),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   finished=False,
-                  home_current_score=0, away_current_score=0),
+                  home_current_score=0, away_current_score=0, season=2018),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False,
-                  home_current_score=0, away_current_score=0),
+                  home_current_score=0, away_current_score=0, season=2018),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  away_current_score=0),
+                  away_current_score=0, season=2018),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0)
+                  home_current_score=0, season=2018)
         ])
 
     def test_auto_increment(self):
@@ -87,7 +87,7 @@ class TestMatch(_ModelTestFramework):
             (2, Match(home_team=self.team_one, away_team=self.team_two,
                       matchday=1, kickoff="2019-01-01:01:02:03",
                       started=False, finished=False,
-                      home_current_score=0, away_current_score=0))
+                      home_current_score=0, away_current_score=0, season=2018))
         ])
 
     def test_uniqueness(self):
@@ -101,7 +101,7 @@ class TestMatch(_ModelTestFramework):
             #       away_team=self.match.away_team,
             #       matchday=self.match.matchday,
             #       kickoff="2019-01-01:01:02:03",
-            #       started=False, finished=False)
+            #       started=False, finished=False, season=2018)
         ])
 
     def test_retrieving_from_db(self):

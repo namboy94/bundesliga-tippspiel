@@ -49,25 +49,25 @@ class TestLeaderboardAction(_ActionTestFramework):
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
-            started=True, finished=True
+            started=True, finished=True, season=2018
         )
         self.match_two = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=2, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
-            started=True, finished=True
+            started=True, finished=True, season=2018
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=3, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
-            started=True, finished=False
+            started=True, finished=False, season=2018
         )
         self.match_four = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=4, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
-            started=False, finished=False
+            started=False, finished=False, season=2018
         )
 
         self.db.session.add(self.match_one)
