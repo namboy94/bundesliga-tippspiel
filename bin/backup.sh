@@ -20,6 +20,7 @@ set -e
 
 if [ "$#" -ne 1 ]; then
     echo "Usage: backup.sh <backup-file>"
+    exit 1
 fi
 
 APP="bundesliga-tippspiel-app"
