@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-from typing import Type
+from typing import Type, List, Dict
 from puffotter.flask.Config import Config as BaseConfig
 
 
@@ -44,6 +44,23 @@ class Config(BaseConfig):
         first = int(cls.OPENLIGADB_SEASON)
         second = str(first + 1)[-2:]
         return f"{first}/{second}"
+
+    @classmethod
+    def environment_variables(cls) -> Dict[str, List[str]]:
+        """
+        Specifies required and optional environment variables
+        :return: The specified environment variables in two lists in
+                 a dictionary, grouped by whether the variables are
+                 required or optional
+        """
+        base = super().environment_variables()
+        base["required"] += [
+            "OPENLIGADB_SEASON"
+        ]
+        base["optional"] += [
+            "OPENLIGADB_LEAGUE"
+        ]
+        return base
 
     @classmethod
     def _load_extras(cls, parent: Type[BaseConfig]):
