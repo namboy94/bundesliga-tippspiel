@@ -49,7 +49,8 @@ if __name__ == "__main__":
             "sqlalchemy",
             "werkzeug",
             "cherrypy",
-            "puffotter[flask,crypto]"
+            "puffotter[flask,crypto]",
+            "beautifulsoup4"
         ],
         include_package_data=True,
         zip_safe=False

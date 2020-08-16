@@ -64,8 +64,13 @@ deploy_app:
   script:
     - echo "$ENV_FILE" > .env
     - docker-compose build
+    - bin/.backup.sh backup.tar.gz
     - docker-compose up -d
     - rm .env
+  artifacts:
+    paths:
+      - backup.tar.gz
+    expire_in: 1 month
 
 release_upload:
   stage: release

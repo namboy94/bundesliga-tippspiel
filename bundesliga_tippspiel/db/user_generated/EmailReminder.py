@@ -19,6 +19,7 @@ LICENSE"""
 
 from flask import render_template
 from typing import Dict, Any, List
+from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from puffotter.flask.base import app, db
 from puffotter.flask.db.ModelMixin import ModelMixin
@@ -172,6 +173,8 @@ class EmailReminder(ModelMixin, db.Model):
 
             telegram = TelegramChatId.query.filter_by(user=self.user).first()
             if telegram is not None:
+                message = BeautifulSoup(message, "html.parser").text
+                message = "\n".join([x.strip() for x in message.split("\n")])
                 telegram.send_message(message)
 
             last_match = max(due, key=lambda x: x.kickoff)

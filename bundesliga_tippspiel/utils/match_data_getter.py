@@ -128,7 +128,8 @@ def parse_match(match_data: Dict[str, Any]) -> Match:
         away_ft_score=ft_away,
         kickoff=kickoff,
         started=started,
-        finished=match_data["MatchIsFinished"]
+        finished=match_data["MatchIsFinished"],
+        season=int(Config.OPENLIGADB_SEASON)
     )
     return match
 

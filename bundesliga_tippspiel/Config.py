@@ -37,6 +37,15 @@ class Config(BaseConfig):
     """
 
     @classmethod
+    def season_string(cls) -> str:
+        """
+        :return: The season string, e.g. 2020/21 for 2020
+        """
+        first = int(cls.OPENLIGADB_SEASON)
+        second = str(first + 1)[-2:]
+        return f"{first}/{second}"
+
+    @classmethod
     def _load_extras(cls, parent: Type[BaseConfig]):
         """
         Loads non-standard configuration variables

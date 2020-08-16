@@ -25,6 +25,7 @@ services:
     restart: always
   db:
     image: "mariadb:10.1"
+    container_name: "bundesliga-tippspiel-db"
     env_file: .env
     networks:
       - net
