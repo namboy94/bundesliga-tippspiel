@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-from typing import Type, List, Dict
+from typing import Type, List, Dict, Optional
 from puffotter.flask.Config import Config as BaseConfig
 
 
@@ -37,13 +37,14 @@ class Config(BaseConfig):
     """
 
     @classmethod
-    def season_string(cls) -> str:
+    def season_string(cls, year: Optional[int] = None) -> str:
         """
         :return: The season string, e.g. 2020/21 for 2020
         """
-        first = int(cls.OPENLIGADB_SEASON)
-        second = str(first + 1)[-2:]
-        return f"{first}/{second}"
+        if year is None:
+            year = int(cls.OPENLIGADB_SEASON)
+        second = str(year + 1)[-2:]
+        return f"{year}/{second}"
 
     @classmethod
     def environment_variables(cls) -> Dict[str, List[str]]:

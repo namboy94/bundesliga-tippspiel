@@ -25,6 +25,7 @@ from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.user_generated.EmailReminder import EmailReminder
+from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 
 models: List[db.Model] = [
     Player,
@@ -32,7 +33,8 @@ models: List[db.Model] = [
     Match,
     Team,
     Bet,
-    EmailReminder
+    EmailReminder,
+    SeasonWinner
 ]
 """
 The database models of the application
