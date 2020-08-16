@@ -40,6 +40,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         <a href="{{ url_for("information.user", user_id=user.id) }}">
                             {{ user.username }}
                         </a>
+                        {% if season_winners is defined %}
+                            {% for season, winner_id in season_winners.items() %}
+                                {% if winner_id == user.id %}
+                                    <span title="{{ season }}">
+                                        <i class="fas fa-crown"></i>
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </td>
                     <td>{{ points }}</td>
                 </tr>

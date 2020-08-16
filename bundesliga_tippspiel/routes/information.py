@@ -26,6 +26,7 @@ from puffotter.flask.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
@@ -67,13 +68,18 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         delta = "%.2f" % (time.time() - start)
         app.logger.debug("Generated leaderboard data in {}s".format(delta))
 
+        season_winners = {
+            x.season_string: x.user_id for x in SeasonWinner.query.all()
+        }
+
         return render_template(
             "info/leaderboard.html",
             leaderboard=enumerate(leaderboard_data),
             matchday=current_matchday,
             leaderboard_history=leaderboard_history,
             show_all=True,
-            charts=True
+            charts=True,
+            season_winners=season_winners
         )
 
     @blueprint.route("/team/<int:team_id>")
