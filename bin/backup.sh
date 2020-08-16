@@ -30,7 +30,7 @@ rm -rf backup
 mkdir backup
 
 docker-compose up --no-recreate -d
-docker exec -it "$APP" printenv > backup/.env
+docker exec "$APP" printenv > backup/.env
 docker exec "$DB" bash -c 'mysqldump --single-transaction \
     -h localhost -u $MYSQL_USER --password=$MYSQL_PASSWORD $MYSQL_DATABASE' \
      > backup/db.sql
