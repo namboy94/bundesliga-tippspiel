@@ -81,7 +81,9 @@ class Config(BaseConfig):
             "password_was_reset": "Passwort erfolgreich zurückgesetzt. "
                                   "Sehe in deinem Email-Postfach nach.",
             "password_changed": "Dein Passwort wurde erfolgreich geändert.",
-            "user_was_deleted": "Dein Account wurde erfolgreich gelöscht"
+            "user_was_deleted": "Dein Account wurde erfolgreich gelöscht",
+            "telegram_chat_id_set": "Telegram Chat ID wurde erfolgreich"
+                                    "gesetzt"
         })
         parent.TEMPLATE_EXTRAS.update({
             "profile": profile_extras

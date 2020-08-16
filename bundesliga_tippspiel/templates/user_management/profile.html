@@ -63,7 +63,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
-    <h2>Email Erinnerungen</h2>
+    <h2>Erinnerungen</h2>
 
     <div class="container form-container">
         <form method="post" action="{{ url_for("email_reminder.set_email_reminder") }}">
@@ -100,24 +100,32 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
-    <h2>Telegram Erinnerungen</h2>
+    <h2>Telegram Chat ID</h2>
+    <p>
+        Um Erinnerungen mittels Telegram zu erhalten, musst du zunächst
+        deine Telegram Chat ID registrieren.
+        Diese Chat ID erhältst du, indem du die Nachricht "/whoami" and den
+        <a href="http://t.me/bundesliga_tippspiel_bot">
+            HK-Tippspiel Telegram Bot
+        </a>
+        sendest.
+    </p>
 
-    Um Erinnerungen für Telegram zu erhalten, schicke die folgende Nachricht
-    an den hk-tippspiel Bot
-    <!--suppress SpellCheckingInspection, HtmlUnknownTarget -->
-    (<a href="https://t.me/hk_tippspiel_bot">t.me/hk_tippspiel_bot</a>):
-
-    <br>
-    <br>
-
-    /register benutzername passwort
-
-    <br>
-    <br>
-
-    Anschließend kannst du den Zeitpunkt der Erinnerungen adjustieren und/oder
-    die Erinnerungen wieder deaktivieren. Schicke für weitere Informationen die
-    Nachricht "/help" an den Bot.>
+    <div class="container form-container">
+        <form method="post" action="{{ url_for('user_management.register_telegram') }}">
+            <div class="form-group">
+                <label for="telegram_chat_id_input">Telegram Chat ID</label>
+                <input class="form-control"
+                       type="text"
+                       autocomplete="on"
+                       id="telegram_chat_id_input"
+                       aria-label="{{ site_name }}"
+                       value="{{ '' if telegram_chat_id is none else telegram_chat_id.chat_id }}"
+                       name="telegram_chat_id">
+            </div>
+            <button type="submit" class="btn btn-primary">Bestätigen</button>
+        </form>
+    </div>
 
     <hr>
 
