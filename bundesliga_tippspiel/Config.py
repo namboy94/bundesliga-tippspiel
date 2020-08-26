@@ -26,12 +26,12 @@ class Config(BaseConfig):
     """
     Configuration for the flask application
     """
-    OPENLIGADB_SEASON: str = os.environ.get("OPENLIGADB_SEASON", "2019")
+    OPENLIGADB_SEASON: str
     """
     The openligadb season to use
     """
 
-    OPENLIGADB_LEAGUE: str = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+    OPENLIGADB_LEAGUE: str
     """
     The openligadb league to use
     """
@@ -70,6 +70,9 @@ class Config(BaseConfig):
         :param parent: The base configuration
         :return: None
         """
+        Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
+        Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+        print(Config.OPENLIGADB_SEASON)
         from bundesliga_tippspiel.template_extras import profile_extras
         parent.API_VERSION = "2"
         parent.STRINGS.update({

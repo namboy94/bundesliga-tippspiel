@@ -30,8 +30,8 @@ from bundesliga_tippspiel.Config import Config
 
 
 def update_db_data(
-        league: str = Config.OPENLIGADB_LEAGUE,
-        season: str = Config.OPENLIGADB_SEASON
+        league: Optional[str] = None,
+        season: Optional[str] = None
 ):
     """
     Updates the database with the match data for
@@ -41,6 +41,11 @@ def update_db_data(
     :return: None
     """
     app.logger.info("Updating match data")
+
+    if league is None:
+        league = Config.OPENLIGADB_LEAGUE
+    if season is None:
+        season = Config.OPENLIGADB_SEASON
 
     # Fetch Data
     base_url = "https://www.openligadb.de/api/{}/{}/{}"

@@ -100,4 +100,16 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             bets=bets_info
         )
 
+    @blueprint.route("/bets/season")
+    @login_required
+    @action_route
+    def season_bets():
+        """
+        Let's the user bet on season-long things.
+        :return: The response
+        """
+        return render_template(
+            "betting/season.html"
+        )
+
     return blueprint
