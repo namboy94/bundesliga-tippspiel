@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<h1>Registrierung für das <a href="https://{{ host }}">Bundesliga Tippspiel</a></h1>
+<h1>Registrierung für das <a href="{{ host_url }}">Bundesliga Tippspiel</a></h1>
 <p>
     Hallo {{ username }}! Vielen Dank dass du dich dazu entschieden hast, dich
-    bei <a href="https://{{ host }}">{{ host }}</a> zu registrieren.
+    bei <a href="{{ host_url }}">{{ domain_name }}</a> zu registrieren.
 </p>
 
 <p>
@@ -28,8 +28,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     besuche bitte den untenstehenden Link:
 </p>
 
-<a href="https://{{ target }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}">
-    {{ target }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}
+<a href="{{ target_url }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}">
+    {{ target_url }}?user_id={{ user_id }}&confirm_key={{ confirm_key }}
 </a>
 
 <p>
