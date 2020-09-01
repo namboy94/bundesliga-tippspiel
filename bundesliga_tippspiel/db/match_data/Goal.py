@@ -20,6 +20,8 @@ LICENSE"""
 from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Player import Player
 
 
 class Goal(ModelMixin, db.Model):

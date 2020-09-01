@@ -55,7 +55,7 @@ class Match(ModelMixin, db.Model):
     """
 
     home_team: Team = db.relationship(
-        "Team", foreign_keys=[home_team_id], back_populates="matches"
+        "Team", foreign_keys=[home_team_id]  # back_populates="matches"
     )
     """
     The home team.
@@ -71,7 +71,7 @@ class Match(ModelMixin, db.Model):
     """
 
     away_team: Team = db.relationship(
-        "Team", foreign_keys=[away_team_id], back_populates="matches"
+        "Team", foreign_keys=[away_team_id]  # back_populates="matches"
     )
     """
     The away team.

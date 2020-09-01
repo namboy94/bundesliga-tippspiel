@@ -77,36 +77,36 @@ class Team(ModelMixin, db.Model):
     The URL of an image file representing the team's logo in PNG format
     """
 
-    home_matches: List["Match"] = db.relationship(
-        "matches", back_populates="home_team", cascade="all, delete"
-    )
-    """
-    The home matches this team plays in.
-    """
-
-    away_matches: List["Match"] = db.relationship(
-        "matches", back_populates="away_team", cascade="all, delete"
-    )
-    """
-    The away matches this team plays in.
-    """
+    # home_matches: List["Match"] = db.relationship(
+    #     "Match", back_populates="home_team", cascade="all, delete"
+    # )
+    # """
+    # The home matches this team plays in.
+    # """
+    #
+    # away_matches: List["Match"] = db.relationship(
+    #     "Match", back_populates="away_team", cascade="all, delete"
+    # )
+    # """
+    # The away matches this team plays in.
+    # """
 
     players: List["Player"] = db.relationship(
-        "players", back_populates="team", cascade="all, delete"
+        "Player", back_populates="team", cascade="all, delete"
     )
     """
     The players of this team
     """
 
     season_position_bets: List["SeasonPositionBet"] = db.relationship(
-        "season_position_bets", back_populates="team", cascade="all, delete"
+        "SeasonPositionBet", back_populates="team", cascade="all, delete"
     )
     """
     The players of this team
     """
 
     season_team_bets: List["SeasonTeamBet"] = db.relationship(
-        "season_team_bets", back_populates="team", cascade="all, delete"
+        "SeasonTeamBet", back_populates="team", cascade="all, delete"
     )
     """
     The players of this team
