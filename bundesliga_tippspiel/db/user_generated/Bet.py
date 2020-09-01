@@ -20,6 +20,8 @@ LICENSE"""
 from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 class Bet(ModelMixin, db.Model):
@@ -40,45 +42,44 @@ class Bet(ModelMixin, db.Model):
     The name of the table
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False
     )
     """
     The ID of the user associated with this bet
     """
 
-    user = db.relationship(
-        "User", backref=db.backref("bets", lazy=True, cascade="all,delete")
+    user: User = db.relationship(
+        "User", backref=db.backref("bets", cascade="all, delete")
     )
     """
     The user associated with this bet
     """
 
-    match_id = db.Column(
+    match_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("matches.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("matches.id"),
         nullable=False
     )
     """
     The ID of the match that this bet refers to.
     """
 
-    match = db.relationship(
-        "Match", backref=db.backref("bets", lazy=True, cascade="all,delete")
+    match: Match = db.relationship(
+        "Match", back_populates="bets"
     )
     """
     The match that this bet refers to
     """
 
-    home_score = db.Column(db.Integer, nullable=False)
+    home_score: int = db.Column(db.Integer, nullable=False)
     """
     The score bet on the home team
     """
 
-    away_score = db.Column(db.Integer, nullable=False)
+    away_score: int = db.Column(db.Integer, nullable=False)
     """
     The score bet on the away team
     """

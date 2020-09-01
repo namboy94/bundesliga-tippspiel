@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any
 from puffotter.flask.base import db
+from puffotter.flask.db.User import User
 from puffotter.flask.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.Config import Config
 
@@ -41,26 +42,25 @@ class SeasonWinner(ModelMixin, db.Model):
     The name of the table
     """
 
-    season = db.Column(db.Integer, unique=True, nullable=False)
+    season: int = db.Column(db.Integer, unique=True, nullable=False)
     """
     The season for which this is the winner
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False
     )
     """
-    The ID of the user that won the season
+    The ID of the user that won the competition
     """
 
-    user = db.relationship("User", backref=db.backref(
-        "season_winners", lazy=True, cascade="all,delete"
-    ))
+    user: User = db.relationship(
+        "User", backref=db.backref("season_winners", cascade="all, delete")
+    )
     """
-    The user that won the season
+    The user that won the competition
     """
 
     @property

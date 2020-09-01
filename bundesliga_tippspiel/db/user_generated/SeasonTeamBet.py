@@ -20,7 +20,9 @@ LICENSE"""
 from enum import Enum
 from typing import Dict, Any
 from puffotter.flask.base import db
+from puffotter.flask.db.User import User
 from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.match_data.Team import Team
 
 
 class SeasonTeamBetType(Enum):
@@ -54,34 +56,46 @@ class SeasonTeamBet(ModelMixin, db.Model):
     The name of the table
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False
     )
     """
-    The ID of the user associated with this season team bet
+    The ID of the user associated with this bet
     """
 
-    user = db.relationship(
-        "User", backref=db.backref("bets", lazy=True, cascade="all,delete")
+    user: User = db.relationship(
+        "User", backref=db.backref("season_team_bets", cascade="all, delete")
     )
     """
-    The user associated with this season team bet
+    The user associated with this bet
     """
 
-    season: db.Column(db.Integer, nullable=False)
+    season: int = db.Column(db.Integer, nullable=False)
     """
     The season of the season bet
     """
 
-    bet_value: db.Column(db.Integer, nullable=False)
+    team_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("teams.id"),
+        nullable=False
+    )
     """
-    The value of the bet
+    The ID of the team the user bet on.
     """
 
-    bet_type = db.Column(db.Enum(SeasonTeamBetType), nullable=False)
+    team: Team = db.relationship(
+        "Team", back_populates="season_team_bets"
+    )
+    """
+    The team the user bet on.
+    """
+
+    bet_type: SeasonTeamBetType = db.Column(
+        db.Enum(SeasonTeamBetType), nullable=False
+    )
     """
     The type of the bet
     """

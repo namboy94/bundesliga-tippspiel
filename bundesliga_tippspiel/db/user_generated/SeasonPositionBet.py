@@ -20,6 +20,8 @@ LICENSE"""
 from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.match_data.Team import Team
 
 
 class SeasonPositionBet(ModelMixin, db.Model):
@@ -40,47 +42,45 @@ class SeasonPositionBet(ModelMixin, db.Model):
     The name of the table
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False
     )
     """
     The ID of the user associated with this season position bet
     """
 
-    user = db.relationship(
-        "User", backref=db.backref("bets", lazy=True, cascade="all,delete")
+    user: User = db.relationship(
+        "User",
+        backref=db.backref("season_position_bets", cascade="all, delete")
     )
     """
     The user associated with this season position bet
     """
 
-    team_id = db.Column(
+    team_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("teams.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("teams.id"),
         nullable=False
     )
     """
     The ID of the team the position bet is for.
     """
 
-    team = db.relationship(
-        "Team", backref=db.backref(
-            "season_position_bets", lazy=True, cascade="all,delete"
-        ),
+    team: Team = db.relationship(
+        "Team", back_populates="season_position_bets"
     )
     """
     The team the position bet is for.
     """
 
-    season: db.Column(db.Integer, nullable=False)
+    season: int = db.Column(db.Integer, nullable=False)
     """
     The season of the season bet
     """
 
-    position: db.Column(db.Integer, nullable=False)
+    position: int = db.Column(db.Integer, nullable=False)
     """
     The position of the team in the table
     """

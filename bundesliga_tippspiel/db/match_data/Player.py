@@ -17,9 +17,12 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
+from typing import Dict, Any, List, TYPE_CHECKING
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.match_data.Team import Team
+if TYPE_CHECKING:
+    from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 
 class Player(ModelMixin, db.Model):
@@ -40,9 +43,9 @@ class Player(ModelMixin, db.Model):
     The name of the database table
     """
 
-    team_id = db.Column(
+    team_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("teams.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("teams.id"),
         nullable=False
     )
     """
@@ -50,16 +53,21 @@ class Player(ModelMixin, db.Model):
     Acts as a foreign key to the 'teams' table.
     """
 
-    team = db.relationship(
-        "Team", backref=db.backref("players", lazy=True, cascade="all,delete"),
-    )
+    team: Team = db.relationship("Team", back_populates="players")
     """
     The team the player is affiliated with.
     """
 
-    name = db.Column(db.String(255), nullable=False)
+    name: str = db.Column(db.String(255), nullable=False)
     """
     The name of the player
+    """
+
+    goal: List["Goal"] = db.relationship(
+        "Goal", back_populates="player", cascade="all, delete"
+    )
+    """
+    The goals the player scored.
     """
 
     def __json__(self, include_children: bool = False) -> Dict[str, Any]:

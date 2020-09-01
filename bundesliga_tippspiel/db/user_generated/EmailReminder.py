@@ -25,6 +25,7 @@ from puffotter.flask.base import app, db
 from puffotter.flask.db.ModelMixin import ModelMixin
 from puffotter.flask.db.TelegramChatId import TelegramChatId
 from puffotter.smtp import send_email
+from puffotter.flask.db.User import User
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -48,10 +49,9 @@ class EmailReminder(ModelMixin, db.Model):
     The name of the table
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False,
         unique=True
     )
@@ -59,23 +59,23 @@ class EmailReminder(ModelMixin, db.Model):
     The ID of the user associated with this email reminder
     """
 
-    user = db.relationship(
+    user: User = db.relationship(
         "User",
-        backref=db.backref("email_reminders", lazy=True, cascade="all,delete")
+        backref=db.backref("email_reminders", cascade="all, delete")
     )
     """
     The user associated with this email reminder
     """
 
-    reminder_time = db.Column(db.Integer, nullable=False)
+    reminder_time: int = db.Column(db.Integer, nullable=False)
     """
     The time before the next unbet match when the reminder email
     will be sent.
     Unit: seconds
     """
 
-    last_reminder = db.Column(db.String(19), nullable=False,
-                              default="1970-01-01:01-01-01")
+    last_reminder: str = db.Column(db.String(19), nullable=False,
+                                   default="1970-01-01:01-01-01")
     """
     The time when the last reminder was sent. Format in the form
     %Y-%m-%d:%H-%M-%S
