@@ -21,7 +21,7 @@ from typing import List, TYPE_CHECKING
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 

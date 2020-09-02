@@ -21,16 +21,14 @@ from unittest import mock
 from datetime import datetime, timedelta
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
-from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
-    SendDueEmailRemindersAction
+from bundesliga_tippspiel.background.reminders import send_due_reminders
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.actions.ActionTestFramework import \
-    _ActionTestFramework
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
 
-class TestSetEmailReminderAction(_ActionTestFramework):
+class TestReminders(_TestFramework):
     """
-    Class that tests the SendDueEmailRemindersAction action
+    Class that tests the sending of due email reminders
     """
 
     def setUp(self):
@@ -56,13 +54,6 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         self.db.session.add(self.reminder)
         self.db.session.commit()
 
-    def generate_action(self) -> SendDueEmailRemindersAction:
-        """
-        Generates a valid SendDueEmailRemindersAction object
-        :return: The generated SendDueEmailRemindersAction
-        """
-        return SendDueEmailRemindersAction()
-
     def test_without_stored_reminders(self):
         """
         Tests running the action without any stored reminders
@@ -72,7 +63,7 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         self.db.session.commit()
         with mock.patch("bundesliga_tippspiel.db.user_generated."
                         "EmailReminder.send_email") as mocked:
-            self.action.execute()
+            send_due_reminders()
             self.assertEqual(0, mocked.call_count)
 
     def test_with_non_due_reminder(self):
@@ -84,7 +75,7 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         self.db.session.commit()
         with mock.patch("bundesliga_tippspiel.db.user_generated."
                         "EmailReminder.send_email") as mocked:
-            self.action.execute()
+            send_due_reminders()
             self.assertEqual(0, mocked.call_count)
 
     def test_with_due_reminder(self):
@@ -95,14 +86,7 @@ class TestSetEmailReminderAction(_ActionTestFramework):
         with self.context:
             with mock.patch("bundesliga_tippspiel.db.user_generated."
                             "EmailReminder.send_email") as mocked:
-                self.action.execute()
+                send_due_reminders()
                 self.assertEqual(1, mocked.call_count)
-                self.action.execute()
+                send_due_reminders()
                 self.assertEqual(1, mocked.call_count)
-
-    def test_from_dict(self):
-        """
-        "Tests" the from_dict method
-        :return: None
-        """
-        SendDueEmailRemindersAction.from_dict({})

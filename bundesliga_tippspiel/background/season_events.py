@@ -24,7 +24,6 @@ from datetime import datetime, timedelta
 from puffotter.smtp import send_email
 from puffotter.flask.base import db
 from puffotter.flask.db.User import User
-from puffotter.flask.db.TelegramChatId import TelegramChatId
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent, SeasonEventType
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -44,7 +43,9 @@ def handle_season_events():
         elif event.event_type == SeasonEventType.MID_SEASON_REMINDER:
             event.executed = handle_midseason_reminder()
         elif event.event_type == SeasonEventType.POST_SEASON_WRAPUP:
-            event.executed = handle_post_season_wrapup()
+            event.executed = handle_postseason_wrapup()
+        else:  # pragma: no cover
+            pass
 
         db.session.commit()
 
@@ -54,10 +55,17 @@ def load_season_events() -> List[SeasonEvent]:
     Loads all event states from the database
     :return: The event states
     """
-    existing = {x.event_type: x for x in SeasonEvent.query.all()}
+    existing = {
+        x.event_type: x
+        for x in SeasonEvent.query.filter_by(season=Config.season()).all()
+    }
     for event_type in SeasonEventType:
         if event_type not in existing:
-            new = SeasonEvent(event_type=event_type, executed=False)
+            new = SeasonEvent(
+                event_type=event_type,
+                executed=False,
+                season=Config.season()
+            )
             db.session.add(new)
             existing[event_type] = new
 
@@ -70,14 +78,68 @@ def handle_preseason_reminder() -> bool:
     Sends a reminder to existing users a week before the start of the season
     :return: Whether or not the reminder was sent
     """
+    return __handle_reminder(
+        1,
+        timedelta(days=7),
+        "email/newseason.html",
+        True
+    )
+
+
+def handle_midseason_reminder() -> bool:
+    """
+    Handles sending out midseason reminders
+    :return: Whether the reminder was sent or not
+    """
+    return __handle_reminder(
+        18,
+        timedelta(days=7),
+        "email/midseason.html",
+        True
+    )
+
+
+def handle_postseason_wrapup() -> bool:
+    """
+    Handles the post-season wrapup
+    :return: None
+    """
+    return __handle_reminder(
+        34,
+        timedelta(days=1),
+        "email/postseason.html",
+        False
+    )
+
+
+def __handle_reminder(
+        matchday: int,
+        delta: timedelta,
+        message_file: str,
+        before: bool
+) -> bool:
+    """
+    Handles sending out a reminder after/before a specified time
+    :param matchday: The matchday that acts as an anchor
+    :param delta: The time delta relative to the matchday
+    :param message_file: The HTML template containing the message
+    :param before: Whether or not the email should be sent before the event
+    :return: True if the message was sent, False if it was not yet due
+    """
     kickoff_times = [
         x.kickoff_datetime
-        for x in Match.query.filter_by(matchday=1).all()
+        for x in Match.query.filter_by(matchday=matchday).all()
     ]
-    first_kickoff = min(kickoff_times)
+    if before:
+        kickoff = min(kickoff_times)
+    else:
+        kickoff = max(kickoff_times)
+
     now = datetime.utcnow()
 
-    if first_kickoff - timedelta(weeks=1) > now:
+    if before and kickoff - delta > now:
+        return False
+    elif not before and kickoff + delta > now:
         return False
     else:
         for user in User.query.all():
@@ -88,35 +150,18 @@ def handle_preseason_reminder() -> bool:
             )
 
             send_email(
-                "hermann@krumreyh.com",
+                user.email,
                 f"Bundesliga Tippspiel Saison {Config.season_string()}",
-                message,
+                message_file,
                 Config.SMTP_HOST,
                 Config.SMTP_ADDRESS,
                 Config.SMTP_PASSWORD,
                 Config.SMTP_PORT
             )
 
-            telegram = TelegramChatId.query.filter_by(user=user).first()
+            telegram = user.telegram_chat_id
             if telegram is not None:
                 message = BeautifulSoup(message, "html.parser").text
                 message = "\n".join([x.strip() for x in message.split("\n")])
                 telegram.send_message(message)
-
         return True
-
-
-def handle_midseason_reminder() -> bool:
-    """
-    Handles sending out midseason reminders
-    :return: Whether the reminder was sent or not
-    """
-    return False
-
-
-def handle_post_season_wrapup() -> bool:
-    """
-    Handles the post-season wrapup
-    :return: None
-    """
-    return False

@@ -57,7 +57,7 @@ class TestBet(_ModelTestFramework):
         self._test_auto_increment([
             (1, self.bet),
             (2, Bet(
-                user=self.user_one,
+                user=self.user_two,
                 match=self.match,
                 home_score=3,
                 away_score=1
@@ -69,8 +69,12 @@ class TestBet(_ModelTestFramework):
         Tests that unique attributes are correctly checked
         :return: None
         """
-        # No unique stuff
-        pass
+        self._test_uniqueness([
+            Bet(
+                user=self.bet.user, match=self.bet.match,
+                home_score=50, away_score=90
+            )
+        ])
 
     def test_retrieving_from_db(self):
         """

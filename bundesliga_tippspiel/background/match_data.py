@@ -29,7 +29,7 @@ from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.Config import Config
 
 
-def update_db_data(
+def update_match_data(
         league: Optional[str] = None,
         season: Optional[str] = None
 ):

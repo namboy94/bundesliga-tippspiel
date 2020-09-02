@@ -22,7 +22,7 @@ from typing import TYPE_CHECKING, List
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
     from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
@@ -44,6 +44,18 @@ class Match(ModelMixin, db.Model):
     """
     The table name
     """
+
+    # __table_args__ = (
+    #     db.UniqueConstraint(
+    #         "home_team_id",
+    #         "away_team_id",
+    #         "season",
+    #         name="unique_match"
+    #     ),
+    # )
+    # """
+    # Table arguments for unique constraints
+    # """
 
     home_team_id: int = db.Column(
         db.Integer,
@@ -201,3 +213,12 @@ class Match(ModelMixin, db.Model):
         :return: A datetime object representing the kickoff time
         """
         return datetime.strptime(self.kickoff, "%Y-%m-%d:%H-%M-%S")
+
+    @kickoff_datetime.setter
+    def kickoff_datetime(self, kickoff: datetime):
+        """
+        Setter for the kickoff datetime
+        :param kickoff: The new kickoff datetime
+        :return: None
+        """
+        self.kickoff = kickoff.strftime("%Y-%m-%d:%H-%M-%S")

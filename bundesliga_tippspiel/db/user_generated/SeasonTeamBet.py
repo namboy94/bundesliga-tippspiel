@@ -55,6 +55,18 @@ class SeasonTeamBet(ModelMixin, db.Model):
     The name of the table
     """
 
+    __table_args__ = (
+        db.UniqueConstraint(
+            "user_id",
+            "bet_type",
+            "season",
+            name="unique_season_team_bet"
+        ),
+    )
+    """
+    Table arguments for unique constraints
+    """
+
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),

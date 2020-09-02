@@ -186,5 +186,17 @@ class _ModelTestFramework(_TestFramework):
         from bundesliga_tippspiel.db.match_data.Match import Match
         # noinspection PyUnresolvedReferences
         from bundesliga_tippspiel.db.user_generated.Bet import Bet
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.db.user_generated.SeasonWinner import \
+            SeasonWinner
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
+            SeasonTeamBet, SeasonTeamBetType
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
+            SeasonPositionBet
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.db.SeasonEvent import \
+            SeasonEvent, SeasonEventType
 
         exec("self.assertEqual(model, {})".format(repr(model)))

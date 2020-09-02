@@ -18,7 +18,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from enum import Enum
-from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
 
@@ -50,6 +49,17 @@ class SeasonEvent(ModelMixin, db.Model):
     The name of the table
     """
 
+    __table_args__ = (
+        db.UniqueConstraint(
+            "event_type",
+            "season",
+            name="unique_season_event"
+        ),
+    )
+    """
+    Table arguments for unique constraints
+    """
+
     event_type: SeasonEventType = db.Column(
         db.Enum(SeasonEventType),
         nullable=False,
@@ -64,16 +74,7 @@ class SeasonEvent(ModelMixin, db.Model):
     Whether the event was executed or not
     """
 
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "event_type": self.event_type.value,
-            "executed": self.executed
-        }
-        return data
+    season: int = db.Column(db.Integer, nullable=False)
+    """
+    The season this event is for
+    """

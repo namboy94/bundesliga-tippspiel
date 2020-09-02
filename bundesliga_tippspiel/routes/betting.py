@@ -156,9 +156,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Let's the user bet on season-long things.
         :return: The response
         """
-        if Action.resolve_and_check_matchday(-1) > 17:
+        if Action.get_current_matchday() > 17:
             flash("Saisonübergreifende Wetten können nur vor dem 18. "
                   "Spieltag abgeschlossen werden", "danger")
+            return redirect(url_for("betting.season_bets"))
 
         existing_team_bets = {
             x.bet_type: x
@@ -198,9 +199,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Let's the user bet on season-long things.
         :return: The response
         """
-        if Action.resolve_and_check_matchday(-1) > 17:
+        if Action.get_current_matchday() > 17:
             flash("Saisonübergreifende Wetten können nur vor dem 18. "
                   "Spieltag abgeschlossen werden", "danger")
+            return redirect(url_for("betting.season_bets"))
 
         existing_bets = {
             x.team_id: x

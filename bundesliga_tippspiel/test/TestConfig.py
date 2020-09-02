@@ -17,17 +17,25 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Tuple, Callable
-from bundesliga_tippspiel.background.season_events import handle_season_events
-from bundesliga_tippspiel.background.match_data import update_match_data
-from bundesliga_tippspiel.background.reminders import send_due_reminders
+# noinspection PyProtectedMember
+from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
 
-bg_tasks: Dict[str, Tuple[int, Callable]] = {
-    "update_db_data": (30, update_match_data),
-    "send_due_reminders": (60, send_due_reminders),
-    "handle_season_events": (60 * 60 * 24, handle_season_events)
-}
-"""
-A dictionary containing background tasks for the flask application
-"""
+class TestConfig(_TestFramework):
+    """
+    Tests the config class
+    """
+
+    def test_season_calculations(self):
+        """
+        Tests if the season calculations are done correctly
+        :return: None
+        """
+        self.assertEqual(
+            self.config.season(),
+            int(self.config.OPENLIGADB_SEASON)
+        )
+        self.assertEqual(
+            self.config.season_string(2017),
+            "2017/18"
+        )

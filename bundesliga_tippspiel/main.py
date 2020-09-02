@@ -27,7 +27,7 @@ from bundesliga_tippspiel.db import models
 from bundesliga_tippspiel.routes import blueprint_generators
 
 
-def main():
+def main():  # pragma: no cover
     """
     Initializes and starts the flask application
     :return: None

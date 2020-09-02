@@ -68,3 +68,10 @@ class TestGetEmailReminderAction(_ActionTestFramework):
 
             resp = self.action.execute()
             self.assertEqual(resp["email_reminder"], None)
+
+    def test_from_dict(self):
+        """
+        Tests the from_dict method
+        :return: None
+        """
+        GetEmailReminderAction.from_dict({})
