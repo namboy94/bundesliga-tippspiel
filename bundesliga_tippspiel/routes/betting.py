@@ -181,7 +181,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             if bet is None:
                 bet = SeasonTeamBet(
                     bet_type=bet_type, user=current_user,
-                    season=int(Config.OPENLIGADB_SEASON)
+                    season=Config.season()
                 )
                 db.session.add(bet)
             bet.team = team
@@ -218,8 +218,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
                 bet = existing_bets[team.id]
             else:
                 bet = SeasonPositionBet(
-                    user=current_user, team=team,
-                    season=int(Config.OPENLIGADB_SEASON)
+                    user=current_user, team=team, season=Config.season()
                 )
                 db.session.add(bet)
             bet.position = int(team_position)

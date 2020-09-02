@@ -47,6 +47,13 @@ class Config(BaseConfig):
         return f"{year}/{second}"
 
     @classmethod
+    def season(cls) -> int:
+        """
+        :return: The current season
+        """
+        return int(Config.OPENLIGADB_SEASON)
+
+    @classmethod
     def environment_variables(cls) -> Dict[str, List[str]]:
         """
         Specifies required and optional environment variables
@@ -72,7 +79,6 @@ class Config(BaseConfig):
         """
         Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
         Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
-        print(Config.OPENLIGADB_SEASON)
         from bundesliga_tippspiel.template_extras import profile_extras
         parent.API_VERSION = "2"
         parent.STRINGS.update({
