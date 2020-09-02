@@ -20,6 +20,7 @@ LICENSE"""
 from unittest import mock
 from datetime import datetime, timedelta
 from puffotter.flask.db.User import User
+from puffotter.flask.base import db
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.user_generated.EmailReminder import \
     EmailReminder
@@ -218,3 +219,12 @@ class TestEmailReminder(_ModelTestFramework):
 
         self.generate_sample_bet(self.user_two, match_two)
         self.assertEqual(len(reminder.get_due_matches()), 0)
+
+    def test_cascades(self):
+        """
+        Tests if cascade deletes work correctly
+        :return: None
+        """
+        self.assertEqual(len(EmailReminder.query.all()), 1)
+        db.session.delete(self.reminder.user)
+        self.assertEqual(len(EmailReminder.query.all()), 0)

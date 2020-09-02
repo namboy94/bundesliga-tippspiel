@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from puffotter.flask.base import db
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
     _ModelTestFramework
@@ -103,3 +104,14 @@ class TestPlayer(_ModelTestFramework):
         :return: None
         """
         self._test_string_representation(self.player)
+
+    def test_cascades(self):
+        """
+        Tests if cascade deletes work correctly
+        :return: None
+        """
+        self.assertEqual(len(Player.query.all()), 1)
+        db.session.delete(self.goal)
+        self.assertEqual(len(Player.query.all()), 1)
+        db.session.delete(self.player.team)
+        self.assertEqual(len(Player.query.all()), 0)

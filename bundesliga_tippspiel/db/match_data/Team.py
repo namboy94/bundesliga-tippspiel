@@ -22,7 +22,7 @@ from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
 if TYPE_CHECKING:
     from bundesliga_tippspiel.db.match_data.Player import Player
-    from bundesliga_tippspiel.db.match_data.Match import Match
+    # from bundesliga_tippspiel.db.match_data.Match import Match
     from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
         SeasonTeamBet
     from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
@@ -77,6 +77,7 @@ class Team(ModelMixin, db.Model):
     The URL of an image file representing the team's logo in PNG format
     """
 
+    # TODO Figure out how to fix this
     # home_matches: List["Match"] = db.relationship(
     #     "Match", back_populates="home_team", cascade="all, delete"
     # )

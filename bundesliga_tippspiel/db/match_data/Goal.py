@@ -58,7 +58,7 @@ class Goal(ModelMixin, db.Model):
 
     player_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("players.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("players.id"),
         nullable=False
     )
     """
@@ -67,7 +67,7 @@ class Goal(ModelMixin, db.Model):
 
     player: Player = db.relationship(
         "Player",
-        backref=db.backref("goals", lazy=True, cascade="all,delete")
+        back_populates="goals"
     )
     """
     The player that scored this goal.

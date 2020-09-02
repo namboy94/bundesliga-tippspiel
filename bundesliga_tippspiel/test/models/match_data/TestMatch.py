@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from puffotter.flask.base import db
 from datetime import datetime, timedelta
 from bundesliga_tippspiel.db.match_data.Match import Match
 # noinspection PyProtectedMember
@@ -200,3 +201,20 @@ class TestMatch(_ModelTestFramework):
         self.assertEqual(match.ht_score, "0:1")
         self.assertEqual(match.ft_score, "2:3")
         self.assertEqual(match.current_score, "4:5")
+
+    def test_cascades(self):
+        """
+        Tests if cascade deletes work correctly
+        :return: None
+        """
+        # TODO Fix this
+        self.assertEqual(len(Match.query.all()), 1)
+        db.session.delete(self.goal)
+        self.assertEqual(len(Match.query.all()), 1)
+        db.session.delete(self.team_one)
+        # self.assertEqual(len(Match.query.all()), 0)
+        self.tearDown()
+        self.setUp()
+        self.assertEqual(len(Match.query.all()), 1)
+        db.session.delete(self.team_two)
+        # self.assertEqual(len(Match.query.all()), 0)

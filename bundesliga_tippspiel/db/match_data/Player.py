@@ -63,7 +63,7 @@ class Player(ModelMixin, db.Model):
     The name of the player
     """
 
-    goal: List["Goal"] = db.relationship(
+    goals: List["Goal"] = db.relationship(
         "Goal", back_populates="player", cascade="all, delete"
     )
     """
