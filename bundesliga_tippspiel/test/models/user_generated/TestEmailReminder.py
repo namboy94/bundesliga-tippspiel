@@ -134,7 +134,7 @@ class TestEmailReminder(_ModelTestFramework):
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
                           season=2018)
-        match_two = Match(home_team=self.team_one, away_team=self.team_two,
+        match_two = Match(home_team=self.team_two, away_team=self.team_one,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=120))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
@@ -199,7 +199,7 @@ class TestEmailReminder(_ModelTestFramework):
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
                           season=2018)
-        match_two = Match(home_team=self.team_one, away_team=self.team_two,
+        match_two = Match(home_team=self.team_two, away_team=self.team_one,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=7))
                           .strftime("%Y-%m-%d:%H-%M-%S"),

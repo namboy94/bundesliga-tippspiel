@@ -45,17 +45,17 @@ class Match(ModelMixin, db.Model):
     The table name
     """
 
-    # __table_args__ = (
-    #     db.UniqueConstraint(
-    #         "home_team_id",
-    #         "away_team_id",
-    #         "season",
-    #         name="unique_match"
-    #     ),
-    # )
-    # """
-    # Table arguments for unique constraints
-    # """
+    __table_args__ = (
+        db.UniqueConstraint(
+            "home_team_id",
+            "away_team_id",
+            "season",
+            name="unique_match"
+        ),
+    )
+    """
+    Table arguments for unique constraints
+    """
 
     home_team_id: int = db.Column(
         db.Integer,

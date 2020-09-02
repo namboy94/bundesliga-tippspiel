@@ -20,6 +20,7 @@ LICENSE"""
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
@@ -45,6 +46,12 @@ class TestLeaderboardAction(_ActionTestFramework):
         self.unconfirmed_user = self.generate_sample_user(False)[0]
         self.team_one, self.team_two, _, _, _ = \
             self.generate_sample_match_data()
+        self.team_three = Team(
+            name="ZZ", short_name="ZZ", abbreviation="ZZ",
+            icon_svg="ZZ", icon_png="ZZ"
+        )
+        self.db.session.add(self.team_three)
+        self.db.session.commit()
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
@@ -52,19 +59,19 @@ class TestLeaderboardAction(_ActionTestFramework):
             started=True, finished=True, season=2018
         )
         self.match_two = Match(
-            home_team=self.team_one, away_team=self.team_two,
+            home_team=self.team_two, away_team=self.team_one,
             matchday=2, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
             started=True, finished=True, season=2018
         )
         self.match_three = Match(
-            home_team=self.team_one, away_team=self.team_two,
+            home_team=self.team_one, away_team=self.team_three,
             matchday=3, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
             started=True, finished=False, season=2018
         )
         self.match_four = Match(
-            home_team=self.team_one, away_team=self.team_two,
+            home_team=self.team_three, away_team=self.team_two,
             matchday=4, kickoff="2019-01-01:01:02:03",
             home_current_score=1, away_current_score=1,
             started=False, finished=False, season=2018

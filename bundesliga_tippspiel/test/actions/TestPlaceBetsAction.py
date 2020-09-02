@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 # noinspection PyProtectedMember
@@ -39,6 +40,12 @@ class TestPlaceBetsAction(_ActionTestFramework):
         self.user, self.passwd, _ = self.generate_sample_user(True)
         self.team_one, self.team_two, _, _, _ = \
             self.generate_sample_match_data()
+        self.team_three = Team(
+            name="ZZ", short_name="ZZ", abbreviation="ZZ",
+            icon_svg="ZZ", icon_png="ZZ"
+        )
+        self.db.session.add(self.team_three)
+        self.db.session.commit()
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
@@ -46,13 +53,13 @@ class TestPlaceBetsAction(_ActionTestFramework):
             home_current_score=0, away_current_score=0, season=2018
         )
         self.match_two = Match(
-            home_team=self.team_one, away_team=self.team_two,
+            home_team=self.team_two, away_team=self.team_one,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=False,
             home_current_score=0, away_current_score=0, season=2018
         )
         self.match_three = Match(
-            home_team=self.team_one, away_team=self.team_two,
+            home_team=self.team_one, away_team=self.team_three,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=True, finished=False,
             home_current_score=0, away_current_score=0, season=2018

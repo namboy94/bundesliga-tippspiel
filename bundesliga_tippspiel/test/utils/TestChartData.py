@@ -46,7 +46,7 @@ class TestChartData(_TestFramework):
             home_current_score=1, away_current_score=2, season=2018
         )
         match_two = Match(
-            home_team=team_one, away_team=team_two,
+            home_team=team_two, away_team=team_one,
             matchday=2, kickoff="2019-01-01:01:02:03",
             started=False, finished=False,
             home_current_score=0, away_current_score=0, season=2018
