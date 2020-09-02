@@ -35,7 +35,9 @@ docker-compose up -d
 docker stop "$APP"
 sleep 20
 
-docker exec -i "$DB" bash -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -e "DROP DATABASE $MYSQL_DATABASE; CREATE DATABASE $MYSQL_DATABASE"'
-docker exec -i "$DB" bash -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE' < backup/db.sql
+docker exec -i "$DB" bash -c 'dropdb $POSTGRES_DB -U $POSTGRES_USER'
+docker exec -i "$DB" bash -c 'createdb $POSTGRES_DB -U $POSTGRES_USER'
+docker exec -i "$DB" bash -c 'psql $POSTGRES_DB -U $POSTGRES_USER' < backup/db.sql
+
 docker-compose up -d
 rm -rf backup
