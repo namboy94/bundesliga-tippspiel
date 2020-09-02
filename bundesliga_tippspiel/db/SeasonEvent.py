@@ -62,8 +62,7 @@ class SeasonEvent(ModelMixin, db.Model):
 
     event_type: SeasonEventType = db.Column(
         db.Enum(SeasonEventType),
-        nullable=False,
-        unique=True
+        nullable=False
     )
     """
     The type of event

@@ -78,6 +78,7 @@ class Config(BaseConfig):
         :return: None
         """
         Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
+        print(Config.OPENLIGADB_SEASON)
         Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
         from bundesliga_tippspiel.template_extras import profile_extras
         parent.API_VERSION = "2"

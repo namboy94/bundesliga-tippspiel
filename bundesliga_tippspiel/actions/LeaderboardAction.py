@@ -17,10 +17,12 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.Config import Config
 
 
 class LeaderboardAction(Action):
@@ -31,20 +33,18 @@ class LeaderboardAction(Action):
     def __init__(
             self,
             matchday: Optional[int] = None,
-            bets: Optional[List[Bet]] = None,
             count: bool = False
     ):
         """
         Initializes the LeaderboardAction object
         :param matchday: The matchday for which to generate the leaderboard.
                          If None, will use the most current matchday
-        :param bets: limits the leaderboard to a given set of bets
         :param count: If set to true, will count the amount of bets instead
                       of evaluating their points
         """
         self.matchday = None if matchday is None else int(matchday)
-        self.bets = bets
         self.count = count
+        self.bets = []
 
     def validate_data(self):
         """
@@ -67,8 +67,8 @@ class LeaderboardAction(Action):
             pointmap[user.id] = 0
             usermap[user.id] = user
 
-        if self.bets is None:
-            self.bets = Bet.query.all()
+        self.bets = Bet.query.join(Bet.match)\
+            .filter(Match.season == Config.season()).all()
 
         if self.matchday is not None:
             self.bets = list(filter(

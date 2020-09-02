@@ -17,23 +17,21 @@ services:
       - "${HTTP_PORT}:${HTTP_PORT}"
     env_file: .env
     environment:
-      - DB_MODE=mysql
-      - MYSQL_HOST=db
-      - MYSQL_PORT=3306
+      - DB_MODE=postgresql
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_PORT=5432
       - LOGGING_PATH=/var/logs/bundesliga_tippspiel.log
-      - DEBUG_LOGGING_PATH=/var/logs/bundesliga_tippspiel.log
+      - DEBUG_LOGGING_PATH=/var/logs/bundesliga_tippspiel_debug.log
     restart: always
   db:
-    image: "mariadb:10.1"
+    image: postgres
     container_name: "bundesliga-tippspiel-db"
     env_file: .env
     networks:
       - net
     volumes:
-      - db_data:/var/lib/mysql
-    environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=1
+      - data:/var/lib/postgresql/data
     restart: always
 volumes:
   logs: ~
-  db_data: ~
+  data: ~

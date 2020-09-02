@@ -116,7 +116,11 @@ class EmailReminder(ModelMixin, db.Model):
             .filter(Match.kickoff < then_str)\
             .all()
 
-        user_bets = Bet.query.filter_by(user_id=self.user_id).all()
+        user_bets = Bet.query\
+            .filter_by(user_id=self.user_id) \
+            .join(Match)\
+            .filter(Match.season == Config.season())\
+            .all()
         betted_matches = list(map(lambda x: x.match_id, user_bets))
 
         to_remind = list(filter(

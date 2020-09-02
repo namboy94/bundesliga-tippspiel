@@ -21,6 +21,8 @@ from typing import List, Tuple, Dict, Optional
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 def generate_leaderboard_data(
@@ -83,7 +85,8 @@ def load_leaderboard_history(
         current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
 
     if bets is None:
-        bets = Bet.query.all()
+        bets = Bet.query.join(Match).filter(Match.season == Config.season())\
+            .all()
     users = User.query.filter_by(confirmed=True).all()
 
     for matchday in range(1, current_matchday + 1):  # type: ignore

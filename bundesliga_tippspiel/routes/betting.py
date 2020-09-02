@@ -24,6 +24,7 @@ from puffotter.flask.base import db
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
@@ -116,11 +117,12 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Let's the user bet on season-long things.
         :return: The response
         """
-        all_teams = Team.query.all()
+        all_teams = GetTeamAction().execute()["teams"]
         season_position_bets = [
             (x.team, x)
             for x in SeasonPositionBet.query
             .filter_by(user=current_user)
+            .filter_by(season=Config.season())
             .options(db.joinedload(SeasonPositionBet.team))
             .all()
         ]
@@ -132,7 +134,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
 
         season_team_bets = [
             (x.bet_type, x)
-            for x in SeasonTeamBet.query.filter_by(user=current_user).all()
+            for x in SeasonTeamBet.query
+            .filter_by(user=current_user)
+            .filter_by(season=Config.season())
+            .all()
         ]
         season_team_bet_types = [x[0] for x in season_team_bets]
         for bet_type in SeasonTeamBetType:
@@ -163,9 +168,12 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
 
         existing_team_bets = {
             x.bet_type: x
-            for x in SeasonTeamBet.query.filter_by(user=current_user).all()
+            for x in SeasonTeamBet.query
+            .filter_by(user=current_user)
+            .filter_by(season=Config.season())
+            .all()
         }
-        teams = {x.id: x for x in Team.query.all()}
+        teams = {x.id: x for x in GetTeamAction().execute()["teams"]}
 
         for bet_type in SeasonTeamBetType:
             bet_value = request.form.get(bet_type.name, "")
@@ -208,10 +216,11 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             x.team_id: x
             for x in SeasonPositionBet.query
             .filter_by(user=current_user)
+            .filter_by(season=Config.season())
             .all()
         }
 
-        for team in Team.query.all():
+        for team in GetTeamAction().execute()["teams"]:
             team_position = request.form.get(str(team.id), "")
             if not team_position.isdigit():
                 continue
