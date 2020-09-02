@@ -18,8 +18,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List
+from flask import render_template
+from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
+from puffotter.smtp import send_email
 from puffotter.flask.base import db
+from puffotter.flask.db.User import User
+from puffotter.flask.db.TelegramChatId import TelegramChatId
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent, SeasonEventType
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 def handle_season_events():
@@ -62,7 +70,40 @@ def handle_preseason_reminder() -> bool:
     Sends a reminder to existing users a week before the start of the season
     :return: Whether or not the reminder was sent
     """
-    return False
+    kickoff_times = [
+        x.kickoff_datetime
+        for x in Match.query.filter_by(matchday=1).all()
+    ]
+    first_kickoff = min(kickoff_times)
+    now = datetime.utcnow()
+
+    if first_kickoff - timedelta(weeks=1) > now:
+        return False
+    else:
+        for user in User.query.all():
+
+            message = render_template(
+                "email/new_season.html",
+                user=user
+            )
+
+            send_email(
+                "hermann@krumreyh.com",
+                f"Bundesliga Tippspiel Saison {Config.season_string()}",
+                message,
+                Config.SMTP_HOST,
+                Config.SMTP_ADDRESS,
+                Config.SMTP_PASSWORD,
+                Config.SMTP_PORT
+            )
+
+            telegram = TelegramChatId.query.filter_by(user=user).first()
+            if telegram is not None:
+                message = BeautifulSoup(message, "html.parser").text
+                message = "\n".join([x.strip() for x in message.split("\n")])
+                telegram.send_message(message)
+
+        return True
 
 
 def handle_midseason_reminder() -> bool:
