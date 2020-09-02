@@ -118,7 +118,7 @@ class Config(BaseConfig):
                                   "Sehe in deinem Email-Postfach nach.",
             "password_changed": "Dein Passwort wurde erfolgreich geändert.",
             "user_was_deleted": "Dein Account wurde erfolgreich gelöscht",
-            "telegram_chat_id_set": "Telegram Chat ID wurde erfolgreich"
+            "telegram_chat_id_set": "Telegram Chat ID wurde erfolgreich "
                                     "gesetzt"
         })
         parent.TEMPLATE_EXTRAS.update({

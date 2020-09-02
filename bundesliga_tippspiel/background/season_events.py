@@ -132,7 +132,10 @@ def __handle_reminder(
             matchday=matchday, season=Config.season()
         ).all()
     ]
-    if before:
+
+    if len(kickoff_times) == 0:
+        return False
+    elif before:
         kickoff = min(kickoff_times)
     else:
         kickoff = max(kickoff_times)
