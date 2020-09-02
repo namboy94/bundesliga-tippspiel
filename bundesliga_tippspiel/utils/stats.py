@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import Optional, List, Dict, Tuple
 from puffotter.flask.db.User import User
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -118,7 +119,7 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
     :param bets: The bets to analyze. If not provided, will analyze all bets
     :return: A sorted list of tuples detailing the participation ranking
     """
-    matches = Match.query.all()
+    matches = Match.query.filter_by(season=Config.season()).all()
     matches = list(filter(lambda x: x.finished, matches))
 
     if bets is None:

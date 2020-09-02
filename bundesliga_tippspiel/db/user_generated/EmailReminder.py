@@ -111,6 +111,7 @@ class EmailReminder(ModelMixin, db.Model):
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
         due_matches = Match.query\
+            .filter_by(season=Config.season())\
             .filter(start_str < Match.kickoff)\
             .filter(Match.kickoff < then_str)\
             .all()

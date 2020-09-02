@@ -127,22 +127,24 @@ class TestEmailReminder(_ModelTestFramework):
         reminder_one = EmailReminder(user=self.user_two, reminder_time=600)
         reminder_two = EmailReminder(user=new_user, reminder_time=3600)
 
+        self.db.session.delete(self.match)
+        self.db.session.commit()
+
         match_one = Match(home_team=self.team_one, away_team=self.team_two,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=30))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=2018)
+                          season=self.config.season())
         match_two = Match(home_team=self.team_two, away_team=self.team_one,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=120))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=2018)
+                          season=self.config.season())
 
-        self.db.session.delete(self.match)
         self.db.session.add(match_one)
         self.db.session.add(match_two)
         self.db.session.add(new_user)
@@ -192,22 +194,24 @@ class TestEmailReminder(_ModelTestFramework):
         now = datetime.utcnow()
         reminder = EmailReminder(user=self.user_two, reminder_time=600)
 
+        self.db.session.delete(self.match)
+        self.db.session.commit()
+
         match_one = Match(home_team=self.team_one, away_team=self.team_two,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=5))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=2018)
+                          season=self.config.season())
         match_two = Match(home_team=self.team_two, away_team=self.team_one,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=7))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=2018)
+                          season=self.config.season())
 
-        self.db.session.delete(self.match)
         self.db.session.add(match_one)
         self.db.session.add(match_two)
         self.db.session.commit()

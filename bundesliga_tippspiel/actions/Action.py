@@ -23,6 +23,7 @@ from werkzeug.wrappers import Response
 from puffotter.flask.base import db
 from puffotter.flask.enums import AlertSeverity
 from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.db.match_data.Match import Match
 
@@ -170,7 +171,8 @@ class Action:
         """
         if matchday is not None:
             if matchday == -1:
-                all_matches = Match.query.all()
+                all_matches = Match.query\
+                    .filter_by(season=Config.season()).all()
                 filtered = list(filter(lambda x: not x.started, all_matches))
                 if len(filtered) > 0:
                     matchday = min(filtered, key=lambda x: x.matchday).matchday

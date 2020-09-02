@@ -37,31 +37,35 @@ class TestBetsRoute(_RouteTestFramework):
         :return:
         """
         super().setUp()
-        self.team_one, self.team_two, zero, _, _ = \
+        self.team_one, self.team_two, zero, old_match, _ = \
             self.generate_sample_match_data()
         self.team_three = Team(
             name="ZZ", short_name="ZZ", abbreviation="ZZ",
             icon_svg="ZZ", icon_png="ZZ"
         )
         self.db.session.add(self.team_three)
+        self.db.session.delete(old_match)
         self.db.session.commit()
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=True,
-            home_current_score=0, away_current_score=0, season=2018
+            home_current_score=0, away_current_score=0,
+            season=self.config.season()
         )
         self.match_two = Match(
             home_team=self.team_two, away_team=self.team_one,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=False,
-            home_current_score=0, away_current_score=0, season=2018
+            home_current_score=0, away_current_score=0,
+            season=self.config.season()
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_three,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=True, finished=False,
-            home_current_score=1, away_current_score=3, season=2018
+            home_current_score=1, away_current_score=3,
+            season=self.config.season()
         )
         self.db.session.add(self.match_one)
         self.db.session.add(self.match_two)

@@ -128,7 +128,9 @@ def __handle_reminder(
     """
     kickoff_times = [
         x.kickoff_datetime
-        for x in Match.query.filter_by(matchday=matchday).all()
+        for x in Match.query.filter_by(
+            matchday=matchday, season=Config.season()
+        ).all()
     ]
     if before:
         kickoff = min(kickoff_times)
