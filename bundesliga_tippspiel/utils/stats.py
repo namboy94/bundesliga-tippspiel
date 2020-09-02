@@ -19,9 +19,11 @@ LICENSE"""
 
 from typing import Optional, List, Dict, Tuple
 from puffotter.flask.db.User import User
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 
 
 def get_team_points_data(bets: Optional[List[Bet]] = None) \
@@ -35,11 +37,12 @@ def get_team_points_data(bets: Optional[List[Bet]] = None) \
     stats: Dict[User, Dict[Team, int]] = {}
     for user in User.query.filter_by(confirmed=True):
         stats[user] = {}
-        for team in Team.query.all():
+        for team in GetTeamAction().execute()["teams"]:
             stats[user][team] = 0
 
     if bets is None:
-        bets = Bet.query.all()
+        bets = Bet.query.join(Match).filter(Match.season == Config.season())\
+            .all()
 
     for bet in bets:
         for team in [bet.match.home_team, bet.match.away_team]:
@@ -95,7 +98,8 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
              appearance count
     """
     if bets is None:
-        bets = Bet.query.all()
+        bets = Bet.query.join(Match).filter(Match.season == Config.season()) \
+            .all()
         bets = list(filter(lambda x: x.match.finished, bets))
 
     distribution: Dict[User, Dict[int, int]] = {}
@@ -118,11 +122,12 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
     :param bets: The bets to analyze. If not provided, will analyze all bets
     :return: A sorted list of tuples detailing the participation ranking
     """
-    matches = Match.query.all()
+    matches = Match.query.filter_by(season=Config.season()).all()
     matches = list(filter(lambda x: x.finished, matches))
 
     if bets is None:
-        bets = Bet.query.all()
+        bets = Bet.query.join(Match).filter(Match.season == Config.season()) \
+            .all()
         bets = list(filter(lambda x: x.match.finished, bets))
 
     participation_stats = {}

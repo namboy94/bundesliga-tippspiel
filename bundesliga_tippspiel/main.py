@@ -22,12 +22,12 @@ from puffotter.flask.initialize import init_flask
 from puffotter.flask.wsgi import start_server
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel import sentry_dsn, root_path
-from bundesliga_tippspiel.bg_tasks import bg_tasks
+from bundesliga_tippspiel.background import bg_tasks
 from bundesliga_tippspiel.db import models
 from bundesliga_tippspiel.routes import blueprint_generators
 
 
-def main():
+def main():  # pragma: no cover
     """
     Initializes and starts the flask application
     :return: None

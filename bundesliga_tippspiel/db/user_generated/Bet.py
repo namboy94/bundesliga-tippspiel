@@ -17,9 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
+from typing import Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 class Bet(ModelMixin, db.Model):
@@ -40,68 +42,58 @@ class Bet(ModelMixin, db.Model):
     The name of the table
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
+    __table_args__ = (
+        db.UniqueConstraint(
+            "user_id",
+            "match_id",
+            name="unique_bet"
         ),
+    )
+    """
+    Table arguments for unique constraints
+    """
+
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False
     )
     """
     The ID of the user associated with this bet
     """
 
-    user = db.relationship(
-        "User", backref=db.backref("bets", lazy=True, cascade="all,delete")
+    user: User = db.relationship(
+        "User", backref=db.backref("bets", cascade="all, delete")
     )
     """
     The user associated with this bet
     """
 
-    match_id = db.Column(
+    match_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("matches.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("matches.id"),
         nullable=False
     )
     """
     The ID of the match that this bet refers to.
     """
 
-    match = db.relationship(
-        "Match", backref=db.backref("bets", lazy=True, cascade="all,delete")
+    match: Match = db.relationship(
+        "Match", back_populates="bets"
     )
     """
     The match that this bet refers to
     """
 
-    home_score = db.Column(db.Integer, nullable=False)
+    home_score: int = db.Column(db.Integer, nullable=False)
     """
     The score bet on the home team
     """
 
-    away_score = db.Column(db.Integer, nullable=False)
+    away_score: int = db.Column(db.Integer, nullable=False)
     """
     The score bet on the away team
     """
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "user_id": self.user_id,
-            "match_id": self.match_id,
-            "home_score": self.home_score,
-            "away_score": self.away_score,
-            "points": self.evaluate()
-        }
-        if include_children:
-            data["user"] = self.user.__json__(include_children)
-            data["match"] = self.match.__json__(include_children)
-        return data
 
     def __repr__(self) -> str:
         """

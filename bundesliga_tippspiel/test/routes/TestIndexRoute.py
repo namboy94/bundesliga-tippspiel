@@ -38,7 +38,7 @@ class TestIndexRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/", ["GET"], "Tippspiel zur Bundesliga Saison 2019/20", False
+        return "/", ["GET"], "Tippspiel zur Bundesliga Saison", False
 
     def test_successful_requests(self):
         """

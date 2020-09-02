@@ -17,16 +17,15 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Tuple, Callable
-from bundesliga_tippspiel.utils.match_data_getter import update_db_data
-from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
-    SendDueEmailRemindersAction
+from puffotter.flask.base import app
+from bundesliga_tippspiel.db.user_generated.EmailReminder import EmailReminder
 
 
-bg_tasks: Dict[str, Tuple[int, Callable]] = {
-    "update_db_data": (30, update_db_data),
-    "send_due_reminders": (60, SendDueEmailRemindersAction().execute)
-}
-"""
-A dictionary containing background tasks for the flask application
-"""
+def send_due_reminders():
+    """
+    Sends all email reminders that are due
+    :return: None
+    """
+    app.logger.info("Checking for new email reminders")
+    for reminder in EmailReminder.query.all():
+        reminder.send_reminder()

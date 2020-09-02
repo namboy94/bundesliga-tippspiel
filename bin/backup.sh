@@ -20,6 +20,7 @@ set -e
 
 if [ "$#" -ne 1 ]; then
     echo "Usage: backup.sh <backup-file>"
+    exit 1
 fi
 
 APP="bundesliga-tippspiel-app"
@@ -31,8 +32,6 @@ mkdir backup
 
 docker-compose up --no-recreate -d
 docker exec "$APP" printenv > backup/.env
-docker exec "$DB" bash -c 'mysqldump --single-transaction \
-    -h localhost -u $MYSQL_USER --password=$MYSQL_PASSWORD $MYSQL_DATABASE' \
-     > backup/db.sql
+docker exec -i "$DB" bash -c 'pg_dump $POSTGRES_DB -U $POSTGRES_USER' > backup/db.sql
 tar -zcvpf "$TARGET" backup
 rm -rf backup

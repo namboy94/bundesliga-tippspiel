@@ -51,7 +51,7 @@ class _GetActionTestFramework(_ActionTestFramework):
             finished=False,
             home_current_score=0,
             away_current_score=0,
-            season=2018
+            season=self.config.season()
         )
         self.user_one, self.passwd_one, self.confirm_one = \
             self.generate_sample_user(True)

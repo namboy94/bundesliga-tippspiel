@@ -18,13 +18,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask import render_template
-from typing import Dict, Any, List
+from typing import List
 from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from puffotter.flask.base import app, db
 from puffotter.flask.db.ModelMixin import ModelMixin
 from puffotter.flask.db.TelegramChatId import TelegramChatId
 from puffotter.smtp import send_email
+from puffotter.flask.db.User import User
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -48,10 +49,9 @@ class EmailReminder(ModelMixin, db.Model):
     The name of the table
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False,
         unique=True
     )
@@ -59,23 +59,23 @@ class EmailReminder(ModelMixin, db.Model):
     The ID of the user associated with this email reminder
     """
 
-    user = db.relationship(
+    user: User = db.relationship(
         "User",
-        backref=db.backref("email_reminders", lazy=True, cascade="all,delete")
+        backref=db.backref("email_reminders", cascade="all, delete")
     )
     """
     The user associated with this email reminder
     """
 
-    reminder_time = db.Column(db.Integer, nullable=False)
+    reminder_time: int = db.Column(db.Integer, nullable=False)
     """
     The time before the next unbet match when the reminder email
     will be sent.
     Unit: seconds
     """
 
-    last_reminder = db.Column(db.String(19), nullable=False,
-                              default="1970-01-01:01-01-01")
+    last_reminder: str = db.Column(db.String(19), nullable=False,
+                                   default="1970-01-01:01-01-01")
     """
     The time when the last reminder was sent. Format in the form
     %Y-%m-%d:%H-%M-%S
@@ -95,23 +95,6 @@ class EmailReminder(ModelMixin, db.Model):
         """
         return datetime.strptime(self.last_reminder, "%Y-%m-%d:%H-%M-%S")
 
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "user_id": self.user_id,
-            "reminder_time": self.reminder_time,
-            "last_reminder": self.last_reminder
-        }
-        if include_children:
-            data["user"] = self.user.__json__(True)
-        return data
-
     def get_due_matches(self) -> List[Match]:
         """
         Checks if the reminder is due and returns a list of matches that the
@@ -128,11 +111,16 @@ class EmailReminder(ModelMixin, db.Model):
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
         due_matches = Match.query\
+            .filter_by(season=Config.season())\
             .filter(start_str < Match.kickoff)\
             .filter(Match.kickoff < then_str)\
             .all()
 
-        user_bets = Bet.query.filter_by(user_id=self.user_id).all()
+        user_bets = Bet.query\
+            .filter_by(user_id=self.user_id) \
+            .join(Match)\
+            .filter(Match.season == Config.season())\
+            .all()
         betted_matches = list(map(lambda x: x.match_id, user_bets))
 
         to_remind = list(filter(

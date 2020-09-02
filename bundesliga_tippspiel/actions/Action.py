@@ -23,6 +23,7 @@ from werkzeug.wrappers import Response
 from puffotter.flask.base import db
 from puffotter.flask.enums import AlertSeverity
 from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.db.match_data.Match import Match
 
@@ -104,7 +105,7 @@ class Action:
     def execute_with_redirects(
             self,
             success_url: str,
-            success_msg: ActionException,
+            success_msg: str,
             failure_url: str
     ) -> Response:
         """
@@ -116,13 +117,9 @@ class Action:
         """
         try:
             self.execute()
-
-            if isinstance(success_msg, str):
-                success_msg = ActionException(
-                    success_msg, success_msg, 200, AlertSeverity.SUCCESS
-                )
-
-            success_msg.flash()
+            ActionException(
+                success_msg, success_msg, 200, AlertSeverity.SUCCESS
+            ).flash()
             return redirect(url_for(success_url))
 
         except ActionException as e:
@@ -174,7 +171,8 @@ class Action:
         """
         if matchday is not None:
             if matchday == -1:
-                all_matches = Match.query.all()
+                all_matches = Match.query\
+                    .filter_by(season=Config.season()).all()
                 filtered = list(filter(lambda x: not x.started, all_matches))
                 if len(filtered) > 0:
                     matchday = min(filtered, key=lambda x: x.matchday).matchday
@@ -185,6 +183,15 @@ class Action:
                     "Matchday out of bounds",
                     "Den angegebenen Spieltag gibt es nicht"
                 )
+        return matchday
+
+    @staticmethod
+    def get_current_matchday() -> int:
+        """
+        :return: The current matchday
+        """
+        matchday = Action.resolve_and_check_matchday(-1)
+        assert matchday is not None
         return matchday
 
     def prepare_get_response(self, result: List[ModelMixin], keyword: str) \

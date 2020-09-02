@@ -1,0 +1,79 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<!--betting/seasons.html-->
+{% extends "components/base_layout.html" %}
+{% block body %}
+
+    <h1>Saisonwetten</h1>
+
+    <h3>Bis zum 18. Spieltag kann getippt werden</h3>
+    <br>
+
+    <h2>Tabelle</h2>
+
+    <form class="form-horizontal"
+          action="{{ url_for("betting.place_season_position_bets") }}"
+          method="post">
+        <fieldset>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for team, position_bet in position_bets %}
+                        {% include "betting/season_position_row.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if not closed %}
+                <br>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary">Bestätigen</button>
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </form>
+
+    <br>
+    <h2>Teamwetten</h2>
+
+    <form class="form-horizontal"
+          action="{{ url_for("betting.place_season_team_bets") }}"
+          method="post">
+        <fieldset>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for bet_type, team_bet in team_bets %}
+                        {% include "betting/season_team_row.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <br>
+            {% if not closed %}
+                <br>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary">Bestätigen</button>
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </form>
+
+{% endblock %}

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from puffotter.flask.base import db
 from datetime import datetime, timedelta
 from bundesliga_tippspiel.db.match_data.Match import Match
 # noinspection PyProtectedMember
@@ -46,35 +47,41 @@ class TestMatch(_ModelTestFramework):
             Match(away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0, season=2018),
+                  home_current_score=0, away_current_score=0,
+                  season=self.config.season()),
             Match(home_team=self.team_one,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0, season=2018),
+                  home_current_score=0, away_current_score=0,
+                  season=self.config.season()),
             Match(home_team=self.team_one, away_team=self.team_two,
                   kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0, season=2018),
+                  home_current_score=0, away_current_score=0,
+                  season=self.config.season()),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1,
                   started=False, finished=False,
-                  home_current_score=0, away_current_score=0, season=2018),
+                  home_current_score=0, away_current_score=0,
+                  season=self.config.season()),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   finished=False,
-                  home_current_score=0, away_current_score=0, season=2018),
+                  home_current_score=0, away_current_score=0,
+                  season=self.config.season()),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False,
-                  home_current_score=0, away_current_score=0, season=2018),
+                  home_current_score=0, away_current_score=0,
+                  season=self.config.season()),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  away_current_score=0, season=2018),
+                  away_current_score=0, season=self.config.season()),
             Match(home_team=self.team_one, away_team=self.team_two,
                   matchday=1, kickoff="2019-01-01:01:02:03",
                   started=False, finished=False,
-                  home_current_score=0, season=2018)
+                  home_current_score=0, season=self.config.season())
         ])
 
     def test_auto_increment(self):
@@ -84,10 +91,11 @@ class TestMatch(_ModelTestFramework):
         """
         self._test_auto_increment([
             (1, self.match),
-            (2, Match(home_team=self.team_one, away_team=self.team_two,
+            (2, Match(home_team=self.team_two, away_team=self.team_one,
                       matchday=1, kickoff="2019-01-01:01:02:03",
                       started=False, finished=False,
-                      home_current_score=0, away_current_score=0, season=2018))
+                      home_current_score=0, away_current_score=0,
+                      season=self.config.season()))
         ])
 
     def test_uniqueness(self):
@@ -95,13 +103,13 @@ class TestMatch(_ModelTestFramework):
         Tests that unique attributes are correctly checked
         :return: None
         """
-        # TODO Fix unique constraint
+
         self._test_uniqueness([
-            # Match(home_team=self.match.home_team,
-            #       away_team=self.match.away_team,
-            #       matchday=self.match.matchday,
-            #       kickoff="2019-01-01:01:02:03",
-            #       started=False, finished=False, season=2018)
+            Match(home_team=self.match.home_team,
+                  away_team=self.match.away_team,
+                  matchday=self.match.matchday,
+                  kickoff="2019-01-01:01:02:03",
+                  started=False, finished=False, season=self.config.season())
         ])
 
     def test_retrieving_from_db(self):
@@ -200,3 +208,20 @@ class TestMatch(_ModelTestFramework):
         self.assertEqual(match.ht_score, "0:1")
         self.assertEqual(match.ft_score, "2:3")
         self.assertEqual(match.current_score, "4:5")
+
+    def test_cascades(self):
+        """
+        Tests if cascade deletes work correctly
+        :return: None
+        """
+        # TODO Fix this
+        self.assertEqual(len(Match.query.all()), 1)
+        db.session.delete(self.goal)
+        self.assertEqual(len(Match.query.all()), 1)
+        db.session.delete(self.team_one)
+        # self.assertEqual(len(Match.query.all()), 0)
+        self.tearDown()
+        self.setUp()
+        self.assertEqual(len(Match.query.all()), 1)
+        db.session.delete(self.team_two)
+        # self.assertEqual(len(Match.query.all()), 0)

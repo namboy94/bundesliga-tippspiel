@@ -17,9 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Player import Player
 
 
 class Goal(ModelMixin, db.Model):
@@ -40,88 +41,63 @@ class Goal(ModelMixin, db.Model):
     The name of the table
     """
 
-    match_id = db.Column(
+    match_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("matches.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("matches.id"),
         nullable=False
     )
     """
     The ID of the match in which this goal was scored. Acts as a foreign key.
     """
 
-    match = db.relationship(
-        "Match", backref=db.backref("goals", lazy=True, cascade="all,delete")
-    )
+    match: Match = db.relationship("Match", back_populates="goals")
     """
     The match in which this goal was scored.
     """
 
-    player_id = db.Column(
+    player_id: int = db.Column(
         db.Integer,
-        db.ForeignKey("players.id", ondelete="CASCADE", onupdate="CASCADE"),
+        db.ForeignKey("players.id"),
         nullable=False
     )
     """
     The ID of the player that scored this goal. Acts as a foreign key.
     """
 
-    player = db.relationship(
+    player: Player = db.relationship(
         "Player",
-        backref=db.backref("goals", lazy=True, cascade="all,delete")
+        back_populates="goals"
     )
     """
     The player that scored this goal.
     """
 
-    minute = db.Column(db.Integer, nullable=False)
+    minute: int = db.Column(db.Integer, nullable=False)
     """
     The minute in which the goal was scored
     """
 
-    minute_et = db.Column(db.Integer, nullable=True, default=0)
+    minute_et: int = db.Column(db.Integer, nullable=True, default=0)
     """
     This keeps track in which minute of extra time a goal was scored.
     """
 
-    home_score = db.Column(db.Integer, nullable=False)
+    home_score: int = db.Column(db.Integer, nullable=False)
     """
     The home team's score after the goal was scored
     """
 
-    away_score = db.Column(db.Integer, nullable=False)
+    away_score: int = db.Column(db.Integer, nullable=False)
     """
     The away team's score after the goal was scored
     """
 
-    own_goal = db.Column(db.Boolean, nullable=False, default=False)
+    own_goal: bool = db.Column(db.Boolean, nullable=False, default=False)
     """
     Indicates whether or not this goal was an own goal
     """
 
-    penalty = db.Column(db.Boolean, nullable=False, default=False)
+    penalty: bool = db.Column(db.Boolean, nullable=False, default=False)
     """
     Indicates whether or not this goal was a penalty
     """
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "match_id": self.match_id,
-            "player_id": self.player_id,
-            "minute": self.minute,
-            "minute_et": self.minute_et,
-            "home_score": self.home_score,
-            "away_score": self.away_score,
-            "own_goal": self.own_goal,
-            "penalty": self.penalty
-        }
-        if include_children:
-            data["match"] = self.match.__json__(include_children)
-            data["player"] = self.player.__json__(include_children)
-        return data

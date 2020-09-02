@@ -18,8 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any, Optional
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Match import Match
 
 
 class GetTeamAction(GetAction):
@@ -54,8 +56,14 @@ class GetTeamAction(GetAction):
             result = [self.handle_id_fetch(self.id, Team)]
 
         else:
-            query = Team.query
-            result = query.all()
+            matches = Match.query\
+                .filter_by(season=Config.season())\
+                .filter_by(matchday=1)\
+                .all()
+            result = []
+            for match in matches:
+                result.append(match.home_team)
+                result.append(match.away_team)
             result.sort(key=lambda x: x.name)
 
         return self.prepare_get_response(result, "team")

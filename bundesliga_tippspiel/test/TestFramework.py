@@ -26,7 +26,7 @@ from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Player import Player
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
-from bundesliga_tippspiel.utils.match_data_getter import update_db_data
+from bundesliga_tippspiel.background.match_data import update_match_data
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel import root_path
 from bundesliga_tippspiel.routes import blueprint_generators
@@ -67,7 +67,7 @@ class _TestFramework(Framework):
             home_current_score=1, away_current_score=0,
             home_ht_score=0, away_ht_score=0,
             home_ft_score=1, away_ft_score=0,
-            season=2016
+            season=self.config.season()
         )
         goal = Goal(
             match=match, player=player, minute=67, minute_et=None,
@@ -101,4 +101,4 @@ class _TestFramework(Framework):
         Loads real match data from openligadb.com into the database
         :return: None
         """
-        update_db_data()
+        update_match_data()

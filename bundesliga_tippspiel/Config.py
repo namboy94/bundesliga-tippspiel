@@ -26,12 +26,12 @@ class Config(BaseConfig):
     """
     Configuration for the flask application
     """
-    OPENLIGADB_SEASON: str = os.environ.get("OPENLIGADB_SEASON", "2019")
+    OPENLIGADB_SEASON: str
     """
     The openligadb season to use
     """
 
-    OPENLIGADB_LEAGUE: str = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+    OPENLIGADB_LEAGUE: str
     """
     The openligadb league to use
     """
@@ -45,6 +45,13 @@ class Config(BaseConfig):
             year = int(cls.OPENLIGADB_SEASON)
         second = str(year + 1)[-2:]
         return f"{year}/{second}"
+
+    @classmethod
+    def season(cls) -> int:
+        """
+        :return: The current season
+        """
+        return int(Config.OPENLIGADB_SEASON)
 
     @classmethod
     def environment_variables(cls) -> Dict[str, List[str]]:
@@ -70,6 +77,9 @@ class Config(BaseConfig):
         :param parent: The base configuration
         :return: None
         """
+        Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
+        print(Config.OPENLIGADB_SEASON)
+        Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
         from bundesliga_tippspiel.template_extras import profile_extras
         parent.API_VERSION = "2"
         parent.STRINGS.update({
@@ -109,7 +119,7 @@ class Config(BaseConfig):
                                   "Sehe in deinem Email-Postfach nach.",
             "password_changed": "Dein Passwort wurde erfolgreich geändert.",
             "user_was_deleted": "Dein Account wurde erfolgreich gelöscht",
-            "telegram_chat_id_set": "Telegram Chat ID wurde erfolgreich"
+            "telegram_chat_id_set": "Telegram Chat ID wurde erfolgreich "
                                     "gesetzt"
         })
         parent.TEMPLATE_EXTRAS.update({

@@ -19,6 +19,7 @@ LICENSE"""
 
 from sqlalchemy import or_
 from typing import Dict, Any, Optional
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.db.match_data.Match import Match
 
@@ -64,8 +65,7 @@ class GetMatchAction(GetAction):
             result = [self.handle_id_fetch(self.id, Match)]
 
         else:
-
-            query = Match.query
+            query = Match.query.filter_by(season=Config.season())
 
             if self.matchday is not None:
                 query = query.filter_by(matchday=self.matchday)

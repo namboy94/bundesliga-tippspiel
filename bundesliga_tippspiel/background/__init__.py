@@ -1,4 +1,4 @@
-{#
+"""LICENSE
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,25 +15,19 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-#}
+LICENSE"""
 
-<h1>Bundesliga Tippspiel Saison {{ config.season_string() }}</h1>
+from typing import Dict, Tuple, Callable
+from bundesliga_tippspiel.background.season_events import handle_season_events
+from bundesliga_tippspiel.background.match_data import update_match_data
+from bundesliga_tippspiel.background.reminders import send_due_reminders
 
-<p>
-    {{ user.username }}, du hast letzte Saison beim Bundesliga Tippspiel
-    teilgenommen und erhältst daher eine Einladung zum diesjährigen Tippspiel!
-    Dein bisheriges Account bleibt bestehen, du kannst dich wie gewohnt
-    anmelden. Besuche den untenstehenden Link um zu tippen:
-</p>
 
-<h3><a href="{{ config.base_url() }}">{{ config.base_url() }}</a></h3>
-
-<p>
-    Solltest du dein Passwort vergessen haben, kannst du es hier zurücksetzen:
-</p>
-
-<h3><a href="{{ config.base_url() }}/forgot">{{ config.base_url() }}/forgot</a></h3>
-
-<br>
-
-<p>Viel Spaß und viel Erfolg!</p>
+bg_tasks: Dict[str, Tuple[int, Callable]] = {
+    "update_db_data": (30, update_match_data),
+    "send_due_reminders": (60, send_due_reminders),
+    "handle_season_events": (60 * 60 * 24, handle_season_events)
+}
+"""
+A dictionary containing background tasks for the flask application
+"""

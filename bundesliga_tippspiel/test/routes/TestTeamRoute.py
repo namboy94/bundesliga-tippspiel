@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import Tuple, Optional, List
 from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.db.match_data.Team import Team
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
@@ -35,25 +36,35 @@ class TestTeamRoute(_RouteTestFramework):
         :return:
         """
         super().setUp()
-        self.team_one, self.team_two, self.player, _, _ = \
+        self.team_one, self.team_two, self.player, old_match, _ = \
             self.generate_sample_match_data()
+        self.team_three = Team(
+            name="ZZ", short_name="ZZ", abbreviation="ZZ",
+            icon_svg="ZZ", icon_png="ZZ"
+        )
+        self.db.session.add(self.team_three)
+        self.db.session.delete(old_match)
+        self.db.session.commit()
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
             matchday=1, kickoff="2019-01-01:01:02:01",
             started=True, finished=True,
-            home_current_score=1, away_current_score=1, season=2018
+            home_current_score=1, away_current_score=1,
+            season=self.config.season()
         )
         self.match_two = Match(
             home_team=self.team_two, away_team=self.team_one,
             matchday=2, kickoff="2019-01-01:01:02:02",
             started=True, finished=True,
-            home_current_score=2, away_current_score=1, season=2018
+            home_current_score=2, away_current_score=1,
+            season=self.config.season()
         )
         self.match_three = Match(
-            home_team=self.team_one, away_team=self.team_two,
+            home_team=self.team_one, away_team=self.team_three,
             matchday=3, kickoff="2019-01-01:01:02:03",
             started=True, finished=True,
-            home_current_score=2, away_current_score=1, season=2018
+            home_current_score=2, away_current_score=1,
+            season=self.config.season()
         )
         self.db.session.add(self.match_one)
         self.db.session.add(self.match_two)

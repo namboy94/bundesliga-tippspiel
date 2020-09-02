@@ -1,0 +1,32 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<h1>Bundesliga Tippspiel Saison {{ config.season_string() }}</h1>
+
+<p>
+    {{ user.username }}, nächste Woche ist die Winterpause zuende und es kann
+    wieder losgehen mit dem Tippen.
+    Allerdings kannst du nur noch bis zum Beginn des nächsten Spieltags deine
+    saisonübergreifende Tipps modifizieren.
+    Dies kannst du hier tun:
+</p>
+
+<h3><a href="{{ config.base_url() }}/bets/season">{{ config.base_url() }}/bets/season</a></h3>
+
+<p>Viel Spaß und viel Erfolg!</p>

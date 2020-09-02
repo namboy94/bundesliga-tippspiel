@@ -21,13 +21,13 @@ import time
 import requests
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.utils.match_data_getter import update_db_data
+from bundesliga_tippspiel.background.match_data import update_match_data
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 
-class TestMatchDataGetter(_TestFramework):
+class TestMatchDataUpdate(_TestFramework):
     """
     Unit test class that tests the match_data_getter script
     """
@@ -37,9 +37,9 @@ class TestMatchDataGetter(_TestFramework):
         Tests populating the database. Twice.
         :return: None
         """
-        update_db_data(season="2018")
+        update_match_data(season="2018", league="bl1")
         self.assert_db_state()
-        update_db_data(season="2018")
+        update_match_data(season="2018", league="bl1")
         self.assert_db_state()
 
     def test_icon_urls(self):
@@ -47,7 +47,7 @@ class TestMatchDataGetter(_TestFramework):
         Tests if all team icon URLs are valid
         :return: None
         """
-        update_db_data()
+        update_match_data()
         for team in Team.query.all():
             for url in [team.icon_svg, team.icon_png]:
                 resp = requests.head(url)

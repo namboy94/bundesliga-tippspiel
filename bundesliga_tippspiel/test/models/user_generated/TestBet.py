@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from puffotter.flask.base import db
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
@@ -56,7 +57,7 @@ class TestBet(_ModelTestFramework):
         self._test_auto_increment([
             (1, self.bet),
             (2, Bet(
-                user=self.user_one,
+                user=self.user_two,
                 match=self.match,
                 home_score=3,
                 away_score=1
@@ -68,8 +69,12 @@ class TestBet(_ModelTestFramework):
         Tests that unique attributes are correctly checked
         :return: None
         """
-        # No unique stuff
-        pass
+        self._test_uniqueness([
+            Bet(
+                user=self.bet.user, match=self.bet.match,
+                home_score=50, away_score=90
+            )
+        ])
 
     def test_retrieving_from_db(self):
         """
@@ -163,3 +168,17 @@ class TestBet(_ModelTestFramework):
         self.bet.match.finished = False
         self.assertEqual(self.bet.evaluate(), 15)
         self.assertEqual(self.bet.evaluate(True), 0)
+
+    def test_cascades(self):
+        """
+        Tests if cascade deletes work correctly
+        :return: None
+        """
+        self.assertEqual(len(Bet.query.all()), 1)
+        db.session.delete(self.match)
+        self.assertEqual(len(Bet.query.all()), 0)
+        self.tearDown()
+        self.setUp()
+        self.assertEqual(len(Bet.query.all()), 1)
+        db.session.delete(self.bet.user)
+        self.assertEqual(len(Bet.query.all()), 0)

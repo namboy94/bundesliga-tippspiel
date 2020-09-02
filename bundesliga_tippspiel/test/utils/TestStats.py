@@ -41,17 +41,21 @@ class TestStats(_TestFramework):
                         confirmation_hash="AA", confirmed=True)
 
         team_one, team_two, _, old_match, _ = self.generate_sample_match_data()
+        self.db.session.delete(old_match)
+        self.db.session.commit()
         match_one = Match(
             home_team=team_one, away_team=team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=True, finished=True,
-            home_current_score=2, away_current_score=1, season=2018
+            home_current_score=2, away_current_score=1,
+            season=self.config.season()
         )
         match_two = Match(
-            home_team=team_one, away_team=team_two,
+            home_team=team_two, away_team=team_one,
             matchday=2, kickoff="2019-01-01:01:02:03",
             started=True, finished=True,
-            home_current_score=0, away_current_score=0, season=2018
+            home_current_score=0, away_current_score=0,
+            season=self.config.season()
         )
         self.db.session.add(match_one)
         self.db.session.add(match_two)

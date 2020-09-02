@@ -22,6 +22,8 @@ from flask_login import current_user
 from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.exceptions import ActionException
+from bundesliga_tippspiel.db.match_data.Match import Match
+from bundesliga_tippspiel.Config import Config
 
 
 class GetBetAction(GetAction):
@@ -90,6 +92,8 @@ class GetBetAction(GetAction):
                 query = query.filter_by(match_id=self.match_id)
             if self.matchday is not None:
                 query = query.filter(Bet.match.has(matchday=self.matchday))
+
+            query = query.join(Match).filter(Match.season == Config.season())
 
             result = query.all()
             result = list(filter(

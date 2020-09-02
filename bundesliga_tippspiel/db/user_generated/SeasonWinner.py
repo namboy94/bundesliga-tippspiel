@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
 from puffotter.flask.base import db
+from puffotter.flask.db.User import User
 from puffotter.flask.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.Config import Config
 
@@ -41,26 +41,25 @@ class SeasonWinner(ModelMixin, db.Model):
     The name of the table
     """
 
-    season = db.Column(db.Integer, unique=True, nullable=False)
+    season: int = db.Column(db.Integer, unique=True, nullable=False)
     """
     The season for which this is the winner
     """
 
-    user_id = db.Column(
-        db.Integer, db.ForeignKey(
-            "users.id", onupdate="CASCADE", ondelete="CASCADE"
-        ),
+    user_id: int = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
         nullable=False
     )
     """
-    The ID of the user that won the season
+    The ID of the user that won the competition
     """
 
-    user = db.relationship("User", backref=db.backref(
-        "season_winners", lazy=True, cascade="all,delete"
-    ))
+    user: User = db.relationship(
+        "User", backref=db.backref("season_winners", cascade="all, delete")
+    )
     """
-    The user that won the season
+    The user that won the competition
     """
 
     @property
@@ -69,19 +68,3 @@ class SeasonWinner(ModelMixin, db.Model):
         :return: The season string, e.g. 2019/20
         """
         return Config.season_string(self.season)
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "user_id": self.user_id,
-            "season": self.season
-        }
-        if include_children:
-            data["user"] = self.user.__json__(include_children)
-        return data

@@ -43,7 +43,7 @@ class TestGetTeamAction(_GetActionTestFramework):
         """
         # All
         result = self.action.execute()
-        self.assertEqual(len(result["teams"]), 3)
+        self.assertEqual(len(result["teams"]), 2)
         self.assertFalse("team" in result)
 
         # By ID

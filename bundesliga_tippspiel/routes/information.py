@@ -25,6 +25,8 @@ from puffotter.flask.base import app
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
@@ -149,7 +151,9 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         if user_data is None:
             abort(404)
 
-        bets = Bet.query.all()
+        bets = Bet.query.join(Match)\
+            .filter(Match.season == Config.season())\
+            .all()
         total_bets = len(list(filter(lambda x: x.user_id == user_id, bets)))
         bets = list(filter(lambda x: x.match.finished, bets))
         rr_bets = list(filter(lambda x: x.match.matchday > 17, bets))
@@ -214,7 +218,8 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Displays a statistics page.
         :return: The Response
         """
-        bets = Bet.query.all()
+        bets = Bet.query.join(Match).filter(Match.season == Config.season())\
+            .all()
         finished_bets = list(filter(lambda x: x.match.finished, bets))
 
         leaderboards = []

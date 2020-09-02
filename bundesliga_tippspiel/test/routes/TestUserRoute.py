@@ -40,13 +40,16 @@ class TestUserRoute(_RouteTestFramework):
         super().setUp()
         self.second_user = User(username="AA", email="AA", password_hash="AA",
                                 confirmation_hash="AA", confirmed=True)
-        team_one, team_two, _, _, _ = self.generate_sample_match_data()
+        team_one, team_two, _, old_match, _ = self.generate_sample_match_data()
+        self.db.session.delete(old_match)
+        self.db.session.commit()
         self.db.session.add(self.second_user)
         self.db.session.add(Match(
             home_team=team_one, away_team=team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=False,
-            home_current_score=0, away_current_score=0, season=2018
+            home_current_score=0, away_current_score=0,
+            season=self.config.season()
         ))
         self.db.session.commit()
 

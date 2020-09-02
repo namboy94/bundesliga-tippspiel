@@ -61,6 +61,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <li class="nav-item {% if request.path == "/bets" %} active {% endif %}">
                     <a class="nav-link" href="{{ url_for("betting.bets") }}">Spieltag</a>
                 </li>
+                <li class="nav-item {% if request.path == "/season_bets" %} active {% endif %}">
+                    <a class="nav-link" href="{{ url_for("betting.season_bets") }}">Saison</a>
+                </li>
                 <li class="nav-item {% if request.path == "/leaderboard" %} active {% endif %}">
                     <a class="nav-link" href="{{ url_for("information.leaderboard") }}">Rangliste</a>
                 </li>
