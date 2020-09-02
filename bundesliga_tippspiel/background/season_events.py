@@ -81,7 +81,7 @@ def handle_preseason_reminder() -> bool:
     return __handle_reminder(
         1,
         timedelta(days=7),
-        "email/newseason.html",
+        "email/preseason.html",
         True
     )
 
@@ -150,14 +150,14 @@ def __handle_reminder(
         for user in User.query.all():
 
             message = render_template(
-                "email/new_season.html",
+                message_file,
                 user=user
             )
 
             send_email(
                 user.email,
                 f"Bundesliga Tippspiel Saison {Config.season_string()}",
-                message_file,
+                message,
                 Config.SMTP_HOST,
                 Config.SMTP_ADDRESS,
                 Config.SMTP_PASSWORD,
