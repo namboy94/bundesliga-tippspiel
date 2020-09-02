@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.User import User
 from puffotter.flask.db.ModelMixin import ModelMixin
@@ -69,19 +68,3 @@ class SeasonWinner(ModelMixin, db.Model):
         :return: The season string, e.g. 2019/20
         """
         return Config.season_string(self.season)
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "user_id": self.user_id,
-            "season": self.season
-        }
-        if include_children:
-            data["user"] = self.user.__json__(include_children)
-        return data

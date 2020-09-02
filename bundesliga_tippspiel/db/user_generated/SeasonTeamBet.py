@@ -18,7 +18,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from enum import Enum
-from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.User import User
 from puffotter.flask.db.ModelMixin import ModelMixin
@@ -99,21 +98,3 @@ class SeasonTeamBet(ModelMixin, db.Model):
     """
     The type of the bet
     """
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "user_id": self.user_id,
-            "season": self.season,
-            "bet_value": self.bet_value,
-            "bet_type": self.bet_type.value
-        }
-        if include_children:
-            data["user"] = self.user.__json__(include_children)
-        return data

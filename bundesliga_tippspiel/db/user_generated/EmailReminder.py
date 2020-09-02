@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask import render_template
-from typing import Dict, Any, List
+from typing import List
 from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from puffotter.flask.base import app, db
@@ -94,23 +94,6 @@ class EmailReminder(ModelMixin, db.Model):
         :return: The 'last_reminder' parameter as a datetime object
         """
         return datetime.strptime(self.last_reminder, "%Y-%m-%d:%H-%M-%S")
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "user_id": self.user_id,
-            "reminder_time": self.reminder_time,
-            "last_reminder": self.last_reminder
-        }
-        if include_children:
-            data["user"] = self.user.__json__(True)
-        return data
 
     def get_due_matches(self) -> List[Match]:
         """

@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -102,26 +101,3 @@ class Goal(ModelMixin, db.Model):
     """
     Indicates whether or not this goal was a penalty
     """
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "match_id": self.match_id,
-            "player_id": self.player_id,
-            "minute": self.minute,
-            "minute_et": self.minute_et,
-            "home_score": self.home_score,
-            "away_score": self.away_score,
-            "own_goal": self.own_goal,
-            "penalty": self.penalty
-        }
-        if include_children:
-            data["match"] = self.match.__json__(include_children)
-            data["player"] = self.player.__json__(include_children)
-        return data

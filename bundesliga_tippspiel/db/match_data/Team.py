@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any, List, TYPE_CHECKING
+from typing import List, TYPE_CHECKING
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
 if TYPE_CHECKING:
@@ -112,22 +112,3 @@ class Team(ModelMixin, db.Model):
     """
     The players of this team
     """
-
-    def __json__(self, include_children: bool = False) -> Dict[str, Any]:
-        """
-        Generates a dictionary containing the information of this model
-        :param include_children: Specifies if children data models will be
-                                 included or if they're limited to IDs
-        :return: A dictionary representing the model's values
-        """
-        data = {
-            "id": self.id,
-            "name": self.name,
-            "short_name": self.short_name,
-            "abbreviation": self.abbreviation,
-            "icon_svg": self.icon_svg,
-            "icon_png": self.icon_png
-        }
-        if include_children:
-            pass
-        return data
