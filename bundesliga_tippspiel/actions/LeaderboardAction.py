@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -44,7 +44,7 @@ class LeaderboardAction(Action):
         """
         self.matchday = None if matchday is None else int(matchday)
         self.count = count
-        self.bets = []
+        self.bets: List[Bet] = []
 
     def validate_data(self):
         """
@@ -71,10 +71,9 @@ class LeaderboardAction(Action):
             .filter(Match.season == Config.season()).all()
 
         if self.matchday is not None:
-            self.bets = list(filter(
-                lambda x: x.match.matchday <= self.matchday,
-                self.bets
-            ))
+            self.bets = [
+                x for x in self.bets if x.match.matchday <= self.matchday
+            ]
 
         for bet in self.bets:
             if self.count:
