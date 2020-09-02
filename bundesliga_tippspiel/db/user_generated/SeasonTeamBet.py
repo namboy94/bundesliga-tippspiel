@@ -29,13 +29,13 @@ class SeasonTeamBetType(Enum):
     """
     Class that specifies the various season team bets that are possible
     """
-    MOST_GOALS_SCORED = "most goals scored"
-    LEAST_GOALS_SCORED = "least goals scored"
-    MOST_GOALS_CONCEDED = "most goals conceded"
-    LEAST_GOALS_CONCEDED = "least goals conceded"
-    MOST_OWN_GOALS = "most own goals"
-    MOST_YELLOW_CARDS = "most yellow cards"
-    MOST_RED_CARDS = "most red cards"
+    MOST_GOALS_SCORED = "Die meisten Tore"
+    LEAST_GOALS_SCORED = "Die wenigsten Gegentore"
+    MOST_GOALS_CONCEDED = "Die meisten Gegentore"
+    LEAST_GOALS_CONCEDED = "Die wenigsten Tore"
+    MOST_OWN_GOALS = "Die meisten Eigentore"
+    # MOST_YELLOW_CARDS = "Die meisten gelben Karten"
+    # MOST_RED_CARDS = "Die meisten roten Karten"
 
 
 class SeasonTeamBet(ModelMixin, db.Model):

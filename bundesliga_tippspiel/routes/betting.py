@@ -18,14 +18,22 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Optional, Dict
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, flash, redirect, url_for
 from flask_login import login_required, current_user
+from puffotter.flask.base import db
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
+from bundesliga_tippspiel.actions.Action import Action
+from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
+    SeasonTeamBet, SeasonTeamBetType
+from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
+    SeasonPositionBet
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -100,7 +108,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             bets=bets_info
         )
 
-    @blueprint.route("/bets/season")
+    @blueprint.route("/bets/season", methods=["GET"])
     @login_required
     @action_route
     def season_bets():
@@ -108,8 +116,116 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Let's the user bet on season-long things.
         :return: The response
         """
+        all_teams = Team.query.all()
+        season_position_bets = [
+            (x.team, x)
+            for x in SeasonPositionBet.query
+            .filter_by(user=current_user)
+            .options(db.joinedload(SeasonPositionBet.team))
+            .all()
+        ]
+        season_position_bets.sort(key=lambda x: x[1].position)
+        season_positon_team_ids = [x[0].id for x in season_position_bets]
+        for team in all_teams:
+            if team.id not in season_positon_team_ids:
+                season_position_bets.append((team, None))
+
+        season_team_bets = [
+            (x.bet_type, x)
+            for x in SeasonTeamBet.query.filter_by(user=current_user).all()
+        ]
+        season_team_bet_types = [x[0] for x in season_team_bets]
+        for bet_type in SeasonTeamBetType:
+            if bet_type not in season_team_bet_types:
+                season_team_bets.append((bet_type, None))
+        season_team_bets.sort(key=lambda x: x[0].value)
+
         return render_template(
-            "betting/season.html"
+            "betting/season.html",
+            all_teams=all_teams,
+            team_bets=season_team_bets,
+            position_bets=season_position_bets,
+            closed=Action.resolve_and_check_matchday(-1) > 17
         )
+
+    @blueprint.route("/bets/season_team_bets", methods=["POST"])
+    @login_required
+    @action_route
+    def place_season_team_bets():
+        """
+        Let's the user bet on season-long things.
+        :return: The response
+        """
+        if Action.resolve_and_check_matchday(-1) > 17:
+            flash("Saisonübergreifende Wetten können nur vor dem 18. "
+                  "Spieltag abgeschlossen werden", "danger")
+
+        existing_team_bets = {
+            x.bet_type: x
+            for x in SeasonTeamBet.query.filter_by(user=current_user).all()
+        }
+        teams = {x.id: x for x in Team.query.all()}
+
+        for bet_type in SeasonTeamBetType:
+            bet_value = request.form.get(bet_type.name, "")
+            if not bet_value.isdigit():
+                continue
+
+            team_id = int(bet_value)
+            if team_id not in teams:
+                continue
+
+            team = teams[team_id]
+
+            bet = existing_team_bets.get(bet_type)
+            if bet is None:
+                bet = SeasonTeamBet(
+                    bet_type=bet_type, user=current_user,
+                    season=int(Config.OPENLIGADB_SEASON)
+                )
+                db.session.add(bet)
+            bet.team = team
+
+        db.session.commit()
+
+        return redirect(url_for("betting.season_bets"))
+
+    @blueprint.route("/bets/season_position_bets", methods=["POST"])
+    @login_required
+    @action_route
+    def place_season_position_bets():
+        """
+        Let's the user bet on season-long things.
+        :return: The response
+        """
+        if Action.resolve_and_check_matchday(-1) > 17:
+            flash("Saisonübergreifende Wetten können nur vor dem 18. "
+                  "Spieltag abgeschlossen werden", "danger")
+
+        existing_bets = {
+            x.team_id: x
+            for x in SeasonPositionBet.query
+            .filter_by(user=current_user)
+            .all()
+        }
+
+        for team in Team.query.all():
+            team_position = request.form.get(str(team.id), "")
+            if not team_position.isdigit():
+                continue
+
+            if team.id in existing_bets:
+                bet = existing_bets[team.id]
+            else:
+                bet = SeasonPositionBet(
+                    user=current_user, team=team,
+                    season=int(Config.OPENLIGADB_SEASON)
+                )
+                db.session.add(bet)
+            bet.position = int(team_position)
+
+        db.session.commit()
+
+        return redirect(url_for("betting.season_bets"))
 
     return blueprint

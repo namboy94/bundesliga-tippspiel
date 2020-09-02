@@ -1,0 +1,51 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<li class="list-group-item bet_row">
+        <div class="row text-center">
+        <div class="col-md-7 bet_col">
+            <h5>{{ bet_type.value }}</h5>
+        </div>
+        <div class="col-md-5 bet_col">
+            {% if not closed %}
+            <label class="sr-only" for="{{ bet_type.name }}_select">Bet Type</label>
+            <select id="{{ bet_type.name }}_select" name="{{ bet_type.name }}" class="form-control mb-2">
+                {% if team_bet is none  %}
+                    <option value="" selected></option>
+                {% endif %}
+                {% for team in all_teams %}
+                    {% if team_bet is none or team.id != team_bet.team_id  %}
+                        <option value="{{ team.id }}">{{ team.name }}</option>
+                    {% else %}
+                       <option value="{{ team.id }}" selected>{{ team.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            {% else %}
+                <h3>
+                    {% if team_bet is none %}
+                        -
+                    {% else %}
+                        {{ team_bet.team.name }}
+                    {% endif %}
+                </h3>
+            {% endif %}
+        </div>
+    </div>
+</li>

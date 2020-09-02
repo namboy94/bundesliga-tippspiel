@@ -23,24 +23,56 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h1>Saisonwetten</h1>
 
     <h3>Bis zum 18. Spieltag kann gesetzt werden</h3>
+    <br>
 
-    <ul>
-        <li>Meister</li>
-        <li>Absteiger</li>
-        <li>Evtl einfach eine Tabelle</li>
-        <li>Wer schießt die meisten Tore?</li>
-        <li>Wer schießt die wenigsten Tore?</li>
-        <li>Wer bekommt die meisten Gegentore?</li>
-        <li>Wer bekommt die wenigsten Gegentore?</li>
-        <li>Wer bekommt die meisten gelben Karten?</li>
-        <li>Wer bekommt die meisten roten Karten?</li>
-        <li>Wer schießt die meisten Eigentore?</li>
-    </ul>
+    <h2>Tabelle</h2>
 
-    <h3>New Database entries/models</h3>
-    <ul>
-        <li>SeasonPositionBet x 18</li>
-        <li>SeasonBet - SeasonBetType(MostGoals,LeastGoals...)</li>
-    </ul>
+    <form class="form-horizontal"
+          action="{{ url_for("betting.place_season_position_bets") }}"
+          method="post">
+        <fieldset>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for team, position_bet in position_bets %}
+                        {% include "betting/season_position_row.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if not closed %}
+                <br>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary">Bestätigen</button>
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </form>
+
+    <br>
+    <h2>Teamwetten</h2>
+
+    <form class="form-horizontal"
+          action="{{ url_for("betting.place_season_team_bets") }}"
+          method="post">
+        <fieldset>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for bet_type, team_bet in team_bets %}
+                        {% include "betting/season_team_row.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <br>
+            {% if not closed %}
+                <br>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary">Bestätigen</button>
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </form>
 
 {% endblock %}
