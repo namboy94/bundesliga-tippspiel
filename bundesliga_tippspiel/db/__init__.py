@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import List
 from puffotter.flask.base import db
+from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent
 from bundesliga_tippspiel.db.match_data.Player import Player
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -39,7 +40,8 @@ models: List[db.Model] = [
     EmailReminder,
     SeasonWinner,
     SeasonTeamBet,
-    SeasonPositionBet
+    SeasonPositionBet,
+    SeasonEvent
 ]
 """
 The database models of the application

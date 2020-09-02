@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Tuple, Callable
+from bundesliga_tippspiel.background.season_events import handle_season_events
 from bundesliga_tippspiel.utils.match_data_getter import update_db_data
 from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
     SendDueEmailRemindersAction
@@ -25,7 +26,8 @@ from bundesliga_tippspiel.actions.SendDueEmailRemindersAction import \
 
 bg_tasks: Dict[str, Tuple[int, Callable]] = {
     "update_db_data": (30, update_db_data),
-    "send_due_reminders": (60, SendDueEmailRemindersAction().execute)
+    "send_due_reminders": (60, SendDueEmailRemindersAction().execute),
+    "handle_season_events": (60 * 60 * 24, handle_season_events)
 }
 """
 A dictionary containing background tasks for the flask application
