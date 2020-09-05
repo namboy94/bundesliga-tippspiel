@@ -91,7 +91,8 @@ class TestPlayer(_ModelTestFramework):
         """
         without_children = self.player.__json__(False)
         without_children.update({
-            "team": self.player.team.__json__(True)
+            "team": self.player.team.__json__(True, ["players", "player"]),
+            "goals": [x.__json__(True, ["player"]) for x in self.player.goals]
         })
         self.assertEqual(
             self.player.__json__(True),

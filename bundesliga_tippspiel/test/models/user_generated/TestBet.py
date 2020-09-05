@@ -106,11 +106,13 @@ class TestBet(_ModelTestFramework):
         """
         without_children = self.bet.__json__(False)
         without_children.update({
-            "user": self.bet.user.__json__(True),
-            "match": self.bet.match.__json__(True)
+            "user": self.bet.user.__json__(True, ["bets"]),
+            "match": self.bet.match.__json__(True, ["bets"])
         })
+        with_children = self.bet.__json__(True)
+        self.assertTrue("points" in with_children)
         self.assertEqual(
-            self.bet.__json__(True),
+            with_children,
             without_children
         )
 

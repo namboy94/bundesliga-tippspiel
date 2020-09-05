@@ -139,7 +139,9 @@ class TestMatch(_ModelTestFramework):
         without_children = self.match.__json__(False)
         without_children.update({
             "home_team": self.match.home_team.__json__(True),
-            "away_team": self.match.away_team.__json__(True)
+            "away_team": self.match.away_team.__json__(True),
+            "bets": [x.__json__(True, "match") for x in self.match.bets],
+            "goals": [x.__json__(True, "match") for x in self.match.goals]
         })
         self.assertEqual(
             self.match.__json__(True),

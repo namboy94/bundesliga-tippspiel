@@ -1,4 +1,4 @@
-# /api_key
+# /key
 
 This API endpoint allows the acquisition of a new API key.
 This API key may be used to access API endpoints that require
