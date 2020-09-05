@@ -75,7 +75,7 @@ class TestSeasonWinner(_ModelTestFramework):
         """
         without_children = self.winner.__json__(False)
         without_children.update({
-            "user": self.winner.user.__json__(True)
+            "user": self.winner.user.__json__(True, ["season_winners"])
         })
         self.assertEqual(
             self.winner.__json__(True),

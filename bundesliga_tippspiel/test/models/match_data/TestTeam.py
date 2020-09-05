@@ -109,8 +109,14 @@ class TestTeam(_ModelTestFramework):
         Tests the JSON representation of the model
         :return: None
         """
+        with_children = self.team_one.__json__(True)
+        for key in list(with_children.keys()):
+            if isinstance(with_children[key], dict) or \
+                    isinstance(with_children[key], list):
+                with_children.pop(key)
+
         self.assertEqual(
-            self.team_one.__json__(True),
+            with_children,
             self.team_one.__json__(False)
         )
 

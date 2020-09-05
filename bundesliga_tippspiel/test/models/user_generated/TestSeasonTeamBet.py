@@ -100,8 +100,8 @@ class TestSeasonTeamBet(_ModelTestFramework):
         """
         without_children = self.team_bet.__json__(False)
         without_children.update({
-            "user": self.team_bet.user.__json__(True),
-            "team": self.team_bet.team.__json__(True)
+            "user": self.team_bet.user.__json__(True, ["season_team_bets"]),
+            "team": self.team_bet.team.__json__(True, ["season_team_bets"])
         })
         self.assertEqual(
             self.team_bet.__json__(True),

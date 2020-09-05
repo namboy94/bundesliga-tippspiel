@@ -106,8 +106,8 @@ class TestBet(_ModelTestFramework):
         """
         without_children = self.bet.__json__(False)
         without_children.update({
-            "user": self.bet.user.__json__(True),
-            "match": self.bet.match.__json__(True)
+            "user": self.bet.user.__json__(True, ["bets"]),
+            "match": self.bet.match.__json__(True, ["bets"])
         })
         self.assertEqual(
             self.bet.__json__(True),

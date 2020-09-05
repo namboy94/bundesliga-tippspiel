@@ -98,7 +98,7 @@ class TestEmailReminder(_ModelTestFramework):
         """
         without_children = self.reminder.__json__(False)
         without_children.update({
-            "user": self.reminder.user.__json__(True)
+            "user": self.reminder.user.__json__(True, ["email_reminders"])
         })
         self.assertEqual(
             self.reminder.__json__(True),

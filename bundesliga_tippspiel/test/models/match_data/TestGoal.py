@@ -100,8 +100,8 @@ class TestGoal(_ModelTestFramework):
         """
         without_children = self.goal.__json__(False)
         without_children.update({
-            "match": self.goal.match.__json__(True),
-            "player": self.goal.player.__json__(True)
+            "match": self.goal.match.__json__(True, ["goals"]),
+            "player": self.goal.player.__json__(True, ["goals"])
          })
         self.assertEqual(
             self.goal.__json__(True),
