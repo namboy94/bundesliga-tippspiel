@@ -106,7 +106,7 @@ class TestSeasonPositionBet(_ModelTestFramework):
                 ),
             "team": self.position_bet.team.__json__(
                 True, ["season_position_bets"]
-            )
+                )
         })
         self.assertEqual(
             self.position_bet.__json__(True),
