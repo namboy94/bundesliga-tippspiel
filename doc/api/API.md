@@ -11,7 +11,7 @@ To start off, we'll discuss how requests are sent.
 Authorization is handled using basic HTTP authentication headers.
 The format is like this:
 
-    "Authorization": "Basic <API Key>"
+    "Authorization": "Basic <API Key(base64)>"
     
 Some requests do not require authentication, those can simply be called.
 

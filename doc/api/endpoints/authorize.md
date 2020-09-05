@@ -1,4 +1,4 @@
-# /request_key
+# /authorize
 
 This API endpoint allows checking if an API key is valid or not.
 
