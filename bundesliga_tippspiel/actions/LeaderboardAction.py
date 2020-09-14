@@ -43,7 +43,7 @@ class LeaderboardAction(Action):
         :param count: If set to true, will count the amount of bets instead
                       of evaluating their points
         :param include_bots: Whether or not to include bots.
-                             Bots are identified by a 🤖 or 🧠 emoji
+                             Bots are identified by a robot or brain emoji
         """
         self.matchday = None if matchday is None else int(matchday)
         self.count = count
