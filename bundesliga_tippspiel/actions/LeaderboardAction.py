@@ -33,7 +33,8 @@ class LeaderboardAction(Action):
     def __init__(
             self,
             matchday: Optional[int] = None,
-            count: bool = False
+            count: bool = False,
+            include_bots: bool = False
     ):
         """
         Initializes the LeaderboardAction object
@@ -41,9 +42,12 @@ class LeaderboardAction(Action):
                          If None, will use the most current matchday
         :param count: If set to true, will count the amount of bets instead
                       of evaluating their points
+        :param include_bots: Whether or not to include bots.
+                             Bots are identified by a 🤖 or 🧠 emoji
         """
         self.matchday = None if matchday is None else int(matchday)
         self.count = count
+        self.include_bots = include_bots
         self.bets: List[Bet] = []
 
     def validate_data(self):
@@ -64,6 +68,11 @@ class LeaderboardAction(Action):
         pointmap = {}
         usermap = {}
         for user in User.query.filter_by(confirmed=True).all():
+
+            if not self.include_bots and \
+                    ("🧠" in user.username or "🤖" in user.username):
+                continue  # Ignore bots
+
             pointmap[user.id] = 0
             usermap[user.id] = user
 
@@ -97,5 +106,6 @@ class LeaderboardAction(Action):
         :return: The generated Action object
         """
         return cls(
-            matchday=data.get("matchday")
+            matchday=data.get("matchday"),
+            include_bots=data.get("include_bets", "0") == "1"
         )
