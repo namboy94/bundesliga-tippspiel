@@ -85,6 +85,7 @@ class LeaderboardAction(Action):
         for user_id, points in pointmap.items():
             leaderboard.append((usermap[user_id], points))
 
+        leaderboard.sort(key=lambda x: x[0].id)
         leaderboard.sort(key=lambda x: x[1], reverse=True)
         return {"leaderboard": leaderboard}
 
