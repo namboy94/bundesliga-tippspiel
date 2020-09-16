@@ -107,5 +107,5 @@ class LeaderboardAction(Action):
         """
         return cls(
             matchday=data.get("matchday"),
-            include_bots=data.get("include_bets", "0") == "1"
+            include_bots=data.get("include_bots", "0") == "1"
         )
