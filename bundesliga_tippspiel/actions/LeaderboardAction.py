@@ -85,6 +85,10 @@ class LeaderboardAction(Action):
             ]
 
         for bet in self.bets:
+
+            if bet.user_id not in pointmap:
+                continue
+
             if self.count:
                 pointmap[bet.user_id] += 1
             else:
