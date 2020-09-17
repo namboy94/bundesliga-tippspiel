@@ -19,8 +19,8 @@ LICENSE"""
 
 from unittest import mock
 from datetime import datetime, timedelta
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.enums import ReminderType
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 from bundesliga_tippspiel.background.reminders import send_due_reminders
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
@@ -44,8 +44,9 @@ class TestReminders(_TestFramework):
         then = now + timedelta(hours=24)
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
-        self.reminder = EmailReminder(
+        self.reminder = ReminderSettings(
             id=1, user_id=self.user.id,
+            reminder_type=ReminderType.EMAIL,
             last_reminder=now_str,
             reminder_time=48 * 60 * 60
         )
@@ -61,8 +62,8 @@ class TestReminders(_TestFramework):
         """
         self.db.session.delete(self.reminder)
         self.db.session.commit()
-        with mock.patch("bundesliga_tippspiel.db.user_generated."
-                        "EmailReminder.send_email") as mocked:
+        with mock.patch("bundesliga_tippspiel.db.settings."
+                        "ReminderSettings.send_email") as mocked:
             send_due_reminders()
             self.assertEqual(0, mocked.call_count)
 
@@ -73,8 +74,8 @@ class TestReminders(_TestFramework):
         """
         self.reminder.last_reminder = self.match.kickoff
         self.db.session.commit()
-        with mock.patch("bundesliga_tippspiel.db.user_generated."
-                        "EmailReminder.send_email") as mocked:
+        with mock.patch("bundesliga_tippspiel.db.settings."
+                        "ReminderSettings.send_email") as mocked:
             send_due_reminders()
             self.assertEqual(0, mocked.call_count)
 
@@ -84,8 +85,8 @@ class TestReminders(_TestFramework):
         :return: None
         """
         with self.context:
-            with mock.patch("bundesliga_tippspiel.db.user_generated."
-                            "EmailReminder.send_email") as mocked:
+            with mock.patch("bundesliga_tippspiel.db.settings."
+                            "ReminderSettings.send_email") as mocked:
                 send_due_reminders()
                 self.assertEqual(1, mocked.call_count)
                 send_due_reminders()

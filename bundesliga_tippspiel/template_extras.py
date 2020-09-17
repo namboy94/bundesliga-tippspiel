@@ -18,8 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
-from bundesliga_tippspiel.actions.GetEmailReminderAction import \
-    GetEmailReminderAction
+from flask_login import current_user
+from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
+    DisplayBotsSettings
+from bundesliga_tippspiel.actions.GetReminderSettingsAction import \
+    GetReminderSettingsAction
 
 
 def profile_extras() -> Dict[str, Any]:
@@ -28,6 +31,15 @@ def profile_extras() -> Dict[str, Any]:
     reminders.
     :return: The variables to forward to the template
     """
+    reminder_settings = GetReminderSettingsAction().execute()["settings"]
+    reminder_time = None
+    for reminder in reminder_settings.values():
+        if reminder is not None:
+            reminder_time = reminder.reminder_time
+            break
     return {
-        "email_reminder": GetEmailReminderAction().execute()["email_reminder"]
+        "reminder_settings": reminder_settings,
+        "reminder_time": reminder_time,
+        "display_bots_setting":
+            DisplayBotsSettings.query.filter_by(user=current_user).first()
     }

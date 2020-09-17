@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
-from bundesliga_tippspiel.actions.GetEmailReminderAction import \
-    GetEmailReminderAction
+from bundesliga_tippspiel.enums import ReminderType
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
+from bundesliga_tippspiel.actions.GetReminderSettingsAction import \
+    GetReminderSettingsAction
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.actions.ActionTestFramework import \
     _ActionTestFramework
 
 
-class TestGetEmailReminderAction(_ActionTestFramework):
+class TestGetReminderSettingsAction(_ActionTestFramework):
     """
-    Class that tests the GetEmailReminder action
+    Class that tests the GetReminderSettingsAction action
     """
 
     def setUp(self):
@@ -39,20 +39,21 @@ class TestGetEmailReminderAction(_ActionTestFramework):
         super().setUp()
         self.user, self.password, _ = self.generate_sample_user(True)
         self.login_user(self.user, self.password, False)
-        self.reminder = EmailReminder(
+        self.reminder = ReminderSettings(
             id=1, user_id=self.user.id,
+            reminder_type=ReminderType.EMAIL,
             last_reminder="1970-01-01:01-01-01",
             reminder_time=24 * 60 * 60
         )
         self.db.session.add(self.reminder)
         self.db.session.commit()
 
-    def generate_action(self) -> GetEmailReminderAction:
+    def generate_action(self) -> GetReminderSettingsAction:
         """
-        Generates a valid SetEmailReminderAction object
-        :return: The generated SetEmailReminderAction
+        Generates a valid SetReminderSettingsAction object
+        :return: The generated SetReminderSettingsAction
         """
-        return GetEmailReminderAction()
+        return GetReminderSettingsAction()
 
     def test_setting_updating_and_deleting_reminder(self):
         """
@@ -61,17 +62,23 @@ class TestGetEmailReminderAction(_ActionTestFramework):
         """
         with self.context:
             resp = self.action.execute()
-            self.assertEqual(resp["email_reminder"], self.reminder)
+            self.assertEqual(
+                resp["settings"][ReminderType.EMAIL],
+                self.reminder
+            )
 
             self.db.session.delete(self.reminder)
             self.db.session.commit()
 
             resp = self.action.execute()
-            self.assertEqual(resp["email_reminder"], None)
+            self.assertEqual(
+                resp["settings"][ReminderType.EMAIL],
+                None
+            )
 
     def test_from_dict(self):
         """
         Tests the from_dict method
         :return: None
         """
-        GetEmailReminderAction.from_dict({})
+        GetReminderSettingsAction.from_dict({})

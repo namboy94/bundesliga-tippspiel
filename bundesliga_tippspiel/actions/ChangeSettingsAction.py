@@ -19,15 +19,23 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import current_user
+from puffotter.flask.base import db
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
+    DisplayBotsSettings
 
 
-class GetEmailReminderAction(Action):
+class ChangeSettingsAction(Action):
     """
-    Action that allows retrieving the user's email reminder
+    Action that allows users to change miscellaneous settings
     """
+
+    def __init__(self, display_bots: bool):
+        """
+        Initializes the SetReminderSettingsAction object
+        :param display_bots: Whether to display bots
+        """
+        self.display_bots = display_bots
 
     def validate_data(self):
         """
@@ -39,12 +47,23 @@ class GetEmailReminderAction(Action):
 
     def _execute(self) -> Dict[str, Any]:
         """
-        Registers an unconfirmed user in the database
+        Confirms a previously registered user
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        reminder = EmailReminder.query.filter_by(user=current_user).first()
-        return {"email_reminder": reminder}
+        display_bots_setting = DisplayBotsSettings.query.\
+            filter_by(user=current_user).first()
+        if display_bots_setting is None:
+            display_bots_setting = DisplayBotsSettings(
+                user=current_user,
+                display_bots=self.display_bots
+            )
+            db.session.add(display_bots_setting)
+        else:
+            display_bots_setting.display_bots = self.display_bots
+        db.session.commit()
+
+        return {}
 
     @classmethod
     def _from_dict(cls, data: Dict[str, Any]):
@@ -53,4 +72,6 @@ class GetEmailReminderAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        return cls()
+        return cls(
+            display_bots=data.get("display_bots", "off") == "on"
+        )

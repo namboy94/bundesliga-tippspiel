@@ -66,7 +66,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h2>Erinnerungen</h2>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("email_reminder.set_email_reminder") }}">
+        <form method="post" action="{{ url_for("reminder.set_reminder") }}">
             <div class="form-group">
                 <label for="hours_input">Stunden vor Spielbeginn</label>
                 <input class="form-control"
@@ -74,26 +74,30 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                        min="1"
                        max="48"
                        step="1"
-                       {% if email_reminder is none %}
+                       {% if reminder_time is none %}
                            value="24"
                        {% else %}
-                           value="{{ (email_reminder.reminder_time / 3600)|int }}"
+                           value="{{ (reminder_time / 3600)|int }}"
                        {% endif %}
                        id="hours_input"
                        aria-label="hours"
                        name="hours">
             </div>
-            <div class="form-check">
-                <input type="checkbox"
-                       class="form-check-input"
-                       id="active_check"
-                       name="active"
-                       {% if email_reminder is not none %}
-                           checked
-                       {% endif %}
-                       >
-                <label class="form-check-label" for="active_check">Aktiv</label>
-            </div>
+            {% for reminder_type, reminder in reminder_settings.items() %}
+                <div class="form-check">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           id="{{ reminder_type.value }}_check"
+                           name="{{ reminder_type.value }}"
+                           {% if reminder is not none and reminder.active %}
+                               checked
+                           {% endif %}
+                           >
+                    <label class="form-check-label" for="{{ reminder_type.value }}_check">
+                        {{ reminder_type.value.title() }}
+                    </label>
+                </div>
+            {% endfor %}
             <button type="submit" class="btn btn-primary">Aktualisieren</button>
         </form>
     </div>
@@ -122,6 +126,31 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                        aria-label="{{ site_name }}"
                        value="{{ '' if telegram_chat_id is none else telegram_chat_id.chat_id }}"
                        name="telegram_chat_id">
+            </div>
+            <button type="submit" class="btn btn-primary">Bestätigen</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <h2>Andere Einstellungen</h2>
+
+    <div class="container form-container">
+        <form method="post" action="{{ url_for('settings.misc_settings') }}">
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           id="display_bots_check"
+                           name="display_bots"
+                           {% if display_bots_setting is not none and display_bots_setting.display_bots %}
+                               checked
+                           {% endif %}
+                           >
+                    <label class="form-check-label" for="display_bots_check">
+                        Bots anzeigen
+                    </label>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Bestätigen</button>
         </form>

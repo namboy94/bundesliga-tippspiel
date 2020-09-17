@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any, Optional, List
+from puffotter.flask.base import db
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -34,7 +35,8 @@ class LeaderboardAction(Action):
             self,
             matchday: Optional[int] = None,
             count: bool = False,
-            include_bots: bool = False
+            include_bots: bool = False,
+            bets: Optional[List[Bet]] = None
     ):
         """
         Initializes the LeaderboardAction object
@@ -44,11 +46,13 @@ class LeaderboardAction(Action):
                       of evaluating their points
         :param include_bots: Whether or not to include bots.
                              Bots are identified by a robot or brain emoji
+        :param bets: Allows using a specific set of bets to calculate
+                     the leaderboard
         """
         self.matchday = None if matchday is None else int(matchday)
         self.count = count
         self.include_bots = include_bots
-        self.bets: List[Bet] = []
+        self.bets = bets
 
     def validate_data(self):
         """
@@ -69,15 +73,18 @@ class LeaderboardAction(Action):
         usermap = {}
         for user in User.query.filter_by(confirmed=True).all():
 
-            if not self.include_bots and \
-                    ("🧠" in user.username or "🤖" in user.username):
+            if not self.include_bots and "🤖" in user.username:
                 continue  # Ignore bots
 
             pointmap[user.id] = 0
             usermap[user.id] = user
 
-        self.bets = Bet.query.join(Bet.match)\
-            .filter(Match.season == Config.season()).all()
+        if self.bets is None:
+            self.bets = Bet.query\
+                .options(db.joinedload(Bet.match))\
+                .options(db.joinedload(Bet.user))\
+                .filter(Match.season == Config.season())\
+                .all()
 
         if self.matchday is not None:
             self.bets = [

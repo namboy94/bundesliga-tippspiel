@@ -21,61 +21,49 @@ from typing import Dict, Any
 from flask_login import current_user
 from puffotter.flask.base import db
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.exceptions import ActionException
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
+    DisplayBotsSettings
 
 
-class SetEmailReminderAction(Action):
+class LoadSettingsAction(Action):
     """
-    Action that allows setting an email reminder
+    Action that retrieves miscellaneous settings for the current user
     """
 
-    def __init__(self, hours: int, active: bool):
+    def __init__(self):
         """
-        Initializes the SetEmailReminderAction object
-        :param hours: How many hours before the match the user wants a reminder
-        :param active: Defines whether or not the reminder is active or not
+        Initializes the LoadSettingsAction object
+        :raises: ActionException if any problems occur
         """
-        self.hours = int(hours)
-        self.active = bool(active)
+        pass
 
     def validate_data(self):
         """
-        Validates user-provided data
+        Validates data
         :return: None
         :raises ActionException: if any data discrepancies are found
         """
-        if not 0 < self.hours < 49:
-            raise ActionException(
-                "invalid reminder hours",
-                "Ungültige Anzahl Stunden eingegeben"
-            )
+        pass
 
     def _execute(self) -> Dict[str, Any]:
         """
-        Confirms a previously registered user
+        Retrieves the settings from the database
+        (or initializes them with default values)
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        reminder = \
-            EmailReminder.query.filter_by(user_id=current_user.id).first()
-
-        if self.active:
-
-            if reminder is None:
-                reminder = EmailReminder(user=current_user)
-                db.session.add(reminder)
-
-            reminder.reminder_time = self.hours * 60 * 60
-
-        else:
-            if reminder is not None:
-                db.session.delete(reminder)
-
+        display_bots_setting = DisplayBotsSettings.query. \
+            filter_by(user=current_user).first()
+        if display_bots_setting is None:
+            display_bots_setting = DisplayBotsSettings(
+                user=current_user,
+                display_bots=False
+            )
+            db.session.add(display_bots_setting)
         db.session.commit()
-
-        return {}
+        return {
+            "display_bots": display_bots_setting.display_bots
+        }
 
     @classmethod
     def _from_dict(cls, data: Dict[str, Any]):
@@ -84,7 +72,4 @@ class SetEmailReminderAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
-        return cls(
-            hours=data["hours"],
-            active=data.get("active") in ["on", True]
-        )
+        return cls()

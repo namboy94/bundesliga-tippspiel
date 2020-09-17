@@ -29,6 +29,7 @@ from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
+from bundesliga_tippspiel.actions.LoadSettingsAction import LoadSettingsAction
 from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
 from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
 from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
@@ -57,15 +58,18 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :return: The Response
         """
         start = time.time()
+        settings = LoadSettingsAction().execute()
 
         app.logger.debug("Start generating leaderboard data")
         leaderboard_action = LeaderboardAction.from_site_request()
+        leaderboard_action.include_bots = settings["display_bots"]
         leaderboard_data = leaderboard_action.execute()["leaderboard"]
 
         # Re-use the previously queried bets
         bets = leaderboard_action.bets
-        current_matchday, leaderboard_history = \
-            generate_leaderboard_data(bets=bets)
+        current_matchday, leaderboard_history = generate_leaderboard_data(
+            bets=bets, include_bots=settings["display_bots"]
+        )
 
         delta = "%.2f" % (time.time() - start)
         app.logger.debug("Generated leaderboard data in {}s".format(delta))
@@ -147,6 +151,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :param user_id: The ID of the user to display
         :return: The request response
         """
+        settings = LoadSettingsAction().execute()
         user_data = User.query.get(user_id)
         if user_data is None:
             abort(404)
@@ -158,9 +163,12 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         bets = list(filter(lambda x: x.match.finished, bets))
         rr_bets = list(filter(lambda x: x.match.matchday > 17, bets))
 
-        current_matchday, leaderboard_history = \
-            generate_leaderboard_data(bets=bets)
-        _, rr_history = generate_leaderboard_data(bets=rr_bets)
+        current_matchday, leaderboard_history = generate_leaderboard_data(
+            bets=bets, include_bots=settings["display_bots"]
+        )
+        _, rr_history = generate_leaderboard_data(
+            bets=rr_bets, include_bots=settings["display_bots"]
+        )
 
         bets = list(filter(lambda x: x.user_id == user_id, bets))
 
@@ -221,6 +229,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         bets = Bet.query.join(Match).filter(Match.season == Config.season())\
             .all()
         finished_bets = list(filter(lambda x: x.match.finished, bets))
+        settings = LoadSettingsAction().execute()
 
         leaderboards = []
         for _filter, bets_data, count in [
@@ -231,10 +240,9 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         ]:
             dataset = list(filter(_filter, bets_data))
 
-            leaderboard_action = LeaderboardAction.from_site_request()
-            leaderboard_action.matchday = 34
-            leaderboard_action.bets = dataset
-            leaderboard_action.count = count
+            leaderboard_action = LeaderboardAction(
+                34, count, settings["display_bots"], dataset
+            )
             leaderboards.append(leaderboard_action.execute()["leaderboard"])
 
         team_points = get_total_points_per_team(finished_bets)

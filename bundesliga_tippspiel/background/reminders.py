@@ -17,8 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from puffotter.flask.base import app
-from bundesliga_tippspiel.db.user_generated.EmailReminder import EmailReminder
+from puffotter.flask.base import app, db
+from puffotter.flask.db.User import User
+from bundesliga_tippspiel.enums import ReminderType
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 
 
 def send_due_reminders():
@@ -27,5 +29,24 @@ def send_due_reminders():
     :return: None
     """
     app.logger.info("Checking for new email reminders")
-    for reminder in EmailReminder.query.all():
+    reminders = ReminderSettings.query.all()
+
+    all_users = User.query.all()
+    for reminder_type in ReminderType:
+        reminder_users = [
+            reminder.user_id
+            for reminder in reminders
+            if reminder.reminder_type == reminder_type
+        ]
+
+        for user in all_users:
+            if user.id not in reminder_users and user.confirmed:
+                reminder = ReminderSettings(
+                    user=user, reminder_type=reminder_type
+                )
+                db.session.add(reminder)
+                reminders.append(reminder)
+    db.session.commit()
+
+    for reminder in reminders:
         reminder.send_reminder()
