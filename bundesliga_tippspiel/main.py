@@ -25,6 +25,7 @@ from bundesliga_tippspiel import sentry_dsn, root_path
 from bundesliga_tippspiel.background import bg_tasks
 from bundesliga_tippspiel.db import models
 from bundesliga_tippspiel.routes import blueprint_generators
+from bundesliga_tippspiel.jinja_extras import jinja_extras
 
 
 def main():  # pragma: no cover
@@ -39,6 +40,7 @@ def main():  # pragma: no cover
         root_path,
         Config,
         models,
-        blueprint_generators
+        blueprint_generators,
+        jinja_extras()
     )
     start_server(Config, bg_tasks)

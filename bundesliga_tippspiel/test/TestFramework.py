@@ -31,6 +31,7 @@ from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel import root_path
 from bundesliga_tippspiel.routes import blueprint_generators
 from bundesliga_tippspiel.main import models
+from bundesliga_tippspiel.jinja_extras import jinja_extras
 
 
 class _TestFramework(Framework):
@@ -43,6 +44,7 @@ class _TestFramework(Framework):
     models = models
     config = Config
     blueprint_generators = blueprint_generators
+    extra_jinja_vars = jinja_extras()
 
     def generate_sample_match_data(self) \
             -> Tuple[Team, Team, Player, Match, Goal]:

@@ -21,12 +21,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 <p>
     {{ user.username }}, du hast noch nicht getippt!
-    Besuch schnell den untenstehenden Link um zu tippen:
+    Besuch schnell den folgenden Link um zu tippen:
 </p>
 
-<h3><a href="https://{{ "{}/bets".format(request.host) }}">
-    {{ "{}/bets".format(request.host) }}
-</a></h3>
+<h3>
+    <a href="{{ config.base_url() }}/bets">{{ config.base_url() }}/bets</a>
+</h3>
 
 <p>Die folgenden Spiele finden in den nächsten {{ hours }} Stunden statt:</p>
 

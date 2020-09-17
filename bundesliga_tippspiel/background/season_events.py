@@ -20,9 +20,10 @@ LICENSE"""
 from typing import List
 from flask import render_template
 from bs4 import BeautifulSoup
+from smtplib import SMTPAuthenticationError
 from datetime import datetime, timedelta
 from puffotter.smtp import send_email
-from puffotter.flask.base import db
+from puffotter.flask.base import db, app
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent, SeasonEventType
@@ -36,18 +37,21 @@ def handle_season_events():
     """
     for event in load_season_events():
 
-        if event.executed:
-            continue
-        elif event.event_type == SeasonEventType.PRE_SEASON_MAIL:
-            event.executed = handle_preseason_reminder()
-        elif event.event_type == SeasonEventType.MID_SEASON_REMINDER:
-            event.executed = handle_midseason_reminder()
-        elif event.event_type == SeasonEventType.POST_SEASON_WRAPUP:
-            event.executed = handle_postseason_wrapup()
-        else:  # pragma: no cover
-            pass
+        try:
+            if event.executed:
+                continue
+            elif event.event_type == SeasonEventType.PRE_SEASON_MAIL:
+                event.executed = handle_preseason_reminder()
+            elif event.event_type == SeasonEventType.MID_SEASON_REMINDER:
+                event.executed = handle_midseason_reminder()
+            elif event.event_type == SeasonEventType.POST_SEASON_WRAPUP:
+                event.executed = handle_postseason_wrapup()
+            else:  # pragma: no cover
+                pass
 
-        db.session.commit()
+            db.session.commit()
+        except SMTPAuthenticationError:
+            app.logger.error("Failed to send email (Authentication failed)")
 
 
 def load_season_events() -> List[SeasonEvent]:
