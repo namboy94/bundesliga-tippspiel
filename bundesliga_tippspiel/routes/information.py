@@ -19,7 +19,7 @@ LICENSE"""
 
 import time
 from typing import Union
-from flask import render_template, abort, Blueprint
+from flask import render_template, abort, Blueprint, request
 from flask_login import login_required
 from puffotter.flask.base import app
 from puffotter.flask.db.User import User
@@ -57,6 +57,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :return: The Response
         """
         start = time.time()
+        include_bots = request.args.get("include_bots", "0") == "1"
 
         app.logger.debug("Start generating leaderboard data")
         leaderboard_action = LeaderboardAction.from_site_request()
@@ -65,7 +66,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         # Re-use the previously queried bets
         bets = leaderboard_action.bets
         current_matchday, leaderboard_history = \
-            generate_leaderboard_data(bets=bets)
+            generate_leaderboard_data(bets=bets, include_bots=include_bots)
 
         delta = "%.2f" % (time.time() - start)
         app.logger.debug("Generated leaderboard data in {}s".format(delta))

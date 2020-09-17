@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any, Optional, List
+from puffotter.flask.base import db
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -69,15 +70,17 @@ class LeaderboardAction(Action):
         usermap = {}
         for user in User.query.filter_by(confirmed=True).all():
 
-            if not self.include_bots and \
-                    ("🧠" in user.username or "🤖" in user.username):
+            if not self.include_bots and "🤖" in user.username:
                 continue  # Ignore bots
 
             pointmap[user.id] = 0
             usermap[user.id] = user
 
-        self.bets = Bet.query.join(Bet.match)\
-            .filter(Match.season == Config.season()).all()
+        self.bets = Bet.query\
+            .options(db.joinedload(Bet.match))\
+            .options(db.joinedload(Bet.user))\
+            .filter(Match.season == Config.season())\
+            .all()
 
         if self.matchday is not None:
             self.bets = [
