@@ -232,10 +232,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         ]:
             dataset = list(filter(_filter, bets_data))
 
-            leaderboard_action = LeaderboardAction.from_site_request()
-            leaderboard_action.matchday = 34
-            leaderboard_action.bets = dataset
-            leaderboard_action.count = count
+            leaderboard_action = LeaderboardAction(
+                34, count, True, dataset
+            )
+            # TODO BOTS
             leaderboards.append(leaderboard_action.execute()["leaderboard"])
 
         team_points = get_total_points_per_team(finished_bets)
