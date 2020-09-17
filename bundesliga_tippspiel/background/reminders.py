@@ -29,7 +29,7 @@ def send_due_reminders():
     :return: None
     """
     app.logger.info("Checking for new email reminders")
-    reminders = ReminderSettings.query.all()
+    reminders = ReminderSettings.query.join(ReminderSettings.user).all()
 
     all_users = User.query.all()
     for reminder_type in ReminderType:

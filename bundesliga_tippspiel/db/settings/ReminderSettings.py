@@ -22,6 +22,7 @@ from flask import render_template
 from typing import List
 from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
+from smtplib import SMTPAuthenticationError
 from puffotter.flask.base import app, db
 from puffotter.flask.db.ModelMixin import ModelMixin
 from puffotter.flask.db.TelegramChatId import TelegramChatId
@@ -193,15 +194,18 @@ class ReminderSettings(ModelMixin, db.Model):
         :return: None
         """
         if self.reminder_type == ReminderType.EMAIL:
-            send_email(
-                self.user.email,
-                "Tippspiel Erinnerung",
-                message,
-                Config.SMTP_HOST,
-                Config.SMTP_ADDRESS,
-                Config.SMTP_PASSWORD,
-                Config.SMTP_PORT
-            )
+            try:
+                send_email(
+                    self.user.email,
+                    "Tippspiel Erinnerung",
+                    message,
+                    Config.SMTP_HOST,
+                    Config.SMTP_ADDRESS,
+                    Config.SMTP_PASSWORD,
+                    Config.SMTP_PORT
+                )
+            except SMTPAuthenticationError:
+                app.logger.error("Invalid SMTP settings, failed to send email")
         elif self.reminder_type == ReminderType.TELEGRAM:
             telegram = TelegramChatId.query.filter_by(user=self.user).first()
             if telegram is not None:
