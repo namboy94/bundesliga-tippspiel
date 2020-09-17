@@ -115,11 +115,14 @@ def generate_points_distributions(bets: Optional[List[Bet]] = None) \
     return distribution
 
 
-def create_participation_ranking(bets: Optional[List[Bet]] = None) \
-        -> List[Tuple[User, str]]:
+def create_participation_ranking(
+        bets: Optional[List[Bet]] = None,
+        include_bots: bool = False
+) -> List[Tuple[User, str]]:
     """
     Creates a ranking of user's participation percentages
     :param bets: The bets to analyze. If not provided, will analyze all bets
+    :param include_bots: Whether or not to include bots
     :return: A sorted list of tuples detailing the participation ranking
     """
     matches = Match.query.filter_by(season=Config.season()).all()
@@ -132,10 +135,13 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
 
     participation_stats = {}
     for user in User.query.filter_by(confirmed=True):
+        if not include_bots and "🤖" in user.username:
+            continue
         participation_stats[user] = 0
 
     for bet in bets:
-        participation_stats[bet.user] += 1
+        if bet.user in participation_stats:
+            participation_stats[bet.user] += 1
 
     ranking = []
     for user, betcount in participation_stats.items():
@@ -152,17 +158,24 @@ def create_participation_ranking(bets: Optional[List[Bet]] = None) \
     ))
 
 
-def create_point_average_ranking(bets: Optional[List[Bet]] = None) \
-        -> List[Tuple[User, str]]:
+def create_point_average_ranking(
+        bets: Optional[List[Bet]] = None,
+        include_bots: bool = False
+) -> List[Tuple[User, str]]:
     """
     Creates a ranking of points averages
     :param bets: The bets to analyze
+    :param include_bots: Whether or not to include bots
     :return: The ranking
     """
     distribution = generate_points_distributions(bets)
     averages = []
 
     for user, points_distrib in distribution.items():
+
+        if not include_bots and "🤖" in user.username:
+            continue
+
         total_points = 0
         count = 0
 

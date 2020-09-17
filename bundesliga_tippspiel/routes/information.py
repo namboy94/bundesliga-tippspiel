@@ -153,6 +153,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         """
         settings = LoadSettingsAction().execute()
         user_data = User.query.get(user_id)
+        if "🤖" in user_data.username:
+            # If the user to display is a bot, show other bots as well
+            settings["display_bots"] = True
+
         if user_data is None:
             abort(404)
 
@@ -255,8 +259,12 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
                     points_distribution[key] = 0
                 points_distribution[key] += value
 
-        participation_ranking = create_participation_ranking(finished_bets)
-        average_ranking = create_point_average_ranking(finished_bets)
+        participation_ranking = create_participation_ranking(
+            finished_bets, settings["display_bots"]
+        )
+        average_ranking = create_point_average_ranking(
+            finished_bets, settings["display_bots"]
+        )
 
         return render_template(
             "info/stats.html",

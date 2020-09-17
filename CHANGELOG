@@ -1,3 +1,5 @@
+V 1.6.1:
+  - Fixed bots showing up when disabled on stats page
 V 1.6.0:
   - Fixed issues with statistics page
   - Now supports separating different reminder types
