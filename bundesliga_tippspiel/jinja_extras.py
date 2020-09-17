@@ -17,6 +17,19 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+from typing import Dict, Any
+
+
+def jinja_extras() -> Dict[str, Any]:
+    """
+    Makes sure that jinja has access to these variables
+    :return: The variables to forward to jinja
+    """
+    return {
+        "get_pill_class": get_pill_class,
+        "get_matchday_total_pill_class": get_matchday_total_pill_class
+    }
+
 
 def get_pill_class(points: int) -> str:
     """

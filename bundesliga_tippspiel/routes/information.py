@@ -153,7 +153,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         """
         settings = LoadSettingsAction().execute()
         user_data = User.query.get(user_id)
-        if "🤖" in user_data.username:
+        if user_data is not None and "🤖" in user_data.username:
             # If the user to display is a bot, show other bots as well
             settings["display_bots"] = True
 
