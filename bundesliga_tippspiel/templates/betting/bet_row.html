@@ -59,21 +59,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="badge badge-danger badge-pill">0</span>
             {% else %}
                 {% set points=bet.evaluate() %}
-                {% if points == 0 %}
-                    <span class="badge badge-danger badge-pill">{{ points }}</span>
-                {% elif points <= 3 %}
-                    <span class="badge badge-warning badge-pill">{{ points }}</span>
-                {% elif points <= 7 %}
-                    <span class="badge badge-light badge-pill">{{ points }}</span>
-                {% elif points <= 10 %}
-                    <span class="badge badge-info badge-pill">{{ points }}</span>
-                {% elif points <= 12 %}
-                    <span class="badge badge-primary badge-pill">{{ points }}</span>
-                {% elif points > 12 %}
-                    <span class="badge badge-success badge-pill">{{ points }}</span>
-                {% else %}
-                    <span class="badge badge-secondary badge-pill">{{ points }}</span>
-                {% endif %}
+                <span class="badge badge-{{ get_pill_class(points) }} badge-pill">{{ points }}</span>
             {% endif %}
         </div>
 

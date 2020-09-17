@@ -99,30 +99,36 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>3:0</td>
-                <td>1:0</td>
-                <td>7 + 3 = 10</td>
-            </tr>
+
             <tr>
                 <td>2:1</td>
                 <td>1:2</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>1:1</td>
-                <td>2:2</td>
-                <td>7 + 5 = 12</td>
+                <td><span class="badge badge-{{ get_pill_class(0) }} badge-pill">0</span></td>
             </tr>
             <tr>
                 <td>5:0</td>
                 <td>0:0</td>
-                <td>3</td>
+                <td><span class="badge badge-{{ get_pill_class(3) }} badge-pill">3</span></td>
+            </tr>
+            <tr>
+                <td>3:0</td>
+                <td>1:0</td>
+                <td>7 + 3 = <span class="badge badge-{{ get_pill_class(10) }} badge-pill">10</span></td>
+            </tr>
+            <tr>
+                <td>1:1</td>
+                <td>2:2</td>
+                <td>7 + 5 = <span class="badge badge-{{ get_pill_class(12) }} badge-pill">12</span></td>
             </tr>
             <tr>
                 <td>4:1</td>
                 <td>3:0</td>
-                <td>7 + 5 = 12</td>
+                <td>7 + 5 = <span class="badge badge-{{ get_pill_class(12) }} badge-pill">12</span></td>
+            </tr>
+            <tr>
+                <td>0:2</td>
+                <td>0:2</td>
+                <td>7 + 5 + 3 = <span class="badge badge-{{ get_pill_class(15) }} badge-pill">3</span></td>
             </tr>
         </tbody>
     </table>

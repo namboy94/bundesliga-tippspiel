@@ -25,6 +25,8 @@ from bundesliga_tippspiel import sentry_dsn, root_path
 from bundesliga_tippspiel.background import bg_tasks
 from bundesliga_tippspiel.db import models
 from bundesliga_tippspiel.routes import blueprint_generators
+from bundesliga_tippspiel.utils.jinja_helper import get_pill_class, \
+    get_matchday_total_pill_class
 
 
 def main():  # pragma: no cover
@@ -39,6 +41,10 @@ def main():  # pragma: no cover
         root_path,
         Config,
         models,
-        blueprint_generators
+        blueprint_generators,
+        {
+            "get_pill_class": get_pill_class,
+            "get_matchday_total_pill_class": get_matchday_total_pill_class
+        }
     )
     start_server(Config, bg_tasks)
