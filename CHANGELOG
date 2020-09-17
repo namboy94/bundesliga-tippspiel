@@ -2,6 +2,7 @@ V 1.6.0:
   - Fixed issues with statistics page
   - Now supports separating different reminder types
   - Now hides bots in chart data as well
+  - Hiding bots is now a setting that can be changed on the profile page
 V 1.5.2:
   - Fixed leaderboard display issues
 V 1.5.1:

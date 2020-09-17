@@ -18,6 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
+from flask_login import current_user
+from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
+    DisplayBotsSettings
 from bundesliga_tippspiel.actions.GetReminderSettingsAction import \
     GetReminderSettingsAction
 
@@ -36,5 +39,7 @@ def profile_extras() -> Dict[str, Any]:
             break
     return {
         "reminder_settings": reminder_settings,
-        "reminder_time": reminder_time
+        "reminder_time": reminder_time,
+        "display_bots_setting":
+            DisplayBotsSettings.query.filter_by(user=current_user).first()
     }

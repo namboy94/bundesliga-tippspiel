@@ -22,6 +22,7 @@ from bundesliga_tippspiel.routes.information import define_blueprint \
     as __information
 from bundesliga_tippspiel.routes.reminder import define_blueprint \
     as __reminder
+from bundesliga_tippspiel.routes.settings import define_blueprint as __settings
 from bundesliga_tippspiel.routes.api.putters import define_blueprint \
     as __putters
 from bundesliga_tippspiel.routes.api.getters import define_blueprint \
@@ -35,7 +36,8 @@ blueprint_generators: List[Tuple[Callable[[str], Blueprint], str]] = [
     (__information, "information"),
     (__putters, "putters"),
     (__getters, "getters"),
-    (__betting, "betting")
+    (__betting, "betting"),
+    (__settings, "settings")
 ]
 """
 Defines the functions used to create the various blueprints

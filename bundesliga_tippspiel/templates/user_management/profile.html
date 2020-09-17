@@ -133,6 +133,31 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
+    <h2>Andere Einstellungen</h2>
+
+    <div class="container form-container">
+        <form method="post" action="{{ url_for('settings.misc_settings') }}">
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           id="display_bots_check"
+                           name="display_bots"
+                           {% if display_bots_setting is not none and display_bots_setting.display_bots %}
+                               checked
+                           {% endif %}
+                           >
+                    <label class="form-check-label" for="display_bots_check">
+                        Bots anzeigen
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Bestätigen</button>
+        </form>
+    </div>
+
+    <hr>
+
     <h2>Account löschen</h2>
 
     <div class="container form-container">
