@@ -22,23 +22,24 @@ from flask_login import current_user
 from puffotter.flask.base import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.enums import ReminderType
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 
 
-class SetEmailReminderAction(Action):
+class SetReminderSettingsAction(Action):
     """
-    Action that allows setting an email reminder
+    Action that allows setting reminder settings
     """
 
-    def __init__(self, hours: int, active: bool):
+    def __init__(self, hours: int, reminder_states: Dict[ReminderType, bool]):
         """
-        Initializes the SetEmailReminderAction object
+        Initializes the SetReminderSettingsAction object
         :param hours: How many hours before the match the user wants a reminder
-        :param active: Defines whether or not the reminder is active or not
+        :param reminder_states: specifies the states for each of the reminder
+                                types
         """
         self.hours = int(hours)
-        self.active = bool(active)
+        self.reminder_states = reminder_states
 
     def validate_data(self):
         """
@@ -58,23 +59,28 @@ class SetEmailReminderAction(Action):
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        reminder = \
-            EmailReminder.query.filter_by(user_id=current_user.id).first()
+        reminders = {
+            x.reminder_type: x for x in
+            ReminderSettings.query.filter_by(user_id=current_user.id).all()
+        }
 
-        if self.active:
+        seconds = self.hours * 60 * 60
 
+        for reminder_type, active in self.reminder_states.items():
+            reminder = reminders.get(reminder_type)
             if reminder is None:
-                reminder = EmailReminder(user=current_user)
+                reminder = ReminderSettings(
+                    user=current_user,
+                    reminder_time=seconds,
+                    reminder_type=reminder_type,
+                    active=active
+                )
                 db.session.add(reminder)
-
-            reminder.reminder_time = self.hours * 60 * 60
-
-        else:
-            if reminder is not None:
-                db.session.delete(reminder)
+            else:
+                reminder.active = active
+                reminder.reminder_time = seconds
 
         db.session.commit()
-
         return {}
 
     @classmethod
@@ -84,7 +90,11 @@ class SetEmailReminderAction(Action):
         :param data: The dictionary containing the relevant data
         :return: The generated Action object
         """
+        reminder_states = {
+            reminder_type: data.get(reminder_type.value) in ["on", True]
+            for reminder_type in ReminderType
+        }
         return cls(
             hours=data["hours"],
-            active=data.get("active") in ["on", True]
+            reminder_states=reminder_states
         )

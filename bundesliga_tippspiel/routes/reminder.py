@@ -20,8 +20,8 @@ LICENSE"""
 from flask import Blueprint
 from flask_login import login_required
 from bundesliga_tippspiel.utils.routes import action_route
-from bundesliga_tippspiel.actions.SetEmailReminderAction import \
-    SetEmailReminderAction
+from bundesliga_tippspiel.actions.SetReminderSettingsAction import \
+    SetReminderSettingsAction
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -32,15 +32,15 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     """
     blueprint = Blueprint(blueprint_name, __name__)
 
-    @blueprint.route("/set_email_reminder", methods=["POST"])
+    @blueprint.route("/set_reminder", methods=["POST"])
     @login_required
     @action_route
-    def set_email_reminder():
+    def set_reminder():
         """
         Allows the user to set an email reminder
         :return: The response
         """
-        action = SetEmailReminderAction.from_site_request()
+        action = SetReminderSettingsAction.from_site_request()
         return action.execute_with_redirects(
             "user_management.profile",
             "Erinnerungsdaten gespeichert",

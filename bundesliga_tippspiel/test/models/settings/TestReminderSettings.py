@@ -22,16 +22,16 @@ from datetime import datetime, timedelta
 from puffotter.flask.db.User import User
 from puffotter.flask.base import db
 from bundesliga_tippspiel.db.match_data.Match import Match
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.enums import ReminderType
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \
     _ModelTestFramework
 
 
-class TestEmailReminder(_ModelTestFramework):
+class TestReminderSettings(_ModelTestFramework):
     """
-    Tests the EmailReminder SQL model
+    Tests the ReminderSettings SQL model
     """
 
     def setUp(self):
@@ -40,7 +40,7 @@ class TestEmailReminder(_ModelTestFramework):
         :return: None
         """
         super().setUp()
-        self.model_cls = EmailReminder
+        self.model_cls = ReminderSettings
 
     def test_missing_column_data(self):
         """
@@ -48,8 +48,8 @@ class TestEmailReminder(_ModelTestFramework):
         :return: None
         """
         self._test_missing_column_data([
-            EmailReminder(user=self.user_two),
-            EmailReminder(reminder_time=1)
+            ReminderSettings(user=self.user_two),
+            ReminderSettings(reminder_type=ReminderType.EMAIL)
         ])
 
     def test_auto_increment(self):
@@ -59,7 +59,11 @@ class TestEmailReminder(_ModelTestFramework):
         """
         self._test_auto_increment([
             (1, self.reminder),
-            (2, EmailReminder(user=self.user_two, reminder_time=2))
+            (2, ReminderSettings(
+                user=self.user_two,
+                reminder_time=2,
+                reminder_type=ReminderType.EMAIL
+            ))
         ])
 
     def test_uniqueness(self):
@@ -68,7 +72,9 @@ class TestEmailReminder(_ModelTestFramework):
         :return: None
         """
         self._test_uniqueness([
-            EmailReminder(user=self.user_one, reminder_time=2)
+            ReminderSettings(
+                user=self.user_one, reminder_type=ReminderType.EMAIL
+            )
         ])
 
     def test_retrieving_from_db(self):
@@ -77,7 +83,7 @@ class TestEmailReminder(_ModelTestFramework):
         :return: None
         """
         self._test_retrieving_from_db([
-            (lambda: EmailReminder.query.filter_by(
+            (lambda: ReminderSettings.query.filter_by(
                 id=self.reminder.id).first(),
              self.reminder)
         ])
@@ -98,7 +104,7 @@ class TestEmailReminder(_ModelTestFramework):
         """
         without_children = self.reminder.__json__(False)
         without_children.update({
-            "user": self.reminder.user.__json__(True, ["email_reminders"])
+            "user": self.reminder.user.__json__(True, ["reminder_settings"])
         })
         self.assertEqual(
             self.reminder.__json__(True),
@@ -124,8 +130,13 @@ class TestEmailReminder(_ModelTestFramework):
         now = datetime.utcnow()
         new_user = User(username="Z", email="Z", confirmed=True,
                         password_hash="Z", confirmation_hash="Z")
-        reminder_one = EmailReminder(user=self.user_two, reminder_time=600)
-        reminder_two = EmailReminder(user=new_user, reminder_time=3600)
+        reminder_one = ReminderSettings(
+            user=self.user_two, reminder_time=600,
+            reminder_type=ReminderType.EMAIL
+        )
+        reminder_two = ReminderSettings(
+            user=new_user, reminder_time=3600, reminder_type=ReminderType.EMAIL
+        )
 
         self.db.session.delete(self.match)
         self.db.session.commit()
@@ -154,8 +165,8 @@ class TestEmailReminder(_ModelTestFramework):
         self.assertEqual(reminder_two.get_due_matches(), [match_one])
 
         with self.context:
-            with mock.patch("bundesliga_tippspiel.db.user_generated."
-                            "EmailReminder.send_email") as mocked:
+            with mock.patch("bundesliga_tippspiel.db.settings."
+                            "ReminderSettings.send_email") as mocked:
                 reminder_one.send_reminder()
                 self.assertEqual(0, mocked.call_count)
                 reminder_two.send_reminder()
@@ -176,8 +187,8 @@ class TestEmailReminder(_ModelTestFramework):
                          [match_one, match_two])
 
         with self.context:
-            with mock.patch("bundesliga_tippspiel.db.user_generated."
-                            "EmailReminder.send_email") as mocked:
+            with mock.patch("bundesliga_tippspiel.db.settings."
+                            "ReminderSettings.send_email") as mocked:
                 reminder_one.send_reminder()
                 self.assertEqual(1, mocked.call_count)
                 reminder_two.send_reminder()
@@ -192,7 +203,11 @@ class TestEmailReminder(_ModelTestFramework):
         :return: None
         """
         now = datetime.utcnow()
-        reminder = EmailReminder(user=self.user_two, reminder_time=600)
+        reminder = ReminderSettings(
+            user=self.user_two,
+            reminder_time=600,
+            reminder_type=ReminderType.EMAIL
+        )
 
         self.db.session.delete(self.match)
         self.db.session.commit()
@@ -229,6 +244,6 @@ class TestEmailReminder(_ModelTestFramework):
         Tests if cascade deletes work correctly
         :return: None
         """
-        self.assertEqual(len(EmailReminder.query.all()), 1)
+        self.assertEqual(len(ReminderSettings.query.all()), 1)
         db.session.delete(self.reminder.user)
-        self.assertEqual(len(EmailReminder.query.all()), 0)
+        self.assertEqual(len(ReminderSettings.query.all()), 0)

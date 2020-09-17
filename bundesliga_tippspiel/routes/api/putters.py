@@ -21,8 +21,8 @@ from flask import request, Blueprint
 from flask_login import login_required
 from puffotter.flask.routes.decorators import api, api_login_required
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
-from bundesliga_tippspiel.actions.SetEmailReminderAction import \
-    SetEmailReminderAction
+from bundesliga_tippspiel.actions.SetReminderSettingsAction import \
+    SetReminderSettingsAction
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -45,16 +45,16 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         action = PlaceBetsAction.from_dict(request.get_json())
         return action.execute()
 
-    @blueprint.route("/api/v2/email_reminder", methods=["PUT"])
+    @blueprint.route("/api/v2/reminder", methods=["PUT"])
     @api_login_required
     @login_required
     @api
-    def put_email_reminder():
+    def put_reminder():
         """
         Allows the creation or updating of an email reminder
         :return: None
         """
-        action = SetEmailReminderAction.from_dict(request.get_json())
+        action = SetReminderSettingsAction.from_dict(request.get_json())
         return action.execute()
 
     return blueprint

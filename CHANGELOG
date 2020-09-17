@@ -1,4 +1,5 @@
 V 1.5.3:
+  - Now supports separating different reminder types
   - Now hides bots in chart data as well
 V 1.5.2:
   - Fixed leaderboard display issues

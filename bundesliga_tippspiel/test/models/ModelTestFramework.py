@@ -22,8 +22,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
 from puffotter.flask.base import db
 from puffotter.flask.db.ModelMixin import ModelMixin
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.enums import ReminderType
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 
@@ -47,8 +47,10 @@ class _ModelTestFramework(_TestFramework):
         self.user_two = self.generate_sample_user(True)[0]
         self.api_key = self.generate_api_key(self.user_one)[0]
         self.bet = self.generate_sample_bet(self.user_one, self.match)
-        self.reminder = EmailReminder(
-            user=self.user_one, reminder_time=1
+        self.reminder = ReminderSettings(
+            id=1, user=self.user_one,
+            reminder_type=ReminderType.EMAIL,
+            reminder_time=1
         )
         self.db.session.add(self.reminder)
         self.db.session.commit()

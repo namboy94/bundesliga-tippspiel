@@ -19,14 +19,14 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import current_user
+from bundesliga_tippspiel.enums import ReminderType
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.db.user_generated.EmailReminder import \
-    EmailReminder
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 
 
-class GetEmailReminderAction(Action):
+class GetReminderSettingsAction(Action):
     """
-    Action that allows retrieving the user's email reminder
+    Action that allows retrieving the user's reminder settings
     """
 
     def validate_data(self):
@@ -39,12 +39,20 @@ class GetEmailReminderAction(Action):
 
     def _execute(self) -> Dict[str, Any]:
         """
-        Registers an unconfirmed user in the database
+        Retrieves reminder settings
         :return: A JSON-compatible dictionary containing the response
         :raises ActionException: if anything went wrong
         """
-        reminder = EmailReminder.query.filter_by(user=current_user).first()
-        return {"email_reminder": reminder}
+        reminders = {
+            x.reminder_type: x for x in
+            ReminderSettings.query.filter_by(user_id=current_user.id).all()
+        }
+        return {
+            "settings": {
+                reminder_type: reminders.get(reminder_type)
+                for reminder_type in ReminderType
+            }
+        }
 
     @classmethod
     def _from_dict(cls, data: Dict[str, Any]):

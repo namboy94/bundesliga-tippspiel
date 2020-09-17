@@ -17,24 +17,12 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Dict, Any
-from bundesliga_tippspiel.actions.GetReminderSettingsAction import \
-    GetReminderSettingsAction
+from enum import Enum
 
 
-def profile_extras() -> Dict[str, Any]:
+class ReminderType(Enum):
     """
-    Makes sure that the profile page has access to information on email
-    reminders.
-    :return: The variables to forward to the template
+    Class that specifies the different reminder types
     """
-    reminder_settings = GetReminderSettingsAction().execute()["settings"]
-    reminder_time = None
-    for reminder in reminder_settings.values():
-        if reminder is not None:
-            reminder_time = reminder.reminder_time
-            break
-    return {
-        "reminder_settings": reminder_settings,
-        "reminder_time": reminder_time
-    }
+    EMAIL = "email"
+    TELEGRAM = "telegram"
