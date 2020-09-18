@@ -49,12 +49,16 @@ def update_match_data(
 
     # Fetch Data
     base_url = "https://www.openligadb.de/api/{}/{}/{}"
-    team_data = json.loads(requests.get(
-        base_url.format("getavailableteams", league, season)
-    ).text)
-    match_data = json.loads(requests.get(
-        base_url.format("getmatchdata", league, season)
-    ).text)
+    try:
+        team_data = json.loads(requests.get(
+            base_url.format("getavailableteams", league, season)
+        ).text)
+        match_data = json.loads(requests.get(
+            base_url.format("getmatchdata", league, season)
+        ).text)
+    except ConnectionError:
+        app.logger.warning("Failed to update match data due to failed request")
+        return
 
     matches, goals, players, teams = [], [], [], []
 
