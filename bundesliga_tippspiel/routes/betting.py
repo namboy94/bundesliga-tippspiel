@@ -30,7 +30,7 @@ from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
 from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 from bundesliga_tippspiel.actions.Action import Action
-from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.actions.LoadSettingsAction import LoadSettingsAction
 from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
     SeasonTeamBet, SeasonTeamBetType
 from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
@@ -99,9 +99,18 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :param match_id: The ID of the match to display
         :return: The Response
         """
+        settings = LoadSettingsAction().execute()
         match_info = GetMatchAction(_id=match_id).execute()["match"]
         goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
-        bets_info = GetBetAction(match_id=match_id).execute()["bets"]
+        bets_info = GetBetAction(
+            match_id=match_id,
+            include_other_users_bets=True
+        ).execute()["bets"]
+        bets_info.sort(key=lambda x: x.user_id)
+
+        if not settings["display_bots"]:
+            bets_info = [x for x in bets_info if "🤖" not in x.user.username]
+
         return render_template(
             "info/match.html",
             match=match_info,

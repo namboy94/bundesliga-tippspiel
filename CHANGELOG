@@ -2,6 +2,7 @@ V 1.6.1:
   - Fixed bots showing up when disabled on stats page
   - Fixed email reminders not being sent correctly
   - Gracefully handles SMTP authentication errors
+  - The match page now shows who has already placed bets
 V 1.6.0:
   - Fixed issues with statistics page
   - Now supports separating different reminder types
