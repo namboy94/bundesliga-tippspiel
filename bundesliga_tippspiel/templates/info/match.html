@@ -124,7 +124,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% for bet in bets %}
                 <tr>
                     <th>{{ bet.user.username }}</th>
-                    <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
+                    {% if match.started or bet.user_id == current_user.id %}
+                        <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
+                    {% else %}
+                        <th>?:?</th>
+                    {% endif %}
                     <th>
                         {% if match.started %}
                             {% set points=bet.evaluate() %}

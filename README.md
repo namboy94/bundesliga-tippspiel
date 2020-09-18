@@ -10,8 +10,7 @@ Bundesliga Tippspiel is a website using flask and various plugins that allows
 users to bet on Bundesliga matches and compete with one another.
 
 A live version of the page is available at
-[hk-tippspiel.com](https://hk-tippspiel.com). A development instance is available
-at [develop.hk-tippspiel.com](https://develop.hk-tippspiel.com)
+[hk-tippspiel.com](https://hk-tippspiel.com).
 
 ## Documentation
 
@@ -27,38 +26,39 @@ You can deploy the website using docker and docker-compose.
 To do this run the following commands:
 
     # Builds the docker image
-    docker build -f docker/Dockerfile -t bundesliga-tippspiel-prod . --no-chache
+    docker-compose build
     # Starts the container and the database container
-    docker-compose -f docker/docker-compose-prod.yml up -d
-    # If you want to use an updated image
-    docker-compose -f docker/docker-compose-prod.yml up -d --no-deps bundesliga-tippspiel-prod-app
+    docker-compose up -d
+    
+The .env file should contain the following variables:
 
-The .env file must contain the following variables:
-
-* MYSQL_ROOT_PASSWORD
-* MYSQL_USER
-* MYSQL_PASSWORD
-* MYSQL_DATABASE
 * FLASK_SECRET
+* DB_MODE
 * RECAPTCHA_SITE_KEY
 * RECAPTCHA_SECRET_KEY
+* SMTP_HOST
+* SMTP_PORT
 * SMTP_ADDRESS
 * SMTP_PASSWORD
-* SMTP_PORT
-* SMTP_HOST
+* TELEGRAM_API_KEY
+* POSTGRES_HOST
+* POSTGRES_PORT
+* POSTGRES_USER
+* POSTGRES_PASSWORD
+* POSTGRES_DB
+* DOMAIN_NAME
+* HTTP_PORT
+* BEHIND_PROXY
 * OPENLIGADB_SEASON
-* OPENLIGADB_LEAGUE
 
 # Backing up and restoring
 
-All the data is stored in the mysql/mariadb database, so you can backup the
-database using the following command:
-
-    docker exec bundesliga-tippspiel-prod-db-container mysqldump --user root --password=$MYSQL_ROOT_PASSWORD bundesliga_tippspiel > $BACKUPS_DIR/bundesliga_tippspiel-$(date --iso-8601).db
-
-And restoring can be done like this:
-
-    docker exec bundesliga-tippspiel-prod-db-container mysql -u root --password=$MYSQL_ROOT_PASSWORD bundesliga_tippspiel < $BACKUP_FILE
+The project provides a backup and restore script in the [bin](bin) directory.
+    
+    # Backup
+    bin/backup.sh backup.tar.gz
+    # Restore
+    bin/restore.sh backup.tar.gz
 
 ## Further Information
 

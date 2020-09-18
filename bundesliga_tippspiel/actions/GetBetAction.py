@@ -36,7 +36,8 @@ class GetBetAction(GetAction):
             _id: Optional[int] = None,
             user_id: Optional[int] = None,
             match_id: Optional[int] = None,
-            matchday: Optional[int] = None
+            matchday: Optional[int] = None,
+            include_other_users_bets: bool = False
     ):
         """
         Initializes the GetBetAction object
@@ -47,12 +48,16 @@ class GetBetAction(GetAction):
                          specified match
         :param matchday: If provided, will only provide bets for the specified
                          matchday
+        :param include_other_users_bets: If True, will include bets from other
+                                         users even if the match hasn't started
+                                         yet.
         :raises: ActionException if any problems occur
         """
         super().__init__(_id)
         self.user_id = None if user_id is None else int(user_id)
         self.match_id = None if match_id is None else int(match_id)
         self.matchday = None if matchday is None else int(matchday)
+        self.include_other_users_bets = include_other_users_bets
 
     def validate_data(self):
         """
@@ -96,10 +101,11 @@ class GetBetAction(GetAction):
             query = query.join(Match).filter(Match.season == Config.season())
 
             result = query.all()
-            result = list(filter(
-                lambda x: x.match.started or current_user.id == x.user_id,
-                result
-            ))
+            if not self.include_other_users_bets:
+                result = list(filter(
+                    lambda x: x.match.started or current_user.id == x.user_id,
+                    result
+                ))
 
             result.sort(key=lambda x: x.match.kickoff)
 
@@ -116,5 +122,6 @@ class GetBetAction(GetAction):
             _id=data.get("id"),
             user_id=data.get("user_id"),
             match_id=data.get("match_id"),
-            matchday=data.get("matchday")
+            matchday=data.get("matchday"),
+            include_other_users_bets=False
         )
