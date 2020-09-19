@@ -35,7 +35,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     @blueprint.route("/chat", methods=["GET"])
     @blueprint.route("/chat/<int:page>", methods=["GET"])
     @login_required
-    def chat(page: Optional[int] = 1):
+    def chat(page: int = 1):
         """
         Displays the chat page
         :param page: The page of the chat to display
