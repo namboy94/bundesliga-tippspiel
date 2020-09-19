@@ -1,3 +1,5 @@
+V 1.7.1:
+  - Fixed displaying chat page when no comments exist yet
 V 1.7.0:
   - Added comment/chat system
 V 1.6.3:
