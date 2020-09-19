@@ -43,10 +43,24 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         """
         chat_messages = ChatMessage.query.all()
         chat_messages.sort(key=lambda x: x.creation_time, reverse=True)
-        return render_template(
-            "chat/chat.html",
-            messages=chat_messages
-        )
+
+        page_size = 15
+        start_comment = (page - 1) * page_size
+        end_comment = start_comment + page_size
+        page_messages = chat_messages[start_comment:end_comment]
+
+        last_page = None if page == 1 else page - 1
+        next_page = None if len(chat_messages) <= end_comment else page + 1
+
+        if len(page_messages) < 1:
+            return redirect(url_for("chat.chat", page=1))
+        else:
+            return render_template(
+                "chat/chat.html",
+                messages=page_messages,
+                last_page=last_page,
+                next_page=next_page
+            )
 
     @blueprint.route("/new_chat_message", methods=["POST"])
     @login_required
