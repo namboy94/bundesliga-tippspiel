@@ -27,6 +27,7 @@ from bundesliga_tippspiel.routes.api.putters import define_blueprint \
     as __putters
 from bundesliga_tippspiel.routes.api.getters import define_blueprint \
     as __getters
+from bundesliga_tippspiel.routes.chat import define_blueprint as __chat
 
 from flask.blueprints import Blueprint
 from typing import List, Tuple, Callable
@@ -37,7 +38,8 @@ blueprint_generators: List[Tuple[Callable[[str], Blueprint], str]] = [
     (__putters, "putters"),
     (__getters, "getters"),
     (__betting, "betting"),
-    (__settings, "settings")
+    (__settings, "settings"),
+    (__chat, "chat")
 ]
 """
 Defines the functions used to create the various blueprints

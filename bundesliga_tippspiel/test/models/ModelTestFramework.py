@@ -200,5 +200,8 @@ class _ModelTestFramework(_TestFramework):
         # noinspection PyUnresolvedReferences
         from bundesliga_tippspiel.db.SeasonEvent import \
             SeasonEvent, SeasonEventType
+        # noinspection PyUnresolvedReferences
+        from bundesliga_tippspiel.db.user_generated.ChatMessage import \
+            ChatMessage
 
         exec("self.assertEqual(model, {})".format(repr(model)))
