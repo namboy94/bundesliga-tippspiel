@@ -29,6 +29,7 @@ from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import SeasonTeamBet
 from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
     SeasonPositionBet
+from bundesliga_tippspiel.db.user_generated.ChatMessage import ChatMessage
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings
@@ -44,7 +45,8 @@ models: List[db.Model] = [
     SeasonPositionBet,
     SeasonEvent,
     ReminderSettings,
-    DisplayBotsSettings
+    DisplayBotsSettings,
+    ChatMessage
 ]
 """
 The database models of the application
