@@ -56,7 +56,7 @@ def update_match_data(
         match_data = json.loads(requests.get(
             base_url.format("getmatchdata", league, season)
         ).text)
-    except ConnectionError:
+    except (ConnectionError, requests.exceptions.ReadTimeout):
         app.logger.warning("Failed to update match data due to failed request")
         return
 
