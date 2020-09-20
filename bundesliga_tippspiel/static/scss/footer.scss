@@ -23,7 +23,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
  */
 .bottom-footer {
     padding: 12px;  // To ensure that the footer reaches all the way down
-    background: grey;
+    background: #363636;
 }
 
 /**
@@ -36,4 +36,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     border-radius: 3px;
     padding-left: 3px;
     padding-right: 3px;
+}
+
+.bottom-footer a {
+    color: white;
 }

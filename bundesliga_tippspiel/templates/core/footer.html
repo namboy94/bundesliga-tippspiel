@@ -21,18 +21,18 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="content has-text-centered">
         <div class="columns">
-            <div class="column">
+            <div class="column is-4">
                 <a href="mailto:hermann@krumreyh.com">
                     © 2017-2020 Hermann Krumrey
                 </a>
             </div>
 
-            <div class="column">
+            <div class="column is-4">
                 <a href="{{ url_for("static.about") }}">Impressum</a>
                 |
                 <a href="{{ url_for("static.privacy") }}">Datenschutzerklärung</a>
             </div>
-            <div class="column">
+            <div class="column is-3">
                 <a href="https://www.python.org/">
                     <img class="dependency-logo" alt="python"
                          src="{{ url_for('static', filename='python-logo.png') }}">
@@ -46,7 +46,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                          src="{{ url_for('static', filename='sqlalchemy-logo.png') }}">
                 </a>
             </div>
-            <div class="column">
+            <div class="column is-1">
                 <a href="https://gitlab.namibsun.net:/namibsun/python/bundesliga-tippspiel">
                     V{{ version }}
                 </a>
