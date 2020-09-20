@@ -20,59 +20,45 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% extends "core/base_layout.html" %}
 {% block body %}
 
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
-            <h1>
-                {% if matchday > 1 %}
-                    <a href="{{ "{}/{}".format(url_for("betting.bets"), matchday - 1) }}">
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                {% endif %}
-            </h1>
+    <div class="columns is-mobile is-vcentered has-text-centered">
+        <div class="column is-1 is-offset-2">
+            {% if matchday > 1 %}
+                <a href="{{ "{}/{}".format(url_for("betting.bets"), matchday - 1) }}">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            {% endif %}
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-6"><h1>Spieltag {{ matchday }}</h1></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
-            <h1>
-                {% if matchday < 34 %}
-                    <a href="{{ "{}/{}".format(url_for("betting.bets"), matchday + 1) }}">
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                {% endif %}
-            </h1>
+        <div class="column is-6"><h1>Spieltag {{ matchday }}</h1></div>
+        <div class="column is-1">
+            {% if matchday < 34 %}
+                <a href="{{ "{}/{}".format(url_for("betting.bets"), matchday + 1) }}">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            {% endif %}
         </div>
-        <div class="col-md-1"></div>
     </div>
 
-    <form class="form-horizontal"
-          action="{{ url_for("betting.bets") }}"
-          method="post">
-        <fieldset>
-            <ul class="list-group">
-                {% for match in matches %}
-                    {% with match=match, bet=betmap[match.id] %}
-                        {% include "betting/bet_row.html" %}
-                    {% endwith %}
-                {% endfor %}
-            </ul>
-            <br>
-            <h3>
-                {% if matches[0].started %}
-                    Erreichte Punktzahl:
-                    <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
-                        {{ matchday_points }}
-                    </span>
-                {% endif %}
-            </h3>
-            <br>
-            <div class="form-group">
-                <div class="col-sm-12 text-center">
-                    <button type="submit" class="btn btn-primary">Bestätigen</button>
-                </div>
-            </div>
-        </fieldset>
-    </form>
+    <form action="{{ url_for("betting.bets") }}" method="post" class="has-text-centered">
+        {% for match in matches %}
+            {% with match=match, bet=betmap[match.id],
+                    first=loop.index == 1, last=loop.index == matches|length %}
+                {% include "betting/bet_row_desktop.html" %}
+                {% include "betting/bet_row_mobile.html" %}
+            {% endwith %}
+        {% endfor %}
 
+        {% with button_name="Bestätigen" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+
+        <h3>
+            {% if matches[0].started %}
+                Erreichte Punktzahl:
+                <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
+                    {{ matchday_points }}
+                </span>
+            {% endif %}
+        </h3>
+
+    </form>
 {% endblock %}

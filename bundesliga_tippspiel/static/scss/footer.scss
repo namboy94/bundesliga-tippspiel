@@ -17,13 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+@import "colors";
 
 /**
  Styling for the footer
  */
 .bottom-footer {
     padding: 12px;  // To ensure that the footer reaches all the way down
-    background: #363636;
+    background: $footer-background-color;
 }
 
 /**
@@ -32,12 +33,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 .dependency-logo {
     max-height: 30px;
     margin-left: 5px;
-    background: #999c9f;
+    background: $footer-logo-background-color;
     border-radius: 3px;
     padding-left: 3px;
     padding-right: 3px;
 }
 
 .bottom-footer a {
-    color: white;
+    color: $footer-text-color;
 }

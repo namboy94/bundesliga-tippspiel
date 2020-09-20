@@ -1,4 +1,4 @@
-/**
+{#
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,28 +15,13 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-*/
+#}
 
-@import "colors";
-
-/**
- Styling for the top navbar
- */
-.top-navbar {
-    max-height: 3.25rem; // Ensures that the navbar is not too big
-}
-
-/**
- Styling for the logo in the navbar
- */
-.brand-image {
-    max-height: 40px; // Ensures that the logo does not exceed the navbar
-}
-
-/**
- Styling for the currently selected navbar item
- */
-.active {
-    font-weight: bold;
-    background: $navbar-active-background-color;
-}
+{% if not match.started%}
+    <span class="tag is-light">-</span>
+{% elif bet is none %}
+    <span class="tag is-danger">0</span>
+{% else %}
+    {% set points=bet.evaluate() %}
+    <span class="tag is-{{ get_pill_class(points) }}">{{ points }}</span>
+{% endif %}

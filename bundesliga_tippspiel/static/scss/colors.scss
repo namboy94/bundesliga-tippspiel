@@ -17,26 +17,19 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-@import "colors";
-
-/**
- Styling for the top navbar
- */
-.top-navbar {
-    max-height: 3.25rem; // Ensures that the navbar is not too big
-}
-
-/**
- Styling for the logo in the navbar
- */
-.brand-image {
-    max-height: 40px; // Ensures that the logo does not exceed the navbar
-}
-
-/**
- Styling for the currently selected navbar item
- */
-.active {
-    font-weight: bold;
-    background: $navbar-active-background-color;
-}
+// The background color of the main container
+$main-background-color: #f8f9fa;
+// Backup color for the lawn background
+$backup-background-color: #49c14e;
+// The background color of the footer
+$footer-background-color: #363636;
+// Color of logo background on footer
+$footer-logo-background-color: #999c9f;
+// The color of text on the footer
+$footer-text-color: white;
+// Color of the bet row borders
+$bet-row-border-color: #dfdfdf;
+// Background color of the bet rows
+$bet-row-background-color: white;
+// Background color of active element on the navbar
+$navbar-active-background-color: #292929

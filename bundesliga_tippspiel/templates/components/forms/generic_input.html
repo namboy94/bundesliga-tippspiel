@@ -18,7 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 <div class="field">
-    <label class="label">{{ label_name }}</label>
+
+    {% if label_name is not none %}
+        <label class="label">{{ label_name }}</label>
+    {% endif %}
 
     {% if icon_name is not none %}
         <p class="control has-icons-left">
