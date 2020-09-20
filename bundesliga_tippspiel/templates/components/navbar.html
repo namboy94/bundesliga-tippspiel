@@ -25,86 +25,54 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                  class="brand-image"
                  src="{{ url_for('static', filename='logo.png') }}">
         </a>
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="navbar-menu">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
 
-    <!-- Toggle Button for mobile layouts -->
-    <button class="navbar-toggler collapsed" type="button"
-            data-toggle="collapse" data-target="#navbar-data"
-            aria-controls="navbars-data" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="navbar-menu" id="navbar-menu">
 
-    <!-- Navbar Content -->
-    <div class="navbar-collapse collapse" id="navbar-data" style="">
-
-        <!-- Navigation Links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item {% if request.path == "/" %} active {% endif %}">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-
+        <div class="navbar-start">
+            <a class="navbar-item {% if request.path == "/" %} active {% endif %}"
+               href="{{ url_for("static.index") }}">Home</a>
             {% if not current_user.is_authenticated %}
-
-                <li class="nav-item {% if request.path == "/login" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("user_management.login") }}">
-                        Anmelden
-                    </a>
-                </li>
-
-                <li class="nav-item {% if request.path == "/register" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("user_management.register") }}">
-                        Registrieren
-                    </a>
-                </li>
-
+                <a class="navbar-item {% if request.path == "/login" %} active {% endif %}"
+                   href="{{url_for("user_management.login")}}">Anmelden</a>
+                <a class="navbar-item {% if request.path == "/register" %} active {% endif %}"
+                   href="{{url_for("user_management.register")}}">Registrieren</a>
             {% else %}
-
-                <li class="nav-item {% if request.path == "/bets" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("betting.bets") }}">Spieltag</a>
-                </li>
-                <li class="nav-item {% if request.path == "/season_bets" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("betting.season_bets") }}">Saison</a>
-                </li>
-                <li class="nav-item {% if request.path == "/leaderboard" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("information.leaderboard") }}">Rangliste</a>
-                </li>
-                <li class="nav-item {% if request.path == "/stats" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("information.stats") }}">Statistiken</a>
-                </li>
-                <li class="nav-item {% if request.path == "/chat" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("chat.chat") }}">Chat</a>
-                </li>
-                <li class="nav-item {% if request.path == "/profile" %} active {% endif %}">
-                    <a class="nav-link" href="{{ url_for("user_management.profile") }}">Einstellungen</a>
-                </li>
-
+                <a class="navbar-item {% if request.path == "/bets" %} active {% endif %}"
+                   href="{{url_for("betting.bets")}}">Spieltag</a>
+                <a class="navbar-item {% if request.path == "/bets/season" %} active {% endif %}"
+                   href="{{url_for("betting.season_bets")}}">Saison</a>
+                <a class="navbar-item {% if request.path == "/leaderboard" %} active {% endif %}"
+                   href="{{url_for("information.leaderboard")}}">Rangliste</a>
+                <a class="navbar-item {% if request.path == "/stats" %} active {% endif %}"
+                   href="{{url_for("information.stats")}}">Statistiken</a>
+                <a class="navbar-item {% if request.path == "/chat" %} active {% endif %}"
+                   href="{{url_for("chat.chat")}}">Chat</a>
+                <a class="navbar-item {% if request.path == "/profile" %} active {% endif %}"
+                   href="{{url_for("user_management.profile")}}">Einstellungen</a>
             {% endif %}
-        </ul>
+        </div>
 
-        <!-- Login/Logout Data -->
-        <ul class="navbar-nav ml-auto">
-
-            <li>
-                <!-- Login/Logout Button-->
+        <div class="navbar-end">
+            <div class="navbar-item">
                 {% if current_user.is_authenticated %}
                     <a href="{{ url_for("user_management.logout") }}">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <form id="nav-login-form" class="form-inline mt-2 mt-md-0 ml-auto" method="post" action="{{ url_for("user_management.login") }}">
-                        <input class="form-control mr-sm-2" name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
-                        <input class="form-control mr-sm-2" name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
+                    <form method="post" action="{{ url_for("user_management.login") }}">
+                        <input name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
+                        <input  name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
                         <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>
                     </form>
                 {% endif %}
-            </li>
-        </ul>
-
+            </div>
+        </div>
     </div>
 </nav>
