@@ -17,10 +17,32 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/**
+ General styling rules for the body
+ */
 body {
+  // Ensures that the footer is at the bottom of the page
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  padding: 0;
-  background: red;
+
+  padding: 0; // Makes sure that the content fills the body
+  background: url(../images/background.jpg) repeat #49c14e;
+}
+
+/**
+ Styling for the container wrapping the content
+ */
+.main-container {
+  flex: 1;  // Ensures that the footer is at the bottom of the page
+  margin-bottom: 0 !important;  // Eliminates gap between content and footer
+}
+
+/**
+ Styling for the actual content of the page
+ */
+.main-content {
+  padding: 2em;  // Keep content off the edges
+  background: white;
 }

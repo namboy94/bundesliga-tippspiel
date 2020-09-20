@@ -20,9 +20,15 @@ LICENSE"""
 # imports
 import os
 from setuptools import setup, find_packages
+from subprocess import Popen
 
 
 if __name__ == "__main__":
+
+    target_css = "bundesliga_tippspiel/static/scss/style.css"
+    Popen(["sass", "--update", "--force", "--style", "compressed",
+           "bundesliga_tippspiel/static/scss/style.scss",
+           "bundesliga_tippspiel/static/scss"]).wait()
 
     setup(
         name="bundesliga-tippspiel",

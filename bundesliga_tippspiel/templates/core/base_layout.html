@@ -17,8 +17,18 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/../core/base_layout.html" %}
-{% block body %}
-    <h1>Error {{ error.code }}</h1>
-    <h3>{{ error.description }}</h3>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="de" class="has-navbar-fixed-top">
+    {% include "components/header.html" %}
+    <body>
+        <div id="navbar">{% include "components/navbar.html" %}</div>
+        <div class="columns main-container">
+            <div class="content main-content column is-8 is-offset-2">
+                {% include "components/alerts.html" %}
+                {% block body %}{% endblock %}
+            </div>
+            AAAA
+        </div>
+        <div id="footer">{% include "components/footer.html" %}</div>
+    </body>
+</html>

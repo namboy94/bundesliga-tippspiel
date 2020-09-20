@@ -1,4 +1,4 @@
-{#
+/**
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,10 +15,25 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-#}
+*/
 
-{% extends "components/../core/base_layout.html" %}
-{% block body %}
-    <h1>Error {{ error.code }}</h1>
-    <h3>{{ error.description }}</h3>
-{% endblock %}
+
+/**
+ Styling for the footer
+ */
+.bottom-footer {
+    padding: 12px;  // To ensure that the footer reaches all the way down
+    background: grey;
+}
+
+/**
+ Styling for the dependency logos (python, flask etc.)
+ */
+.dependency-logo {
+    max-height: 30px;
+    margin-left: 5px;
+    background: #999c9f;
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
