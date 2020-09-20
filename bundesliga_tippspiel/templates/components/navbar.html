@@ -17,13 +17,20 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar is-fixed-top is-dark top-navbar" role="navigation" aria-label="main navigation">
 
-    <!-- Logo Button -->
-    <a class="navbar-brand" href="/">
-        <img alt="Bundesliga Tippspiel" class="brand-image"
-             src="{{ url_for('static', filename='logo.png') }}">
-    </a>
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img alt="Bundesliga Tippspiel"
+                 class="brand-image"
+                 src="{{ url_for('static', filename='logo.png') }}">
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
 
     <!-- Toggle Button for mobile layouts -->
     <button class="navbar-toggler collapsed" type="button"
