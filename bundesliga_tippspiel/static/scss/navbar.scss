@@ -31,3 +31,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 .brand-image {
     max-height: 40px; // Ensures that the logo does not exceed the navbar
 }
+
+/**
+ Styling for the currently selected navbar item
+ */
+.active {
+    font-weight: bold;
+    background: #292929;
+}
