@@ -19,9 +19,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "core/base_layout.html" %}
 {% block body %}
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
+    <div class="columns">
+        <div class="column is-1 is-offset-1">
             <h1>
                 {% if last_page is not none %}
                     <a href="{{ url_for("chat.chat",page=last_page) }}">
@@ -30,32 +29,33 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 {% endif %}
             </h1>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-6"><h1>Chat</h1></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
+        <div class="column is-6 is-offset-1"><h1>Chat</h1></div>
+        <div class="column is-1 is-offset-1">
             <h1>
                 {% if next_page is not none %}
-                    <a href="{{ url_for("chat.chat",page=next_page) }}">
+                    <a href="{{ url_for("chat.chat", page=next_page) }}">
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 {% endif %}
             </h1>
         </div>
-        <div class="col-md-1"></div>
     </div>
 
     <form action="{{ url_for("chat.new_chat_message") }}" method="post">
-        <div class="form-group">
-            <label for="new_comment">Neues Kommentar</label>
-            <textarea name="text" class="form-control" id="new_comment" rows="3" maxlength="255"></textarea>
+        <div class="field">
+            <label class="label">
+                Neues Kommentar
+                <textarea name="text" class="textarea" rows="3 maxlength=255"></textarea>
+            </label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        {% with button_name="Schicken" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
     </form>
 
     <br>
 
-    <table class="table table-striped table-bordered leaderboard-table">
+    <table class="table is-bordered is-striped has-text-centered">
         <thead>
             <tr>
                 <th style="width: 15%"></th>
@@ -83,7 +83,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <td>
                         {% if message.user_id == current_user.id and not message.deleted %}
                             <form method="post" action="{{ url_for("chat.delete_chat_message", message_id=message.id) }}">
-                                <button type="submit" class="btn btn-danger">Löschen</button>
+                                <button type="submit" class="button is-danger">Löschen</button>
                             </form>
                         {% endif %}
                     </td>
