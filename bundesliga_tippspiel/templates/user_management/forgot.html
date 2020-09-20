@@ -38,14 +38,21 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                        placeholder="Email"
                        name="email">
             </div>
-
             <br>
-            <div data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
-                 class="g-recaptcha">
-            </div>
-            <br>
-
-            <button type="submit" class="btn btn-primary">Abschicken</button>
+            <button
+                    type="submit"
+                    class="btn btn-primary g-recaptcha"
+                    data-action="submit"
+                    data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
+                    data-callback="onSubmit">
+                Zurücksetzen
+            </button>
+            <!--suppress JSUnusedLocalSymbols -->
+            <script>
+                function onSubmit(token) {
+                    document.getElementById("registerform").submit();
+                }
+            </script>
         </form>
     </div>
 
