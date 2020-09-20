@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 {% extends "components/base_layout.html" %}
+{% set requires_recaptcha=True %}
 {% block body %}
     <h1> Passwort vergessen </h1>
     <p>
@@ -27,7 +28,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <br>
 
     <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.forgot") }}">
+        <form id="resetform" method="post" action="{{ url_for("user_management.forgot") }}">
             <div class="form-group">
                 <label for="email_input">Email Addresse</label>
                 <input class="form-control"
@@ -50,7 +51,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <!--suppress JSUnusedLocalSymbols -->
             <script>
                 function onSubmit(token) {
-                    document.getElementById("registerform").submit();
+                    document.getElementById("resetform").submit();
                 }
             </script>
         </form>
