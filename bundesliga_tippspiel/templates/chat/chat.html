@@ -45,12 +45,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="field">
             <label class="label">
                 Neues Kommentar
-                <textarea name="text" class="textarea" rows="3 maxlength=255"></textarea>
+                <textarea name="text" class="textarea" rows="3" minlength="1" maxlength="255"></textarea>
             </label>
         </div>
+        <div class="has-text-right">
         {% with button_name="Schicken" %}
             {% include "components/forms/submit_button.html" %}
         {% endwith %}
+        </div>
     </form>
 
     <br>

@@ -17,9 +17,26 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-@import "navbar";
-@import "base_layout";
-@import "footer";
-@import "content";
-@import "bets";
-@import "tables";
+/**
+ Table where all colums have the same size
+ */
+.equal-column-table {
+    // Makes all columns same size
+    width: 100%;
+    td {
+        width: 25%; // Makes all columns same size (The 25 don't really matter)
+    }
+}
+
+
+.season-position-bets-table {
+    width: 100%;
+}
+
+.season-position-bets-position {
+    width: 20%;
+}
+
+.season-position-bets-team {
+    width: 80%;
+}

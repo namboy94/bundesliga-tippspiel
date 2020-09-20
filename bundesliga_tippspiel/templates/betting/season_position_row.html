@@ -17,27 +17,22 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<li class="list-group-item bet_row">
-    <div class="row text-center">
-        <div class="col-md-10 bet_col">
-            <a href="{{ url_for("information.team", team_id=team.id) }}">
-                <h5>
-                    {{ team.name }}
-                    <span>
-                        <img src="{{ team.icon_svg }}" class="bet_row_logo" alt="{{ team.shortname }}">
-                    </span>
-                </h5>
-            </a>
-        </div>
-         <div class="col-md-2 bet_col">
-            <input class="form-control text-center bet_row_input"
-                   name="{{ team.id }}"
-                   title="Away"
-                   pattern="[0-9]*"
-                   maxlength="2"
-                   {% if position_bet is not none %}value="{{ position_bet.position }}"{% endif %}
-                   {% if closed %} disabled="" {% endif %}
-            >
-        </div>
-    </div>
-</li>
+<tr>
+    <td>
+        {% with min_value=1, max_value=18, step=1,
+                value=None if position_bet is none else position_bet.position,
+                var_name=team.id, disabled=closed %}
+            {% include "components/forms/number_input.html" %}
+        {% endwith %}
+    </td>
+    <td>
+        <a href="{{ url_for("information.team", team_id=team.id) }}">
+            <h5>
+                {{ team.name }}
+                <span>
+                    <img src="{{ team.icon_svg }}" class="bet_row_logo" alt="{{ team.shortname }}" style="max-height: 40px">
+                </span>
+            </h5>
+        </a>
+    </td>
+</tr>

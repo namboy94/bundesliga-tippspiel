@@ -69,13 +69,18 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Places a new chat message
         :return: The response
         """
-        text = request.form["text"]
-        parent_id = request.form.get("parent_id")
-        message = ChatMessage(
-            user=current_user, text=text, parent_id=parent_id
-        )
-        db.session.add(message)
-        db.session.commit()
+        text = request.form["text"][0:255]
+
+        if len(text) < 1:
+            flash("Kommentare müssen mindestens ein Zeichen enthalten",
+                  "danger")
+        else:
+            parent_id = request.form.get("parent_id")
+            message = ChatMessage(
+                user=current_user, text=text, parent_id=parent_id
+            )
+            db.session.add(message)
+            db.session.commit()
         return redirect(url_for("chat.chat"))
 
     @blueprint.route("/delete_chat_message/<int:message_id>", methods=["POST"])

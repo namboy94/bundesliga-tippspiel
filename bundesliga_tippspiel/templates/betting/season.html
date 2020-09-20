@@ -24,56 +24,50 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h1>Saisonwetten</h1>
 
     <h3>Bis zum 18. Spieltag kann getippt werden</h3>
-    <br>
+    <hr>
 
-    <h2>Tabelle</h2>
-
-    <form class="form-horizontal"
-          action="{{ url_for("betting.place_season_position_bets") }}"
-          method="post">
-        <fieldset>
-            <div class="col-md-12">
-                <ul class="list-group">
+    <div class="columns has-text-centered">
+        <div class="column is-8">
+            <h2>Tabelle</h2>
+            <form action="{{ url_for("betting.place_season_position_bets") }}"
+                  method="post">
+                <table class="table is-bordered is-striped has-text-centered season-position-bets-table">
+                    <colgroup>
+                        <col span="1" class="season-position-bets-position">
+                        <col span="1" class="season-position-bets-team">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Team</th>
+                        </tr>
+                    </thead>
                     {% for team, position_bet in position_bets %}
                         {% include "betting/season_position_row.html" %}
                     {% endfor %}
-                </ul>
-            </div>
-            {% if not closed %}
-                <br>
-                <div class="form-group">
-                    <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-primary">Bestätigen</button>
-                    </div>
-                </div>
-            {% endif %}
-        </fieldset>
-    </form>
+                </table>
 
-    <br>
-    <h2>Teamwetten</h2>
-
-    <form class="form-horizontal"
-          action="{{ url_for("betting.place_season_team_bets") }}"
-          method="post">
-        <fieldset>
-            <div class="col-md-12">
-                <ul class="list-group">
-                    {% for bet_type, team_bet in team_bets %}
-                        {% include "betting/season_team_row.html" %}
-                    {% endfor %}
-                </ul>
-            </div>
-            <br>
-            {% if not closed %}
-                <br>
-                <div class="form-group">
-                    <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-primary">Bestätigen</button>
-                    </div>
-                </div>
-            {% endif %}
-        </fieldset>
-    </form>
+                {% if not closed %}
+                    {% with button_name="Bestätigen" %}
+                        {% include "components/forms/submit_button.html" %}
+                    {% endwith %}
+                {% endif %}
+            </form>
+        </div>
+        <div class="column is-4">
+            <h2>Teamwetten</h2>
+            <form action="{{ url_for("betting.place_season_team_bets") }}"
+                  method="post">
+                {% for bet_type, team_bet in team_bets %}
+                    {% include "betting/season_team_row.html" %}
+                {% endfor %}
+                {% if not closed %}
+                    {% with button_name="Bestätigen" %}
+                        {% include "components/forms/submit_button.html" %}
+                    {% endwith %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
