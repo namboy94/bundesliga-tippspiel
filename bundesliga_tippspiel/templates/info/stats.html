@@ -22,13 +22,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% block body %}
 
     {% set unit="Punkte" %}
-    <div class="row">
-        <div class="col-md-6">
+    <div class="columns">
+        <div class="column">
             <h3>Rangliste Hinrunde</h3>
             {% set leaderboard=first_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
-        <div class="col-md-6">
+        <div class="column">
             <h3>Rangliste Rückrunde</h3>
             {% set leaderboard=second_leaderboard %}
             {% include "components/ranking_table.html" %}
@@ -36,27 +36,27 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     </div>
 
     {% set unit="#" %}
-    <div class="row">
-        <div class="col-md-6">
+    <div class="columns">
+        <div class="column">
             <h3>Korrekte Tipps</h3>
             {% set leaderboard=max_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
-        <div class="col-md-6">
+        <div class="column">
             <h3>Komplett falsche Tipps</h3>
             {% set leaderboard=zero_leaderboard %}
             {% include "components/ranking_table.html" %}
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="columns">
+        <div class="column">
             <h3>Punkte/Tipp</h3>
             {% set leaderboard=average_ranking %}
             {% set unit="Punkte/Tipp" %}
             {% include "components/ranking_table.html" %}
         </div>
-        <div class="col-md-6">
+        <div class="column">
             <h3>Teilnahme</h3>
             {% set leaderboard=participation_ranking %}
             {% set unit="%" %}
@@ -64,15 +64,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+    <div class="columna">
+        <div class="column is-6 is-offset-3">
             {% include "components/points_distribution_pie_chart.html" %}
         </div>
-        <div class="col-md-3"></div>
     </div>
 
-    <div class="row">
+    <div class="container">
         <h3>Punkte pro Team</h3>
         {% include "components/team_points_table.html" %}
     </div>
