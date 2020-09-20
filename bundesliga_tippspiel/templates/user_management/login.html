@@ -26,40 +26,40 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <br>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.login") }}">
-            <div class="form-group">
-                <label for="username_input">Benutzername</label>
-                <input class="form-control"
+    <form method="post" action="{{ url_for("user_management.login") }}">
+        <div class="field">
+            <label class="label">Benutzername</label>
+            <input class="input"
                        type="text"
                        autocomplete="on"
-                       id="username_input"
                        aria-label="username"
                        placeholder="Username"
                        name="username">
-            </div>
-            <div class="form-group">
-                <label for="password_input">Passwort</label>
-                <input class="form-control"
+        </div>
+        <div class="field">
+            <label class="label">Passwort</label>
+            <input class="input"
                        type="password"
                        autocomplete="on"
-                       id="password_input"
                        aria-label="password"
                        placeholder="Passwort"
                        name="password">
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="checkbox" name="remember_me" checked>
+                    Merken?
+                </label>
             </div>
-            <div class="form-check">
-                <input type="checkbox"
-                       class="form-check-input"
-                       id="remember_me_check"
-                       name="remember_me"
-                       checked>
-                <label class="form-check-label" for="remember_me_check">Merken?</label>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-link" type="submit">Anmelden</button>
             </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Anmelden</button>
-        </form>
-    </div>
+        </div>
+    </form>
 
     <br>
 

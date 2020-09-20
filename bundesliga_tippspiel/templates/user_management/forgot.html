@@ -27,35 +27,35 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     </p>
     <br>
 
-    <div class="container form-container">
-        <form id="resetform" method="post" action="{{ url_for("user_management.forgot") }}">
-            <div class="form-group">
-                <label for="email_input">Email Addresse</label>
-                <input class="form-control"
+    <form id="reset-form" method="post" action="{{ url_for("user_management.forgot") }}">
+        <div class="field">
+            <label class="label">Email Adresse</label>
+            <input class="input"
                        type="text"
                        autocomplete="on"
-                       id="email_input"
                        aria-label="email"
                        placeholder="Email"
                        name="email">
-            </div>
-            <br>
-            <button
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button
                     type="submit"
-                    class="btn btn-primary g-recaptcha"
+                    class="button is-link g-recaptcha"
                     data-action="submit"
                     data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
                     data-callback="onSubmit">
                 Zurücksetzen
             </button>
-            <!--suppress JSUnusedLocalSymbols -->
             <script>
-                function onSubmit(token) {
-                    document.getElementById("resetform").submit();
+                function onSubmit(_) {
+                    document.getElementById("reset-form").submit();
                 }
             </script>
-        </form>
-    </div>
+            </div>
+        </div>
+    </form>
 
     <br>
 {% endblock %}

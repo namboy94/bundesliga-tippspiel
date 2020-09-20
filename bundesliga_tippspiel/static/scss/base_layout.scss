@@ -43,6 +43,6 @@ body {
  Styling for the actual content of the page
  */
 .main-content {
-  padding: 2em;  // Keep content off the edges
+  padding: 0 3em 3em 3em;  // Keep content off the left/right/bottom edges
   background: white;
 }
