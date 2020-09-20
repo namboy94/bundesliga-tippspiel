@@ -25,82 +25,45 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <h2>Passwort ändern</h2>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.change_password") }}">
-            <div class="form-group">
-                <label for="old_password_input">Derzeitiges Passwort</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="old_password_input"
-                       aria-label="old_password"
-                       placeholder="Passwort"
-                       name="old_password">
-            </div>
-            <div class="form-group">
-                <label for="new_password_input">Neues Passwort</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="new_password_input"
-                       aria-label="new_password"
-                       placeholder="Passwort"
-                       name="new_password">
-            </div>
-            <div class="form-group">
-                <label for="password_repeat_input">Neues Passwort (Wiederholen)</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="password_repeat_input"
-                       aria-label="password-repeat"
-                       placeholder="Passwort"
-                       name="password_repeat">
-            </div>
-            <button type="submit" class="btn btn-primary">Ändern</button>
-        </form>
-    </div>
+    <form method="post" action="{{ url_for("user_management.change_password") }}">
+        {% with label_name="Derzeitiges Passwort", placeholder="Passwort",
+                var_name="old_password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Neues Passwort", placeholder="Passwort",
+                var_name="new_password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Neues Passwort (Wiederholen)", placeholder="Passwort",
+                var_name="password_repeat", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with button_name="Ändern" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 
     <hr>
 
     <h2>Erinnerungen</h2>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("reminder.set_reminder") }}">
-            <div class="form-group">
-                <label for="hours_input">Stunden vor Spielbeginn</label>
-                <input class="form-control"
-                       type="number"
-                       min="1"
-                       max="48"
-                       step="1"
-                       {% if reminder_time is none %}
-                           value="24"
-                       {% else %}
-                           value="{{ (reminder_time / 3600)|int }}"
-                       {% endif %}
-                       id="hours_input"
-                       aria-label="hours"
-                       name="hours">
-            </div>
-            {% for reminder_type, reminder in reminder_settings.items() %}
-                <div class="form-check">
-                    <input type="checkbox"
-                           class="form-check-input"
-                           id="{{ reminder_type.value }}_check"
-                           name="{{ reminder_type.value }}"
-                           {% if reminder is not none and reminder.active %}
-                               checked
-                           {% endif %}
-                           >
-                    <label class="form-check-label" for="{{ reminder_type.value }}_check">
-                        {{ reminder_type.value.title() }}
-                    </label>
-                </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Aktualisieren</button>
-        </form>
-    </div>
+    <form method="post" action="{{ url_for("reminder.set_reminder") }}">
+        {% with label_name="Stunden vor Spielbeginn",
+                min_value=1, max_value=48, step=1,
+                value=24 if reminder_time is none else (reminder_time / 3600)|int,
+                var_name="hours", icon_name="clock" %}
+            {% include "components/forms/number_input.html" %}
+        {% endwith %}
+        {% for reminder_type, reminder in reminder_settings.items() %}
+            {% with label_name=reminder_type.value.title(), var_name=reminder_type.value,
+                    checked=reminder is not none and reminder.active %}
+                {% include "components/forms/bool_input.html" %}
+            {% endwith %}
+        {% endfor %}
+        {% with button_name="Aktualisieren" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 
     <hr>
 
@@ -115,65 +78,42 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         sendest.
     </p>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for('user_management.register_telegram') }}">
-            <div class="form-group">
-                <label for="telegram_chat_id_input">Telegram Chat ID</label>
-                <input class="form-control"
-                       type="text"
-                       autocomplete="on"
-                       id="telegram_chat_id_input"
-                       aria-label="{{ site_name }}"
-                       value="{{ '' if telegram_chat_id is none else telegram_chat_id.chat_id }}"
-                       name="telegram_chat_id">
-            </div>
-            <button type="submit" class="btn btn-primary">Bestätigen</button>
-        </form>
-    </div>
+    <form method="post" action="{{ url_for("user_management.register_telegram") }}">
+        {% with label_name="Telegram Chat ID", placeholder="Chat ID",
+                value=None if telegram_chat_id is none else telegram_chat_id.chat_id,
+                var_name="telegram_chat_id", icon_name="paper-plane" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with button_name="Bestätigen" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 
     <hr>
 
     <h2>Andere Einstellungen</h2>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for('settings.misc_settings') }}">
-            <div class="form-group">
-                <div class="form-check">
-                    <input type="checkbox"
-                           class="form-check-input"
-                           id="display_bots_check"
-                           name="display_bots"
-                           {% if display_bots_setting is not none and display_bots_setting.display_bots %}
-                               checked
-                           {% endif %}
-                           >
-                    <label class="form-check-label" for="display_bots_check">
-                        Bots anzeigen
-                    </label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Bestätigen</button>
-        </form>
-    </div>
+    <form method="post" action="{{ url_for("settings.misc_settings") }}">
+        {% with label_name="Bots anzeigen", var_name="display_bots",
+                checked=display_bots_setting is not none and display_bots_setting.display_bots %}
+            {% include "components/forms/bool_input.html" %}
+        {% endwith %}
+        {% with button_name="Bestätigen" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 
     <hr>
 
     <h2>Account löschen</h2>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.delete_user") }}">
-            <div class="form-group">
-                <label for="password_input">Derzeitiges Passwort</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="password_input"
-                       aria-label="password"
-                       placeholder="Passwort"
-                       name="password">
-            </div>
-            <button type="submit" class="btn btn-danger">Löschen</button>
-        </form>
-    </div>
-
+    <form method="post" action="{{ url_for("user_management.delete_user") }}">
+        {% with label_name="Derzeitiges Passwort", placeholder="Passwort",
+                var_name="password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with button_name="Löschen", category="danger" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 {% endblock %}

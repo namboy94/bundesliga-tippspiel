@@ -25,37 +25,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         Hier kannst du dein Passwort zurücksetzen. Gebe hierfür deine Email
         Addresse im Eingabekasten ein
     </p>
-    <br>
+
+    <hr>
 
     <form id="reset-form" method="post" action="{{ url_for("user_management.forgot") }}">
-        <div class="field">
-            <label class="label">Email Adresse</label>
-            <input class="input"
-                       type="text"
-                       autocomplete="on"
-                       aria-label="email"
-                       placeholder="Email"
-                       name="email">
-        </div>
-
-        <div class="field">
-            <div class="control">
-                <button
-                    type="submit"
-                    class="button is-link g-recaptcha"
-                    data-action="submit"
-                    data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
-                    data-callback="onSubmit">
-                Zurücksetzen
-            </button>
-            <script>
-                function onSubmit(_) {
-                    document.getElementById("reset-form").submit();
-                }
-            </script>
-            </div>
-        </div>
+        {% with label_name="Email Adresse", placeholder="Email",
+                var_name="email", icon_name="envelope" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with button_name="Zurücksetzen", use_recaptcha=True, form_name="reset-form" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
     </form>
-
-    <br>
 {% endblock %}

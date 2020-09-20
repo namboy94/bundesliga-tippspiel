@@ -26,61 +26,27 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         registrieren:
     </p>
 
-    <br>
+    <hr>
 
     <form id="register-form" method="post" action="{{ url_for("user_management.register") }}">
-        <div class="field">
-            <label class="label">Email Adresse</label>
-            <input class="input"
-                       type="text"
-                       autocomplete="on"
-                       aria-label="email"
-                       placeholder="Email"
-                       name="email">
-        </div>
-        <div class="field">
-            <label class="label">Benutzername</label>
-            <input class="input"
-                       type="text"
-                       autocomplete="on"
-                       aria-label="username"
-                       placeholder="Username"
-                       name="username">
-        </div>
-        <div class="field">
-            <label class="label">Passwort</label>
-            <input class="input"
-                       type="password"
-                       autocomplete="on"
-                       aria-label="password"
-                       placeholder="Passwort"
-                       name="password">
-        </div>
-        <div class="field">
-            <label class="label">Passwort (Wiederholen)</label>
-            <input class="input"
-                       type="password"
-                       autocomplete="on"
-                       aria-label="password-repeat"
-                       placeholder="Passwort"
-                       name="password-repeat">
-        </div>
-        <div class="field">
-            <div class="control">
-                <button
-                    type="submit"
-                    class="button is-link g-recaptcha"
-                    data-action="submit"
-                    data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
-                    data-callback="onSubmit">
-                Zurücksetzen
-            </button>
-            <script>
-                function onSubmit(_) {
-                    document.getElementById("register-form").submit();
-                }
-            </script>
-            </div>
-        </div>
+        {% with label_name="Email Adresse", placeholder="Email",
+                var_name="email", icon_name="envelope" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with label_name="Benutzername", placeholder="Username",
+                var_name="username", icon_name="user" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with label_name="Passwort", placeholder="Passwort",
+                var_name="password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Passwort (Wiederholen)", placeholder="Passwort",
+                var_name="password-repeat", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with button_name="Registrieren", use_recaptcha=True, form_name="register-form" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
     </form>
 {% endblock %}
