@@ -79,6 +79,16 @@ $match-header-border-radius: 15px;
     }
 }
 
+/**
+ Remove rounded edges on top on mobile
+ */
+@media (max-width: 768px) {
+    .match-header {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+}
+
 // Styles for different goal types
 .goal-icon-normal {
     color: $normal-goal-icon-color;

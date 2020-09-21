@@ -35,13 +35,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <img src="{{ match.home_team.icon_svg }}" alt="{{ match.home_team.name }}">
                 </a>
             </div>
-            <div class="column is-4">
+            <div class="column is-4 is-hidden-mobile">
                 <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
                     <h1>{{ match.home_team.short_name }}</h1>
                 </a>
             </div>
             <div class="column is-2"><h1>VS</h1></div>
-            <div class="column is-4">
+            <div class="column is-4 is-hidden-mobile">
                 <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
                     <h1>{{ match.away_team.short_name }}</h1>
                 </a>
