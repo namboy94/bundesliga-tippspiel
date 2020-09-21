@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-@import "navbar";
-@import "base_layout";
-@import "footer";
-@import "content";
-@import "bets";
-@import "tables";
-@import "info";
-@import "chat";
+@import "colors";
+
+/**
+ Styles a deleted comment
+ */
+.deleted-comment {
+    background: $deleted-comment-background-color;
+}

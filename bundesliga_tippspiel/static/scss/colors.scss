@@ -33,6 +33,18 @@ $bet-row-border-color: #dfdfdf;
 $bet-row-background-color: white;
 // Background color of active element on the navbar
 $navbar-active-background-color: #292929;
+// Background color of the match header
+$match-header-background-color: white;
+// Border color of the match header
+$match-header-border-color: black;
+// Color for a normal goal
+$normal-goal-icon-color: green;
+// Color for an own goal
+$owngoal-goal-icon-color: red;
+// Color for a penalty
+$penalty-goal-icon-color: blue;
+// Background Color for a deleted comment
+$deleted-comment-background-color: grey;
 
 // Standard colors
 $danger-color: #f14668;
