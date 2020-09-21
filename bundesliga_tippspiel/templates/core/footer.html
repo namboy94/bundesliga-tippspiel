@@ -1,0 +1,57 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<footer class="footer bottom-footer">
+
+    <div class="content has-text-centered">
+        <div class="columns">
+            <div class="column is-4">
+                <a href="mailto:hermann@krumreyh.com">
+                    © 2017-2020 Hermann Krumrey
+                </a>
+            </div>
+
+            <div class="column is-4">
+                <a href="{{ url_for("static.about") }}">Impressum</a>
+                |
+                <a href="{{ url_for("static.privacy") }}">Datenschutzerklärung</a>
+            </div>
+            <div class="column is-3">
+                <a href="https://www.python.org/">
+                    <img class="dependency-logo" alt="python"
+                         src="{{ url_for('static', filename='python-logo.png') }}">
+                </a>
+                <a href="http://flask.pocoo.org/">
+                    <img class="dependency-logo" alt="flask"
+                         src="{{ url_for('static', filename='flask-logo.png') }}">
+                </a>
+                <a href="https://www.sqlalchemy.org/">
+                    <img class="dependency-logo" alt="sqlalchemy"
+                         src="{{ url_for('static', filename='sqlalchemy-logo.png') }}">
+                </a>
+            </div>
+            <div class="column is-1">
+                <a href="https://gitlab.namibsun.net:/namibsun/python/bundesliga-tippspiel">
+                    V{{ version }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+</footer>

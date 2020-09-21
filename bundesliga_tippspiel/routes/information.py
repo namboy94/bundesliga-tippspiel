@@ -84,7 +84,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             matchday=current_matchday,
             leaderboard_history=leaderboard_history,
             show_all=True,
-            charts=True,
             season_winners=season_winners
         )
 
@@ -201,7 +200,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
 
         return render_template(
             "info/user.html",
-            charts=True,
             user=user_data,
             leaderboard_history=leaderboard_history,
             matchday=current_matchday,
@@ -276,8 +274,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             points_distribution=points_distribution,
             participation_ranking=enumerate(participation_ranking),
             average_ranking=enumerate(average_ranking),
-            show_all=True,
-            charts=True
+            show_all=True
         )
 
     return blueprint

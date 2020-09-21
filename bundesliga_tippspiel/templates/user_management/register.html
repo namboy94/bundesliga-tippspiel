@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/base_layout.html" %}
+{% extends "core/base_layout.html" %}
+{% set requires_recaptcha=True %}
 {% block body %}
     <h1>Registrierung</h1>
     <p>
@@ -25,57 +26,27 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         registrieren:
     </p>
 
-    <br>
+    <hr>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.register") }}">
-            <div class="form-group">
-                <label for="email_input">Email Adresse</label>
-                <input class="form-control"
-                       type="email"
-                       autocomplete="on"
-                       id="email_input"
-                       aria-label="email"
-                       placeholder="Email"
-                       name="email">
-            </div>
-            <div class="form-group">
-                <label for="username_input">Benutzername</label>
-                <input class="form-control"
-                       type="text"
-                       autocomplete="on"
-                       id="email_input"
-                       aria-label="username"
-                       placeholder="Username"
-                       name="username">
-            </div>
-            <div class="form-group">
-                <label for="password_input">Passwort</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="password_input"
-                       aria-label="password"
-                       placeholder="Passwort"
-                       name="password">
-            </div>
-            <div class="form-group">
-                <label for="password_repeat_input">Passwort (Wiederholen)</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="password_repeat_input"
-                       aria-label="password-repeat"
-                       placeholder="Passwort"
-                       name="password-repeat">
-            </div>
-            <br>
-            <div data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
-                 class="g-recaptcha">
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Registrieren</button>
-        </form>
-    </div>
-
+    <form id="register-form" method="post" action="{{ url_for("user_management.register") }}">
+        {% with label_name="Email Adresse", placeholder="Email",
+                var_name="email", icon_name="envelope" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with label_name="Benutzername", placeholder="Username",
+                var_name="username", icon_name="user" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with label_name="Passwort", placeholder="Passwort",
+                var_name="password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Passwort (Wiederholen)", placeholder="Passwort",
+                var_name="password-repeat", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with button_name="Registrieren", use_recaptcha=True, form_name="register-form" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 {% endblock %}

@@ -1,0 +1,97 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<nav class="navbar is-fixed-top is-dark top-navbar" role="navigation" aria-label="main navigation">
+
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img alt="Bundesliga Tippspiel"
+                 class="brand-image"
+                 src="{{ url_for('static', filename='logo.png') }}">
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="navbar-menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu" id="navbar-menu">
+
+        <div class="navbar-start">
+            <a class="navbar-item {% if request.path == "/" %} active {% endif %}"
+               href="{{ url_for("static.index") }}">Home</a>
+            {% if not current_user.is_authenticated %}
+                <a class="navbar-item {% if request.path == "/login" %} active {% endif %}"
+                   href="{{url_for("user_management.login")}}">Anmelden</a>
+                <a class="navbar-item {% if request.path == "/register" %} active {% endif %}"
+                   href="{{url_for("user_management.register")}}">Registrieren</a>
+            {% else %}
+                <a class="navbar-item {% if request.path == "/bets" %} active {% endif %}"
+                   href="{{url_for("betting.bets")}}">Spieltag</a>
+                <a class="navbar-item {% if request.path == "/bets/season" %} active {% endif %}"
+                   href="{{url_for("betting.season_bets")}}">Saison</a>
+                <a class="navbar-item {% if request.path == "/leaderboard" %} active {% endif %}"
+                   href="{{url_for("information.leaderboard")}}">Rangliste</a>
+                <a class="navbar-item {% if request.path == "/stats" %} active {% endif %}"
+                   href="{{url_for("information.stats")}}">Statistiken</a>
+                <a class="navbar-item {% if request.path == "/chat" %} active {% endif %}"
+                   href="{{url_for("chat.chat")}}">Chat</a>
+                <a class="navbar-item {% if request.path == "/profile" %} active {% endif %}"
+                   href="{{url_for("user_management.profile")}}">Einstellungen</a>
+            {% endif %}
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for("user_management.logout") }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                {% else %}
+                    <form method="post" action="{{ url_for("user_management.login") }}">
+                        <input name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
+                        <input  name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
+                        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<script type="text/javascript">
+    // Handles the toggle button when in mobile mode
+    document.addEventListener('DOMContentLoaded', () => {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        if ($navbarBurgers.length > 0) {
+            $navbarBurgers.forEach( el => {
+                el.addEventListener('click', () => {
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+                });
+            });
+        }
+    });
+</script>

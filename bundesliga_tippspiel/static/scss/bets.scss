@@ -1,0 +1,83 @@
+/**
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+$border-radius: 4px;
+$border-width: 1px;
+@import "colors";
+
+/**
+ Styling for the team logos
+ */
+.bet-row-logo {
+    max-height: 2em;
+}
+
+/**
+ Styling for a single bet row
+ */
+.bet-row {
+    background: $bet-row-background-color;
+    border: solid $bet-row-border-color $border-width;
+    border-bottom: 0;  // Avoid overlapping
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+/**
+ Styling for the top-most bet row
+ */
+.bet-row-top {
+    @extend .bet-row;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+}
+
+/**
+ Styling for the bottom-most bet row
+ */
+.bet-row-bottom {
+    @extend .bet-row;
+    border-bottom: solid $bet-row-border-color $border-width;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}
+
+/**
+ Styling for the input of a bet
+ */
+.bet-row-input {
+    text-align: center;
+}
+
+/**
+ Removes margins for bet row on mobile
+ */
+@media (max-width: 768px) {
+    .bet-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/**
+ Styling for the team logos on the season position table
+ */
+.season-position-logo-image {
+    max-height: 2em;
+}

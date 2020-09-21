@@ -43,25 +43,23 @@ class TestRegisterRoute(_RouteTestFramework):
         """
         return "/register", ["POST"], "Registrierung", False
 
+    @mock.patch("puffotter.flask.routes.user_management.send_email",
+                lambda x, y, z, a, b, c, d: print())
+    @mock.patch("puffotter.flask.routes.user_management.verify_recaptcha",
+                lambda x, y, z: True)
     def test_successful_requests(self):
         """
         Tests (a) successful request(s)
         :return: None
         """
         self.assertFalse(username_exists("TestUser"))
-
-        with mock.patch(
-                "puffotter.flask.routes.user_management.send_email",
-                lambda x, y, z, a, b, c, d:
-                self.assertEqual(x, Config.SMTP_ADDRESS)
-        ):
-            post = self.client.post("/register", follow_redirects=True, data={
-                "username": "TestUser",
-                "email": Config.SMTP_ADDRESS,
-                "password": "Abc",
-                "password-repeat": "Abc",
-                "g-recaptcha-response": ""
-            })
+        post = self.client.post("/register", follow_redirects=True, data={
+            "username": "TestUser",
+            "email": Config.SMTP_ADDRESS,
+            "password": "Abc",
+            "password-repeat": "Abc",
+            "g-recaptcha-response": ""
+        })
         self.assertEqual(post.status_code, 200)
         self.assertTrue(b"Siehe in deiner Email-Inbox nach" in post.data)
         self.assertTrue(username_exists("TestUser"))

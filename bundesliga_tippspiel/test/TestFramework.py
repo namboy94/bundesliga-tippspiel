@@ -46,6 +46,15 @@ class _TestFramework(Framework):
     blueprint_generators = blueprint_generators
     extra_jinja_vars = jinja_extras()
 
+    def setUp(self):
+        """
+        Sets up the flask application and a temporary database to test with
+        :return: None
+        """
+        super().setUp()
+        self.config.OPENLIGADB_LEAGUE = "bl1"
+        self.config.OPENLIGADB_SEASON = "2018"
+
     def generate_sample_match_data(self) \
             -> Tuple[Team, Team, Player, Match, Goal]:
         """

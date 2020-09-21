@@ -17,37 +17,24 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/base_layout.html" %}
+{% extends "core/base_layout.html" %}
+{% set requires_recaptcha=True %}
 {% block body %}
     <h1> Passwort vergessen </h1>
     <p>
         Hier kannst du dein Passwort zurücksetzen. Gebe hierfür deine Email
         Addresse im Eingabekasten ein
     </p>
-    <br>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.forgot") }}">
-            <div class="form-group">
-                <label for="email_input">Email Addresse</label>
-                <input class="form-control"
-                       type="text"
-                       autocomplete="on"
-                       id="email_input"
-                       aria-label="email"
-                       placeholder="Email"
-                       name="email">
-            </div>
+    <hr>
 
-            <br>
-            <div data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
-                 class="g-recaptcha">
-            </div>
-            <br>
-
-            <button type="submit" class="btn btn-primary">Abschicken</button>
-        </form>
-    </div>
-
-    <br>
+    <form id="reset-form" method="post" action="{{ url_for("user_management.forgot") }}">
+        {% with label_name="Email Adresse", placeholder="Email",
+                var_name="email", icon_name="envelope" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with button_name="Zurücksetzen", use_recaptcha=True, form_name="reset-form" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 {% endblock %}

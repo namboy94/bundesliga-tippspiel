@@ -1,0 +1,53 @@
+/**
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+@import "colors";
+
+
+/**
+ General styling rules for the body
+ */
+body {
+  // Ensures that the footer is at the bottom of the page
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  padding: 0; // Makes sure that the content fills the body
+  background: url(../images/background.jpg) repeat $backup-background-color;
+}
+
+/**
+ Styling for the container wrapping the content
+ */
+.main-container {
+  flex: 1;  // Ensures that the footer is at the bottom of the page
+  margin-bottom: 0 !important;  // Eliminates gap between content and footer
+  display: flex; // Allows content to fill the container
+  min-width:70%; // Keeps content container at at least 70% screen width
+}
+
+/**
+ Styling for the actual content of the page
+ */
+.main-content {
+  padding: 1rem;  // Keep content off the edges
+  flex: 1;  // Fill main container
+  background: $main-background-color;
+}

@@ -56,7 +56,7 @@ def update_match_data(
         match_data = json.loads(requests.get(
             base_url.format("getmatchdata", league, season)
         ).text)
-    except ConnectionError:
+    except (ConnectionError, requests.exceptions.ReadTimeout):
         app.logger.warning("Failed to update match data due to failed request")
         return
 
@@ -64,7 +64,7 @@ def update_match_data(
 
     # Generate Data Model Objects
     for match_data in match_data:
-        match = parse_match(match_data)
+        match = parse_match(match_data, int(season))
         matches.append(match)
 
         home_score = 0
@@ -96,10 +96,11 @@ def update_match_data(
     store_in_db(goals, Goal)
 
 
-def parse_match(match_data: Dict[str, Any]) -> Match:
+def parse_match(match_data: Dict[str, Any], season: int) -> Match:
     """
     Parses a Match object from JSON match data
     :param match_data: The match data to parse
+    :param season: The season
     :return: The generated Match object
     """
     ht_home = 0
@@ -138,7 +139,7 @@ def parse_match(match_data: Dict[str, Any]) -> Match:
         kickoff=kickoff,
         started=started,
         finished=match_data["MatchIsFinished"],
-        season=int(Config.OPENLIGADB_SEASON)
+        season=season
     )
     return match
 

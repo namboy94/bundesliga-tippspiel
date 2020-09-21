@@ -17,15 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+{% if not match.started%}
+    <span class="tag is-light">-</span>
+{% elif bet is none %}
+    <span class="tag is-danger">0</span>
+{% else %}
+    {% set points=bet.evaluate() %}
+    <span class="tag is-{{ get_pill_class(points) }}">{{ points }}</span>
+{% endif %}
