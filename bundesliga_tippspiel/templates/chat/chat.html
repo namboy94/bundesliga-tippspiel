@@ -57,25 +57,25 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <br>
 
-    <table class="table is-bordered is-striped has-text-centered">
+    <table class="table is-bordered is-striped has-text-centered comment-table">
         <thead>
             <tr>
-                <th style="width: 15%"></th>
-                <th style="width: 75%"></th>
-                <th style="width: 10%"></th>
+                <th class="user-col"></th>
+                <th class="comment-col"></th>
+                <th class="button-col"></th>
             </tr>
         </thead>
         <tbody>
             {% for message in messages %}
-                <tr>
-                    <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                <tr {% if message.get_text() is none %}class="comment-deleted"{% endif %}>
+                    <td class="comment-content">
                         {% if message.user is none %}
                             [Gelöscht]
                         {% else %}
                             {{ message.user.username }}
                         {% endif %}
                     </td>
-                    <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                    <td class="comment-content">
                         {% if message.get_text() is none %}
                             [Gelöscht]
                         {% else %}
