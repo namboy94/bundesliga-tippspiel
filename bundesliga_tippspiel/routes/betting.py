@@ -162,10 +162,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             closed=Action.resolve_and_check_matchday(-1) > 17
         )
 
-    @blueprint.route("/bets/season_team_bets", methods=["POST"])
+    @blueprint.route("/bets/season_bets", methods=["POST"])
     @login_required
     @action_route
-    def place_season_team_bets():
+    def place_season_bets():
         """
         Let's the user bet on season-long things.
         :return: The response
@@ -182,8 +182,16 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             .filter_by(season=Config.season())
             .all()
         }
+        existing_position_bets = {
+            x.team_id: x
+            for x in SeasonPositionBet.query
+            .filter_by(user=current_user)
+            .filter_by(season=Config.season())
+            .all()
+        }
         teams = {x.id: x for x in GetTeamAction().execute()["teams"]}
 
+        # Season Team Bets
         for bet_type in SeasonTeamBetType:
             bet_value = request.form.get(bet_type.name, "")
             if not bet_value.isdigit():
@@ -204,38 +212,14 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
                 db.session.add(bet)
             bet.team = team
 
-        db.session.commit()
-
-        return redirect(url_for("betting.season_bets"))
-
-    @blueprint.route("/bets/season_position_bets", methods=["POST"])
-    @login_required
-    @action_route
-    def place_season_position_bets():
-        """
-        Let's the user bet on season-long things.
-        :return: The response
-        """
-        if Action.get_current_matchday() > 17:
-            flash("Saisonübergreifende Wetten können nur vor dem 18. "
-                  "Spieltag abgeschlossen werden", "danger")
-            return redirect(url_for("betting.season_bets"))
-
-        existing_bets = {
-            x.team_id: x
-            for x in SeasonPositionBet.query
-            .filter_by(user=current_user)
-            .filter_by(season=Config.season())
-            .all()
-        }
-
+        # Season Position Bets
         for team in GetTeamAction().execute()["teams"]:
-            team_position = request.form.get(str(team.id), "")
+            team_position = request.form.get(f"position_{team.id}", "")
             if not team_position.isdigit():
                 continue
 
-            if team.id in existing_bets:
-                bet = existing_bets[team.id]
+            if team.id in existing_position_bets:
+                bet = existing_position_bets[team.id]
             else:
                 bet = SeasonPositionBet(
                     user=current_user, team=team, season=Config.season()
@@ -244,7 +228,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             bet.position = int(team_position)
 
         db.session.commit()
-
         return redirect(url_for("betting.season_bets"))
 
     return blueprint

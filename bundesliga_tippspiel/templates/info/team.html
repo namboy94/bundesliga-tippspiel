@@ -21,19 +21,19 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% block body %}
     <h1>{{ team.name }}</h1>
     <br>
-    <div class="container text-center">
-        <img src="{{ team.icon_svg }}" class="team-page-logo">
+    <div class="container has-text-centered">
+        <img src="{{ team.icon_svg }}" class="team-logo" alt="{{ team.name }}">
     </div>
 
     <hr>
 
     <h3>Tendenz</h3>
-    <table class="table table-striped table-bordered text-center leaderboard-table">
-        <thead class="thead-light">
+    <table class="table is-bordered is-striped has-text-centered equal-column-table">
+        <thead>
             <tr>
-                <th scope="col">Gegner</th>
+                <th>Gegner</th>
                 {% for  opponent_id, opponent_name, _, _, _ in matches %}
-                    <th scope="col">
+                    <th>
                         <a href="{{ url_for("information.team", team_id=opponent_id) }}">
                             {{ opponent_name }}
                         </a>
@@ -45,14 +45,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <tr>
                 <td>Ergebnis</td>
                 {% for _, _, score, result, match_id in matches %}
-                    {% if result == "win" %}
-                        {% set result_class = "success" %}
-                    {% elif result == "loss" %}
-                        {% set result_class = "danger" %}
-                    {% else %}
-                        {% set result_class = "info" %}
-                    {% endif %}
-                    <td class="table-{{ result_class }}">
+                    <td class="match-history-{{ result }}">
                         <a href="{{ url_for("betting.match", match_id=match_id) }}">
                             {{ score }}
                         </a>
@@ -65,11 +58,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <hr>
 
     <h3>Torschützen</h3>
-    <table class="table table-striped table-bordered text-center leaderboard-table">
-        <thead class="thead-light">
+    <table class="table is-bordered is-striped has-text-centered equal-column-table">
+        <thead>
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Tore</th>
+                <th>Name</th>
+                <th>Tore</th>
             </tr>
         </thead>
         <tbody>

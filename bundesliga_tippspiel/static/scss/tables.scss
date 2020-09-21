@@ -28,15 +28,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     }
 }
 
-
-.season-position-bets-table {
-    width: 100%;
-}
-
+// Table column size values for the season position table
 .season-position-bets-position {
     width: 20%;
 }
-
 .season-position-bets-team {
-    width: 80%;
+    width: 70%;
+}
+.season-position-bets-logo {
+    width: 10%;
 }

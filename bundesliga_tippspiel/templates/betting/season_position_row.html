@@ -21,18 +21,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <td>
         {% with min_value=1, max_value=18, step=1,
                 value=None if position_bet is none else position_bet.position,
-                var_name=team.id, disabled=closed %}
+                var_name="position_{}".format(team.id), disabled=closed %}
             {% include "components/forms/number_input.html" %}
         {% endwith %}
     </td>
     <td>
         <a href="{{ url_for("information.team", team_id=team.id) }}">
-            <h5>
-                {{ team.name }}
-                <span>
-                    <img src="{{ team.icon_svg }}" class="bet_row_logo" alt="{{ team.shortname }}" style="max-height: 40px">
-                </span>
-            </h5>
+            <h5>{{ team.name }}</h5>
         </a>
+    </td>
+    <td>
+        <img src="{{ team.icon_svg }}" class="season-position-logo-image" alt="{{ team.shortname }}">
     </td>
 </tr>

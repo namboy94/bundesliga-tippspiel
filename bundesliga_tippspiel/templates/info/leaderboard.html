@@ -23,6 +23,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h1>Rangliste</h1>
     {% set unit="Punkte" %}
     {% include "components/ranking_table.html" %}
-    <br>
-    {% include "components/ranking_chart.html" %}
+    <hr>
+    <div class="columns">
+        <div class="column">
+            {% include "components/ranking_chart.html" %}
+        </div>
+    </div>
 {% endblock %}

@@ -17,10 +17,32 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-@import "navbar";
-@import "base_layout";
-@import "footer";
-@import "content";
-@import "bets";
-@import "tables";
-@import "info";
+@import "colors";
+
+/**
+ Styles the logo displayed on the top of the team page
+ */
+.team-logo {
+    max-height: 150px;
+}
+
+// Colors the background of the table boxes according to win/loss/draw
+// On the team page
+.match-history-win {
+    background: $success-color;
+    a {
+        color: $success-text-color;
+    }
+}
+.match-history-loss {
+    background: $danger-color;
+    a {
+        color: $danger-text-color;
+    }
+}
+.match-history-draw {
+    background: $info-color;
+    a {
+        color: $info-text-color;
+    }
+}
