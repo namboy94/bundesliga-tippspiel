@@ -18,8 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, Optional, List
-from bundesliga_tippspiel.db.user_generated.Bet import Bet
-from bundesliga_tippspiel.db.match_data.Match import Match
+from puffotter.flask.base import db
+from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
+    SeasonTeamBet, SeasonTeamBetType
+from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
+    SeasonPositionBet
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
@@ -33,10 +36,13 @@ class TestSeasonBetsRoute(_RouteTestFramework):
     def setUp(self):
         """
         Sets up data for the tests
-        :return: None
+        :return:
         """
         super().setUp()
-        _, _, self.match, _, _ = self.generate_sample_match_data()
+        _, _, _, self.match, _ = self.generate_sample_match_data()
+        self.match.finished = False
+        self.match.started = False
+        db.session.commit()
 
     @property
     def route_info(self) -> Tuple[str, List[str], Optional[str], bool]:
@@ -48,8 +54,7 @@ class TestSeasonBetsRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/bets/season", ["GET"], \
-            "<!--betting/seasons.html-->", True
+        return "/bets/season_bets", ["POST"], None, True
 
     def test_successful_requests(self):
         """
@@ -58,12 +63,110 @@ class TestSeasonBetsRoute(_RouteTestFramework):
         """
         self.login()
 
+        # Team Bets
+        self.assertEqual(len(SeasonTeamBet.query.all()), 0)
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            SeasonTeamBetType.MOST_GOALS_CONCEDED.name:
+                str(self.match.home_team_id),
+            SeasonTeamBetType.LEAST_GOALS_CONCEDED.name:
+                str(self.match.away_team_id)
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonTeamBet.query.all()), 2)
+
+        self.assertEqual(SeasonTeamBet.query.all()[0].bet_type,
+                         SeasonTeamBetType.MOST_GOALS_CONCEDED)
+        self.assertEqual(SeasonTeamBet.query.all()[0].team_id,
+                         self.match.home_team_id)
+        self.assertEqual(SeasonTeamBet.query.all()[1].bet_type,
+                         SeasonTeamBetType.LEAST_GOALS_CONCEDED)
+        self.assertEqual(SeasonTeamBet.query.all()[1].team_id,
+                         self.match.away_team_id)
+
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            SeasonTeamBetType.MOST_GOALS_SCORED.name:
+                str(self.match.home_team_id),
+            SeasonTeamBetType.LEAST_GOALS_CONCEDED.name:
+                str(self.match.home_team_id)
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonTeamBet.query.all()), 3)
+
+        self.assertEqual(SeasonTeamBet.query.all()[1].bet_type,
+                         SeasonTeamBetType.LEAST_GOALS_CONCEDED)
+        self.assertEqual(SeasonTeamBet.query.all()[1].team_id,
+                         self.match.home_team_id)
+        self.assertEqual(SeasonTeamBet.query.all()[2].bet_type,
+                         SeasonTeamBetType.MOST_GOALS_SCORED)
+        self.assertEqual(SeasonTeamBet.query.all()[2].team_id,
+                         self.match.home_team_id)
+
+        # Position Bets
+        self.assertEqual(len(SeasonPositionBet.query.all()), 0)
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            f"position_{self.match.home_team_id}": "1",
+            f"position_{self.match.away_team_id}": "10"
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonPositionBet.query.all()), 2)
+
+        self.assertEqual(SeasonPositionBet.query.all()[0].position, 1)
+        self.assertEqual(SeasonPositionBet.query.all()[1].position, 10)
+
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            f"position_{self.match.home_team_id}": "5",
+            f"position_{self.match.away_team_id}": "13"
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonPositionBet.query.all()), 2)
+
+        self.assertEqual(SeasonPositionBet.query.all()[0].position, 5)
+        self.assertEqual(SeasonPositionBet.query.all()[1].position, 13)
+
     def test_unsuccessful_requests(self):
         """
         Tests (an) unsuccessful request(s)
         :return: None
         """
-        pass
+        self.login()
+
+        # Team Bets
+        self.assertEqual(len(SeasonTeamBet.query.all()), 0)
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            SeasonTeamBetType.MOST_GOALS_CONCEDED.name: "9000",
+            "Lala": str(self.match.away_team_id)
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonTeamBet.query.all()), 0)
+
+        self.match.matchday = 18
+        db.session.commit()
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            SeasonTeamBetType.MOST_GOALS_CONCEDED.name:
+                str(self.match.home_team_id),
+            SeasonTeamBetType.LEAST_GOALS_CONCEDED.name:
+                str(self.match.away_team_id)
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonTeamBet.query.all()), 0)
+
+        # Position Bets
+        self.assertEqual(len(SeasonPositionBet.query.all()), 0)
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            f"position_{self.match.home_team_id}": "lala",
+            "9000": "10"
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonPositionBet.query.all()), 0)
+
+        self.match.matchday = 18
+        db.session.commit()
+        resp = self.client.post(self.route_path, follow_redirects=True, data={
+            f"position_{self.match.home_team_id}": "1",
+            f"position_{self.match.away_team_id}": "10"
+        })
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(SeasonPositionBet.query.all()), 0)
 
     def test_malformed_data(self):
         """

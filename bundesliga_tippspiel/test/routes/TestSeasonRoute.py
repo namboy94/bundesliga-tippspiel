@@ -17,18 +17,26 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from unittest import mock
-from typing import List, Optional, Tuple
-from bundesliga_tippspiel.Config import Config
+from typing import Tuple, Optional, List
+from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.match_data.Match import Match
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
 
 
-class TestForgotPasswordRoute(_RouteTestFramework):
+class TestSeasonRoute(_RouteTestFramework):
     """
-    Class that tests the /forgot route
+    Class that tests the /seasons route
     """
+
+    def setUp(self):
+        """
+        Sets up data for the tests
+        :return: None
+        """
+        super().setUp()
+        _, _, self.match, _, _ = self.generate_sample_match_data()
 
     @property
     def route_info(self) -> Tuple[str, List[str], Optional[str], bool]:
@@ -40,47 +48,26 @@ class TestForgotPasswordRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/forgot", ["POST"], " Passwort vergessen", False
+        return "/bets/season", ["GET"], \
+            "<!--betting/seasons.html-->", True
 
-    @mock.patch("puffotter.flask.routes.user_management.verify_recaptcha",
-                lambda x, y, z: True)
     def test_successful_requests(self):
         """
         Tests (a) successful request(s)
         :return: None
         """
-        user = self.generate_sample_user(True)[0]
-        user.email = Config.SMTP_ADDRESS
-        self.db.session.commit()
+        self.login()
 
-        old_hash = user.password_hash
-
-        with mock.patch(
-                "puffotter.flask.routes.user_management.send_email",
-                lambda x, y, z, a, b, c, d:
-                self.assertEqual(x, Config.SMTP_ADDRESS)
-        ):
-            post = self.client.post("/forgot", follow_redirects=True, data={
-                "email": Config.SMTP_ADDRESS,
-                "g-recaptcha-response": ""
-            })
-
-        self.assertNotEqual(old_hash, user.password_hash)
-        self.assertTrue(b"Passwort erfolgreich zur" in post.data)
-
-    @mock.patch("puffotter.flask.routes.user_management.verify_recaptcha",
-                lambda x, y, z: True)
     def test_unsuccessful_requests(self):
         """
         Tests (an) unsuccessful request(s)
         :return: None
         """
-        failed_post = self.client.post(
-            "/forgot",
-            follow_redirects=True,
-            data={
-                "email": Config.SMTP_ADDRESS,
-                "g-recaptcha-response": ""
-            }
-        )
-        self.assertTrue(b"Passwort erfolgreich zur" in failed_post.data)
+        pass
+
+    def test_malformed_data(self):
+        """
+        Tests that malformed data in the request is handled appropriately
+        :return: None
+        """
+        pass
