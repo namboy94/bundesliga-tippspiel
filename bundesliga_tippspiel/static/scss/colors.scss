@@ -1,0 +1,61 @@
+/**
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+// The background color of the main container
+$main-background-color: #f8f9fa;
+// Backup color for the lawn background
+$backup-background-color: #49c14e;
+// The background color of the footer
+$footer-background-color: #363636;
+// Color of logo background on footer
+$footer-logo-background-color: #999c9f;
+// The color of text on the footer
+$footer-text-color: white;
+// Color of the bet row borders
+$bet-row-border-color: #dfdfdf;
+// Background color of the bet rows
+$bet-row-background-color: white;
+// Background color of active element on the navbar
+$navbar-active-background-color: #292929;
+// Background color of the match header
+$match-header-background-color: white;
+// Border color of the match header
+$match-header-border-color: black;
+// Color for a normal goal
+$normal-goal-icon-color: green;
+// Color for an own goal
+$owngoal-goal-icon-color: red;
+// Color for a penalty
+$penalty-goal-icon-color: blue;
+// Background Color for a deleted comment
+$deleted-comment-background-color: grey;
+
+// Standard colors
+$danger-color: #f14668;
+$warning-color: #ffdd57;
+$success-color: #48c774;
+$info-color: #3298dc;
+$primary-color: #00d1b2;
+$link-color: #3273dc;
+$danger-text-color: #ffffff;
+$warning-text-color: #4f451b;
+$success-text-color: #ffffff;
+$info-text-color: #ffffff;
+$primary-text-color: #ffffff;
+$link-text-color: #ffffff;

@@ -4,7 +4,7 @@ MAINTAINER Hermann Krumrey <hermann@krumreyh.com>
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
-    apt install -y python3 python3-pip python3-psycopg2 && \
+    apt install -y python3 python3-pip python3-psycopg2 ruby-sass && \
     pip3 install flask
 
 ADD . flask-app

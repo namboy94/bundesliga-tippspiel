@@ -6,3 +6,6 @@ cover/
 dist/
 build/
 .env
+.sass-cache/
+bundesliga_tippspiel/static/scss/*.css
+bundesliga_tippspiel/static/scss/*.css.map

@@ -1,0 +1,44 @@
+/**
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+@import "colors";
+
+/**
+ Styling for the footer
+ */
+.bottom-footer {
+    padding: 12px;  // To ensure that the footer reaches all the way down
+    background: $footer-background-color;
+}
+
+/**
+ Styling for the dependency logos (python, flask etc.)
+ */
+.dependency-logo {
+    max-height: 30px;
+    margin-left: 5px;
+    background: $footer-logo-background-color;
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.bottom-footer a {
+    color: $footer-text-color;
+}

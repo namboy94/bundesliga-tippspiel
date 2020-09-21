@@ -134,8 +134,8 @@ class ReminderSettings(ModelMixin, db.Model):
         user still needs to bet on.
         :return: The matches for which the reminder is due
         """
-        app.logger.info("Checking for due reminders for user {}."
-                        .format(self.user.username))
+        app.logger.debug("Checking for due reminders for user {}."
+                         .format(self.user.username))
 
         now = datetime.utcnow()
         start = max(now, self.last_reminder_datetime)
@@ -172,10 +172,10 @@ class ReminderSettings(ModelMixin, db.Model):
         """
         due = self.get_due_matches()
         if len(due) < 1:
-            app.logger.info("No due reminders found")
+            app.logger.debug("No due reminders found")
             return
         else:
-            app.logger.info("Sending reminder to {}.".format(self.user.email))
+            app.logger.debug("Sending reminder to {}.".format(self.user.email))
             message = render_template(
                 "email/reminder.html",
                 user=self.user,

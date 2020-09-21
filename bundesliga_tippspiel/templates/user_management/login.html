@@ -17,51 +17,31 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/base_layout.html" %}
+{% extends "core/base_layout.html" %}
 {% block body %}
     <h1>Anmelden</h1>
-    <p>
-        Fülle die folgenden Einträge aus, um dich anzumelden:
-    </p>
+    <p>Fülle die folgenden Einträge aus, um dich anzumelden:</p>
 
-    <br>
+    <hr>
 
-    <div class="container form-container">
-        <form method="post" action="{{ url_for("user_management.login") }}">
-            <div class="form-group">
-                <label for="username_input">Benutzername</label>
-                <input class="form-control"
-                       type="text"
-                       autocomplete="on"
-                       id="username_input"
-                       aria-label="username"
-                       placeholder="Username"
-                       name="username">
-            </div>
-            <div class="form-group">
-                <label for="password_input">Passwort</label>
-                <input class="form-control"
-                       type="password"
-                       autocomplete="on"
-                       id="password_input"
-                       aria-label="password"
-                       placeholder="Passwort"
-                       name="password">
-            </div>
-            <div class="form-check">
-                <input type="checkbox"
-                       class="form-check-input"
-                       id="remember_me_check"
-                       name="remember_me"
-                       checked>
-                <label class="form-check-label" for="remember_me_check">Merken?</label>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Anmelden</button>
-        </form>
-    </div>
+    <form method="post" action="{{ url_for("user_management.login") }}">
+        {% with label_name="Benutzername", placeholder="Username",
+                var_name="username", icon_name="user" %}
+            {% include "components/forms/text_input.html" %}
+        {% endwith %}
+        {% with label_name="Passwort", placeholder="Passwort",
+                var_name="password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Merken?", var_name="remember_me", checked=True %}
+            {% include "components/forms/bool_input.html" %}
+        {% endwith %}
+        {% with button_name="Anmelden" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
 
-    <br>
+    <hr>
 
     <p>
         Wenn du dein Passwort vergessen hast, kannst du es

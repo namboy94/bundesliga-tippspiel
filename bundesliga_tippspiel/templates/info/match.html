@@ -17,92 +17,77 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/base_layout.html" %}
+{% extends "core/base_layout.html" %}
 {% block body %}
 
-    <div class="container match-header-goal-display-wrapper">
-        <div class="match-header-goal-display">
-            {{ match.current_score }}
+    <div class="container is-fluid has-text-centered">
+        <div class="columns">
+            <div class="column is-2 is-offset-5 match-header-goal-display">
+                <div class="columns is-mobile">
+                    <div class="column first">{{ match.current_score }}</div>
+                    <div class="column last">{{ match.minute_display }}</div>
+                </div>
+            </div>
         </div>
-        <div class="match-header-goal-display">
-            {{ match.minute_display }}
+        <div class="columns match-header is-vcentered">
+            <div class="column is-1">
+                <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+                    <img src="{{ match.home_team.icon_svg }}" alt="{{ match.home_team.name }}">
+                </a>
+            </div>
+            <div class="column is-4 is-hidden-mobile">
+                <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+                    <h1>{{ match.home_team.short_name }}</h1>
+                </a>
+            </div>
+            <div class="column is-2"><h1>VS</h1></div>
+            <div class="column is-4 is-hidden-mobile">
+                <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+                    <h1>{{ match.away_team.short_name }}</h1>
+                </a>
+            </div>
+            <div class="column is-1">
+                <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+                    <img src="{{ match.away_team.icon_svg }}" alt="{{ match.away_team.name }}">
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="row match-header text-center">
-        <div class="col-md-1">
-            <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
-                <img src="{{ match.home_team.icon_svg }}" class="match-logo">
-            </a>
-        </div>
-        <div class="col-md-4">
-            <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
-                <h1>{{ match.home_team.short_name }}</h1>
-            </a>
-        </div>
-        <div class="col-md-2"><h1>VS</h1></div>
-        <div class="col-md-4">
-            <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
-                <h1>{{ match.away_team.short_name }}</h1>
-            </a>
-        </div>
-        <div class="col-md-1">
-            <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
-                <img src="{{ match.away_team.icon_svg }}" class="match-logo">
-            </a>
-        </div>
-    </div>
 
     <hr>
 
     <h2>Tore</h2>
 
-    <table class="table table-striped table-bordered text-center">
-        <thead class="thead-light">
+    <table class="table is-bordered is-striped has-text-centered">
+        <thead>
             <tr>
-                <th scope="col">Minute</th>
                 <th></th>
-                <th>Schütze</th>
+                <th>Minute</th>
                 <th>Stand</th>
+                <th>Team</th>
                 <th>Schütze</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for goal in goals %}
                 <tr>
-                    <th>{{ goal.minute }}</th>
-                    {% if goal.player.team.id == match.home_team.id %}
-                        <th>
-                            {% if goal.penalty %}
-                                <i class="far fa-futbol goal-icon-penalty"></i>
-                            {% elif goal.own_goal %}
-                                <i class="far fa-futbol goal-icon-owngoal"></i>
-                            {% else %}
-                                <i class="far fa-futbol goal-icon-normal"></i>
-                            {% endif %}
-                        </th>
-                        <th>{{ goal.player.name }}</th>
-                    {% else %}
-                        <th></th>
-                        <th></th>
-                    {% endif %}
-                    <th>{{ goal.home_score }}:{{ goal.away_score }}</th>
-                    {% if goal.player.team.id == match.away_team.id %}
-                        <th>{{ goal.player.name }}</th>
-                        <th>
-                            {% if goal.penalty %}
-                                <i class="far fa-futbol goal-icon-penalty"></i>
-                            {% elif goal.own_goal %}
-                                <i class="far fa-futbol goal-icon-owngoal"></i>
-                            {% else %}
-                                <i class="far fa-futbol goal-icon-normal"></i>
-                            {% endif %}
-                        </th>
-                    {% else %}
-                        <th></th>
-                        <th></th>
-                    {% endif %}
+                    <td>
+                        {% if goal.penalty %}
+                            {% set football_class="penalty" %}
+                        {% elif goal.own_goal %}
+                            {% set football_class="owngoal" %}
+                        {% else %}
+                            {% set football_class="normal" %}
+                        {% endif %}
+                        <i class="far fa-futbol goal-icon-{{ football_class }}"></i>
+                    </td>
+                    <td>{{ goal.minute }}</td>
+                    <td>{{ goal.home_score }}:{{ goal.away_score }}</td>
+                    <td>
+                        <img src="{{ goal.player.team.icon_svg }}" alt="{{ goal.player.team.name }}" class="goals-table-team-logo">
+                    </td>
+                    <td>{{ goal.player.name }}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -112,12 +97,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <h2>Tipps</h2>
 
-    <table class="table table-striped table-bordered text-center">
-        <thead class="thead-light">
+    <table class="table is-bordered is-striped has-text-centered equal-column-table">
+        <thead>
             <tr>
-                <th scope="col">Spieler</th>
-                <th scope="col">Tipp</th>
-                <th scope="col">Punkte</th>
+                <th>Spieler</th>
+                <th>Tipp</th>
+                <th>Punkte</th>
             </tr>
         </thead>
         <tbody>
@@ -132,9 +117,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <th>
                         {% if match.started %}
                             {% set points=bet.evaluate() %}
-                            <span class="badge badge-{{ get_pill_class(points) }} badge-pill">{{ points }}</span>
+                            <span class="tag is-{{ get_pill_class(points) }}">{{ points }}</span>
                         {% else %}
-                            <span class="badge badge-secondary badge-pill">-</span>
+                            <span class="tag is-light">-</span>
                         {% endif %}
                     </th>
                 </tr>

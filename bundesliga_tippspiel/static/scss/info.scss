@@ -1,0 +1,108 @@
+/**
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+@import "colors";
+
+$match-header-border-radius: 15px;
+
+/**
+ Styles the logo displayed on the top of the team page
+ */
+.team-logo {
+    max-height: 150px;
+}
+
+// Colors the background of the table boxes according to win/loss/draw
+// On the team page
+.match-history-win {
+    background: $success-color;
+    a {
+        color: $success-text-color;
+    }
+}
+.match-history-loss {
+    background: $danger-color;
+    a {
+        color: $danger-text-color;
+    }
+}
+.match-history-draw {
+    background: $info-color;
+    a {
+        color: $info-text-color;
+    }
+}
+
+/**
+ Styles the "match header" on top of the match page
+ */
+.match-header {
+    background: $match-header-background-color;
+    border-radius: $match-header-border-radius;
+    border: 3px solid $match-header-border-color;
+    img {
+        max-height: 100px; // Ensure logos aren't too big
+    }
+}
+
+/**
+ Styles the goal/minute display above the match header
+ */
+.match-header-goal-display {
+    font-size: 13pt;
+    background: $match-header-background-color;
+    border-top-right-radius: $match-header-border-radius;
+    border-top-left-radius: $match-header-border-radius;
+    border: 2px solid $match-header-border-color;
+    border-bottom: 0;
+    .first {
+        border-right: 1px solid $match-header-border-color;
+    }
+    .last {
+       border-left: 1px solid $match-header-border-color;
+    }
+}
+
+/**
+ Remove rounded edges on top on mobile
+ */
+@media (max-width: 768px) {
+    .match-header {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+}
+
+// Styles for different goal types
+.goal-icon-normal {
+    color: $normal-goal-icon-color;
+}
+.goal-icon-owngoal {
+    color: $owngoal-goal-icon-color;
+}
+.goal-icon-penalty {
+    color: $penalty-goal-icon-color;
+}
+
+/**
+ Styles the team logos in the goals table on the match page
+ */
+.goals-table-team-logo {
+    max-height: 30px;
+}

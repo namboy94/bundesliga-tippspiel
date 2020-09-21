@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "components/base_layout.html" %}
+{% extends "core/base_layout.html" %}
 {% block body %}
     <h1>Tippspiel zur Bundesliga Saison {{ config.season_string() }}</h1>
     <p>
@@ -25,24 +25,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         mit deinen Freunden messen!
     </p>
 
-    {% set covid = False %}
-
-    {% if covid %}
-
-        Wegen COVID-19 ist der Spielbetrieb der Bundesliga derzeit angehalten.
-        Aufgrund technischer Komplikation die daraus resultieren, könnte es
-        Unstimmigkeiten auf der Webseite geben.
-
-        Alle bereits getätigten Tipps sind allerdings sicher.
-
-        In der Zwischenzeit tut euer Bestes um die Ausbreitung von COVID-19
-        zu verlangsamen.
-
-        <br>
-
-        <img style="display:block; margin: 20px auto auto;" alt="covid" src="https://www.sportwetten24.com/wp-content/uploads/2020/03/sportwetten_corona_ausfall_wettangebot-wetten.jpg">
-
-    {% else %}
     {% if current_user.is_authenticated %}
         <p>
             Um zu tippen, besuche die
@@ -90,51 +72,36 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <p>Es können also maximal 15 Punkte pro Spiel erzielt werden.</p>
     <h4>Beispiele:</h4>
 
-    <table class="table table-striped table-bordered text-center">
-        <thead class="thead-light">
+    <table class="table is-bordered is-striped has-text-centered equal-column-table">
+        <thead>
             <tr>
-                <th scope="col">Ergebnis</th>
-                <th scope="col">Tipp</th>
-                <th scope="col">Punkte</th>
+                <th>Ergebnis</th>
+                <th>Tipp</th>
+                <th>Punkte</th>
             </tr>
         </thead>
         <tbody>
 
-            <tr>
-                <td>2:1</td>
-                <td>1:2</td>
-                <td><span class="badge badge-{{ get_pill_class(0) }} badge-pill">0</span></td>
-            </tr>
-            <tr>
-                <td>5:0</td>
-                <td>0:0</td>
-                <td><span class="badge badge-{{ get_pill_class(3) }} badge-pill">3</span></td>
-            </tr>
-            <tr>
-                <td>3:0</td>
-                <td>1:0</td>
-                <td>7 + 3 = <span class="badge badge-{{ get_pill_class(10) }} badge-pill">10</span></td>
-            </tr>
-            <tr>
-                <td>1:1</td>
-                <td>2:2</td>
-                <td>7 + 5 = <span class="badge badge-{{ get_pill_class(12) }} badge-pill">12</span></td>
-            </tr>
-            <tr>
-                <td>4:1</td>
-                <td>3:0</td>
-                <td>7 + 5 = <span class="badge badge-{{ get_pill_class(12) }} badge-pill">12</span></td>
-            </tr>
-            <tr>
-                <td>0:2</td>
-                <td>0:2</td>
-                <td>7 + 5 + 3 = <span class="badge badge-{{ get_pill_class(15) }} badge-pill">15</span></td>
-            </tr>
+            {% for home_is, away_is, home_bet, away_bet, points_calc, points in [
+                (2, 1, 1, 2, "", 0),
+                (5, 0, 0, 0, "", 3),
+                (3, 0, 1, 0, "7 + 3 =", 10),
+                (1, 1, 2, 2, "7 + 5 =", 12),
+                (4, 1, 3, 0, "7 + 5 =", 12),
+                (0, 2, 0, 2, "7 + 5 + 3 =", 15)
+            ] %}
+                <tr>
+                    <td>{{ home_is }}:{{ away_is }}</td>
+                    <td>{{ home_bet }}:{{ away_bet }}</td>
+                    <td>{{ points_calc }} <span class="tag is-{{ get_pill_class(points) }}">{{ points }}</span></td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
+    <p>
     Außerdem werden am Ende der Saison Punkte für saisonübergreifende Wetten
     verteilt.
+    </p>
 
-    {% endif %}
 {% endblock %}
