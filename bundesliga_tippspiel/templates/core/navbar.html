@@ -66,10 +66,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <form method="post" action="{{ url_for("user_management.login") }}">
-                        <input name="username" placeholder="Username" aria-label="username" autocomplete="on" type="text">
-                        <input  name="password" placeholder="Passwort" aria-label="password" autocomplete="current-password" type="password">
-                        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i></button>
+                    <form class="has-text-centered" method="post" action="{{ url_for("user_management.login") }}">
+                        <input name="username" placeholder="Username"
+                               aria-label="username" autocomplete="on" type="text">
+                        <input  name="password" placeholder="Passwort"
+                                aria-label="password" autocomplete="current-password" type="password">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
                     </form>
                 {% endif %}
             </div>

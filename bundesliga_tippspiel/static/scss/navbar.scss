@@ -40,3 +40,20 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     font-weight: bold;
     background: $navbar-active-background-color;
 }
+
+/**
+ Used to add some space between the login entries
+ */
+.navbar-login-spacing {
+    margin-right: 1em;
+}
+
+/**
+ Ensures that the navbar menu is the same color when expanded on mobile
+ */
+.navbar-menu {
+    background: $dark-color;
+}
+.navbar-item {
+    color: $dark-text-color;
+}
