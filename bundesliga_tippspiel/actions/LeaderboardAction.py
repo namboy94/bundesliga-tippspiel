@@ -21,7 +21,6 @@ from typing import Dict, Any, Optional, List
 from puffotter.flask.base import db
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
-from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.Config import Config
 
@@ -80,11 +79,14 @@ class LeaderboardAction(Action):
             usermap[user.id] = user
 
         if self.bets is None:
-            self.bets = Bet.query\
-                .options(db.joinedload(Bet.match))\
-                .options(db.joinedload(Bet.user))\
-                .filter(Match.season == Config.season())\
+            self.bets = [
+                x for x in
+                Bet.query
+                .options(db.joinedload(Bet.match))
+                .options(db.joinedload(Bet.user))
                 .all()
+                if x.match.season == Config.season()
+            ]
 
         if self.matchday is not None:
             self.bets = [

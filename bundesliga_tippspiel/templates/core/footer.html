@@ -21,9 +21,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="content has-text-centered">
         <div class="columns">
-            <div class="column is-4">
+            <div class="column is-3">
                 <a href="mailto:hermann@krumreyh.com">
-                    © 2017-2020 Hermann Krumrey
+                    © <span class="is-hidden-tablet-only">2017-2020</span> Hermann Krumrey
                 </a>
             </div>
 
@@ -32,19 +32,29 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 |
                 <a href="{{ url_for("static.privacy") }}">Datenschutzerklärung</a>
             </div>
-            <div class="column is-3">
-                <a href="https://www.python.org/">
-                    <img class="dependency-logo" alt="python"
-                         src="{{ url_for('static', filename='python-logo.png') }}">
-                </a>
-                <a href="http://flask.pocoo.org/">
-                    <img class="dependency-logo" alt="flask"
-                         src="{{ url_for('static', filename='flask-logo.png') }}">
-                </a>
-                <a href="https://www.sqlalchemy.org/">
-                    <img class="dependency-logo" alt="sqlalchemy"
-                         src="{{ url_for('static', filename='sqlalchemy-logo.png') }}">
-                </a>
+            <div class="column is-4">
+                <div class="dependencies">
+                    <a href="https://www.python.org/">
+                        <img class="dependency-logo" alt="python"
+                             src="{{ url_for('static', filename='images/dependencies/python-logo.png') }}">
+                    </a>
+                    <a href="http://flask.pocoo.org/">
+                        <img class="dependency-logo" alt="flask"
+                             src="{{ url_for('static', filename='images/dependencies/flask-logo.png') }}">
+                    </a>
+                    <a href="https://www.sqlalchemy.org/">
+                        <img class="dependency-logo" alt="sqlalchemy"
+                             src="{{ url_for('static', filename='images/dependencies/sqlalchemy-logo.png') }}">
+                    </a>
+                    <a href="https://bulma.io/">
+                        <img class="dependency-logo" alt="bulma"
+                             src="{{ url_for('static', filename='images/dependencies/bulma-logo.png') }}">
+                    </a>
+                    <a href="https://gitlab.namibsun.net/namibsun/python/puffotter">
+                        <img class="dependency-logo" alt="puffotter"
+                             src="{{ url_for('static', filename='images/dependencies/puffotter-logo.png') }}">
+                    </a>
+                </div>
             </div>
             <div class="column is-1">
                 <a href="https://gitlab.namibsun.net:/namibsun/python/bundesliga-tippspiel">

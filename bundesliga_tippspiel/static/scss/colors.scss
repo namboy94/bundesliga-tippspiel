@@ -27,6 +27,8 @@ $footer-background-color: #363636;
 $footer-logo-background-color: #999c9f;
 // The color of text on the footer
 $footer-text-color: white;
+// The color of link text on the footer when the user hovers over it
+$footer-text-color-hover: grey;
 // Color of the bet row borders
 $bet-row-border-color: #dfdfdf;
 // Background color of the bet rows
@@ -53,9 +55,17 @@ $success-color: #48c774;
 $info-color: #3298dc;
 $primary-color: #00d1b2;
 $link-color: #3273dc;
+$dark-color: #363636;
+$light-color: #f5f5f5;
+$black-color: #0a0a0a;
+$white-color: #ffffff;
 $danger-text-color: #ffffff;
 $warning-text-color: #4f451b;
 $success-text-color: #ffffff;
 $info-text-color: #ffffff;
 $primary-text-color: #ffffff;
 $link-text-color: #ffffff;
+$dark-text-color: #ffffff;
+$light-text-color: #4c4c4c;
+$black-text-color: #ffffff;
+$white-text-color: #0a0a0a;

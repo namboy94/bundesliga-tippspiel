@@ -21,7 +21,7 @@ import time
 from typing import Union
 from flask import render_template, abort, Blueprint
 from flask_login import login_required
-from puffotter.flask.base import app
+from puffotter.flask.base import app, db
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
@@ -228,8 +228,19 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Displays a statistics page.
         :return: The Response
         """
-        bets = Bet.query.join(Match).filter(Match.season == Config.season())\
+        bets = [
+            x for x in
+            Bet.query
+            .options(
+                db.joinedload(Bet.match).subqueryload(Match.home_team)
+            )
+            .options(
+                db.joinedload(Bet.match).subqueryload(Match.away_team)
+            )
+            .options(db.joinedload(Bet.user))
             .all()
+            if x.match.season == Config.season()
+        ]
         finished_bets = list(filter(lambda x: x.match.finished, bets))
         settings = LoadSettingsAction().execute()
 

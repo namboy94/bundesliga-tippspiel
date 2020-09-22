@@ -1,5 +1,9 @@
+V 1.8.1:
+  - Improved loading times on leaderboard and stats
+  - Minor design improvements on the navbar and header
 V 1.8.0:
   - Now uses ReCaptcha v3
+  - Replaced bootstrap with bulma
 V 1.7.1:
   - Fixed displaying chat page when no comments exist yet
 V 1.7.0:
