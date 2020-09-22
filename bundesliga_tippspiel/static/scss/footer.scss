@@ -25,20 +25,32 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 .bottom-footer {
     padding: 12px;  // To ensure that the footer reaches all the way down
     background: $footer-background-color;
+    a {
+        color: $footer-text-color;
+        margin-top: 5px;
+    }
+    a:hover {
+        color: $footer-text-color-hover;
+    }
 }
 
 /**
  Styling for the dependency logos (python, flask etc.)
  */
 .dependency-logo {
-    max-height: 30px;
+    max-height: 20px;
     margin-left: 5px;
-    background: $footer-logo-background-color;
-    border-radius: 3px;
-    padding-left: 3px;
-    padding-right: 3px;
 }
 
-.bottom-footer a {
-    color: $footer-text-color;
+/**
+Styling for the dependencies section on the footer
+ */
+.dependencies {
+    padding-top: 5px; // Makes logos more centered vertically
+    padding-right: 20px;
+    padding-left: 20px;
+    background: $footer-logo-background-color;
+    border-radius: 3px;
+    margin: 0;
+    display: inline-block;  // Fit to content
 }
