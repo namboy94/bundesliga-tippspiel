@@ -38,7 +38,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="columns is-vcentered is-mobile has-text-centered is-hidden-tablet bet-row{% if first %}-top{% elif last %}-bottom{% endif %}">
     <div class="column is-2">
-        <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+        <a tabindex="-1" href="{{ url_for("information.team", team_id=match.home_team.id) }}">
             {% include "betting/bet_row/logo_home.html" %}
         </a>
     </div>
@@ -58,7 +58,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </div>
     {% endif %}
 
-    <div class="column is-2">
+    <div tabindex="-1" class="column is-2">
         <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
             {% include "betting/bet_row/logo_away.html" %}
         </a>

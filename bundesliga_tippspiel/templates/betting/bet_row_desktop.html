@@ -22,7 +22,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         {% include "betting/bet_row/logo_home.html" %}
     </div>
     <div class="column is-2">
-        <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+        <a tabindex="-1" href="{{ url_for("information.team", team_id=match.home_team.id) }}">
             <h5>{{ match.home_team.short_name }}</h5>
         </a>
     </div>
@@ -39,7 +39,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         {% include "betting/bet_row/score.html" %}
     </div>
     <div class="column is-2">
-        <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+        <a tabindex="-1" href="{{ url_for("information.team", team_id=match.away_team.id) }}">
             <h5>{{ match.away_team.short_name }}</h5>
         </a>
     </div>
