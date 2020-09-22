@@ -21,7 +21,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% set requires_charts=True %}
 {% block body %}
     <h1>{{ user.username }}</h1>
-    <div class="container is-fluid">
+    <div class="container is-hidden-mobile ranking-chart-container">
         <h3>Positionsentwicklung</h3>
         {% include "components/ranking_chart.html" %}
     </div>

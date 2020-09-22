@@ -1,4 +1,4 @@
-{#
+/**
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,18 +15,34 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-#}
+*/
 
-{% extends "core/base_layout.html" %}
-{% set requires_charts=True %}
-{% block body %}
-    <h1>Rangliste</h1>
-    {% set unit="Punkte" %}
-    {% with history=leaderboard_history %}
-        {% include "components/ranking_table.html" %}
-    {% endwith %}
-    <hr class="is-hidden-mobile">
-    <div class="container is-hidden-mobile ranking-chart-container">
-        {% include "components/ranking_chart.html" %}
-    </div>
-{% endblock %}
+@import "colors";
+
+// Styles the table tendency icons
+.tendency-icon {
+    .fas {
+        margin-right: 10px;
+    }
+    .fa-chevron-circle-up {
+        color: $success-color;
+    }
+    .fa-chevron-circle-down {
+        color: $danger-color;
+    }
+    .fa-minus-circle {
+        color: $warning-color;
+    }
+}
+
+/**
+ Tries to tame the resizing behaviour of the ranking chart
+ */
+.ranking-chart-container {
+    position: relative;
+    width:80vw;
+}
+
+.fa-crown {
+    color: $crown-color !important;
+}

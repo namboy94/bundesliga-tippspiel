@@ -81,3 +81,14 @@ $border-width: 1px;
 .season-position-logo-image {
     max-height: 2em;
 }
+
+// Table column size values for the season position table
+.season-position-bets-position {
+    width: 20%;
+}
+.season-position-bets-team {
+    width: 70%;
+}
+.season-position-bets-logo {
+    width: 10%;
+}

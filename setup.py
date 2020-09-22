@@ -25,7 +25,9 @@ from subprocess import Popen, DEVNULL
 
 if __name__ == "__main__":
 
-    target_css = "bundesliga_tippspiel/static/scss/style.css"
+    # Static dependencies (JS and CSS)
+    Popen(["npm", "install", "--prefix", "bundesliga_tippspiel/static"],
+          stdout=DEVNULL).wait()
     Popen(["sass", "--update", "--force", "--style", "compressed",
            "bundesliga_tippspiel/static/scss/style.scss",
            "bundesliga_tippspiel/static/scss"], stdout=DEVNULL).wait()

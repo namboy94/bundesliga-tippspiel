@@ -17,6 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+@import "colors";
+
+// General content styling
+
 h1 {
     text-align: center;
     margin-bottom: 30px;
@@ -26,4 +30,12 @@ h1 {
 h3 {
     text-align: center;
     font-size: 20pt;
+}
+
+a {
+    color: $default-text-color;
+}
+
+a:hover {
+    color: $default-text-hover-color;
 }

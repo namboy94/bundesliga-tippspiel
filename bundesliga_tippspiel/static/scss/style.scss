@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+@import "../node_modules/bulma/bulma";
 @import "navbar";
 @import "base_layout";
 @import "footer";
@@ -25,3 +25,4 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 @import "tables";
 @import "info";
 @import "chat";
+@import "leaderboard";
