@@ -191,12 +191,13 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         current_placement: Union[str, int] = "N/A"
         if len(placements) >= 1:
             current_placement = placements[len(placements) - 1]
-        hinrunde_placement: Union[str, int] = "N/A"
         if len(placements) >= 17:
             hinrunde_placement = placements[16]
+        else:
+            hinrunde_placement = placements[-1]
         ruckrunde_placement: Union[str, int] = "N/A"
-        if len(rr_placements) >= 1:
-            ruckrunde_placement = rr_placements[len(rr_placements) - 1]
+        if len(rr_placements) >= 17:
+            ruckrunde_placement = rr_placements[-1]
 
         return render_template(
             "info/user.html",
@@ -211,8 +212,8 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             player_participation=participation,
             player_correct_bets_count=points_distribution.get(15, 0),
             player_incorrect_bets_count=points_distribution.get(0, 0),
-            player_best_team=team_points[0][0].name,
-            player_worst_team=team_points[len(team_points) - 1][0].name,
+            player_best_team=(team_points[0]),
+            player_worst_team=team_points[len(team_points) - 1],
             player_current_placement=current_placement,
             player_hinrunde_placement=hinrunde_placement,
             player_ruckrunde_placement=ruckrunde_placement,

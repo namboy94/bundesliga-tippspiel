@@ -103,3 +103,17 @@ $border-width: 1px;
         width: 10%;
     }
 }
+
+/**
+ Styling for the score column on the bets page
+ */
+.score-col {
+    min-width: 5em;  // Ensures that text does not wrap
+}
+
+/**
+ Used instead of hX due to weird vertical alignment issues
+ */
+.bets-table-text {
+    font-size: 13pt;
+}

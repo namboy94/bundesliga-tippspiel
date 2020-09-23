@@ -19,7 +19,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 <tr id="position_row_{{ team.id }}">
     <td class="is-hidden-mobile">
-        <span>{{ position_bet.position }}</span>
+        <b>{{ position_bet.position }}</b>
         <!--suppress HtmlFormInputWithoutLabel -->
         <input autocomplete="off" name="position_{{ team.id }}" value="{{ position }}" hidden>
     </td>
@@ -33,8 +33,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     </td>
     <td>
         <a href="{{ url_for("information.team", team_id=team.id) }}">
-            <h5 class="is-hidden-mobile">{{ team.name }}</h5>
-            <h5 class="is-hidden-tablet">{{ team.short_name }}</h5>
+            <p class="is-hidden-mobile bets-table-text"><b>{{ team.name }}</b></p>
+            <p class="is-hidden-tablet bets-table-text"><b>{{ team.short_name }}</b></p>
         </a>
     </td>
     <td>
