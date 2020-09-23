@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 <tr id="position_row_{{ team.id }}">
-    <td class="vcentered-table-cell">
+    <td class="is-hidden-mobile">
         <span>{{ position_bet.position }}</span>
         <!--suppress HtmlFormInputWithoutLabel -->
         <input autocomplete="off" name="position_{{ team.id }}" value="{{ position }}" hidden>
@@ -31,12 +31,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <i class="fas fa-arrow-down"></i>
         </button>
     </td>
-    <td class="vcentered-table-cell">
+    <td>
         <a href="{{ url_for("information.team", team_id=team.id) }}">
-            <h5>{{ team.name }}</h5>
+            <h5 class="is-hidden-mobile">{{ team.name }}</h5>
+            <h5 class="is-hidden-tablet">{{ team.short_name }}</h5>
         </a>
     </td>
-    <td class="vcentered-table-cell">
+    <td>
         <img src="{{ team.icon_svg }}" class="season-position-logo-image" alt="{{ team.shortname }}">
     </td>
 </tr>

@@ -86,8 +86,7 @@ $border-width: 1px;
 .season-position-bets-table {
 
     // Ensures that a table cell is centered vertically
-    .vcentered-table-cell {
-        display: table-cell !important;
+    td {
         vertical-align: middle !important;
     }
 
