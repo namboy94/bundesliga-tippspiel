@@ -28,32 +28,29 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <hr>
 
     <h3>Tendenz</h3>
-    <table class="table is-bordered is-striped has-text-centered equal-column-table">
-        <thead>
-            <tr>
-                <th>Gegner</th>
-                {% for  opponent_id, opponent_name, _, _, _ in matches %}
-                    <th>
-                        <a href="{{ url_for("information.team", team_id=opponent_id) }}">
-                            {{ opponent_name }}
-                        </a>
-                    </th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Ergebnis</td>
-                {% for _, _, score, result, match_id in matches %}
-                    <td class="match-history-{{ result }}">
-                        <a href="{{ url_for("betting.match", match_id=match_id) }}">
-                            {{ score }}
-                        </a>
-                    </td>
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
+    <div class="container is-fluid has-text-centered team-match-history">
+        <div class="columns is-mobile is-vcentered">
+            {% for match, opponent, score, result in matches %}
+                <div class="column {% if loop.index < loop.length - 2 %}is-hidden-mobile{% endif %}">
+                    <a href="{{ url_for("information.team", team_id=opponent.id) }}">
+                        <img src="{{ opponent.icon_svg }}"
+                             alt="{{ opponent.name }}"
+                             class="team-match-history-logo"
+                        >
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="columns is-mobile is-vcentered">
+            {% for match, opponent, score, result in matches %}
+                <div class="column {% if loop.index < loop.length - 2 %}is-hidden-mobile{% endif %} match-history-{{ result }}">
+                    <a href="{{ url_for("betting.match", match_id=match.id) }}">
+                        {{ score }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
     <hr>
 

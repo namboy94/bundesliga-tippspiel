@@ -99,7 +99,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         team_data = GetTeamAction(_id=team_id).execute()["team"]
 
         matches = GetMatchAction(team_id=team_id).execute()["matches"]
-        matches = list(filter(lambda x: x.finished, matches))[-5:]
+        matches = list(filter(lambda x: x.finished, matches))[-7:]
         match_data = []
 
         for match in matches:
@@ -121,7 +121,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
 
             score = "{}:{}".format(own_score, opponent_score)
             match_data.append((
-                opponent.id, opponent.short_name, score, result, match.id
+                match, opponent, score, result
             ))
 
         players = GetPlayerAction(team_id=team_id).execute()["players"]

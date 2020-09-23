@@ -106,3 +106,21 @@ $match-header-border-radius: 15px;
 .goals-table-team-logo {
     max-height: 30px;
 }
+
+/**
+ Styles the team logos in the tendency table on the team page
+ */
+.team-match-history-logo {
+    max-height: 50px;
+}
+
+/**
+ Styling for the container around the match history on the team page
+ */
+.team-match-history {
+    background: $white-color;
+    border: 1px solid $black-color;
+    border-radius: 3px;
+    padding-bottom: 2em;
+    padding-top: 1em;
+}
