@@ -52,6 +52,17 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                    href="{{url_for("information.leaderboard")}}">Rangliste</a>
                 <a class="navbar-item {% if request.path == "/stats" %} active {% endif %}"
                    href="{{url_for("information.stats")}}">Statistiken</a>
+
+                <div class="navbar-item has-dropdown is-hoverable
+                           {% if request.path in ["/league_table", "/user_league_table"] %} active {% endif %}">
+                    <a class="navbar-link">Tabelle</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item {% if request.path == "/league_table" %} active {% endif %}"
+                       href="{{url_for("information.league_table")}}">Aktuell</a>
+                        <a class="navbar-item {% if request.path == "/user_league_table" %} active {% endif %}"
+                           href="{{url_for("information.user_league_table")}}">Nach Tipps</a>
+                    </div>
+                </div>
                 <a class="navbar-item {% if request.path == "/chat" %} active {% endif %}"
                    href="{{url_for("chat.chat")}}">Chat</a>
                 <a class="navbar-item {% if request.path == "/profile" %} active {% endif %}"

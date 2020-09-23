@@ -18,9 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from typing import Union
+from typing import Union, Optional
 from flask import render_template, abort, Blueprint
-from flask_login import login_required
+from flask_login import login_required, current_user
 from puffotter.flask.base import app, db
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
@@ -38,7 +38,7 @@ from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_team_points_table, get_total_points_per_team, \
     generate_points_distributions, create_participation_ranking, \
-    create_point_average_ranking
+    create_point_average_ranking, calculate_current_league_table
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -287,6 +287,38 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             participation_ranking=enumerate(participation_ranking),
             average_ranking=enumerate(average_ranking),
             show_all=True
+        )
+
+    @blueprint.route("/league_table", methods=["GET"])
+    @blueprint.route("/league_table/<int:matchday>", methods=["GET"])
+    @login_required
+    @action_route
+    def league_table(matchday: Optional[int] = None):
+        """
+        Calculates the current league table and displays it for the user
+        :param matchday: Can be used to specify a certain matchday
+        :return: The response
+        """
+        table = calculate_current_league_table(matchday=matchday)
+        return render_template(
+            "info/league_table.html",
+            league_table=table,
+            title="Aktuelle Bundesliga Tabelle"
+        )
+
+    @blueprint.route("/user_league_table", methods=["GET"])
+    @login_required
+    @action_route
+    def user_league_table():
+        """
+        Calculates the league table based on the user's bets
+        :return: The response
+        """
+        table = calculate_current_league_table(user=current_user)
+        return render_template(
+            "info/league_table.html",
+            league_table=table,
+            title=f"Tabelle nach {current_user.username}'s Tipps"
         )
 
     return blueprint

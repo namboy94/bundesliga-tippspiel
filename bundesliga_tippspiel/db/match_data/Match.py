@@ -215,13 +215,6 @@ class Match(ModelMixin, db.Model):
         """
         return datetime.strptime(self.kickoff, "%Y-%m-%d:%H-%M-%S")
 
-    @property
-    def kickoff_local_datetime(self) -> datetime:
-        """
-        :return: A datetime object representing the kickoff time in local time
-        """
-        return self.kickoff_datetime.astimezone(pytz.timezone("europe/berlin"))
-
     @kickoff_datetime.setter
     def kickoff_datetime(self, kickoff: datetime):
         """
@@ -230,6 +223,13 @@ class Match(ModelMixin, db.Model):
         :return: None
         """
         self.kickoff = kickoff.strftime("%Y-%m-%d:%H-%M-%S")
+
+    @property
+    def kickoff_local_datetime(self) -> datetime:
+        """
+        :return: A datetime object representing the kickoff time in local time
+        """
+        return self.kickoff_datetime.astimezone(pytz.timezone("europe/berlin"))
 
     @property
     def kickoff_time_string(self) -> str:

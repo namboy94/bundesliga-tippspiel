@@ -1,0 +1,62 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "core/base_layout.html" %}
+{% block body %}
+    <h1>{{ title }}</h1>
+    <table class="table is-bordered is-striped has-text-centered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th></th>
+                <th class="is-hidden-mobile">Verein</th>
+                <th>Sp.</th>
+                <th class="is-hidden-mobile">S</th>
+                <th class="is-hidden-mobile">U</th>
+                <th class="is-hidden-mobile">N</th>
+                <th>Tore</th>
+                <th class="is-hidden-mobile">Diff.</th>
+                <th>Punkte</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team_data in league_table %}
+                {% set team=team_data["team"] %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <a href="{{ url_for("information.team", team_id=team.id) }}">
+                            <img src="{{ team.icon_svg }}"
+                                 alt="{{ team.name }}"
+                                 class="league-table-logo">
+                        </a>
+                    </td>
+                    <td class="is-hidden-mobile">{{ team.name }}</td>
+                    <td>{{ team_data["matches"] }}</td>
+                    <td class="is-hidden-mobile">{{ team_data["wins"] }}</td>
+                    <td class="is-hidden-mobile">{{ team_data["draws"] }}</td>
+                    <td class="is-hidden-mobile">{{ team_data["losses"] }}</td>
+                    <td>{{ team_data["goals_for"] }}:{{ team_data["goals_against"] }}</td>
+                    <td class="is-hidden-mobile">{{ team_data["goal_difference"] }}</td>
+                    <td>{{ team_data["points"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
