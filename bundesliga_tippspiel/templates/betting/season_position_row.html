@@ -17,20 +17,26 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<tr>
-    <td>
-        {% with min_value=1, max_value=18, step=1,
-                value=None if position_bet is none else position_bet.position,
-                var_name="position_{}".format(team.id), disabled=closed %}
-            {% include "components/forms/number_input.html" %}
-        {% endwith %}
+<tr id="position_row_{{ team.id }}">
+    <td class="vcentered-table-cell">
+        <span>{{ position_bet.position }}</span>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input autocomplete="off" name="position_{{ team.id }}" value="{{ position }}" hidden>
     </td>
     <td>
+        <button type="button" onclick="moveSeasonPositionRow({{ team.id }}, -1)" class="button">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button type="button" onclick="moveSeasonPositionRow({{ team.id }}, 1)" class="button">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </td>
+    <td class="vcentered-table-cell">
         <a href="{{ url_for("information.team", team_id=team.id) }}">
             <h5>{{ team.name }}</h5>
         </a>
     </td>
-    <td>
+    <td class="vcentered-table-cell">
         <img src="{{ team.icon_svg }}" class="season-position-logo-image" alt="{{ team.shortname }}">
     </td>
 </tr>

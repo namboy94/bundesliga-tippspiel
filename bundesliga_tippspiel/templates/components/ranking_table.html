@@ -19,7 +19,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% set show_tendency = history is defined and (history.values()|list)[0][1]|length >= 2 %}
 
-<table class="table is-bordered is-striped has-text-centered">
+<table class="table is-bordered is-striped has-text-centered ranking-table">
+    <colgroup>
+        <col span="1" class="first">
+        <col span="1" class="second">
+        <col span="1" class="third">
+    </colgroup>
     <thead>
         <tr>
             <th>#</th>

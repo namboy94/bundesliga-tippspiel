@@ -82,13 +82,25 @@ $border-width: 1px;
     max-height: 2em;
 }
 
-// Table column size values for the season position table
-.season-position-bets-position {
-    width: 20%;
-}
-.season-position-bets-team {
-    width: 70%;
-}
-.season-position-bets-logo {
-    width: 10%;
+// Styling for the season position bets table
+.season-position-bets-table {
+
+    // Ensures that a table cell is centered vertically
+    .vcentered-table-cell {
+        display: table-cell !important;
+        vertical-align: middle !important;
+    }
+
+    .first {
+        width: 15%;
+    }
+    .second {
+        width: 15%;
+    }
+    .third {
+        width: 50%;
+    }
+    .fourth {
+        width: 10%;
+    }
 }

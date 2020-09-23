@@ -31,22 +31,27 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="columns">
             <div class="column is-7">
                 <h2>Tabelle</h2>
-                    <table class="table is-bordered is-striped has-text-centered">
+                    <table class="table is-bordered is-striped has-text-centered season-position-bets-table">
                         <colgroup>
-                            <col span="1" class="season-position-bets-position">
-                            <col span="1" class="season-position-bets-team">
-                            <col span="1" class="season-position-bets-logo">
+                            <col span="1" class="first">
+                            <col span="1" class="second">
+                            <col span="1" class="third">
+                            <col span="1" class="fourth">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>Position</th>
+                                <th></th>
                                 <th>Team</th>
                                 <th>Logo</th>
                             </tr>
                         </thead>
-                        {% for team, position_bet in position_bets %}
-                            {% include "betting/season_position_row.html" %}
-                        {% endfor %}
+                        <tbody>
+                            {% for team, position_bet in position_bets %}
+                                {% set position=loop.index %}
+                                {% include "betting/season_position_row.html" %}
+                            {% endfor %}
+                        </tbody>
                     </table>
             </div>
             <div class="column is-5">

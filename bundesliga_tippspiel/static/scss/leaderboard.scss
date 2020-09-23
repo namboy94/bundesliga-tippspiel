@@ -46,3 +46,16 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 .fa-crown {
     color: $crown-color !important;
 }
+
+// Styling for the rankings table
+.ranking-table {
+    .first {
+        width: 15%;
+    }
+    .second {
+        width: 65%;
+    }
+    .third {
+        width: 20%;
+    }
+}

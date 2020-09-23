@@ -7,6 +7,7 @@ dist/
 build/
 .env
 .sass-cache/
+bundesliga_tippspiel/static/javascript/min.js
 bundesliga_tippspiel/static/node_modules/
 bundesliga_tippspiel/static/scss/*.css
 bundesliga_tippspiel/static/scss/*.css.map
