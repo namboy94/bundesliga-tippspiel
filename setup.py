@@ -67,7 +67,8 @@ if __name__ == "__main__":
             "werkzeug",
             "cherrypy",
             "puffotter[flask,crypto]",
-            "beautifulsoup4"
+            "beautifulsoup4",
+            "pytz"
         ],
         include_package_data=True,
         zip_safe=False

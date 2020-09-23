@@ -65,12 +65,15 @@ $match-header-border-radius: 15px;
  Styles the goal/minute display above the match header
  */
 .match-header-goal-display {
-    font-size: 13pt;
+    font-size: 17pt;
     background: $match-header-background-color;
     border-top-right-radius: $match-header-border-radius;
     border-top-left-radius: $match-header-border-radius;
     border: 2px solid $match-header-border-color;
     border-bottom: 0;
+    .column {
+        font-size: 13pt;
+    }
     .first {
         border-right: 1px solid $match-header-border-color;
     }
@@ -111,7 +114,7 @@ $match-header-border-radius: 15px;
  Styles the team logos in the tendency table on the team page
  */
 .team-match-history-logo {
-    max-height: 50px;
+    max-height: 35px;
 }
 
 /**

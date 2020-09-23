@@ -111,6 +111,9 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         if not settings["display_bots"]:
             bets_info = [x for x in bets_info if "🤖" not in x.user.username]
 
+        if match_info.started:
+            bets_info.sort(key=lambda x: x.evaluate(), reverse=True)
+
         return render_template(
             "info/match.html",
             match=match_info,
