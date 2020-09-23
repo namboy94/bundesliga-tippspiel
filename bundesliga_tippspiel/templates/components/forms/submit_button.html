@@ -27,7 +27,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 {% if use_recaptcha %}
                     data-action="submit"
                     data-sitekey="{{ config.RECAPTCHA_SITE_KEY }}"
-                    data-callback="onSubmit"
+                    data-callback="onRecaptchaSubmit"
                 {% endif %}
                 type="submit"
         >
