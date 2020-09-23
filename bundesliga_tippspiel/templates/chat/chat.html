@@ -55,42 +55,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </div>
     </form>
 
-    <br>
+    <hr>
 
-    <table class="table is-bordered is-striped has-text-centered comment-table">
-        <thead>
-            <tr>
-                <th class="user-col"></th>
-                <th class="comment-col"></th>
-                <th class="button-col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for message in messages %}
-                <tr {% if message.get_text() is none %}class="comment-deleted"{% endif %}>
-                    <td class="comment-content">
-                        {% if message.user is none %}
-                            [Gelöscht]
-                        {% else %}
-                            {{ message.user.username }}
-                        {% endif %}
-                    </td>
-                    <td class="comment-content">
-                        {% if message.get_text() is none %}
-                            [Gelöscht]
-                        {% else %}
-                            {{ message.get_text() }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if message.user_id == current_user.id and not message.deleted %}
-                            <form method="post" action="{{ url_for("chat.delete_chat_message", message_id=message.id) }}">
-                                <button type="submit" class="button is-danger">Löschen</button>
-                            </form>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container is-fluid">
+        {% for message in messages %}
+            {% include "chat/comment.html" %}
+        {% endfor %}
+    </div>
+
 {% endblock %}

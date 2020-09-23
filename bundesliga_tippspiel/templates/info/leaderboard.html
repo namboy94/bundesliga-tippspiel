@@ -22,11 +22,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% block body %}
     <h1>Rangliste</h1>
     {% set unit="Punkte" %}
-    {% include "components/ranking_table.html" %}
-    <hr>
-    <div class="columns">
-        <div class="column">
-            {% include "components/ranking_chart.html" %}
-        </div>
+    {% with history=leaderboard_history %}
+        {% include "components/ranking_table.html" %}
+    {% endwith %}
+    <hr class="is-hidden-mobile">
+    <div class="container is-hidden-mobile ranking-chart-container">
+        {% include "components/ranking_chart.html" %}
     </div>
 {% endblock %}

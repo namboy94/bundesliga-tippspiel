@@ -17,17 +17,24 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<tr>
+<tr id="position_row_{{ team.id }}">
+    <td class="is-hidden-mobile">
+        <b>{{ position_bet.position }}</b>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input autocomplete="off" name="position_{{ team.id }}" value="{{ position }}" hidden>
+    </td>
     <td>
-        {% with min_value=1, max_value=18, step=1,
-                value=None if position_bet is none else position_bet.position,
-                var_name="position_{}".format(team.id), disabled=closed %}
-            {% include "components/forms/number_input.html" %}
-        {% endwith %}
+        <button type="button" onclick="moveSeasonPositionRow({{ team.id }}, -1)" class="button">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button type="button" onclick="moveSeasonPositionRow({{ team.id }}, 1)" class="button">
+            <i class="fas fa-arrow-down"></i>
+        </button>
     </td>
     <td>
         <a href="{{ url_for("information.team", team_id=team.id) }}">
-            <h5>{{ team.name }}</h5>
+            <p class="is-hidden-mobile bets-table-text"><b>{{ team.name }}</b></p>
+            <p class="is-hidden-tablet bets-table-text"><b>{{ team.short_name }}</b></p>
         </a>
     </td>
     <td>

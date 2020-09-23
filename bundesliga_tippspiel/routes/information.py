@@ -18,9 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from typing import Union
+from typing import Union, Optional
 from flask import render_template, abort, Blueprint
-from flask_login import login_required
+from flask_login import login_required, current_user
 from puffotter.flask.base import app, db
 from puffotter.flask.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
@@ -38,7 +38,7 @@ from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_team_points_table, get_total_points_per_team, \
     generate_points_distributions, create_participation_ranking, \
-    create_point_average_ranking
+    create_point_average_ranking, calculate_current_league_table
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -99,7 +99,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         team_data = GetTeamAction(_id=team_id).execute()["team"]
 
         matches = GetMatchAction(team_id=team_id).execute()["matches"]
-        matches = list(filter(lambda x: x.finished, matches))[-5:]
+        matches = list(filter(lambda x: x.finished, matches))[-7:]
         match_data = []
 
         for match in matches:
@@ -121,7 +121,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
 
             score = "{}:{}".format(own_score, opponent_score)
             match_data.append((
-                opponent.id, opponent.short_name, score, result, match.id
+                match, opponent, score, result
             ))
 
         players = GetPlayerAction(team_id=team_id).execute()["players"]
@@ -191,12 +191,13 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         current_placement: Union[str, int] = "N/A"
         if len(placements) >= 1:
             current_placement = placements[len(placements) - 1]
-        hinrunde_placement: Union[str, int] = "N/A"
         if len(placements) >= 17:
             hinrunde_placement = placements[16]
+        else:
+            hinrunde_placement = placements[-1]
         ruckrunde_placement: Union[str, int] = "N/A"
-        if len(rr_placements) >= 1:
-            ruckrunde_placement = rr_placements[len(rr_placements) - 1]
+        if len(rr_placements) >= 17:
+            ruckrunde_placement = rr_placements[-1]
 
         return render_template(
             "info/user.html",
@@ -211,8 +212,8 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             player_participation=participation,
             player_correct_bets_count=points_distribution.get(15, 0),
             player_incorrect_bets_count=points_distribution.get(0, 0),
-            player_best_team=team_points[0][0].name,
-            player_worst_team=team_points[len(team_points) - 1][0].name,
+            player_best_team=(team_points[0]),
+            player_worst_team=team_points[len(team_points) - 1],
             player_current_placement=current_placement,
             player_hinrunde_placement=hinrunde_placement,
             player_ruckrunde_placement=ruckrunde_placement,
@@ -286,6 +287,38 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             participation_ranking=enumerate(participation_ranking),
             average_ranking=enumerate(average_ranking),
             show_all=True
+        )
+
+    @blueprint.route("/league_table", methods=["GET"])
+    @blueprint.route("/league_table/<int:matchday>", methods=["GET"])
+    @login_required
+    @action_route
+    def league_table(matchday: Optional[int] = None):
+        """
+        Calculates the current league table and displays it for the user
+        :param matchday: Can be used to specify a certain matchday
+        :return: The response
+        """
+        table = calculate_current_league_table(matchday=matchday)
+        return render_template(
+            "info/league_table.html",
+            league_table=table,
+            title="Aktuelle Bundesliga Tabelle"
+        )
+
+    @blueprint.route("/user_league_table", methods=["GET"])
+    @login_required
+    @action_route
+    def user_league_table():
+        """
+        Calculates the league table based on the user's bets
+        :return: The response
+        """
+        table = calculate_current_league_table(user=current_user)
+        return render_template(
+            "info/league_table.html",
+            league_table=table,
+            title=f"Tabelle nach {current_user.username}'s Tipps"
         )
 
     return blueprint

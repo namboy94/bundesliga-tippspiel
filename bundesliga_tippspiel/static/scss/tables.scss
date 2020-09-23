@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+@import "colors";
+
 /**
  Table where all colums have the same size
  */
@@ -24,17 +26,17 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     // Makes all columns same size
     width: 100%;
     td {
-        width: 25%; // Makes all columns same size (The 25 don't really matter)
+        width: 20%; // Makes all columns same size
     }
 }
 
-// Table column size values for the season position table
-.season-position-bets-position {
-    width: 20%;
-}
-.season-position-bets-team {
-    width: 70%;
-}
-.season-position-bets-logo {
-    width: 10%;
+/**
+ Styling for the top element of a table
+ */
+.table-top {
+    background: $info-color;
+    color: $info-text-color;
+    a {
+        color: $info-text-color;
+    }
 }

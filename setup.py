@@ -17,18 +17,29 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-# imports
 import os
+import sys
 from setuptools import setup, find_packages
-from subprocess import Popen, DEVNULL
+from subprocess import Popen, check_output
 
 
 if __name__ == "__main__":
 
-    target_css = "bundesliga_tippspiel/static/scss/style.css"
-    Popen(["sass", "--update", "--force", "--style", "compressed",
-           "bundesliga_tippspiel/static/scss/style.scss",
-           "bundesliga_tippspiel/static/scss"], stdout=DEVNULL).wait()
+    if sys.argv[1] == "install":
+        # Static dependencies (JS and CSS)
+        Popen([
+            "npm", "install", "--prefix", "bundesliga_tippspiel/static"
+        ]).wait()
+        Popen(["sass", "--update", "--force", "--style", "compressed",
+               "bundesliga_tippspiel/static/scss/style.scss",
+               "bundesliga_tippspiel/static/scss"]).wait()
+        js_dir = "bundesliga_tippspiel/static/javascript"
+        minified = b""
+        for js_file in os.listdir(js_dir):
+            js_path = os.path.join(js_dir, js_file)
+            minified += check_output(["yui-compressor", js_path]) + b"\n"
+        with open(os.path.join(js_dir, "min.js"), "wb") as f:
+            f.write(minified)
 
     setup(
         name="bundesliga-tippspiel",
@@ -56,7 +67,8 @@ if __name__ == "__main__":
             "werkzeug",
             "cherrypy",
             "puffotter[flask,crypto]",
-            "beautifulsoup4"
+            "beautifulsoup4",
+            "pytz"
         ],
         include_package_data=True,
         zip_safe=False

@@ -23,14 +23,27 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="container is-fluid has-text-centered">
         <div class="columns">
             <div class="column is-2 is-offset-5 match-header-goal-display">
-                <div class="columns is-mobile">
-                    <div class="column first">{{ match.current_score }}</div>
-                    <div class="column last">{{ match.minute_display }}</div>
-                </div>
+                {% if not match.started %}
+                    <b>{{ match.kickoff_date_string }}</b>
+                    <br>
+                    {{ match.kickoff_time_string }}
+                {% elif not match.finished %}
+                    <div class="columns is-mobile">
+                        <div class="column first">{{ match.current_score }}</div>
+                        <div class="column last">{{ match.minute_display }}</div>
+                    </div>
+                {% else %}
+                    <b>{{ match.ft_score }}</b>
+                {% endif %}
             </div>
         </div>
-        <div class="columns match-header is-vcentered">
-            <div class="column is-1">
+        <div class="columns match-header is-vcentered is-mobile">
+            <div class="column is-1 is-hidden-mobile">
+                <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+                    <img src="{{ match.home_team.icon_svg }}" alt="{{ match.home_team.name }}">
+                </a>
+            </div>
+            <div class="column is-5 is-hidden-tablet">
                 <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
                     <img src="{{ match.home_team.icon_svg }}" alt="{{ match.home_team.name }}">
                 </a>
@@ -46,7 +59,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <h1>{{ match.away_team.short_name }}</h1>
                 </a>
             </div>
-            <div class="column is-1">
+            <div class="column is-1 is-hidden-mobile">
+                <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+                    <img src="{{ match.away_team.icon_svg }}" alt="{{ match.away_team.name }}">
+                </a>
+            </div>
+            <div class="column is-5 is-hidden-tablet">
                 <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
                     <img src="{{ match.away_team.icon_svg }}" alt="{{ match.away_team.name }}">
                 </a>
@@ -108,7 +126,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <tbody>
             {% for bet in bets %}
                 <tr>
-                    <th>{{ bet.user.username }}</th>
+                    <th><a href="{{ url_for("information.user", user_id=bet.user.id) }}">{{ bet.user.username }}</a></th>
                     {% if match.started or bet.user_id == current_user.id %}
                         <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
                     {% else %}

@@ -21,7 +21,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% set requires_charts=True %}
 {% block body %}
     <h1>{{ user.username }}</h1>
-    <div class="container is-fluid">
+    <div class="container is-hidden-mobile ranking-chart-container">
         <h3>Positionsentwicklung</h3>
         {% include "components/ranking_chart.html" %}
     </div>
@@ -76,11 +76,19 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     </tr>
                     <tr>
                         <td>Bestes Team</td>
-                        <td>{{ player_best_team }}</td>
+                        <td>
+                            <a href="{{ url_for("information.team", team_id=player_best_team[0].id) }}">
+                                {{ player_best_team[0].short_name }} ({{ player_best_team[1] }})
+                            </a>
+                        </td>
                     </tr>
                     <tr>
                         <td>Schlechtestes Team</td>
-                        <td>{{ player_worst_team }}</td>
+                        <td>
+                            <a href="{{ url_for("information.team", team_id=player_worst_team[0].id) }}">
+                                {{ player_worst_team[0].short_name }}  ({{ player_worst_team[1] }})
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

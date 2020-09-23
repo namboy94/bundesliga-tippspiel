@@ -21,26 +21,30 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="column is-1">
         {% include "betting/bet_row/logo_home.html" %}
     </div>
-    <div class="column is-2">
-        <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
-            <h5>{{ match.home_team.short_name }}</h5>
+    <div class="column is-2 bets-table-text">
+        <a tabindex="-1" href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+            <p><b>{{ match.home_team.short_name }}</b></p>
         </a>
     </div>
-    <div class="column is-1">
-        {% include "betting/bet_row/input_home.html" %}
-    </div>
-    <div class="column is-1">
-        {% include "betting/bet_row/input_away.html" %}
+    <div class="column is-3">
+        <div class="columns">
+            <div class="column">
+                {% include "betting/bet_row/input_home.html" %}
+            </div>
+            <div class="column">
+                {% include "betting/bet_row/input_away.html" %}
+            </div>
+        </div>
     </div>
     <div class="column is-1">
         {% include "betting/bet_row/points.html" %}
     </div>
-    <div class="column is-2">
+    <div class="column is-1 score-col">
         {% include "betting/bet_row/score.html" %}
     </div>
-    <div class="column is-2">
-        <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
-            <h5>{{ match.away_team.short_name }}</h5>
+    <div class="column is-2 bets-table-text">
+        <a tabindex="-1" href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+            <p>{{ match.away_team.short_name }}</p>
         </a>
     </div>
     <div class="column is-1">

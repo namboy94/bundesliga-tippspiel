@@ -24,7 +24,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
  optional: Either user or show_all == True
 #}
 
-<canvas id="rankings-chart" width="400" height="200"></canvas>
+<canvas id="rankings-chart"></canvas>
 
 <!--suppress JSUnusedGlobalSymbols, JSUnusedLocalSymbols, JSDuplicatedDeclaration -->
 <script async>
@@ -36,6 +36,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 {% for i in range(0, matchday - 1) %}
                     "{{ i + 1 }}",
                 {% endfor %}
+                "Jetzt"
             ],
             datasets: [
                 {% for username, (color, positions) in leaderboard_history.items() %}

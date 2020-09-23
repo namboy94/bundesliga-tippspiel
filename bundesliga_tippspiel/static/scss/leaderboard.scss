@@ -1,4 +1,4 @@
-{#
+/**
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,10 +15,47 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-#}
-<a tabindex="-1" href="{{ url_for("information.team", team_id=match.home_team.id) }}">
-    <img src="{{ match.home_team.icon_svg }}"
-         alt="{{ match.home_team.name }}"
-         class="bet-row-logo"
-    >
-</a>
+*/
+
+@import "colors";
+
+// Styles the table tendency icons
+.tendency-icon {
+    .fas {
+        margin-right: 10px;
+    }
+    .fa-chevron-circle-up {
+        color: $success-color;
+    }
+    .fa-chevron-circle-down {
+        color: $danger-color;
+    }
+    .fa-minus-circle {
+        color: $warning-color;
+    }
+}
+
+/**
+ Tries to tame the resizing behaviour of the ranking chart
+ */
+.ranking-chart-container {
+    position: relative;
+    width:80vw;
+}
+
+.fa-crown {
+    color: $crown-color !important;
+}
+
+// Styling for the rankings table
+.ranking-table {
+    .first {
+        width: 15%;
+    }
+    .second {
+        width: 65%;
+    }
+    .third {
+        width: 20%;
+    }
+}

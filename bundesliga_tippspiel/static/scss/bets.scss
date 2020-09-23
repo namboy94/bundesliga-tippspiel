@@ -81,3 +81,39 @@ $border-width: 1px;
 .season-position-logo-image {
     max-height: 2em;
 }
+
+// Styling for the season position bets table
+.season-position-bets-table {
+
+    // Ensures that a table cell is centered vertically
+    td {
+        vertical-align: middle !important;
+    }
+
+    .first {
+        width: 15%;
+    }
+    .second {
+        width: 15%;
+    }
+    .third {
+        width: 50%;
+    }
+    .fourth {
+        width: 10%;
+    }
+}
+
+/**
+ Styling for the score column on the bets page
+ */
+.score-col {
+    min-width: 5em;  // Ensures that text does not wrap
+}
+
+/**
+ Used instead of hX due to weird vertical alignment issues
+ */
+.bets-table-text {
+    font-size: 13pt;
+}
