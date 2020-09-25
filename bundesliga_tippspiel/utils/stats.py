@@ -301,6 +301,7 @@ def calculate_current_league_table(
         table.append(entry)
 
     table.sort(key=lambda x: x["team"].name)
+    table.sort(key=lambda x: x["goals_for"], reverse=True)
     table.sort(key=lambda x: x["goal_difference"], reverse=True)
     table.sort(key=lambda x: x["points"], reverse=True)
 
