@@ -93,17 +93,35 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <td>
                         {% if goal.penalty %}
                             {% set football_class="penalty" %}
+                            {% set description="Elfmeter" %}
                         {% elif goal.own_goal %}
                             {% set football_class="owngoal" %}
+                            {% set description="Eigentor" %}
                         {% else %}
                             {% set football_class="normal" %}
+                            {% set description="Reguläres Tor" %}
                         {% endif %}
-                        <i class="far fa-futbol goal-icon-{{ football_class }}"></i>
+                        <span title="{{ description }}">
+                            <i class="far fa-futbol goal-icon-{{ football_class }}"></i>
+                        </span>
                     </td>
                     <td>{{ goal.minute }}</td>
                     <td>{{ goal.home_score }}:{{ goal.away_score }}</td>
                     <td>
-                        <img src="{{ goal.player.team.icon_svg }}" alt="{{ goal.player.team.name }}" class="goals-table-team-logo">
+                        {% if goal.own_goal %}
+                            {% set team = match.home_team %}
+                            {% if team == goal.player.team %}
+                                {% set team = match.away_team %}
+                            {% endif %}
+                        {% else %}
+                            {% set team = goal.player.team %}
+                        {% endif %}
+
+                        <a href="{{ url_for("information.team", team_id=team.id) }}">
+                            <img src="{{ team.icon_svg }}"
+                                 alt="{{ team.name }}" class="goals-table-team-logo">
+                        </a>
+
                     </td>
                     <td>{{ goal.player.name }}</td>
                 </tr>

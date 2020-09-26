@@ -1,0 +1,45 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<form action="{{ url_for("betting.bets") }}" method="post"
+      class="has-text-centered {% if form_mode == "desktop" %} is-hidden-mobile {% else %} is-hidden-tablet {% endif %}">
+    {% for match in matches %}
+        {% with match=match, bet=betmap[match.id],
+                first=loop.index == 1, last=loop.index == matches|length %}
+            {% if form_mode == "desktop" %}
+                {% include "betting/bet_row/bet_row_desktop.html" %}
+            {% else %}
+                {% include "betting/bet_row/bet_row_mobile.html" %}
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
+
+    {% with button_name="Bestätigen" %}
+        {% include "components/forms/submit_button.html" %}
+    {% endwith %}
+
+    <h3>
+        {% if matches[0].started %}
+            Erreichte Punktzahl:
+            <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
+                {{ matchday_points }}
+            </span>
+        {% endif %}
+    </h3>
+</form>
