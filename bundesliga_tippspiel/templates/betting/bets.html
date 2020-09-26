@@ -38,47 +38,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </div>
     </div>
 
-    <form action="{{ url_for("betting.bets") }}" method="post" class="has-text-centered is-hidden-tablet">
-        {% for match in matches %}
-            {% with match=match, bet=betmap[match.id],
-                    first=loop.index == 1, last=loop.index == matches|length %}
-                {% include "betting/bet_row/bet_row_mobile.html" %}
-            {% endwith %}
-        {% endfor %}
-
-        {% with button_name="Bestätigen" %}
-            {% include "components/forms/submit_button.html" %}
-        {% endwith %}
-
-        <h3>
-            {% if matches[0].started %}
-                Erreichte Punktzahl:
-                <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
-                    {{ matchday_points }}
-                </span>
-            {% endif %}
-        </h3>
-    </form>
-    <form action="{{ url_for("betting.bets") }}" method="post" class="has-text-centered is-hidden-mobile">
-        {% for match in matches %}
-            {% with match=match, bet=betmap[match.id],
-                    first=loop.index == 1, last=loop.index == matches|length %}
-                {% include "betting/bet_row/bet_row_desktop.html" %}
-            {% endwith %}
-        {% endfor %}
-
-        {% with button_name="Bestätigen" %}
-            {% include "components/forms/submit_button.html" %}
-        {% endwith %}
-
-        <h3>
-            {% if matches[0].started %}
-                Erreichte Punktzahl:
-                <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
-                    {{ matchday_points }}
-                </span>
-            {% endif %}
-        </h3>
-    </form>
+    {% with form_mode="desktop" %}
+        {% include "betting/bet_row/bet_form.html" %}
+    {% endwith %}
+    {% with form_mode="mobile" %}
+        {% include "betting/bet_row/bet_form.html" %}
+    {% endwith %}
 
 {% endblock %}
