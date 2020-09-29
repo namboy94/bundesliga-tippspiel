@@ -67,4 +67,4 @@ class TestChartData(_TestFramework):
         matchday, data = generate_leaderboard_data()
 
         self.assertEqual(matchday, 2)
-        self.assertEqual(len(data), 2)
+        self.assertEqual(len(data), 1)

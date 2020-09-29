@@ -25,7 +25,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <hr>
 
     <form method="post" action="{{ url_for("user_management.login") }}">
-        {% with label_name="Benutzername", placeholder="Username",
+        {% with label_name="Benutzername oder Email Adresse",
+                placeholder="Username / Email",
                 var_name="username", icon_name="user" %}
             {% include "components/forms/text_input.html" %}
         {% endwith %}
