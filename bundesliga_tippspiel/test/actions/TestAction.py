@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 

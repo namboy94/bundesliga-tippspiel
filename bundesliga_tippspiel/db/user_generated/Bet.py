@@ -18,9 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Any, Dict, List, Optional
-from puffotter.flask.base import db
-from puffotter.flask.db.ModelMixin import ModelMixin
-from puffotter.flask.db.User import User
+from jerrycan.base import db
+from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.User import User
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 

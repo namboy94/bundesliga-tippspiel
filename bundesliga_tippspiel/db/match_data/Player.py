@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List, TYPE_CHECKING
-from puffotter.flask.base import db
-from puffotter.flask.db.ModelMixin import ModelMixin
+from jerrycan.base import db
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal

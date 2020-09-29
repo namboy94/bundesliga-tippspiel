@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from puffotter.flask.base import db
+from jerrycan.base import db
 from datetime import datetime, timedelta
 from bundesliga_tippspiel.db.match_data.Match import Match
 # noinspection PyProtectedMember

@@ -19,7 +19,7 @@ LICENSE"""
 
 import os
 from typing import Type, List, Dict, Optional
-from puffotter.flask.Config import Config as BaseConfig
+from jerrycan.Config import Config as BaseConfig
 
 
 class Config(BaseConfig):

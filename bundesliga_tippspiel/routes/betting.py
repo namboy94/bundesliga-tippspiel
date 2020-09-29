@@ -20,7 +20,7 @@ LICENSE"""
 from typing import Optional, Dict
 from flask import render_template, request, Blueprint, flash, redirect, url_for
 from flask_login import login_required, current_user
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.db.user_generated.Bet import Bet

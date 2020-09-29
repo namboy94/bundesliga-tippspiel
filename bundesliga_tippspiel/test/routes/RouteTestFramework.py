@@ -20,7 +20,7 @@ LICENSE"""
 from typing import Tuple, List, Optional
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from puffotter.flask.db.User import User
+from jerrycan.db.User import User
 
 
 class _RouteTestFramework(_TestFramework):

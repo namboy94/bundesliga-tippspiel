@@ -60,3 +60,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 .navbar-dropdown {
     background: $dark-color;
 }
+
+/**
+ Styles the navbar logout button
+ */
+.fa-sign-out-alt {
+    color: $dark-text-color;
+}

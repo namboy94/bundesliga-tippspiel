@@ -19,7 +19,7 @@ LICENSE"""
 
 from datetime import datetime, timedelta
 from unittest.mock import patch
-from puffotter.flask.base import db
+from jerrycan.base import db
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent, SeasonEventType

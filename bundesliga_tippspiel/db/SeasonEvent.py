@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from enum import Enum
-from puffotter.flask.base import db
-from puffotter.flask.db.ModelMixin import ModelMixin
+from jerrycan.base import db
+from jerrycan.db.ModelMixin import ModelMixin
 
 
 class SeasonEventType(Enum):

@@ -18,8 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from puffotter.env import load_env_file
-from puffotter.flask.initialize import init_flask
-from puffotter.flask.wsgi import start_server
+from jerrycan.initialize import init_flask
+from jerrycan.wsgi import start_server
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel import sentry_dsn, root_path
 from bundesliga_tippspiel.background import bg_tasks

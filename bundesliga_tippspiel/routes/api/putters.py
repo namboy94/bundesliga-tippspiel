@@ -19,7 +19,7 @@ LICENSE"""
 
 from flask import request, Blueprint
 from flask_login import login_required
-from puffotter.flask.routes.decorators import api, api_login_required
+from jerrycan.routes.decorators import api, api_login_required
 from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
 from bundesliga_tippspiel.actions.SetReminderSettingsAction import \
     SetReminderSettingsAction

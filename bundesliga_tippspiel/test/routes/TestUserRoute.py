@@ -21,7 +21,7 @@ from typing import Tuple, Optional, List
 
 from bundesliga_tippspiel.db.match_data.Match import Match
 
-from puffotter.flask.db.User import User
+from jerrycan.db.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
@@ -47,7 +47,7 @@ class TestUserRoute(_RouteTestFramework):
         self.db.session.add(Match(
             home_team=team_one, away_team=team_two,
             matchday=1, kickoff="2019-01-01:01:02:03",
-            started=False, finished=False,
+            started=True, finished=True,
             home_current_score=0, away_current_score=0,
             season=self.config.season()
         ))

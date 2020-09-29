@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from puffotter.flask.base import app, db
-from puffotter.flask.db.User import User
+from jerrycan.base import app, db
+from jerrycan.db.User import User
 from bundesliga_tippspiel.enums import ReminderType
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 

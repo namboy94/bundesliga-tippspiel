@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, Optional, List
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
     SeasonTeamBet, SeasonTeamBetType
 from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \

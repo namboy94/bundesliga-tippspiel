@@ -43,9 +43,9 @@ class TestRegisterRoute(_RouteTestFramework):
         """
         return "/register", ["POST"], "Registrierung", False
 
-    @mock.patch("puffotter.flask.routes.user_management.send_email",
+    @mock.patch("jerrycan.routes.user_management.send_email",
                 lambda x, y, z, a, b, c, d: print())
-    @mock.patch("puffotter.flask.routes.user_management.verify_recaptcha",
+    @mock.patch("jerrycan.routes.user_management.verify_recaptcha",
                 lambda x, y, z: True)
     def test_successful_requests(self):
         """

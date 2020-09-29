@@ -21,8 +21,8 @@ import json
 from base64 import b64encode
 from flask import Response
 from typing import Tuple, List, Dict, Any, Optional
-from puffotter.flask.db.User import User
-from puffotter.flask.db.ApiKey import ApiKey
+from jerrycan.db.User import User
+from jerrycan.db.ApiKey import ApiKey
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
 

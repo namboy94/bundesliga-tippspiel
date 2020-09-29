@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.db.user_generated.ChatMessage import ChatMessage
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.models.ModelTestFramework import \

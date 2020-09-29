@@ -20,8 +20,8 @@ LICENSE"""
 import pytz
 from datetime import datetime
 from typing import TYPE_CHECKING, List
-from puffotter.flask.base import db
-from puffotter.flask.db.ModelMixin import ModelMixin
+from jerrycan.base import db
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
