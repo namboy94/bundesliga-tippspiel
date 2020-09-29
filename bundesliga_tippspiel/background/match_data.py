@@ -21,7 +21,7 @@ import json
 import requests
 from datetime import datetime
 from typing import Dict, Any, Optional, List, Tuple, Type
-from puffotter.flask.base import db, app
+from jerrycan.base import db, app
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.match_data.Player import Player

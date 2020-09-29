@@ -23,11 +23,11 @@ from typing import List
 from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from smtplib import SMTPAuthenticationError
-from puffotter.flask.base import app, db
-from puffotter.flask.db.ModelMixin import ModelMixin
-from puffotter.flask.db.TelegramChatId import TelegramChatId
+from jerrycan.base import app, db
+from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.TelegramChatId import TelegramChatId
 from puffotter.smtp import send_email
-from puffotter.flask.db.User import User
+from jerrycan.db.User import User
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.enums import ReminderType
 from bundesliga_tippspiel.db.user_generated.Bet import Bet

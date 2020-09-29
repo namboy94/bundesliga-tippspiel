@@ -1,3 +1,5 @@
+V 1.9.3:
+  - Now uses jerrycan instead of puffotter.flask
 V 1.9.2:
   - Fixed some issues on the match page.
 V 1.9.1:

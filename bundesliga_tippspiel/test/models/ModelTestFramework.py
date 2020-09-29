@@ -20,8 +20,8 @@ LICENSE"""
 from typing import List, Tuple, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import FlushError
-from puffotter.flask.base import db
-from puffotter.flask.db.ModelMixin import ModelMixin
+from jerrycan.base import db
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.enums import ReminderType
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 # noinspection PyProtectedMember
@@ -175,9 +175,9 @@ class _ModelTestFramework(_TestFramework):
         )
 
         # noinspection PyUnresolvedReferences
-        from puffotter.flask.db.ApiKey import ApiKey
+        from jerrycan.db.ApiKey import ApiKey
         # noinspection PyUnresolvedReferences
-        from puffotter.flask.db.User import User
+        from jerrycan.db.User import User
         # noinspection PyUnresolvedReferences
         from bundesliga_tippspiel.db.match_data.Player import Player
         # noinspection PyUnresolvedReferences

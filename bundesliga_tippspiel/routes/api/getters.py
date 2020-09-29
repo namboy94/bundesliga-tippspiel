@@ -21,8 +21,8 @@ from flask import request, Blueprint
 from flask_login import login_required
 from typing import Optional, Dict, Any, Type
 from puffotter.json import jsonify_models
-from puffotter.flask.routes.decorators import api, api_login_required
-from puffotter.flask.exceptions import ApiException
+from jerrycan.routes.decorators import api, api_login_required
+from jerrycan.exceptions import ApiException
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.actions.Action import GetAction
 from bundesliga_tippspiel.actions.GetBetAction import GetBetAction

@@ -19,8 +19,8 @@ LICENSE"""
 
 from unittest import mock
 from datetime import datetime, timedelta
-from puffotter.flask.db.User import User
-from puffotter.flask.base import db
+from jerrycan.db.User import User
+from jerrycan.base import db
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.enums import ReminderType
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings

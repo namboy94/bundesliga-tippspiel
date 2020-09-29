@@ -19,9 +19,9 @@ LICENSE"""
 
 import time
 from typing import List, Optional, Dict, Any
-from puffotter.flask.base import db
-from puffotter.flask.db.ModelMixin import ModelMixin
-from puffotter.flask.db.User import User
+from jerrycan.base import db
+from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.User import User
 
 
 class ChatMessage(ModelMixin, db.Model):

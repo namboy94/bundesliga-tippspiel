@@ -21,8 +21,8 @@ import time
 from typing import Union, Optional
 from flask import render_template, abort, Blueprint
 from flask_login import login_required, current_user
-from puffotter.flask.base import app, db
-from puffotter.flask.db.User import User
+from jerrycan.base import app, db
+from jerrycan.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 from bundesliga_tippspiel.Config import Config

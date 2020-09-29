@@ -18,9 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from enum import Enum
-from puffotter.flask.base import db
-from puffotter.flask.db.User import User
-from puffotter.flask.db.ModelMixin import ModelMixin
+from jerrycan.base import db
+from jerrycan.db.User import User
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 
 

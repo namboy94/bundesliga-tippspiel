@@ -20,7 +20,7 @@ LICENSE"""
 from typing import Optional
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.db.user_generated.ChatMessage import ChatMessage
 
 

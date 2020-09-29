@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import current_user
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings

@@ -19,7 +19,7 @@ LICENSE"""
 
 from flask_login import current_user
 from typing import Dict, Any, Tuple, Union, Optional
-from puffotter.flask.base import db
+from jerrycan.base import db
 from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.exceptions import ActionException
 from bundesliga_tippspiel.db.match_data.Match import Match

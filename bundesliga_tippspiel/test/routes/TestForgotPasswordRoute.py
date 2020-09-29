@@ -42,7 +42,7 @@ class TestForgotPasswordRoute(_RouteTestFramework):
         """
         return "/forgot", ["POST"], " Passwort vergessen", False
 
-    @mock.patch("puffotter.flask.routes.user_management.verify_recaptcha",
+    @mock.patch("jerrycan.routes.user_management.verify_recaptcha",
                 lambda x, y, z: True)
     def test_successful_requests(self):
         """
@@ -56,7 +56,7 @@ class TestForgotPasswordRoute(_RouteTestFramework):
         old_hash = user.password_hash
 
         with mock.patch(
-                "puffotter.flask.routes.user_management.send_email",
+                "jerrycan.routes.user_management.send_email",
                 lambda x, y, z, a, b, c, d:
                 self.assertEqual(x, Config.SMTP_ADDRESS)
         ):
@@ -68,7 +68,7 @@ class TestForgotPasswordRoute(_RouteTestFramework):
         self.assertNotEqual(old_hash, user.password_hash)
         self.assertTrue(b"Passwort erfolgreich zur" in post.data)
 
-    @mock.patch("puffotter.flask.routes.user_management.verify_recaptcha",
+    @mock.patch("jerrycan.routes.user_management.verify_recaptcha",
                 lambda x, y, z: True)
     def test_unsuccessful_requests(self):
         """

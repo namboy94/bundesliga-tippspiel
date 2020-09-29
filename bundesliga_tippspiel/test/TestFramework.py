@@ -18,9 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 # noinspection PyProtectedMember
-from puffotter.flask.test.TestFramework import _TestFramework as Framework
+from jerrycan.test.TestFramework import _TestFramework as Framework
 from typing import Tuple
-from puffotter.flask.db.User import User
+from jerrycan.db.User import User
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Player import Player

@@ -23,8 +23,8 @@ from bs4 import BeautifulSoup
 from smtplib import SMTPAuthenticationError
 from datetime import datetime, timedelta
 from puffotter.smtp import send_email
-from puffotter.flask.base import db, app
-from puffotter.flask.db.User import User
+from jerrycan.base import db, app
+from jerrycan.db.User import User
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent, SeasonEventType
 from bundesliga_tippspiel.db.match_data.Match import Match

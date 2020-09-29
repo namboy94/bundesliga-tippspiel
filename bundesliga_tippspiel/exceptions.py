@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from flask import flash
-from puffotter.flask.enums import AlertSeverity
+from jerrycan.enums import AlertSeverity
 
 
 class ActionException(Exception):
