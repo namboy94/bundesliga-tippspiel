@@ -51,7 +51,7 @@ def generate_leaderboard_data(
         matchday_matches = Match.query.filter_by(matchday=current_matchday,
                                                  finished=True,
                                                  season=Config.season()).all()
-        if len(matchday_matches) == 0:
+        if len(matchday_matches) == 0 and current_matchday is not None:
             current_matchday -= 1
 
     leaderboard_history = load_leaderboard_history(
