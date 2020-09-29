@@ -48,6 +48,11 @@ def generate_leaderboard_data(
     if current_matchday is None:  # pragma: no cover
         leaderboard_action = LeaderboardAction()
         current_matchday = leaderboard_action.resolve_and_check_matchday(-1)
+        matchday_matches = Match.query.filter_by(matchday=current_matchday,
+                                                 finished=True,
+                                                 season=Config.season()).all()
+        if len(matchday_matches) == 0:
+            current_matchday -= 1
 
     leaderboard_history = load_leaderboard_history(
         current_matchday=current_matchday,
