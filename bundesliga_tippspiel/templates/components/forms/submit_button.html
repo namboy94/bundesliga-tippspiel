@@ -35,7 +35,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </button>
         {% if use_recaptcha %}
             <script>
-                function onSubmit(_) {
+                function onRecaptchaSubmit(_) {
                     document.getElementById("{{ form_name }}").submit();
                 }
             </script>

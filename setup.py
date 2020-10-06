@@ -36,6 +36,8 @@ if __name__ == "__main__":
         js_dir = "bundesliga_tippspiel/static/javascript"
         minified = b""
         for js_file in os.listdir(js_dir):
+            if js_file == "min.js":
+                continue
             js_path = os.path.join(js_dir, js_file)
             minified += check_output(["yui-compressor", js_path]) + b"\n"
         with open(os.path.join(js_dir, "min.js"), "wb") as f:
