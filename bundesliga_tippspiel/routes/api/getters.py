@@ -136,9 +136,9 @@ def execute_getter(_id: Optional[int], action_cls: Type[GetAction]) \
     """
     try:
         if _id is not None:
-            return jsonify_models(action_cls(_id=_id).execute())
+            return jsonify_models(action_cls(_id=_id).execute(), False)
         else:
             action = action_cls.from_dict(request.args)
-            return jsonify_models(action.execute())
+            return jsonify_models(action.execute(), False)
     except ActionException as e:
         raise ApiException(e.reason, e.status_code)
