@@ -82,7 +82,7 @@ class _GetterApiRouteTestFramework(_ApiRouteTestFramework):
         self.assertEqual(all_results["status"], "ok")
         self.assertEqual(
             all_results["data"],
-            jsonify_models(self.action_cls().execute())
+            jsonify_models(self.action_cls().execute(), False)
         )
 
         id_result = self.decode_data(self.client.get(
@@ -91,7 +91,7 @@ class _GetterApiRouteTestFramework(_ApiRouteTestFramework):
         self.assertEqual(id_result["status"], "ok")
         self.assertEqual(
             id_result["data"],
-            jsonify_models(self.action_cls(_id=1).execute())
+            jsonify_models(self.action_cls(_id=1).execute(), False)
         )
 
         for key, val in self.sample_filters.items():
@@ -104,7 +104,7 @@ class _GetterApiRouteTestFramework(_ApiRouteTestFramework):
                 filter_result["data"],
                 jsonify_models(self.action_cls.from_dict(
                     {key: val}
-                ).execute())
+                ).execute(), False)
             )
 
     def test_unsuccessful_call(self):
