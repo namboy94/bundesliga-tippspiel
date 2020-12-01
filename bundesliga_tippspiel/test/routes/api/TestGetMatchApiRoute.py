@@ -50,3 +50,6 @@ class TestGetMatchApiRoute(_GetterApiRouteTestFramework):
         :return: The action class used to fetch data
         """
         return GetMatchAction
+
+    def test_successful_call(self):
+        pass
