@@ -1,3 +1,5 @@
+V 1.10.1:
+  - Fixed Borussia Dortmund-related error in background updater
 V 1.10.0:
   - Reduced API overhead by removing deep object conversion
 V 1.9.4:

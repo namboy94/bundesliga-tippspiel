@@ -261,7 +261,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
             "Bayer 04 Leverkusen", "Bayer Leverkusen", "B04",
             wikimedia_icon_urls("de/f/f7/Bayer_Leverkusen_Logo.svg")
         ),
-        "Borussia Dortmund": (
+        "BV Borussia Dortmund 09": (
             "Borussia Dortmund", "BVB Dortmund", "BVB",
             wikimedia_icon_urls("commons/6/67/Borussia_Dortmund_logo.svg")
         ),
