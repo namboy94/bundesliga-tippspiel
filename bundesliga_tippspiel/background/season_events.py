@@ -151,7 +151,7 @@ def __handle_reminder(
     elif not before and kickoff + delta > now:
         return False
     else:
-        for user in User.query.all():
+        for user in User.query.filter_by(confirmed=True).all():
 
             message = render_template(
                 message_file,
