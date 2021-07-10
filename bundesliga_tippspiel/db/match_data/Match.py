@@ -21,14 +21,14 @@ import pytz
 from datetime import datetime
 from typing import TYPE_CHECKING, List
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
     from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
 
-class Match(ModelMixin, db.Model):
+class Match(IDModelMixin, db.Model):
     """
     Model that describes the 'matches' SQL table
     """

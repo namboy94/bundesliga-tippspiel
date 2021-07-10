@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import List, TYPE_CHECKING
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Player import Player
     # from bundesliga_tippspiel.db.match_data.Match import Match
@@ -29,7 +29,7 @@ if TYPE_CHECKING:  # pragma: no cover
         SeasonPositionBet
 
 
-class Team(ModelMixin, db.Model):
+class Team(IDModelMixin, db.Model):
     """
     Model that describes the 'teams' SQL table
     A Team is the most basic data for a match, it relies on no other data,

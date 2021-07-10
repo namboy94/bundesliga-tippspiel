@@ -19,11 +19,11 @@ LICENSE"""
 
 from jerrycan.base import db
 from jerrycan.db.User import User
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from bundesliga_tippspiel.Config import Config
 
 
-class SeasonWinner(ModelMixin, db.Model):
+class SeasonWinner(IDModelMixin, db.Model):
     """
     Model that describes the 'season_winners' SQL table
     """

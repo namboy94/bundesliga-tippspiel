@@ -19,7 +19,7 @@ LICENSE"""
 
 from enum import Enum
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 
 
 class SeasonEventType(Enum):
@@ -31,7 +31,7 @@ class SeasonEventType(Enum):
     POST_SEASON_WRAPUP = "post_season_wrapup"
 
 
-class SeasonEvent(ModelMixin, db.Model):
+class SeasonEvent(IDModelMixin, db.Model):
     """
     Model that describes the 'season_events' SQL table
     """

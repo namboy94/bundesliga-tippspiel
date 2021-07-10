@@ -19,13 +19,13 @@ LICENSE"""
 
 from typing import List, TYPE_CHECKING
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 
-class Player(ModelMixin, db.Model):
+class Player(IDModelMixin, db.Model):
     """
     Model that describes the "players" SQL table
     """

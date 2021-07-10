@@ -20,7 +20,7 @@ LICENSE"""
 from enum import Enum
 from jerrycan.base import db
 from jerrycan.db.User import User
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 
 
@@ -37,7 +37,7 @@ class SeasonTeamBetType(Enum):
     # MOST_RED_CARDS = "Die meisten roten Karten"
 
 
-class SeasonTeamBet(ModelMixin, db.Model):
+class SeasonTeamBet(IDModelMixin, db.Model):
     """
     Model that describes the 'season_team_bets' SQL table
     """

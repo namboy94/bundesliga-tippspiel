@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from smtplib import SMTPAuthenticationError
 from jerrycan.base import app, db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from jerrycan.db.TelegramChatId import TelegramChatId
 from puffotter.smtp import send_email
 from jerrycan.db.User import User
@@ -34,7 +34,7 @@ from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 
-class ReminderSettings(ModelMixin, db.Model):
+class ReminderSettings(IDModelMixin, db.Model):
     """
     Database model that keeps track of reminder settings
     """

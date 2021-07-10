@@ -20,11 +20,11 @@ LICENSE"""
 import time
 from typing import List, Optional, Dict, Any
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from jerrycan.db.User import User
 
 
-class ChatMessage(ModelMixin, db.Model):
+class ChatMessage(IDModelMixin, db.Model):
     """
     Model that describes the 'chat_messages' SQL table
     """

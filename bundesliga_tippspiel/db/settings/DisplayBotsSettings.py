@@ -18,11 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from jerrycan.db.User import User
 
 
-class DisplayBotsSettings(ModelMixin, db.Model):
+class DisplayBotsSettings(IDModelMixin, db.Model):
     """
     Database model that specifies whether a user wants to see bots or not
     """

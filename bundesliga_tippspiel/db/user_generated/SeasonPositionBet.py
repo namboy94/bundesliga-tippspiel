@@ -18,12 +18,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from jerrycan.base import db
-from jerrycan.db.ModelMixin import ModelMixin
+from jerrycan.db.IDModelMixin import IDModelMixin
 from jerrycan.db.User import User
 from bundesliga_tippspiel.db.match_data.Team import Team
 
 
-class SeasonPositionBet(ModelMixin, db.Model):
+class SeasonPositionBet(IDModelMixin, db.Model):
     """
     Model that describes the 'season_position_bets' SQL table
     """
