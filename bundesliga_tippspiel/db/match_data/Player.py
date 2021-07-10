@@ -40,14 +40,12 @@ class Player(ModelMixin, db.Model):
 
     __tablename__ = "players"
 
-    team_abbreviation: int = db.Column(
+    name: str = db.Column(db.String(255), primary_key=True)
+    team_abbreviation: str = db.Column(
         db.String(3),
         db.ForeignKey("teams.abbreviation"),
         primary_key=True
     )
-    name: str = db.Column(db.String(255), nullable=False)
 
-    team: Team = db.relationship("Team", back_populates="players")
-    goals: List["Goal"] = db.relationship(
-        "Goal", back_populates="player", cascade="all, delete"
-    )
+    team: Team = db.relationship("Team")
+    goals: List["Goal"] = db.relationship("Goal", cascade="all, delete")

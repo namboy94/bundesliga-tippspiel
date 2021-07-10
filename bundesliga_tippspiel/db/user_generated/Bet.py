@@ -43,7 +43,7 @@ class Bet(ModelMixin, db.Model):
             ("home_team_abbreviation", "away_team_abbreviation", "season"),
             (Match.home_team_abbreviation, Match.away_team_abbreviation,
              Match.season)
-        )
+        ),
     )
 
     user_id: int = db.Column(
@@ -61,7 +61,7 @@ class Bet(ModelMixin, db.Model):
     user: User = db.relationship(
         "User", backref=db.backref("bets", cascade="all, delete")
     )
-    match: Match = db.relationship("Match", back_populates="bets")
+    match: Match = db.relationship("Match")
 
     def __repr__(self) -> str:
         """
@@ -84,9 +84,11 @@ class Bet(ModelMixin, db.Model):
         :return: True if the objects are equal, False otherwise
         """
         if isinstance(other, Bet):
-            return self.id == other.id \
-                   and self.user_id == other.user_id \
-                   and self.match_id == other.match_id \
+            return self.user_id == other.user_id \
+                   and self.home_team_abbreviation == \
+                   other.home_team_abbreviation \
+                   and self.away_team_abbreviation == \
+                   other.away_team_abbreviation \
                    and self.home_score == other.home_score \
                    and self.away_score == other.away_score
         else:

@@ -70,18 +70,27 @@ class _TestFramework(Framework):
             name="E", short_name="F", abbreviation="G",
             icon_svg="H1", icon_png="H2"
         )
-        player = Player(name="I", team=team_one)
+        player = Player(
+            name="I",
+            team_abbreviation=team_one.abbreviation
+        )
         match = Match(
             matchday=1, kickoff="2017-01-01:01-02-03",
             finished=True, started=True,
-            home_team=team_one, away_team=team_two,
+            home_team_abbreviation=team_one.abbreviation,
+            away_team_abbreviation=team_two.abbreviation,
             home_current_score=1, away_current_score=0,
             home_ht_score=0, away_ht_score=0,
             home_ft_score=1, away_ft_score=0,
             season=self.config.season()
         )
         goal = Goal(
-            match=match, player=player, minute=67, minute_et=None,
+            home_team_abbreviation=match.home_team_abbreviation,
+            away_team_abbreviation=match.away_team_abbreviation,
+            season=match.season,
+            player_name=player.name,
+            player_team_abbreviation=player.team_abbreviation,
+            minute=67, minute_et=None,
             home_score=1, away_score=0, own_goal=False, penalty=False
         )
 
@@ -101,7 +110,14 @@ class _TestFramework(Framework):
         :param match: The match for which to generate the bet
         :return: The bet
         """
-        bet = Bet(user=user, match=match, home_score=2, away_score=1)
+        bet = Bet(
+            user=user,
+            home_team_abbreviation=match.home_team_abbreviation,
+            away_team_abbreviation=match.away_team_abbreviation,
+            season=match.season,
+            home_score=2,
+            away_score=1
+        )
         self.db.session.add(bet)
         self.db.session.commit()
         return bet

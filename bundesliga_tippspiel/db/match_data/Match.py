@@ -65,17 +65,13 @@ class Match(ModelMixin, db.Model):
     finished: bool = db.Column(db.Boolean, nullable=False)
 
     home_team: Team = db.relationship(
-        "Team", foreign_keys=["home_team_abbreviation"]
+        "Team", foreign_keys=[home_team_abbreviation]
     )
     away_team: Team = db.relationship(
-        "Team", foreign_keys=["away_team_abbreviation"]
+        "Team", foreign_keys=[away_team_abbreviation]
     )
-    goals: List["Goal"] = db.relationship(
-        "Goal", back_populates="match", cascade="all, delete"
-    )
-    bets: List["Bet"] = db.relationship(
-        "Bet", back_populates="match", cascade="all, delete"
-    )
+    goals: List["Goal"] = db.relationship("Goal", cascade="all, delete")
+    bets: List["Bet"] = db.relationship("Bet", cascade="all, delete")
 
     @property
     def minute_display(self) -> str:

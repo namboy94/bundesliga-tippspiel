@@ -50,17 +50,6 @@ class TestChatMessage(_ModelTestFramework):
             ChatMessage()
         ])
 
-    def test_auto_increment(self):
-        """
-        Tests that auto-incrementing works as expected
-        :return: None
-        """
-        self._test_auto_increment([
-            (1, self.message),
-            (2, ChatMessage(user=self.user_one, text="ABC")),
-            (3, ChatMessage(user=self.user_one, text="XYZ"))
-        ])
-
     def test_retrieving_from_db(self):
         """
         Tests retrieving model objects from the database
@@ -71,15 +60,6 @@ class TestChatMessage(_ModelTestFramework):
              self.message),
             (lambda: ChatMessage.query.filter_by(user=self.user_one).first(),
              self.message)
-        ])
-
-    def test_deleting_from_db(self):
-        """
-        Tests deleting model objects from the database
-        :return: None
-        """
-        self._test_deleting_from_db([
-            (self.message, [])
         ])
 
     def test_json_representation(self):

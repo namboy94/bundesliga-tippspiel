@@ -47,6 +47,4 @@ class Team(ModelMixin, db.Model):
     icon_svg: str = db.Column(db.String(255), nullable=False)
     icon_png: str = db.Column(db.String(255), nullable=False)
 
-    players: List["Player"] = db.relationship(
-        "Player", back_populates="team_abbreviation", cascade="all, delete"
-    )
+    players: List["Player"] = db.relationship("Player", cascade="all, delete")

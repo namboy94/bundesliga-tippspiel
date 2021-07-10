@@ -38,8 +38,6 @@ models: List[db.Model] = [
     Team,
     Bet,
     SeasonWinner,
-    SeasonTeamBet,
-    SeasonPositionBet,
     SeasonEvent,
     ReminderSettings,
     DisplayBotsSettings,

@@ -84,20 +84,6 @@ class TestMatch(_ModelTestFramework):
                   home_current_score=0, season=self.config.season())
         ])
 
-    def test_auto_increment(self):
-        """
-        Tests that auto-incrementing works as expected
-        :return: None
-        """
-        self._test_auto_increment([
-            (1, self.match),
-            (2, Match(home_team=self.team_two, away_team=self.team_one,
-                      matchday=1, kickoff="2019-01-01:01:02:03",
-                      started=False, finished=False,
-                      home_current_score=0, away_current_score=0,
-                      season=self.config.season()))
-        ])
-
     def test_uniqueness(self):
         """
         Tests that unique attributes are correctly checked
@@ -118,17 +104,12 @@ class TestMatch(_ModelTestFramework):
         :return: None
         """
         self._test_retrieving_from_db([
-            (lambda: Match.query.filter_by(id=self.match.id).first(),
+            (lambda: Match.query.filter_by(
+                home_team_abbreviation=self.match.home_team_abbreviation,
+                away_team_abbreviation=self.match.away_team_abbreviation,
+                season=self.match.season
+            ).first(),
              self.match)
-        ])
-
-    def test_deleting_from_db(self):
-        """
-        Tests deleting model objects from the database
-        :return: None
-        """
-        self._test_deleting_from_db([
-            (self.match, [self.goal])
         ])
 
     def test_json_representation(self):

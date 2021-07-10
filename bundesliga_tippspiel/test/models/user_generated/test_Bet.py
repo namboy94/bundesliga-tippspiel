@@ -49,21 +49,6 @@ class TestBet(_ModelTestFramework):
             Bet(user=self.user_one, match=self.match, home_score=3)
         ])
 
-    def test_auto_increment(self):
-        """
-        Tests that auto-incrementing works as expected
-        :return: None
-        """
-        self._test_auto_increment([
-            (1, self.bet),
-            (2, Bet(
-                user=self.user_two,
-                match=self.match,
-                home_score=3,
-                away_score=1
-            ))
-        ])
-
     def test_uniqueness(self):
         """
         Tests that unique attributes are correctly checked
@@ -82,21 +67,13 @@ class TestBet(_ModelTestFramework):
         :return: None
         """
         self._test_retrieving_from_db([
-            (lambda: Bet.query.filter_by(id=self.bet.id).first(),
-             self.bet),
             (lambda: Bet.query.filter_by(
-                user_id=self.bet.user_id, match_id=self.bet.match_id
-            ).first(),
+                home_team_abbreviation=self.bet.home_team_abbreviation,
+                away_team_abbreviation=self.bet.away_team_abbreviation,
+                season=self.bet.season,
+                user_id=self.bet.user_id
+             ).first(),
              self.bet)
-        ])
-
-    def test_deleting_from_db(self):
-        """
-        Tests deleting model objects from the database
-        :return: None
-        """
-        self._test_deleting_from_db([
-            (self.bet, [])
         ])
 
     def test_json_representation(self):
@@ -128,10 +105,10 @@ class TestBet(_ModelTestFramework):
         Tests evaluating the results of a bet
         :return: None
         """
-        self.bet.home_score = 0
-        self.bet.away_score = 0
         self.bet.match.home_current_score = 0
         self.bet.match.away_current_score = 0
+        self.bet.home_score = 0
+        self.bet.away_score = 0
         self.assertEqual(self.bet.evaluate(), 3 + 5 + 7)  # 0:0 | 0:0
 
         self.bet.home_score = 2
@@ -163,10 +140,10 @@ class TestBet(_ModelTestFramework):
         Tests that evaluating unfinished games behaves correctly
         :return: None
         """
-        self.bet.home_score = 0
-        self.bet.away_score = 0
         self.bet.match.home_current_score = 0
         self.bet.match.away_current_score = 0
+        self.bet.home_score = 0
+        self.bet.away_score = 0
         self.bet.match.finished = False
         self.assertEqual(self.bet.evaluate(), 15)
         self.assertEqual(self.bet.evaluate(True), 0)

@@ -48,7 +48,7 @@ class _ModelTestFramework(_TestFramework):
         self.api_key = self.generate_api_key(self.user_one)[0]
         self.bet = self.generate_sample_bet(self.user_one, self.match)
         self.reminder = ReminderSettings(
-            id=1, user=self.user_one,
+            user=self.user_one,
             reminder_type=ReminderType.EMAIL,
             reminder_time=1
         )
@@ -66,20 +66,6 @@ class _ModelTestFramework(_TestFramework):
         """
         for obj in incomplete_columns:
             self.__test_invalid_db_add(obj)
-
-    def _test_auto_increment(self, index_map: List[Tuple[int, db.Model]]):
-        """
-        Tests that auto-incrementing works as expected
-        :param index_map: A list of tuples mapping ids to model objects
-        :return: None
-        """
-        for index, obj in index_map:
-
-            if obj.id is None:
-                self.db.session.add(obj)
-                self.db.session.commit()
-
-            self.assertEqual(obj.id, index)
 
     def _test_uniqueness(self, non_uniques: List[db.Model]):
         """
@@ -102,30 +88,6 @@ class _ModelTestFramework(_TestFramework):
         """
         for query, result in queries:
             self.assertEqual(query(), result)
-
-    def _test_deleting_from_db(
-            self, to_delete: List[Tuple[db.Model, List[db.Model]]]
-    ):
-        """
-        Tests deleting model objects from the database
-        :param to_delete: A list of tuples consisting of:
-                          * a model object to remove from the DB
-                          * a list of other model objects that should
-                            be removed due to cascading
-        :return: None
-        """
-        for obj, cascade_effects in to_delete:
-            _id = obj.id
-            self.db.session.delete(obj)
-            self.db.session.commit()
-            self.assertEqual([], self.model_cls.query.filter_by(id=_id).all())
-
-            for cascaded in cascade_effects:
-                cls = type(cascaded)
-                self.assertEqual(
-                    [],
-                    cls.query.filter_by(id=cascaded.id).all()
-                )
 
     def __test_invalid_db_add(self, obj: db.Model):
         """
@@ -163,16 +125,25 @@ class _ModelTestFramework(_TestFramework):
         :return: None
         """
         data = model.__json__()
-        data.pop("id")
 
-        self.assertEqual(
-            str(model),
-            "{}:{} <{}>".format(
-                model.__class__.__name__,
-                model.id,
-                str(data)
+        if "id" in data:
+            _id = data.pop("id")
+            self.assertEqual(
+                str(model),
+                "{}:{} <{}>".format(
+                    model.__class__.__name__,
+                    _id,
+                    str(data)
+                )
             )
-        )
+        else:
+            self.assertEqual(
+                str(model),
+                "{} <{}>".format(
+                    model.__class__.__name__,
+                    str(data)
+                )
+            )
 
         # noinspection PyUnresolvedReferences
         from jerrycan.db.ApiKey import ApiKey

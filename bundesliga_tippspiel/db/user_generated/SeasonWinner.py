@@ -38,7 +38,7 @@ class SeasonWinner(ModelMixin, db.Model):
 
     __tablename__ = "season_winners"
 
-    season: int = db.Column(db.Integer, primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True, nullable=False)
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),

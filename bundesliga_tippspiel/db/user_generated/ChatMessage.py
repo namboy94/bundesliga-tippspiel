@@ -20,11 +20,11 @@ LICENSE"""
 import time
 from typing import List, Optional, Dict, Any
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.User import User
 
 
-class ChatMessage(IDModelMixin, db.Model):
+class ChatMessage(ModelMixin, db.Model):
     """
     Model that describes the 'chat_messages' SQL table
     """
@@ -39,6 +39,7 @@ class ChatMessage(IDModelMixin, db.Model):
 
     __tablename__ = "chat_messages"
 
+    id: int = db.Column(db.Integer, primary_key=True,  autoincrement=True)
     user_id: int = db.Column(
         db.Integer, db.ForeignKey("users.id"), nullable=True
     )
@@ -61,7 +62,7 @@ class ChatMessage(IDModelMixin, db.Model):
     parent: "ChatMessage" = db.relationship(
         "ChatMessage",
         back_populates="children",
-        remote_side=["id"],
+        remote_side=[id],
         uselist=False
     )
     children: List["ChatMessage"] = db.relationship(

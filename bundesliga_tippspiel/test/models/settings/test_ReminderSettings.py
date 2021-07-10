@@ -52,20 +52,6 @@ class TestReminderSettings(_ModelTestFramework):
             ReminderSettings(reminder_type=ReminderType.EMAIL)
         ])
 
-    def test_auto_increment(self):
-        """
-        Tests that auto-incrementing works as expected
-        :return: None
-        """
-        self._test_auto_increment([
-            (1, self.reminder),
-            (2, ReminderSettings(
-                user=self.user_two,
-                reminder_time=2,
-                reminder_type=ReminderType.EMAIL
-            ))
-        ])
-
     def test_uniqueness(self):
         """
         Tests that unique attributes are correctly checked
@@ -84,17 +70,10 @@ class TestReminderSettings(_ModelTestFramework):
         """
         self._test_retrieving_from_db([
             (lambda: ReminderSettings.query.filter_by(
-                id=self.reminder.id).first(),
+                user_id=self.reminder.user_id,
+                reminder_type=self.reminder.reminder_type
+            ).first(),
              self.reminder)
-        ])
-
-    def test_deleting_from_db(self):
-        """
-        Tests deleting model objects from the database
-        :return: None
-        """
-        self._test_deleting_from_db([
-            (self.reminder, [])
         ])
 
     def test_json_representation(self):

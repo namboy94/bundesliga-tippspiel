@@ -55,18 +55,6 @@ class TestTeam(_ModelTestFramework):
                  icon_png="4", icon_svg="5")
         ])
 
-    def test_auto_increment(self):
-        """
-        Tests that auto-incrementing works as expected
-        :return: None
-        """
-        self._test_auto_increment([
-            (1, self.team_one),
-            (2, self.team_two),
-            (3, Team(name="1", short_name="2", abbreviation="3",
-                     icon_png="4", icon_svg="5"))
-        ])
-
     def test_uniqueness(self):
         """
         Tests that unique attributes are correctly checked
@@ -88,20 +76,11 @@ class TestTeam(_ModelTestFramework):
         :return: None
         """
         self._test_retrieving_from_db([
-            (lambda: Team.query.filter_by(id=self.team_one.id).first(),
+            (lambda: Team.query.
+             filter_by(abbreviation=self.team_one.abbreviation).first(),
              self.team_one),
             (lambda: Team.query.filter_by(name=self.team_two.name).first(),
              self.team_two)
-        ])
-
-    def test_deleting_from_db(self):
-        """
-        Tests deleting model objects from the database
-        :return: None
-        """
-        # TODO Match not cascading correctly
-        self._test_deleting_from_db([
-            (self.team_one, [self.player])
         ])
 
     def test_json_representation(self):
