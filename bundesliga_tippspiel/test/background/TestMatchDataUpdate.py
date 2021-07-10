@@ -51,8 +51,9 @@ class TestMatchDataUpdate(_TestFramework):
         for team in Team.query.all():
             for url in [team.icon_svg, team.icon_png]:
                 resp = requests.head(url)
+                time.sleep(1)
                 if resp.status_code == 429:
-                    time.sleep(5)
+                    time.sleep(15)
                     resp = requests.head(url)
                 self.assertEqual(resp.status_code, 200)
 
