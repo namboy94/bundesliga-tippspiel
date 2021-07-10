@@ -22,5 +22,5 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
        pattern="[0-9]*"
        maxlength="2"
        {% if bet is not none %}value="{{ bet.away_score }}"{% endif %}
-       {% if match.started %} disabled="" {% endif %}
+       {% if match.has_started %} disabled="" {% endif %}
 >

@@ -24,7 +24,7 @@ from bs4 import BeautifulSoup
 from datetime import timedelta, datetime
 from smtplib import SMTPAuthenticationError
 from jerrycan.base import app, db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.TelegramChatId import TelegramChatId
 from puffotter.smtp import send_email
 from jerrycan.db.User import User
@@ -34,7 +34,7 @@ from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 
-class ReminderSettings(IDModelMixin, db.Model):
+class ReminderSettings(ModelMixin, db.Model):
     """
     Database model that keeps track of reminder settings
     """
@@ -48,61 +48,23 @@ class ReminderSettings(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "reminder_settings"
-    """
-    The name of the table
-    """
-
-    __table_args__ = (
-        db.UniqueConstraint(
-            "reminder_type",
-            "user_id",
-            name="unique_reminder_settings"
-        ),
-    )
-    """
-    Makes sure that each user can  only have one reminder setting of one type
-    """
 
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
-        nullable=False
+        primary_key=True
     )
-    """
-    The ID of the user associated with this setting
-    """
+    reminder_type = db.Column(db.Enum(ReminderType), primary_key=True)
+
+    active = db.Column(db.Boolean, nullable=False, default=True)
+    reminder_time: int = db.Column(db.Integer, nullable=False, default=86400)
+    last_reminder: str = db.Column(db.String(19), nullable=False,
+                                   default="1970-01-01:01-01-01")
 
     user: User = db.relationship(
         "User",
         backref=db.backref("reminder_settings", cascade="all, delete")
     )
-    """
-    The user associated with this setting
-    """
-
-    reminder_type = db.Column(db.Enum(ReminderType), nullable=False)
-    """
-    The type of reminder
-    """
-
-    active = db.Column(db.Boolean, nullable=False, default=True)
-    """
-    Whether the reminder is active or not
-    """
-
-    reminder_time: int = db.Column(db.Integer, nullable=False, default=86400)
-    """
-    The time before the next unbet match when the reminder message
-    will be sent.
-    Unit: seconds
-    """
-
-    last_reminder: str = db.Column(db.String(19), nullable=False,
-                                   default="1970-01-01:01-01-01")
-    """
-    The time when the last reminder was sent. Format in the form
-    %Y-%m-%d:%H-%M-%S
-    """
 
     @property
     def reminder_time_delta(self) -> timedelta:
@@ -143,23 +105,25 @@ class ReminderSettings(IDModelMixin, db.Model):
         then = now + self.reminder_time_delta
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
-        due_matches = Match.query \
-            .filter_by(season=Config.season()) \
-            .filter(start_str < Match.kickoff) \
-            .filter(Match.kickoff < then_str) \
-            .all()
-
-        user_bets = Bet.query \
-            .filter_by(user_id=self.user_id) \
-            .join(Match) \
-            .filter(Match.season == Config.season()) \
-            .all()
-        betted_matches = list(map(lambda x: x.match_id, user_bets))
-
-        to_remind = list(filter(
-            lambda x: x.id not in betted_matches,
-            due_matches
-        ))
+        due_matches: List[Match] = [
+            x for x in Match.query.filter_by(season=Config.season()).all()
+            if start_str < x.kickoff < then_str
+        ]
+        user_bet_matches = [
+            (bet.match.home_team_abbreviation,
+             bet.match.away_team_abbreviation,
+             bet.match.season)
+            for bet in Bet.query.filter_by(
+                user_id=self.user_id, season=Config.season()
+            ).options(db.joinedload(Bet.match)).all()
+        ]
+        to_remind = []
+        for match in due_matches:
+            identifier = (match.home_team_abbreviation,
+                          match.away_team_abbreviation,
+                          match.season)
+            if identifier not in user_bet_matches:
+                to_remind.append(match)
 
         app.logger.debug("Matches to remind: {}.".format(to_remind))
 

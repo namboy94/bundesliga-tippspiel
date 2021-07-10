@@ -19,17 +19,12 @@ LICENSE"""
 
 from typing import List, TYPE_CHECKING
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Player import Player
-    # from bundesliga_tippspiel.db.match_data.Match import Match
-    from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
-        SeasonTeamBet
-    from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
-        SeasonPositionBet
 
 
-class Team(IDModelMixin, db.Model):
+class Team(ModelMixin, db.Model):
     """
     Model that describes the 'teams' SQL table
     A Team is the most basic data for a match, it relies on no other data,
@@ -45,70 +40,13 @@ class Team(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "teams"
-    """
-    The name of the table
-    """
 
+    abbreviation: str = db.Column(db.String(3), primary_key=True)
     name: str = db.Column(db.String(50), nullable=False, unique=True)
-    """
-    The full name of the team. Has to be unique.
-    Example: FC Bayern München
-    """
-
     short_name: str = db.Column(db.String(16), nullable=False, unique=True)
-    """
-    The shortened version of the team's name. Has to be unique.
-    Example: Bayern
-    """
-
-    abbreviation: str = db.Column(db.String(3), nullable=False, unique=True)
-    """
-    A three-letter abbreviation of the team's name. Has to be unique.
-    Example: FCB
-    """
-
     icon_svg: str = db.Column(db.String(255), nullable=False)
-    """
-    The URL of an image file representing the team's logo in SVG format
-    """
-
     icon_png: str = db.Column(db.String(255), nullable=False)
-    """
-    The URL of an image file representing the team's logo in PNG format
-    """
-
-    # TODO Figure out how to fix this
-    # home_matches: List["Match"] = db.relationship(
-    #     "Match", back_populates="home_team", cascade="all, delete"
-    # )
-    # """
-    # The home matches this team plays in.
-    # """
-    #
-    # away_matches: List["Match"] = db.relationship(
-    #     "Match", back_populates="away_team", cascade="all, delete"
-    # )
-    # """
-    # The away matches this team plays in.
-    # """
 
     players: List["Player"] = db.relationship(
-        "Player", back_populates="team", cascade="all, delete"
+        "Player", back_populates="team_abbreviation", cascade="all, delete"
     )
-    """
-    The players of this team
-    """
-
-    season_position_bets: List["SeasonPositionBet"] = db.relationship(
-        "SeasonPositionBet", back_populates="team", cascade="all, delete"
-    )
-    """
-    The players of this team
-    """
-
-    season_team_bets: List["SeasonTeamBet"] = db.relationship(
-        "SeasonTeamBet", back_populates="team", cascade="all, delete"
-    )
-    """
-    The players of this team
-    """

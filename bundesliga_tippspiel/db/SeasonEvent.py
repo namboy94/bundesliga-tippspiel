@@ -19,7 +19,7 @@ LICENSE"""
 
 from enum import Enum
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 
 
 class SeasonEventType(Enum):
@@ -31,7 +31,7 @@ class SeasonEventType(Enum):
     POST_SEASON_WRAPUP = "post_season_wrapup"
 
 
-class SeasonEvent(IDModelMixin, db.Model):
+class SeasonEvent(ModelMixin, db.Model):
     """
     Model that describes the 'season_events' SQL table
     """
@@ -45,35 +45,11 @@ class SeasonEvent(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "season_events"
-    """
-    The name of the table
-    """
 
-    __table_args__ = (
-        db.UniqueConstraint(
-            "event_type",
-            "season",
-            name="unique_season_event"
-        ),
-    )
-    """
-    Table arguments for unique constraints
-    """
-
+    season: int = db.Column(db.Integer, nullable=False, primary_key=True)
     event_type: SeasonEventType = db.Column(
         db.Enum(SeasonEventType),
-        nullable=False
+        primary_key=True
     )
-    """
-    The type of event
-    """
 
     executed: bool = db.Column(db.Boolean, nullable=False, default=False)
-    """
-    Whether the event was executed or not
-    """
-
-    season: int = db.Column(db.Integer, nullable=False)
-    """
-    The season this event is for
-    """

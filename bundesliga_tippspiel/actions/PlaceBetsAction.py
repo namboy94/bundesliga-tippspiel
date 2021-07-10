@@ -68,7 +68,7 @@ class PlaceBetsAction(Action):
 
                 if match is None:
                     raise ValueError()
-                elif match.started:
+                elif match.has_started:
                     raise ValueError()
 
                 for score in [away, home]:

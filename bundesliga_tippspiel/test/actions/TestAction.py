@@ -36,7 +36,7 @@ class ActionTest(_TestFramework):
         _, _, _, match, _ = self.generate_sample_match_data()
         self.assertEqual(Action.get_current_matchday(), 34)
         match.finished = False
-        match.started = False
+        match.has_started = False
         db.session.commit()
         self.assertNotEqual(Action.get_current_matchday(), 34)
         self.assertEqual(Action.get_current_matchday(), match.matchday)

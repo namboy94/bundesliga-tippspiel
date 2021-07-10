@@ -23,7 +23,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="container is-fluid has-text-centered">
         <div class="columns">
             <div class="column is-2 is-offset-5 match-header-goal-display">
-                {% if not match.started %}
+                {% if not match.has_started %}
                     <b>{{ match.kickoff_date_string }}</b>
                     <br>
                     {{ match.kickoff_time_string }}
@@ -145,13 +145,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% for bet in bets %}
                 <tr>
                     <th><a href="{{ url_for("information.user", user_id=bet.user.id) }}">{{ bet.user.username }}</a></th>
-                    {% if match.started or bet.user_id == current_user.id %}
+                    {% if match.has_started or bet.user_id == current_user.id %}
                         <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
                     {% else %}
                         <th>?:?</th>
                     {% endif %}
                     <th>
-                        {% if match.started %}
+                        {% if match.has_started %}
                             {% set points=bet.evaluate() %}
                             <span class="tag is-{{ get_pill_class(points) }}">{{ points }}</span>
                         {% else %}

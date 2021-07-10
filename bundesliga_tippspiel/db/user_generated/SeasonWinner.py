@@ -19,11 +19,11 @@ LICENSE"""
 
 from jerrycan.base import db
 from jerrycan.db.User import User
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.Config import Config
 
 
-class SeasonWinner(IDModelMixin, db.Model):
+class SeasonWinner(ModelMixin, db.Model):
     """
     Model that describes the 'season_winners' SQL table
     """
@@ -37,30 +37,17 @@ class SeasonWinner(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "season_winners"
-    """
-    The name of the table
-    """
 
-    season: int = db.Column(db.Integer, unique=True, nullable=False)
-    """
-    The season for which this is the winner
-    """
-
+    season: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
         nullable=False
     )
-    """
-    The ID of the user that won the competition
-    """
 
     user: User = db.relationship(
         "User", backref=db.backref("season_winners", cascade="all, delete")
     )
-    """
-    The user that won the competition
-    """
 
     @property
     def season_string(self) -> str:

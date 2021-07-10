@@ -42,7 +42,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% include "betting/bet_row/logo_home.html" %}
         </a>
     </div>
-    {% if match.started %}
+    {% if match.has_started %}
         <div class="column is-4">
             {% include "betting/bet_row/score.html" %}
         </div>

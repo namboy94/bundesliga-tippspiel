@@ -19,13 +19,13 @@ LICENSE"""
 
 from typing import List, TYPE_CHECKING
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 
-class Player(IDModelMixin, db.Model):
+class Player(ModelMixin, db.Model):
     """
     Model that describes the "players" SQL table
     """
@@ -39,33 +39,15 @@ class Player(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "players"
-    """
-    The name of the database table
-    """
 
-    team_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("teams.id"),
-        nullable=False
+    team_abbreviation: int = db.Column(
+        db.String(3),
+        db.ForeignKey("teams.abbreviation"),
+        primary_key=True
     )
-    """
-    The ID of the team the player is affiliated with.
-    Acts as a foreign key to the 'teams' table.
-    """
+    name: str = db.Column(db.String(255), nullable=False)
 
     team: Team = db.relationship("Team", back_populates="players")
-    """
-    The team the player is affiliated with.
-    """
-
-    name: str = db.Column(db.String(255), nullable=False)
-    """
-    The name of the player
-    """
-
     goals: List["Goal"] = db.relationship(
         "Goal", back_populates="player", cascade="all, delete"
     )
-    """
-    The goals the player scored.
-    """

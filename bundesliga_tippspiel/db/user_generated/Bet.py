@@ -19,12 +19,12 @@ LICENSE"""
 
 from typing import Any, Dict, List, Optional
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.User import User
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 
-class Bet(IDModelMixin, db.Model):
+class Bet(ModelMixin, db.Model):
     """
     Model that describes the 'bets' SQL table
     """
@@ -38,62 +38,30 @@ class Bet(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "bets"
-    """
-    The name of the table
-    """
-
     __table_args__ = (
-        db.UniqueConstraint(
-            "user_id",
-            "match_id",
-            name="unique_bet"
-        ),
+        db.ForeignKeyConstraint(
+            ("home_team_abbreviation", "away_team_abbreviation", "season"),
+            (Match.home_team_abbreviation, Match.away_team_abbreviation,
+             Match.season)
+        )
     )
-    """
-    Table arguments for unique constraints
-    """
 
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
-        nullable=False
+        primary_key=True
     )
-    """
-    The ID of the user associated with this bet
-    """
+    home_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
+    away_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True)
+
+    home_score: int = db.Column(db.Integer, nullable=False)
+    away_score: int = db.Column(db.Integer, nullable=False)
 
     user: User = db.relationship(
         "User", backref=db.backref("bets", cascade="all, delete")
     )
-    """
-    The user associated with this bet
-    """
-
-    match_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("matches.id"),
-        nullable=False
-    )
-    """
-    The ID of the match that this bet refers to.
-    """
-
-    match: Match = db.relationship(
-        "Match", back_populates="bets"
-    )
-    """
-    The match that this bet refers to
-    """
-
-    home_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The score bet on the home team
-    """
-
-    away_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The score bet on the away team
-    """
+    match: Match = db.relationship("Match", back_populates="bets")
 
     def __repr__(self) -> str:
         """

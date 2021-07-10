@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 <h3 class="bet_row_result_display">
-    {% if match.started %}
+    {% if match.has_started %}
         {{ match.home_current_score }} : {{ match.away_current_score }}
     {% else %}
         - : -

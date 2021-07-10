@@ -38,83 +38,35 @@ class ChatMessage(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "chat_messages"
-    """
-    The name of the table
-    """
-
-    id: int = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
-    """
-    The ID of the chat message
-    """
 
     user_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id"),
-        nullable=True
+        db.Integer, db.ForeignKey("users.id"), nullable=True
     )
-    """
-    The ID of the user associated with this bet
-    """
+    parent_id: int = db.Column(
+        db.Integer, db.ForeignKey("chat_messages.id"), nullable=True
+    )
+
+    text: str = db.Column(db.String(255), nullable=False)
+    creation_time: float = db.Column(
+        db.Float, nullable=False, default=time.time
+    )
+    last_edit: float = db.Column(db.Float, nullable=False, default=time.time)
+    edited: bool = db.Column(db.Boolean, nullable=False, default=False)
+    deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
 
     user: Optional[User] = db.relationship(
         "User", backref=db.backref("chat_messages")
     )
-    """
-    The user associated with this bet
-    """
-
-    parent_id: int = db.Column(
-        db.Integer, db.ForeignKey("chat_messages.id"), nullable=True
-    )
-    """
-    ID of the parent chat message
-    """
 
     parent: "ChatMessage" = db.relationship(
         "ChatMessage",
         back_populates="children",
-        remote_side=[id],
+        remote_side=["id"],
         uselist=False
     )
-    """
-    The parent chat message
-    """
-
     children: List["ChatMessage"] = db.relationship(
         "ChatMessage", back_populates="parent", uselist=True
     )
-    """
-    Any child chat messages
-    """
-
-    text: str = db.Column(db.String(255), nullable=False)
-    """
-    The text of the message
-    """
-
-    creation_time: float = db.Column(
-        db.Float, nullable=False, default=time.time
-    )
-    """
-    The timestamp of when the message was created
-    """
-
-    last_edit: float = db.Column(db.Float, nullable=False, default=time.time)
-    """
-    The timestamp of when the message was last edited
-    """
-
-    edited: bool = db.Column(db.Boolean, nullable=False, default=False)
-    """
-    Whether the message has been edited
-    """
-
-    deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
-    """
-    Whether the message has been deleted
-    """
 
     def get_text(self) -> Optional[str]:
         """

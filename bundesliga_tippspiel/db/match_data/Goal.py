@@ -18,12 +18,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Player import Player
 
 
-class Goal(IDModelMixin, db.Model):
+class Goal(ModelMixin, db.Model):
     """
     Model that describes the "goals" SQL table
     """
@@ -37,67 +37,31 @@ class Goal(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "goals"
-    """
-    The name of the table
-    """
-
-    match_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("matches.id"),
-        nullable=False
+    __table_args__ = (
+        db.ForeignKeyConstraint(
+            ("home_team_abbreviation", "away_team_abbreviation", "season"),
+            (Match.home_team_abbreviation, Match.away_team_abbreviation,
+             Match.season)
+        ),
+        db.ForeignKeyConstraint(
+            ("player_name", "player_team_abbreviation"),
+            (Player.name, Player.team_abbreviation)
+        )
     )
-    """
-    The ID of the match in which this goal was scored. Acts as a foreign key.
-    """
 
-    match: Match = db.relationship("Match", back_populates="goals")
-    """
-    The match in which this goal was scored.
-    """
+    home_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
+    away_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True)
+    home_score: int = db.Column(db.Integer, primary_key=True)
+    away_score: int = db.Column(db.Integer, primary_key=True)
 
-    player_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("players.id"),
-        nullable=False
-    )
-    """
-    The ID of the player that scored this goal. Acts as a foreign key.
-    """
-
-    player: Player = db.relationship(
-        "Player",
-        back_populates="goals"
-    )
-    """
-    The player that scored this goal.
-    """
+    player_name: str = db.Column(db.String(255), nullable=False)
+    player_team_abbreviation: str = db.Column(db.String(3), nullable=False)
 
     minute: int = db.Column(db.Integer, nullable=False)
-    """
-    The minute in which the goal was scored
-    """
-
     minute_et: int = db.Column(db.Integer, nullable=True, default=0)
-    """
-    This keeps track in which minute of extra time a goal was scored.
-    """
-
-    home_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The home team's score after the goal was scored
-    """
-
-    away_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The away team's score after the goal was scored
-    """
-
     own_goal: bool = db.Column(db.Boolean, nullable=False, default=False)
-    """
-    Indicates whether or not this goal was an own goal
-    """
-
     penalty: bool = db.Column(db.Boolean, nullable=False, default=False)
-    """
-    Indicates whether or not this goal was a penalty
-    """
+
+    match: Match = db.relationship("Match", back_populates="goals")
+    player: Player = db.relationship("Player", back_populates="goals")

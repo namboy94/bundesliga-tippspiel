@@ -79,7 +79,7 @@ class GetBetAction(GetAction):
         """
         if self.id is not None:
             result = [self.handle_id_fetch(self.id, Bet)]
-            if not result[0].match.started \
+            if not result[0].match.has_started \
                     and not current_user.id == result[0].user.id:
                 raise ActionException(
                     "ID not accessible",
@@ -103,7 +103,7 @@ class GetBetAction(GetAction):
             result = query.all()
             if not self.include_other_users_bets:
                 result = list(filter(
-                    lambda x: x.match.started or current_user.id == x.user_id,
+                    lambda x: x.match.has_started or current_user.id == x.user_id,
                     result
                 ))
 

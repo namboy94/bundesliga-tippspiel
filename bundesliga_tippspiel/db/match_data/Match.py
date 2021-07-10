@@ -21,14 +21,14 @@ import pytz
 from datetime import datetime
 from typing import TYPE_CHECKING, List
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
     from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
 
-class Match(IDModelMixin, db.Model):
+class Match(ModelMixin, db.Model):
     """
     Model that describes the 'matches' SQL table
     """
@@ -41,125 +41,41 @@ class Match(IDModelMixin, db.Model):
         """
         super().__init__(*args, **kwargs)
 
-    __tablename__ = "matches"
-    """
-    The table name
-    """
-
-    __table_args__ = (
-        db.UniqueConstraint(
-            "home_team_id",
-            "away_team_id",
-            "season",
-            name="unique_match"
-        ),
+    home_team_abbreviation: str = db.Column(
+        db.String(3),
+        db.ForeignKey("teams.abbreviation"),
+        primary_key=True,
     )
-    """
-    Table arguments for unique constraints
-    """
-
-    home_team_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("teams.id"),
-        nullable=False
+    away_team_abbreviation: str = db.Column(
+        db.String(3),
+        db.ForeignKey("teams.abbreviation"),
+        primary_key=True
     )
-    """
-    The ID of the home team. Acts as a foreign key
-    """
-
-    home_team: Team = db.relationship(
-        "Team", foreign_keys=[home_team_id]  # back_populates="matches"
-    )
-    """
-    The home team.
-    """
-
-    away_team_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("teams.id"),
-        nullable=False
-    )
-    """
-    The ID of the away team. Acts as a foreign key
-    """
-
-    away_team: Team = db.relationship(
-        "Team", foreign_keys=[away_team_id]  # back_populates="matches"
-    )
-    """
-    The away team.
-    """
+    season: int = db.Column(db.Integer, primary_key=True)
 
     matchday: int = db.Column(db.Integer, nullable=False)
-    """
-    The match day of the match
-    """
-
     home_current_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The current score of the home team.
-    """
-
     away_current_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The current score of the away team.
-    """
-
     home_ht_score: int = db.Column(db.Integer)
-    """
-    The score of the home team at half time
-    """
-
     away_ht_score: int = db.Column(db.Integer)
-    """
-    The score of the away team at half time
-    """
-
     home_ft_score: int = db.Column(db.Integer)
-    """
-    The final score of the home team
-    """
-
     away_ft_score: int = db.Column(db.Integer)
-    """
-    The final score of the away team
-    """
-
     kickoff: str = db.Column(db.String(255), nullable=False)
-    """
-    A string representing the kickoff time in UTC in the following format:
-    YYYY-MM-DD:HH-mm-ss
-    If the kickoff time is not known, it should be set to 'TBD'
-    """
-
     started: bool = db.Column(db.Boolean, nullable=False)
-    """
-    Indicates whether or not the match has started yet
-    """
-
     finished: bool = db.Column(db.Boolean, nullable=False)
-    """
-    Indicates whether or not the match has finished yet
-    """
 
-    season: int = db.Column(db.Integer, nullable=False)
-    """
-    The season of the match
-    """
-
+    home_team: Team = db.relationship(
+        "Team", foreign_keys=["home_team_abbreviation"]
+    )
+    away_team: Team = db.relationship(
+        "Team", foreign_keys=["away_team_abbreviation"]
+    )
     goals: List["Goal"] = db.relationship(
         "Goal", back_populates="match", cascade="all, delete"
     )
-    """
-    The goals scored during this match
-    """
-
     bets: List["Bet"] = db.relationship(
         "Bet", back_populates="match", cascade="all, delete"
     )
-    """
-    Bets placed on this match
-    """
 
     @property
     def minute_display(self) -> str:
@@ -244,3 +160,13 @@ class Match(IDModelMixin, db.Model):
         :return: A string representing the kickoff date
         """
         return self.kickoff_local_datetime.strftime("%d. %m. %Y")
+
+    @property
+    def has_started(self) -> bool:
+        """
+        Checks if the match has started.
+        This is to be preferred over the 'started' attribute, just in case
+        the database update has failed for any reason.
+        :return: True if the match has started, False otherwise
+        """
+        return self.started or self.kickoff_datetime <= datetime.utcnow()

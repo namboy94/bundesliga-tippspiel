@@ -35,7 +35,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     {% endwith %}
 
     <h3>
-        {% if matches[0].started %}
+        {% if matches[0].has_started %}
             Erreichte Punktzahl:
             <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
                 {{ matchday_points }}

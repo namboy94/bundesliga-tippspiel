@@ -18,11 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from jerrycan.base import db
-from jerrycan.db.IDModelMixin import IDModelMixin
+from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.User import User
 
 
-class DisplayBotsSettings(IDModelMixin, db.Model):
+class DisplayBotsSettings(ModelMixin, db.Model):
     """
     Database model that specifies whether a user wants to see bots or not
     """
@@ -36,29 +36,15 @@ class DisplayBotsSettings(IDModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "display_bot_settings"
-    """
-    The name of the table
-    """
-
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
-        nullable=False,
-        unique=True
+        primary_key=True
     )
-    """
-    The ID of the user associated with this setting
-    """
+
+    display_bots = db.Column(db.Boolean, nullable=False, default=True)
 
     user: User = db.relationship(
         "User",
         backref=db.backref("display_bot_settings", cascade="all, delete")
     )
-    """
-    The user associated with this setting
-    """
-
-    display_bots = db.Column(db.Boolean, nullable=False, default=True)
-    """
-    Whether or not to show bots
-    """
