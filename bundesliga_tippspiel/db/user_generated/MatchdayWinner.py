@@ -23,9 +23,9 @@ from jerrycan.db.ModelMixin import ModelMixin
 from bundesliga_tippspiel.Config import Config
 
 
-class SeasonWinner(ModelMixin, db.Model):
+class MatchdayWinner(ModelMixin, db.Model):
     """
-    Model that describes the 'season_winners' SQL table
+    Model that describes the 'matchday_winners' SQL table
     """
 
     def __init__(self, *args, **kwargs):
@@ -36,10 +36,11 @@ class SeasonWinner(ModelMixin, db.Model):
         """
         super().__init__(*args, **kwargs)
 
-    __tablename__ = "season_winners"
+    __tablename__ = "matchday_winners"
 
     league: str = db.Column(db.String(255), primary_key=True)
     season: int = db.Column(db.Integer, primary_key=True)
+    matchday: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
@@ -49,10 +50,3 @@ class SeasonWinner(ModelMixin, db.Model):
     user: User = db.relationship(
         "User", backref=db.backref("season_winners", cascade="all, delete")
     )
-
-    @property
-    def season_string(self) -> str:
-        """
-        :return: The season string, e.g. 2019/20
-        """
-        return Config.season_string(self.season)

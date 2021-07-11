@@ -20,7 +20,7 @@ LICENSE"""
 from typing import List, Tuple, Dict
 from jerrycan.db.User import User
 from bundesliga_tippspiel.db import SeasonWinner, LeaderboardEntry, \
-    DisplayBotsSettings
+    DisplayBotsSettings, MatchdayWinner
 
 
 class Leaderboard:
@@ -54,6 +54,15 @@ class Leaderboard:
             if user_id not in self.season_winners:
                 self.season_winners[user_id] = []
             self.season_winners[user_id].append(winner_season)
+        self.matchday_winners: Dict[int, List[int]] = {}
+        for matchday_winner in MatchdayWinner.query.filter_by(
+                league=league, season=season
+        ).all():
+            user_id = matchday_winner.user_id
+            winner_matchday = matchday_winner.matchday
+            if user_id not in self.matchday_winners:
+                self.matchday_winners[user_id] = []
+            self.matchday_winners[user_id].append(winner_matchday)
 
         self.ranking: List[LeaderboardEntry] = \
             LeaderboardEntry.query.filter_by(
@@ -75,7 +84,7 @@ class Leaderboard:
             ]
 
     def ranking_to_table_data(self) -> List[Tuple[
-        int, str, str, User, List[str], List[str], int
+        int, str, str, User, List[str], List[int], int
     ]]:
         """
         Converts the leaderboard into a format that can easily be entered
@@ -85,8 +94,8 @@ class Leaderboard:
                     - tendency (example: +2 or -3 etc.)
                     - tendency-class
                     - user
-                    - previous season winner
-                    - previous matchday
+                    - previous season wins
+                    - previous matchday wins
                     - points
         """
         table_data = []
@@ -97,7 +106,7 @@ class Leaderboard:
                 item.get_tendency_class(self.include_bots),
                 item.user,
                 self.season_winners.get(item.user_id, []),
-                [],
+                self.matchday_winners.get(item.user_id, []),
                 item.points
             ))
         return table_data
