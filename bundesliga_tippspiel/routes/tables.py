@@ -17,21 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import time
-from typing import Optional, List
-from flask import render_template, Blueprint
+from typing import Optional
+from flask import render_template, Blueprint, request
 from flask_login import login_required, current_user
-from jerrycan.base import app
-
 from bundesliga_tippspiel.Config import Config
-from bundesliga_tippspiel.db import DisplayBotsSettings, LeaderboardEntry
+from bundesliga_tippspiel.db import DisplayBotsSettings
 from bundesliga_tippspiel.utils.collections.Leaderboard import Leaderboard
+from bundesliga_tippspiel.utils.collections.LeagueTable import LeagueTable
 from bundesliga_tippspiel.utils.routes import action_route
-from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
-from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
-from bundesliga_tippspiel.actions.LoadSettingsAction import LoadSettingsAction
-from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
-from bundesliga_tippspiel.utils.stats import calculate_current_league_table
 from bundesliga_tippspiel.utils.matchday import get_matchday_info
 
 
@@ -51,9 +44,9 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     @login_required
     @action_route
     def leaderboard(
-            league: Optional[str],
-            season: Optional[int],
-            matchday: Optional[int]
+            league: Optional[str] = None,
+            season: Optional[int] = None,
+            matchday: Optional[int] = None
     ):
         """
         Displays a leaderboard.
@@ -75,40 +68,44 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         )
 
         return render_template(
-            "tables/../templates/ranking/leaderboard.html",
+            "ranking/leaderboard.html",
             leaderboard=matchday_leaderboard
         )
 
     @blueprint.route("/league_table", methods=["GET"])
-    @blueprint.route("/league_table/<int:matchday>", methods=["GET"])
+    @blueprint.route("/league_table/<string:league>/<int:league>/"
+                     "<int:matchday>", methods=["GET"])
     @login_required
-    @action_route
-    def league_table(matchday: Optional[int] = None):
+    def league_table(
+            league: Optional[str] = None,
+            season: Optional[int] = None,
+            matchday: Optional[int] = None
+    ):
         """
-        Calculates the current league table and displays it for the user
-        :param matchday: Can be used to specify a certain matchday
+        Calculates the current league table and displays it for the user.
+        Can also show a league table based on a user's bets if the
+        GET parameter 'use_bets' is set to 1
+        :param league: The league to display
+        :param season: The season to display
+        :param matchday: The matchday to display
         :return: The response
         """
-        table = calculate_current_league_table(matchday=matchday)
-        return render_template(
-            "info/../templates/tables/league_table.html",
-            league_table=table,
-            title="Aktuelle Bundesliga Tabelle"
-        )
+        if league is None or season is None or matchday is None:
+            league = Config.OPENLIGADB_LEAGUE
+            season = Config.season()
+            matchday = get_matchday_info()[0]
 
-    @blueprint.route("/user_league_table", methods=["GET"])
-    @login_required
-    @action_route
-    def user_league_table():
-        """
-        Calculates the league table based on the user's bets
-        :return: The response
-        """
-        table = calculate_current_league_table(user=current_user)
+        user = None
+        title = "Aktuelle Bundesliga Tabelle"
+        if request.args.get("use_bets") == "1":
+            user = current_user
+            title = f"Tabelle nach {current_user.username}'s Tipps"
+
+        table = LeagueTable(league, season, matchday, user)
         return render_template(
-            "info/../templates/tables/league_table.html",
+            "info/league_table.html",
             league_table=table,
-            title=f"Tabelle nach {current_user.username}'s Tipps"
+            title=title
         )
 
     return blueprint

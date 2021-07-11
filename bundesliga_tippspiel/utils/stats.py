@@ -17,11 +17,9 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Optional, List, Dict, Tuple, Union
-from jerrycan.base import db
+from typing import Optional, List, Dict, Tuple
 from jerrycan.db.User import User
 from bundesliga_tippspiel.Config import Config
-from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 from bundesliga_tippspiel.db.match_data.Match import Match
@@ -197,112 +195,3 @@ def create_point_average_ranking(
         lambda x: (x[0], "%.2f" % x[1]),
         averages
     ))
-
-
-def calculate_current_league_table(
-        matchday: Optional[int] = None, user: Optional[User] = None
-) -> List[Dict[str, Union[Team, int]]]:
-    """
-    Calculates the current league table
-    :param matchday: If specified, shows the table on a certain matchday
-    :param user: If specified, calculates a table based on a user's bets
-    :return: A sorted list of dictionaries containing the details
-    """
-    matches = Match.query\
-        .options(db.joinedload(Match.home_team))\
-        .options(db.joinedload(Match.away_team)) \
-        .options(db.joinedload(Match.goals)) \
-        .options(db.joinedload(Match.bets)) \
-        .filter_by(season=Config.season()).all()
-
-    if matchday is not None:
-        matches = [x for x in matches if x.matchday <= matchday]
-    if user is None:
-        matches = [x for x in matches if x.finished]
-
-    teams = set(
-        [x.home_team for x in matches] + [x.away_team for x in matches]
-    )
-    entries = {
-        team.id: {
-            "goals_for": 0,
-            "goals_against": 0,
-            "own_goals": 0,
-            "penalties": 0,
-            "wins": 0,
-            "draws": 0,
-            "losses": 0,
-            "team": team
-        }
-        for team in teams
-    }
-
-    for match in matches:
-
-        home_entry = entries[match.home_team_id]
-        away_entry = entries[match.away_team_id]
-
-        bet: Optional[Bet] = None
-        if user is not None:
-            for _bet in match.bets:
-                if _bet.user_id == user.id:
-                    bet = _bet
-
-        if bet is not None:
-            home_score = bet.home_score
-            away_score = bet.away_score
-        elif not match.finished:
-            continue
-        else:
-            home_score = match.home_ft_score
-            away_score = match.away_ft_score
-
-        home_win = home_score > away_score
-        away_win = away_score > home_score
-
-        if home_win:
-            home_entry["wins"] += 1
-            away_entry["losses"] += 1
-        elif away_win:
-            home_entry["losses"] += 1
-            away_entry["wins"] += 1
-        else:
-            home_entry["draws"] += 1
-            away_entry["draws"] += 1
-
-        home_entry["goals_for"] += home_score
-        away_entry["goals_against"] += home_score
-        home_entry["goals_against"] += away_score
-        away_entry["goals_for"] += away_score
-
-        score = (0, 0)
-        for goal in match.goals:  # type: Goal
-            is_home_goal = goal.home_score > score[0]
-            is_away_goal = goal.away_score > score[1]
-            score = (goal.home_score, goal.away_score)
-
-            if is_home_goal:
-                entry = home_entry
-            elif is_away_goal:
-                entry = away_entry
-            else:
-                continue
-
-            if goal.own_goal:
-                entry["own_goals"] += 1
-            elif goal.penalty:
-                entry["penalties"] += 1
-
-    table = []
-    for team, entry in entries.items():
-        entry["points"] = 3 * entry["wins"] + entry["draws"]
-        entry["goal_difference"] = entry["goals_for"] - entry["goals_against"]
-        entry["matches"] = entry["wins"] + entry["draws"] + entry["losses"]
-        table.append(entry)
-
-    table.sort(key=lambda x: x["team"].name)
-    table.sort(key=lambda x: x["goals_for"], reverse=True)
-    table.sort(key=lambda x: x["goal_difference"], reverse=True)
-    table.sort(key=lambda x: x["points"], reverse=True)
-
-    return table

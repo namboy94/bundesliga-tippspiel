@@ -83,3 +83,19 @@ class Team(ModelMixin, db.Model):
         :return: The URL for this teams's info page
         """
         return url_for("info.team", team_abbreviation=self.abbreviation)
+
+    @classmethod
+    def get_teams_for_season(cls, league: str, season: int) -> List["Team"]:
+        """
+        Retrieves a list of all teams in a particular season
+        :param league: The league in which to search for teams
+        :param season: The season in which to search for teams
+        :return: The list of teams
+        """
+
+        match_samples = Match.query.filter_by(
+            league=league, season=season, matchday=1
+        ).all()
+        home_teams = [x.home_team for x in match_samples]
+        away_teams = [x.away_team for x in match_samples]
+        return home_teams + away_teams
