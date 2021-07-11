@@ -19,14 +19,14 @@ LICENSE"""
 
 from jerrycan.base import db
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.models.ModelTestFramework import \
+from bundesliga_tippspiel.test.db.ModelTestFramework import \
     _ModelTestFramework
-from bundesliga_tippspiel.db.match_data.Team import Team
+from bundesliga_tippspiel.db.match_data.Goal import Goal
 
 
-class TestTeam(_ModelTestFramework):
+class TestGoal(_ModelTestFramework):
     """
-    Tests the Team SQL model
+    Tests the Goal SQL model
     """
 
     def setUp(self):
@@ -35,7 +35,7 @@ class TestTeam(_ModelTestFramework):
         :return: None
         """
         super().setUp()
-        self.model_cls = Team
+        self.model_cls = Goal
 
     def test_missing_column_data(self):
         """
@@ -43,16 +43,16 @@ class TestTeam(_ModelTestFramework):
         :return: None
         """
         self._test_missing_column_data([
-            Team(name="1", short_name="2", abbreviation="3",
-                 icon_png="4"),
-            Team(name="1", short_name="2", abbreviation="3",
-                 icon_svg="5"),
-            Team(name="1", short_name="2",
-                 icon_png="4", icon_svg="5"),
-            Team(name="1", abbreviation="3",
-                 icon_png="4", icon_svg="5"),
-            Team(short_name="2", abbreviation="3",
-                 icon_png="4", icon_svg="5")
+            Goal(match=None, player=self.player, minute=1,
+                 home_score=1, away_score=1),
+            Goal(match=self.match, player=None, minute=1,
+                 home_score=1, away_score=1),
+            Goal(match=self.match, player=self.player, minute=None,
+                 home_score=1, away_score=1),
+            Goal(match=self.match, player=self.player, minute=1,
+                 home_score=None, away_score=1),
+            Goal(match=self.match, player=self.player, minute=1,
+                 home_score=1, away_score=None)
         ])
 
     def test_uniqueness(self):
@@ -60,15 +60,7 @@ class TestTeam(_ModelTestFramework):
         Tests that unique attributes are correctly checked
         :return: None
         """
-        self._test_uniqueness([
-            Team(name=self.team_one.name, short_name="2", abbreviation="3",
-                 icon_png="4", icon_svg="5"),
-            Team(name="1", short_name=self.team_one.short_name,
-                 abbreviation="3", icon_png="4", icon_svg="5"),
-            Team(name="1", short_name="2",
-                 abbreviation=self.team_one.abbreviation,
-                 icon_png="4", icon_svg="5")
-        ])
+        self._test_uniqueness([])
 
     def test_retrieving_from_db(self):
         """
@@ -76,11 +68,13 @@ class TestTeam(_ModelTestFramework):
         :return: None
         """
         self._test_retrieving_from_db([
-            (lambda: Team.query.
-             filter_by(abbreviation=self.team_one.abbreviation).first(),
-             self.team_one),
-            (lambda: Team.query.filter_by(name=self.team_two.name).first(),
-             self.team_two)
+            (lambda: Goal.query.filter_by(
+                season=self.goal.season,
+                home_team_abbreviation=self.goal.home_team_abbreviation,
+                away_team_abbreviation=self.goal.away_team_abbreviation,
+                home_score=self.goal.home_score,
+                away_score=self.goal.away_score
+            ).first(), self.goal)
         ])
 
     def test_json_representation(self):
@@ -88,15 +82,14 @@ class TestTeam(_ModelTestFramework):
         Tests the JSON representation of the model
         :return: None
         """
-        with_children = self.team_one.__json__(True)
-        for key in list(with_children.keys()):
-            if isinstance(with_children[key], dict) or \
-                    isinstance(with_children[key], list):
-                with_children.pop(key)
-
+        without_children = self.goal.__json__(False)
+        without_children.update({
+            "match": self.goal.match.__json__(True, ["goals"]),
+            "player": self.goal.player.__json__(True, ["goals"])
+         })
         self.assertEqual(
-            with_children,
-            self.team_one.__json__(False)
+            self.goal.__json__(True),
+            without_children
         )
 
     def test_string_representation(self):
@@ -104,15 +97,18 @@ class TestTeam(_ModelTestFramework):
         Tests the str and repr methods of the model
         :return: None
         """
-        self._test_string_representation(self.team_one)
+        self._test_string_representation(self.goal)
 
     def test_cascades(self):
         """
         Tests if cascade deletes work correctly
         :return: None
         """
-        self.assertEqual(len(Team.query.all()), 2)
+        self.assertEqual(len(Goal.query.all()), 1)
         db.session.delete(self.match)
-        self.assertEqual(len(Team.query.all()), 2)
+        self.assertEqual(len(Goal.query.all()), 0)
+        self.tearDown()
+        self.setUp()
+        self.assertEqual(len(Goal.query.all()), 1)
         db.session.delete(self.player)
-        self.assertEqual(len(Team.query.all()), 2)
+        self.assertEqual(len(Goal.query.all()), 0)

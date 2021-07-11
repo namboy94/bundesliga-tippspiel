@@ -25,7 +25,7 @@ from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.enums import ReminderType
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.models.ModelTestFramework import \
+from bundesliga_tippspiel.test.db.ModelTestFramework import \
     _ModelTestFramework
 
 
@@ -126,14 +126,16 @@ class TestReminderSettings(_ModelTestFramework):
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=self.config.season())
+                          season=self.config.season(),
+                          league=self.config.OPENLIGADB_LEAGUE)
         match_two = Match(home_team=self.team_two, away_team=self.team_one,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=120))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=self.config.season())
+                          season=self.config.season(),
+                          league=self.config.OPENLIGADB_LEAGUE)
 
         self.db.session.add(match_one)
         self.db.session.add(match_two)
@@ -197,14 +199,16 @@ class TestReminderSettings(_ModelTestFramework):
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=self.config.season())
+                          season=self.config.season(),
+                          league=self.config.OPENLIGADB_LEAGUE)
         match_two = Match(home_team=self.team_two, away_team=self.team_one,
                           matchday=1,
                           kickoff=(now + timedelta(minutes=7))
                           .strftime("%Y-%m-%d:%H-%M-%S"),
                           started=False, finished=False,
                           home_current_score=0, away_current_score=0,
-                          season=self.config.season())
+                          season=self.config.season(),
+                          league=self.config.OPENLIGADB_LEAGUE)
 
         self.db.session.add(match_one)
         self.db.session.add(match_two)

@@ -17,28 +17,22 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-import time
-from typing import Union, Optional
+from typing import Union
 from flask import render_template, abort, Blueprint
-from flask_login import login_required, current_user
-from jerrycan.base import app, db
+from flask_login import login_required
+from jerrycan.base import db
 from jerrycan.db.User import User
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
-from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 from bundesliga_tippspiel.actions.LoadSettingsAction import LoadSettingsAction
-from bundesliga_tippspiel.actions.GetTeamAction import GetTeamAction
-from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
-from bundesliga_tippspiel.actions.GetPlayerAction import GetPlayerAction
-from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import get_team_points_data, \
     generate_team_points_table, get_total_points_per_team, \
     generate_points_distributions, create_participation_ranking, \
-    create_point_average_ranking, calculate_current_league_table
+    create_point_average_ranking
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -48,98 +42,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     :return: The blueprint
     """
     blueprint = Blueprint(blueprint_name, __name__)
-
-    @blueprint.route("/leaderboard", methods=["GET"])
-    @login_required
-    @action_route
-    def leaderboard():
-        """
-        Displays a leaderboard.
-        :return: The Response
-        """
-        start = time.time()
-        settings = LoadSettingsAction().execute()
-
-        app.logger.debug("Start generating leaderboard data")
-        leaderboard_action = LeaderboardAction.from_site_request()
-        leaderboard_action.include_bots = settings["display_bots"]
-        leaderboard_data = leaderboard_action.execute()["leaderboard"]
-
-        # Re-use the previously queried bets
-        bets = leaderboard_action.bets
-        current_matchday, leaderboard_history = generate_leaderboard_data(
-            bets=bets, include_bots=settings["display_bots"]
-        )
-
-        delta = "%.2f" % (time.time() - start)
-        app.logger.debug("Generated leaderboard data in {}s".format(delta))
-
-        season_winners = {
-            x.season_string: x.user_id for x in SeasonWinner.query.all()
-        }
-
-        return render_template(
-            "info/leaderboard.html",
-            leaderboard=enumerate(leaderboard_data),
-            matchday=current_matchday,
-            leaderboard_history=leaderboard_history,
-            show_all=True,
-            season_winners=season_winners
-        )
-
-    @blueprint.route("/team/<int:team_id>")
-    @login_required
-    @action_route
-    def team(team_id: int):
-        """
-        Displays information about a single team
-        :param team_id: The ID of the team to display
-        :return: The response
-        """
-        team_data = GetTeamAction(_id=team_id).execute()["team"]
-
-        matches = GetMatchAction(team_id=team_id).execute()["matches"]
-        matches = list(filter(lambda x: x.finished, matches))[-7:]
-        match_data = []
-
-        for match in matches:
-            if match.home_team.id == team_id:
-                opponent = match.away_team
-                own_score = match.home_current_score
-                opponent_score = match.away_current_score
-            else:
-                opponent = match.home_team
-                own_score = match.away_current_score
-                opponent_score = match.home_current_score
-
-            if own_score > opponent_score:
-                result = "win"
-            elif own_score < opponent_score:
-                result = "loss"
-            else:
-                result = "draw"
-
-            score = "{}:{}".format(own_score, opponent_score)
-            match_data.append((
-                match, opponent, score, result
-            ))
-
-        players = GetPlayerAction(team_id=team_id).execute()["players"]
-
-        goal_data = []
-        for player in players:
-            player_goals = \
-                GetGoalAction(player_id=player.id).execute()["goals"]
-            player_goals = list(filter(lambda x: not x.own_goal, player_goals))
-            goal_data.append((player.name, len(player_goals)))
-        goal_data.sort(key=lambda x: x[1], reverse=True)
-
-        return render_template(
-            "info/team.html",
-            team=team_data,
-            goals=goal_data,
-            matches=match_data
-        )
 
     @blueprint.route("/user/<int:user_id>")
     @login_required
@@ -200,7 +102,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             ruckrunde_placement = rr_placements[-1]
 
         return render_template(
-            "info/user.html",
+            "info/../templates/stats/user.html",
             user=user_data,
             leaderboard_history=leaderboard_history,
             matchday=current_matchday,
@@ -277,7 +179,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         )
 
         return render_template(
-            "info/stats.html",
+            "info/../templates/stats/stats.html",
             first_leaderboard=enumerate(leaderboards[0]),
             second_leaderboard=enumerate(leaderboards[1]),
             max_leaderboard=enumerate(leaderboards[2]),
@@ -287,38 +189,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             participation_ranking=enumerate(participation_ranking),
             average_ranking=enumerate(average_ranking),
             show_all=True
-        )
-
-    @blueprint.route("/league_table", methods=["GET"])
-    @blueprint.route("/league_table/<int:matchday>", methods=["GET"])
-    @login_required
-    @action_route
-    def league_table(matchday: Optional[int] = None):
-        """
-        Calculates the current league table and displays it for the user
-        :param matchday: Can be used to specify a certain matchday
-        :return: The response
-        """
-        table = calculate_current_league_table(matchday=matchday)
-        return render_template(
-            "info/league_table.html",
-            league_table=table,
-            title="Aktuelle Bundesliga Tabelle"
-        )
-
-    @blueprint.route("/user_league_table", methods=["GET"])
-    @login_required
-    @action_route
-    def user_league_table():
-        """
-        Calculates the league table based on the user's bets
-        :return: The response
-        """
-        table = calculate_current_league_table(user=current_user)
-        return render_template(
-            "info/league_table.html",
-            league_table=table,
-            title=f"Tabelle nach {current_user.username}'s Tipps"
         )
 
     return blueprint

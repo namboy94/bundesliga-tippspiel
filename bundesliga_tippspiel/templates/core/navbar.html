@@ -45,7 +45,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                    href="{{url_for("user_management.register")}}">Registrieren</a>
             {% else %}
                 <a class="navbar-item {% if request.path == "/bets" %} active {% endif %}"
-                   href="{{url_for("betting.bets")}}">Spieltag</a>
+                   href="{{url_for("betting.get_current_bets")}}">Spieltag</a>
                 <a class="navbar-item {% if request.path == "/leaderboard" %} active {% endif %}"
                    href="{{url_for("information.leaderboard")}}">Rangliste</a>
                 <a class="navbar-item {% if request.path == "/stats" %} active {% endif %}"

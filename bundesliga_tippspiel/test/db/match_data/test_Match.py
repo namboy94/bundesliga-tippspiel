@@ -21,7 +21,7 @@ from jerrycan.base import db
 from datetime import datetime, timedelta
 from bundesliga_tippspiel.db.match_data.Match import Match
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.models.ModelTestFramework import \
+from bundesliga_tippspiel.test.db.ModelTestFramework import \
     _ModelTestFramework
 
 
@@ -208,3 +208,16 @@ class TestMatch(_ModelTestFramework):
         self.assertEqual(len(Match.query.all()), 1)
         db.session.delete(self.team_two)
         # self.assertEqual(len(Match.query.all()), 0)
+
+    def test_url(self):
+        """
+        Tests the URL generation
+        :return: None
+        """
+        self.assertEqual(
+            self.match.url,
+            self.config.base_url() +
+            f"/match/{self.match.league}/{self.match.season}/"
+            f"{self.match.home_team_abbreviation}_"
+            f"{self.match.away_team_abbreviation}"
+        )

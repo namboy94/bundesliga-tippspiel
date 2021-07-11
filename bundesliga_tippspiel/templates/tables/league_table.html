@@ -41,7 +41,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>
-                        <a href="{{ url_for("information.team", team_id=team.id) }}">
+                        <a href="{{ team.url }}">
                             <img src="{{ team.icon_svg }}"
                                  alt="{{ team.name }}"
                                  class="league-table-logo">

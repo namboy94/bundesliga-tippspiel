@@ -18,15 +18,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from jerrycan.base import db
-from bundesliga_tippspiel.db.SeasonEvent import SeasonEvent, SeasonEventType
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.models.ModelTestFramework import \
+from bundesliga_tippspiel.test.db.ModelTestFramework import \
     _ModelTestFramework
+from bundesliga_tippspiel.db.match_data.Player import Player
 
 
-class TestSeasonEvent(_ModelTestFramework):
+class TestPlayer(_ModelTestFramework):
     """
-    Tests the SeasonEvent SQL model
+    Tests the Player SQL model
     """
 
     def setUp(self):
@@ -35,14 +35,7 @@ class TestSeasonEvent(_ModelTestFramework):
         :return: None
         """
         super().setUp()
-        self.model_cls = SeasonEvent
-        self.event = SeasonEvent(
-            season=2010,
-            event_type=SeasonEventType.PRE_SEASON_MAIL,
-            executed=True
-        )
-        db.session.add(self.event)
-        db.session.commit()
+        self.model_cls = Player
 
     def test_missing_column_data(self):
         """
@@ -50,8 +43,8 @@ class TestSeasonEvent(_ModelTestFramework):
         :return: None
         """
         self._test_missing_column_data([
-            SeasonEvent(event_type=SeasonEventType.PRE_SEASON_MAIL),
-            SeasonEvent(season=2000),
+            Player(team=self.team_one),
+            Player(name="1")
         ])
 
     def test_uniqueness(self):
@@ -59,30 +52,33 @@ class TestSeasonEvent(_ModelTestFramework):
         Tests that unique attributes are correctly checked
         :return: None
         """
-        self._test_uniqueness([
-            SeasonEvent(
-                season=2010,
-                event_type=SeasonEventType.PRE_SEASON_MAIL,
-                executed=False
-            )
-        ])
+        self._test_uniqueness([])
 
-    def test_cascades(self):
+    def test_retrieving_from_db(self):
         """
-        Tests if cascade deletes work correctly
+        Tests retrieving model objects from the database
         :return: None
         """
-        # No Cascades
-        pass
+        self._test_retrieving_from_db([
+            (lambda: Player.query.filter_by(
+                name=self.player.name,
+                team_abbreviation=self.player.team_abbreviation
+            ).first(),
+             self.player)
+        ])
 
     def test_json_representation(self):
         """
         Tests the JSON representation of the model
         :return: None
         """
-        without_children = self.event.__json__(False)
+        without_children = self.player.__json__(False)
+        without_children.update({
+            "team": self.player.team.__json__(True, ["players", "player"]),
+            "goals": [x.__json__(True, ["player"]) for x in self.player.goals]
+        })
         self.assertEqual(
-            self.event.__json__(True),
+            self.player.__json__(True),
             without_children
         )
 
@@ -91,4 +87,15 @@ class TestSeasonEvent(_ModelTestFramework):
         Tests the str and repr methods of the model
         :return: None
         """
-        self._test_string_representation(self.event)
+        self._test_string_representation(self.player)
+
+    def test_cascades(self):
+        """
+        Tests if cascade deletes work correctly
+        :return: None
+        """
+        self.assertEqual(len(Player.query.all()), 1)
+        db.session.delete(self.goal)
+        self.assertEqual(len(Player.query.all()), 1)
+        db.session.delete(self.player.team)
+        self.assertEqual(len(Player.query.all()), 0)

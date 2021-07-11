@@ -18,15 +18,15 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from jerrycan.base import db
+from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.models.ModelTestFramework import \
+from bundesliga_tippspiel.test.db.ModelTestFramework import \
     _ModelTestFramework
-from bundesliga_tippspiel.db.match_data.Player import Player
 
 
-class TestPlayer(_ModelTestFramework):
+class TestSeasonWinner(_ModelTestFramework):
     """
-    Tests the Player SQL model
+    Tests the SeasonWinner SQL model
     """
 
     def setUp(self):
@@ -35,7 +35,14 @@ class TestPlayer(_ModelTestFramework):
         :return: None
         """
         super().setUp()
-        self.model_cls = Player
+        self.model_cls = SeasonWinner
+        self.winner = SeasonWinner(
+            user=self.user_one,
+            season=2010,
+            league="bl1"
+        )
+        db.session.add(self.winner)
+        db.session.commit()
 
     def test_missing_column_data(self):
         """
@@ -43,8 +50,8 @@ class TestPlayer(_ModelTestFramework):
         :return: None
         """
         self._test_missing_column_data([
-            Player(team=self.team_one),
-            Player(name="1")
+            # SeasonWinner(user=self.user_one),
+            SeasonWinner(season=2000)
         ])
 
     def test_uniqueness(self):
@@ -52,33 +59,30 @@ class TestPlayer(_ModelTestFramework):
         Tests that unique attributes are correctly checked
         :return: None
         """
-        self._test_uniqueness([])
+        self._test_uniqueness([
+            SeasonWinner(user=self.user_two, season=2010)
+        ])
 
-    def test_retrieving_from_db(self):
+    def test_cascades(self):
         """
-        Tests retrieving model objects from the database
+        Tests if cascade deletes work correctly
         :return: None
         """
-        self._test_retrieving_from_db([
-            (lambda: Player.query.filter_by(
-                name=self.player.name,
-                team_abbreviation=self.player.team_abbreviation
-            ).first(),
-             self.player)
-        ])
+        self.assertEqual(len(SeasonWinner.query.all()), 1)
+        db.session.delete(self.user_one)
+        self.assertEqual(len(SeasonWinner.query.all()), 0)
 
     def test_json_representation(self):
         """
         Tests the JSON representation of the model
         :return: None
         """
-        without_children = self.player.__json__(False)
+        without_children = self.winner.__json__(False)
         without_children.update({
-            "team": self.player.team.__json__(True, ["players", "player"]),
-            "goals": [x.__json__(True, ["player"]) for x in self.player.goals]
+            "user": self.winner.user.__json__(True, ["season_winners"])
         })
         self.assertEqual(
-            self.player.__json__(True),
+            self.winner.__json__(True),
             without_children
         )
 
@@ -87,15 +91,11 @@ class TestPlayer(_ModelTestFramework):
         Tests the str and repr methods of the model
         :return: None
         """
-        self._test_string_representation(self.player)
+        self._test_string_representation(self.winner)
 
-    def test_cascades(self):
+    def test_season_string(self):
         """
-        Tests if cascade deletes work correctly
+        Tests the season string
         :return: None
         """
-        self.assertEqual(len(Player.query.all()), 1)
-        db.session.delete(self.goal)
-        self.assertEqual(len(Player.query.all()), 1)
-        db.session.delete(self.player.team)
-        self.assertEqual(len(Player.query.all()), 0)
+        self.assertEqual(self.winner.season_string, "2010/11")

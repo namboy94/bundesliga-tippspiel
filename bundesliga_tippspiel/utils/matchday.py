@@ -1,4 +1,4 @@
-{#
+"""LICENSE
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,32 +15,23 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-#}
+LICENSE"""
 
-<table class="table is-bordered is-striped has-text-centered ranking-table">
-    <colgroup>
-        <col span="1" class="first">
-        <col span="1" class="second">
-        <col span="1" class="third">
-    </colgroup>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Team</th>
-            <th>Punkte</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for index, (team, points) in team_points %}
-            <tr>
-                <td>{{ index + 1 }}</td>
-                <td>
-                    <a href="{{ team.url }}">
-                        {{ team.name }}
-                    </a>
-                </td>
-                <td>{{ points }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+from typing import Tuple
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db.match_data.Match import Match
+
+
+def get_matchday_info() -> Tuple[int, int]:
+    """
+    Retrieves information on matchdays
+    :return: The current matchday as well as the maximum matchday
+    """
+    all_matches = Match.query.filter_by(
+        season=Config.season(),
+        league=Config.OPENLIGADB_LEAGUE
+    ).all()
+    started = [x for x in all_matches if x.has_started]
+    current_matchday = max(started, key=lambda x: x.matchday).matchday
+    max_matchday = max(all_matches, key=lambda x: x.matchday).matchday
+    return current_matchday, max_matchday

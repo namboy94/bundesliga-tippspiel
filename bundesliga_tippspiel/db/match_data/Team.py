@@ -18,8 +18,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List, TYPE_CHECKING
+
+from flask import url_for
 from jerrycan.base import db
 from jerrycan.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.match_data.Match import Match
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Player import Player
 
@@ -48,3 +51,35 @@ class Team(ModelMixin, db.Model):
     icon_png: str = db.Column(db.String(255), nullable=False)
 
     players: List["Player"] = db.relationship("Player", cascade="all, delete")
+
+    @property
+    def home_matches(self) -> List[Match]:
+        """
+        :return: A list of home matches for the team
+        """
+        return Match.query.filter_by(
+            home_team_abbreviation=self.abbreviation
+        ).all()
+
+    @property
+    def away_matches(self) -> List[Match]:
+        """
+        :return: A list of away matches for the team
+        """
+        return Match.query.filter_by(
+            away_team_abbreviation=self.abbreviation
+        ).all()
+
+    @property
+    def matches(self) -> List[Match]:
+        """
+        :return: A list of matches for the team
+        """
+        return self.home_matches + self.away_matches
+
+    @property
+    def url(self) -> str:
+        """
+        :return: The URL for this teams's info page
+        """
+        return url_for("info.team", team_abbreviation=self.abbreviation)

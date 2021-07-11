@@ -17,16 +17,14 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Optional, Dict
-from flask import render_template, request, Blueprint
+from typing import List
+from flask import render_template, request, Blueprint, flash, url_for, redirect
 from flask_login import login_required, current_user
-from bundesliga_tippspiel.utils.routes import action_route
+from jerrycan.base import db
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db import Match
+from bundesliga_tippspiel.utils.matchday import get_matchday_info
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
-from bundesliga_tippspiel.actions.GetMatchAction import GetMatchAction
-from bundesliga_tippspiel.actions.GetBetAction import GetBetAction
-from bundesliga_tippspiel.actions.GetGoalAction import GetGoalAction
-from bundesliga_tippspiel.actions.PlaceBetsAction import PlaceBetsAction
-from bundesliga_tippspiel.actions.LoadSettingsAction import LoadSettingsAction
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -37,80 +35,114 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     """
     blueprint = Blueprint(blueprint_name, __name__)
 
-    @blueprint.route("/bets", methods=["POST", "GET"])
-    @blueprint.route("/bets/<int:matchday>", methods=["GET"])
+    @blueprint.route("/bets", methods=["GET"])
     @login_required
-    @action_route
-    def bets(matchday: Optional[int] = None):
+    def get_current_bets():
+        """
+        Displays all matches for the current matchday with entries for betting.
+        :return: The response
+        """
+        return get_bets(
+            Config.OPENLIGADB_LEAGUE,
+            Config.season(),
+            get_matchday_info()[0]
+        )
+
+    @blueprint.route("/bets/<string:league>/<int:season>/<int:matchday>",
+                     methods=["GET"])
+    @login_required
+    def get_bets(league: str, season: int, matchday: int):
         """
         Displays all matches for a matchday with entries for betting
+        :param league: The league to display
+        :param season: The season to display
         :param matchday: The matchday to display
-        :return: None
+        :return: The response
         """
-        if request.method == "GET":
-            if matchday is None:
-                matchday = -1
+        matches: List[Match] = Match.query.filter_by(
+            matchday=matchday,
+            season=season,
+            league=league
+        ).options(
+            db.joinedload(Match.home_team),
+            db.joinedload(Match.away_team)
+        ).all()
+        if len(matches) == 0:
+            flash("Den angegebenen Spieltag gibt es nicht", "danger")
+            return redirect(url_for("bets.get_bets"))
+        matches.sort(key=lambda x: x.kickoff)
 
-            matchday_bets = GetBetAction(
-                matchday=matchday,
-                user_id=current_user.id
-            ).execute()["bets"]
+        bets = Bet.query.filter_by(
+            matchday=matchday,
+            season=season,
+            league=league,
+            user_id=current_user.id
+        ).all()
 
-            matchday_matches = GetMatchAction(
-                matchday=matchday
-            ).execute()["matches"]
+        matchday_points = 0
+        for bet in bets:
+            matchday_points += bet.evaluate(when_finished=False)
 
-            betmap: Dict[int, Optional[Bet]] = {}
-            matchday_points = 0
-            for _match in matchday_matches:
-                betmap[_match.id] = None
-            for bet in matchday_bets:
-                betmap[bet.match.id] = bet
-                matchday_points += bet.evaluate(when_finished=True)
+        bet_match_map = {
+            (x.home_team_abbreviation, x.away_team_abbreviation): x
+            for x in bets
+        }
 
-            return render_template(
-                "betting/bets.html",
-                matchday=matchday_matches[0].matchday,
-                betmap=betmap,
-                matches=matchday_matches,
-                matchday_points=matchday_points
+        bet_infos = []
+        for match_item in matches:
+            index = (
+                match_item.home_team_abbreviation,
+                match_item.away_team_abbreviation
             )
-
-        else:  # POST
-            action = PlaceBetsAction.from_site_request()
-            return action.execute_with_redirects(
-                "betting.bets", "Tipps erfolgreich gesetzt", "betting.bets"
-            )
-
-    @blueprint.route("/match/<int:match_id>", methods=["GET"])
-    @login_required
-    @action_route
-    def match(match_id: int):
-        """
-        Displays a single match
-        :param match_id: The ID of the match to display
-        :return: The Response
-        """
-        settings = LoadSettingsAction().execute()
-        match_info = GetMatchAction(_id=match_id).execute()["match"]
-        goals_info = GetGoalAction(match_id=match_id).execute()["goals"]
-        bets_info = GetBetAction(
-            match_id=match_id,
-            include_other_users_bets=True
-        ).execute()["bets"]
-        bets_info.sort(key=lambda x: x.user_id)
-
-        if not settings["display_bots"]:
-            bets_info = [x for x in bets_info if "🤖" not in x.user.username]
-
-        if match_info.has_started:
-            bets_info.sort(key=lambda x: x.evaluate(), reverse=True)
+            bet_infos.append((match_item, bet_match_map.get(index)))
 
         return render_template(
-            "info/match.html",
-            match=match_info,
-            goals=goals_info,
-            bets=bets_info
+            "betting/bets.html",
+            matchday=matchday,
+            season=season,
+            league=league,
+            bet_infos=bet_infos,
+            matchday_points=matchday_points
         )
+
+    @blueprint.route("/bets", methods=["POST"])
+    @login_required
+    def place_bets():
+        """
+        Places bets for a user
+        Form data should be in the format:
+            {'league_season_hometeam_awayteam': 'homescore_awayscore'}
+        :return: The response
+        """
+        bet_data = {}
+        for identifier, value in request.form.items():
+            try:
+                league, _season, home, away, mode = identifier.split("_")
+                season = int(_season)
+                score = int(value)
+                id_tuple = (league, season, home, away)
+                if id_tuple not in bet_data:
+                    bet_data[id_tuple] = {}
+                bet_data[id_tuple][mode] = score
+            except ValueError:
+                continue
+
+        for (league, season, home, away), scores in bet_data.items():
+            if "home" not in scores or "away" not in scores:
+                continue
+            bet = Bet(
+                league=league,
+                season=season,
+                home_team_abbreviation=home,
+                away_team_abbreviation=away,
+                user_id=current_user.id,
+                home_score=scores["home"],
+                away_score=scores["away"]
+            )
+            db.session.merge(bet)
+        db.session.commit()
+
+        flash("Tipps erfolgreich gesetzt", "success")
+        return redirect(url_for("betting.get_bets"))
 
     return blueprint

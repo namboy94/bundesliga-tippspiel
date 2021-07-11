@@ -32,7 +32,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="columns is-mobile is-vcentered">
             {% for match, opponent, score, result in matches %}
                 <div class="column {% if loop.index < loop.length - 2 %}is-hidden-mobile{% endif %}">
-                    <a href="{{ url_for("information.team", team_id=opponent.id) }}">
+                    <a href="{{ opponent.url }}">
                         <img src="{{ opponent.icon_svg }}"
                              alt="{{ opponent.name }}"
                              class="team-match-history-logo"
@@ -44,7 +44,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="columns is-mobile is-vcentered">
             {% for match, opponent, score, result in matches %}
                 <div class="column {% if loop.index < loop.length - 2 %}is-hidden-mobile{% endif %} match-history-{{ result }}">
-                    <a href="{{ url_for("betting.match", match_id=match.id) }}">
+                    <a href="{{ match.url }}">
                         {{ score }}
                     </a>
                 </div>

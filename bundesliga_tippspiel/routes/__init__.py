@@ -18,25 +18,28 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from bundesliga_tippspiel.routes.betting import define_blueprint as __betting
-from bundesliga_tippspiel.routes.information import define_blueprint \
-    as __information
+from bundesliga_tippspiel.routes.info import define_blueprint as __info
 from bundesliga_tippspiel.routes.settings import define_blueprint as __settings
-from bundesliga_tippspiel.routes.api.putters import define_blueprint \
-    as __putters
-from bundesliga_tippspiel.routes.api.getters import define_blueprint \
-    as __getters
+from bundesliga_tippspiel.routes.stats import define_blueprint as __stats
+from bundesliga_tippspiel.routes.tables import define_blueprint as __tables
 from bundesliga_tippspiel.routes.chat import define_blueprint as __chat
+# from bundesliga_tippspiel.routes.api.putters import define_blueprint \
+#     as __putters
+# from bundesliga_tippspiel.routes.api.getters import define_blueprint \
+#     as __getters
 
 from flask.blueprints import Blueprint
 from typing import List, Tuple, Callable
 
 blueprint_generators: List[Tuple[Callable[[str], Blueprint], str]] = [
-    (__information, "information"),
-    (__putters, "putters"),
-    (__getters, "getters"),
+    (__info, "info"),
     (__betting, "betting"),
     (__settings, "settings"),
-    (__chat, "chat")
+    (__chat, "chat"),
+    (__tables, "tables"),
+    (__stats, "stats"),
+    # (__putters, "putters"),
+    # (__getters, "getters")
 ]
 """
 Defines the functions used to create the various blueprints

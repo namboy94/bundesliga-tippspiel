@@ -82,12 +82,14 @@ class _TestFramework(Framework):
             home_current_score=1, away_current_score=0,
             home_ht_score=0, away_ht_score=0,
             home_ft_score=1, away_ft_score=0,
-            season=self.config.season()
+            season=self.config.season(),
+            league=self.config.OPENLIGADB_LEAGUE
         )
         goal = Goal(
             home_team_abbreviation=match.home_team_abbreviation,
             away_team_abbreviation=match.away_team_abbreviation,
             season=match.season,
+            league=match.league,
             player_name=player.name,
             player_team_abbreviation=player.team_abbreviation,
             minute=67, minute_et=None,
@@ -115,6 +117,7 @@ class _TestFramework(Framework):
             home_team_abbreviation=match.home_team_abbreviation,
             away_team_abbreviation=match.away_team_abbreviation,
             season=match.season,
+            league=match.league,
             home_score=2,
             away_score=1
         )

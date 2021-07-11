@@ -39,9 +39,10 @@ class Goal(ModelMixin, db.Model):
     __tablename__ = "goals"
     __table_args__ = (
         db.ForeignKeyConstraint(
-            ("home_team_abbreviation", "away_team_abbreviation", "season"),
+            ("home_team_abbreviation", "away_team_abbreviation",
+             "season", "league"),
             (Match.home_team_abbreviation, Match.away_team_abbreviation,
-             Match.season)
+             Match.season, Match.league)
         ),
         db.ForeignKeyConstraint(
             ("player_name", "player_team_abbreviation"),
@@ -52,6 +53,7 @@ class Goal(ModelMixin, db.Model):
     home_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
     away_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
     season: int = db.Column(db.Integer, primary_key=True)
+    league: str = db.Column(db.String(255), primary_key=True)
     home_score: int = db.Column(db.Integer, primary_key=True)
     away_score: int = db.Column(db.Integer, primary_key=True)
 

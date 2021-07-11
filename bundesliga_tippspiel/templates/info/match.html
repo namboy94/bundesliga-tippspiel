@@ -39,33 +39,33 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </div>
         <div class="columns match-header is-vcentered is-mobile">
             <div class="column is-1 is-hidden-mobile">
-                <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+                <a href="{{ match.home_team.url }}">
                     <img src="{{ match.home_team.icon_svg }}" alt="{{ match.home_team.name }}">
                 </a>
             </div>
             <div class="column is-5 is-hidden-tablet">
-                <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+                <a href="{{ match.home_team.url }}">
                     <img src="{{ match.home_team.icon_svg }}" alt="{{ match.home_team.name }}">
                 </a>
             </div>
             <div class="column is-4 is-hidden-mobile">
-                <a href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+                <a href="{{ match.home_team.url }}">
                     <h1>{{ match.home_team.short_name }}</h1>
                 </a>
             </div>
             <div class="column is-2"><h1>VS</h1></div>
             <div class="column is-4 is-hidden-mobile">
-                <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+                <a href="{{ match.away_team.url }}">
                     <h1>{{ match.away_team.short_name }}</h1>
                 </a>
             </div>
             <div class="column is-1 is-hidden-mobile">
-                <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+                <a href="{{ match.away_team.url }}">
                     <img src="{{ match.away_team.icon_svg }}" alt="{{ match.away_team.name }}">
                 </a>
             </div>
             <div class="column is-5 is-hidden-tablet">
-                <a href="{{ url_for("information.team", team_id=match.away_team.id) }}">
+                <a href="{{ match.away_team.url }}">
                     <img src="{{ match.away_team.icon_svg }}" alt="{{ match.away_team.name }}">
                 </a>
             </div>
@@ -117,7 +117,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                             {% set team = goal.player.team %}
                         {% endif %}
 
-                        <a href="{{ url_for("information.team", team_id=team.id) }}">
+                        <a href="{{  team.url }}">
                             <img src="{{ team.icon_svg }}"
                                  alt="{{ team.name }}" class="goals-table-team-logo">
                         </a>

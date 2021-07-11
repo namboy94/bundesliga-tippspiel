@@ -21,7 +21,7 @@ import time
 from jerrycan.base import db
 from bundesliga_tippspiel.db.user_generated.ChatMessage import ChatMessage
 # noinspection PyProtectedMember
-from bundesliga_tippspiel.test.models.ModelTestFramework import \
+from bundesliga_tippspiel.test.db.ModelTestFramework import \
     _ModelTestFramework
 
 

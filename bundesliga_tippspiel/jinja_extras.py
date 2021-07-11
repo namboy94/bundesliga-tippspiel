@@ -18,6 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Dict, Any
+from bundesliga_tippspiel.utils.matchday import get_matchday_info
 
 
 def jinja_extras() -> Dict[str, Any]:
@@ -27,7 +28,8 @@ def jinja_extras() -> Dict[str, Any]:
     """
     return {
         "get_pill_class": get_pill_class,
-        "get_matchday_total_pill_class": get_matchday_total_pill_class
+        "get_matchday_total_pill_class": get_matchday_total_pill_class,
+        "get_matchday_info": get_matchday_info
     }
 
 

@@ -20,12 +20,14 @@ LICENSE"""
 import pytz
 from datetime import datetime
 from typing import TYPE_CHECKING, List
+
+from flask import url_for
 from jerrycan.base import db
 from jerrycan.db.ModelMixin import ModelMixin
-from bundesliga_tippspiel.db.match_data.Team import Team
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Goal import Goal
     from bundesliga_tippspiel.db.user_generated.Bet import Bet
+    from bundesliga_tippspiel.db.match_data.Team import Team
 
 
 class Match(ModelMixin, db.Model):
@@ -52,6 +54,7 @@ class Match(ModelMixin, db.Model):
         primary_key=True
     )
     season: int = db.Column(db.Integer, primary_key=True)
+    league: str = db.Column(db.String(255), primary_key=True)
 
     matchday: int = db.Column(db.Integer, nullable=False)
     home_current_score: int = db.Column(db.Integer, nullable=False)
@@ -64,10 +67,10 @@ class Match(ModelMixin, db.Model):
     started: bool = db.Column(db.Boolean, nullable=False)
     finished: bool = db.Column(db.Boolean, nullable=False)
 
-    home_team: Team = db.relationship(
-        "Team", foreign_keys=[home_team_abbreviation]
+    home_team: "Team" = db.relationship(
+        "Team", foreign_keys=[home_team_abbreviation],
     )
-    away_team: Team = db.relationship(
+    away_team: "Team" = db.relationship(
         "Team", foreign_keys=[away_team_abbreviation]
     )
     goals: List["Goal"] = db.relationship("Goal", cascade="all, delete")
@@ -166,3 +169,16 @@ class Match(ModelMixin, db.Model):
         :return: True if the match has started, False otherwise
         """
         return self.started or self.kickoff_datetime <= datetime.utcnow()
+
+    @property
+    def url(self) -> str:
+        """
+        :return: The URL for this match's info page
+        """
+        return url_for(
+            "info.match",
+            league=self.league,
+            season=self.season,
+            matchup=f"{self.home_team_abbreviation}_"
+                    f"{self.away_team_abbreviation}"
+        )
