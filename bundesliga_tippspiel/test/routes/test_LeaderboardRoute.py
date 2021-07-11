@@ -43,7 +43,8 @@ class TestLeaderboardRoute(_RouteTestFramework):
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=False,
             home_current_score=0, away_current_score=0,
-            season=self.config.season()
+            season=self.config.season(),
+            league=self.config.OPENLIGADB_LEAGUE
         ))
         self.db.session.commit()
 

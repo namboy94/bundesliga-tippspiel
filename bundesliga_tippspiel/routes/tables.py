@@ -73,7 +73,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         )
 
     @blueprint.route("/league_table", methods=["GET"])
-    @blueprint.route("/league_table/<string:league>/<int:league>/"
+    @blueprint.route("/league_table/<string:league>/<int:season>/"
                      "<int:matchday>", methods=["GET"])
     @login_required
     def league_table(

@@ -117,22 +117,24 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         bet_data = {}
         for identifier, value in request.form.items():
             try:
-                league, _season, home, away, mode = identifier.split("_")
+                league, _season, day, home, away, mode = identifier.split("_")
                 season = int(_season)
+                matchday = int(day)
                 score = int(value)
-                id_tuple = (league, season, home, away)
+                id_tuple = (league, season, matchday, home, away)
                 if id_tuple not in bet_data:
                     bet_data[id_tuple] = {}
                 bet_data[id_tuple][mode] = score
             except ValueError:
                 continue
 
-        for (league, season, home, away), scores in bet_data.items():
+        for (league, season, matchday, home, away), scores in bet_data.items():
             if "home" not in scores or "away" not in scores:
                 continue
             bet = Bet(
                 league=league,
                 season=season,
+                matchday=matchday,
                 home_team_abbreviation=home,
                 away_team_abbreviation=away,
                 user_id=current_user.id,

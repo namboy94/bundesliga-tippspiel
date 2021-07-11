@@ -54,7 +54,8 @@ class LeaderboardEntry(ModelMixin, db.Model):
     no_bot_previous_position: int = db.Column(db.Integer, nullable=False)
 
     user: User = db.relationship(
-        "User", backref=db.backref("season_winners", cascade="all, delete")
+        "User",
+        backref=db.backref("leaderboard_entries", cascade="all, delete")
     )
 
     def get_position_info(self, include_bots: bool) -> Tuple[int, int]:

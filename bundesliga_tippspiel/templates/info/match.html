@@ -144,7 +144,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <tbody>
             {% for bet in bets %}
                 <tr>
-                    <th><a href="{{ url_for("information.user", user_id=bet.user.id) }}">{{ bet.user.username }}</a></th>
+                    <th><a href="{{ url_for("stats.user", user_id=bet.user.id) }}">{{ bet.user.username }}</a></th>
                     {% if match.has_started or bet.user_id == current_user.id %}
                         <th>{{ bet.home_score }}:{{ bet.away_score }}</th>
                     {% else %}

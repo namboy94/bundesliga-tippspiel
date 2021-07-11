@@ -48,5 +48,5 @@ class MatchdayWinner(ModelMixin, db.Model):
     )
 
     user: User = db.relationship(
-        "User", backref=db.backref("season_winners", cascade="all, delete")
+        "User", backref=db.backref("matchday_winners", cascade="all, delete")
     )

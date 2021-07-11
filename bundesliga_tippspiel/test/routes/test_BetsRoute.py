@@ -51,21 +51,24 @@ class TestBetsRoute(_RouteTestFramework):
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=True,
             home_current_score=0, away_current_score=0,
-            season=self.config.season()
+            season=self.config.season(),
+            league=self.config.OPENLIGADB_LEAGUE
         )
         self.match_two = Match(
             home_team=self.team_two, away_team=self.team_one,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=False, finished=False,
             home_current_score=0, away_current_score=0,
-            season=self.config.season()
+            season=self.config.season(),
+            league=self.config.OPENLIGADB_LEAGUE
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_three,
             matchday=1, kickoff="2019-01-01:01:02:03",
             started=True, finished=False,
             home_current_score=1, away_current_score=3,
-            season=self.config.season()
+            season=self.config.season(),
+            league=self.config.OPENLIGADB_LEAGUE
         )
         self.db.session.add(self.match_one)
         self.db.session.add(self.match_two)
@@ -92,7 +95,8 @@ class TestBetsRoute(_RouteTestFramework):
         """
         self.login()
         resp = self.client.get(
-            "{}/{}".format(self.route_path, self.match_one.matchday)
+            f"{self.route_path}/{self.match_one.league}/"
+            f"{self.match_one.season}/{self.match_one.matchday}"
         )
         self.assertTrue(
             "Spieltag {}".format(self.match_one.matchday).encode("utf-8") in
@@ -106,9 +110,12 @@ class TestBetsRoute(_RouteTestFramework):
         """
         self.login()
         self.assertEqual(len(Bet.query.all()), 0)
+        match_id = f"{self.match_one.league}_{self.match_one.season}_" \
+                   f"{self.match_one.home_team_abbreviation}_" \
+                   f"{self.match_one.away_team_abbreviation}"
         resp = self.client.post(self.route_path, follow_redirects=True, data={
-            "{}-home".format(self.match_one.id): 1,
-            "{}-away".format(self.match_one.id): "2"
+            f"{match_id}_home": 1,
+            f"{match_id}_away": "2"
         })
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(len(Bet.query.all()), 1)

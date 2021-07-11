@@ -90,6 +90,7 @@ class _TestFramework(Framework):
             away_team_abbreviation=match.away_team_abbreviation,
             season=match.season,
             league=match.league,
+            matchday=match.matchday,
             player_name=player.name,
             player_team_abbreviation=player.team_abbreviation,
             minute=67, minute_et=None,
@@ -118,6 +119,7 @@ class _TestFramework(Framework):
             away_team_abbreviation=match.away_team_abbreviation,
             season=match.season,
             league=match.league,
+            matchday=match.matchday,
             home_score=2,
             away_score=1
         )

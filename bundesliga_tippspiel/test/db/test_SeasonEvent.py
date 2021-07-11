@@ -38,6 +38,7 @@ class TestSeasonEvent(_ModelTestFramework):
         self.model_cls = SeasonEvent
         self.event = SeasonEvent(
             season=2010,
+            league="bl1",
             event_type=SeasonEventType.PRE_SEASON_MAIL,
             executed=True
         )

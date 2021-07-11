@@ -55,8 +55,8 @@ class Match(ModelMixin, db.Model):
     )
     season: int = db.Column(db.Integer, primary_key=True)
     league: str = db.Column(db.String(255), primary_key=True)
+    matchday: int = db.Column(db.Integer, primary_key=True)
 
-    matchday: int = db.Column(db.Integer, nullable=False)
     home_current_score: int = db.Column(db.Integer, nullable=False)
     away_current_score: int = db.Column(db.Integer, nullable=False)
     home_ht_score: int = db.Column(db.Integer)
