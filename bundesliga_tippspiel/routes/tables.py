@@ -18,16 +18,21 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import time
-from typing import Optional
+from typing import Optional, List
 from flask import render_template, Blueprint
 from flask_login import login_required, current_user
 from jerrycan.base import app
+
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db import DisplayBotsSettings, LeaderboardEntry
+from bundesliga_tippspiel.utils.collections.Leaderboard import Leaderboard
 from bundesliga_tippspiel.utils.routes import action_route
 from bundesliga_tippspiel.utils.chart_data import generate_leaderboard_data
 from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 from bundesliga_tippspiel.actions.LoadSettingsAction import LoadSettingsAction
 from bundesliga_tippspiel.actions.LeaderboardAction import LeaderboardAction
 from bundesliga_tippspiel.utils.stats import calculate_current_league_table
+from bundesliga_tippspiel.utils.matchday import get_matchday_info
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -39,41 +44,39 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     blueprint = Blueprint(blueprint_name, __name__)
 
     @blueprint.route("/leaderboard", methods=["GET"])
+    @blueprint.route(
+        "/leaderboard/<string:league>/<int:season>/<int:matchday>",
+        methods=["GET"]
+    )
     @login_required
     @action_route
-    def leaderboard():
+    def leaderboard(
+            league: Optional[str],
+            season: Optional[int],
+            matchday: Optional[int]
+    ):
         """
         Displays a leaderboard.
+        :param league: The league for which to display the leaderboard
+        :param season: The season for which to display the leaderboard
+        :param matchday: The matchday for which to display the leaderboard
         :return: The Response
         """
-        start = time.time()
-        settings = LoadSettingsAction().execute()
+        if league is None or season is None or matchday is None:
+            league = Config.OPENLIGADB_LEAGUE
+            season = Config.season()
+            matchday = get_matchday_info()[0]
 
-        app.logger.debug("Start generating leaderboard data")
-        leaderboard_action = LeaderboardAction.from_site_request()
-        leaderboard_action.include_bots = settings["display_bots"]
-        leaderboard_data = leaderboard_action.execute()["leaderboard"]
-
-        # Re-use the previously queried bets
-        bets = leaderboard_action.bets
-        current_matchday, leaderboard_history = generate_leaderboard_data(
-            bets=bets, include_bots=settings["display_bots"]
+        matchday_leaderboard = Leaderboard(
+            league,
+            season,
+            matchday,
+            DisplayBotsSettings.get_state(current_user)
         )
 
-        delta = "%.2f" % (time.time() - start)
-        app.logger.debug("Generated leaderboard data in {}s".format(delta))
-
-        season_winners = {
-            x.season_string: x.user_id for x in SeasonWinner.query.all()
-        }
-
         return render_template(
-            "info/../templates/tables/leaderboard.html",
-            leaderboard=enumerate(leaderboard_data),
-            matchday=current_matchday,
-            leaderboard_history=leaderboard_history,
-            show_all=True,
-            season_winners=season_winners
+            "tables/../templates/ranking/leaderboard.html",
+            leaderboard=matchday_leaderboard
         )
 
     @blueprint.route("/league_table", methods=["GET"])

@@ -1,4 +1,4 @@
-{#
+"""LICENSE
 Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
 
 This file is part of bundesliga-tippspiel.
@@ -15,18 +15,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
-#}
-
-{% extends "core/base_layout.html" %}
-{% set requires_charts=True %}
-{% block body %}
-    <h1>Rangliste</h1>
-    {% set unit="Punkte" %}
-    {% with history=leaderboard_history %}
-        {% include "components/ranking_table.html" %}
-    {% endwith %}
-    <hr class="is-hidden-mobile">
-    <div class="container is-hidden-mobile ranking-chart-container">
-        {% include "components/ranking_chart.html" %}
-    </div>
-{% endblock %}
+LICENSE"""

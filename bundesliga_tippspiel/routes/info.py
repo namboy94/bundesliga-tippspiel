@@ -119,13 +119,11 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             home_team_abbreviation=home,
             away_team_abbreviation=away
         ).options(db.joinedload(Bet.user)).all()
-        bot_setting = DisplayBotsSettings.query.filter_by(
-            user_id=current_user.id
-        ).first()
+        bot_setting = DisplayBotsSettings.get_state(current_user)
         if bot_setting is None or not bot_setting.display_bots:
             bets = [
                 x for x in bets
-                if "🤖" not in x.user.username
+                if DisplayBotsSettings.bot_symbol() not in x.user.username
             ]
         bets.sort(key=lambda x: x.user_id)
         if match_item.has_started:

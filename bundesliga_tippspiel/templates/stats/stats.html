@@ -26,12 +26,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="column">
             <h3>Rangliste Hinrunde</h3>
             {% set leaderboard=first_leaderboard %}
-            {% include "components/ranking_table.html" %}
+            {% include "components/../ranking/ranking_table.html" %}
         </div>
         <div class="column">
             <h3>Rangliste Rückrunde</h3>
             {% set leaderboard=second_leaderboard %}
-            {% include "components/ranking_table.html" %}
+            {% include "components/../ranking/ranking_table.html" %}
         </div>
     </div>
 
@@ -40,12 +40,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         <div class="column">
             <h3>Korrekte Tipps</h3>
             {% set leaderboard=max_leaderboard %}
-            {% include "components/ranking_table.html" %}
+            {% include "components/../ranking/ranking_table.html" %}
         </div>
         <div class="column">
             <h3>Komplett falsche Tipps</h3>
             {% set leaderboard=zero_leaderboard %}
-            {% include "components/ranking_table.html" %}
+            {% include "components/../ranking/ranking_table.html" %}
         </div>
     </div>
 
@@ -54,13 +54,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             <h3>Punkte/Tipp</h3>
             {% set leaderboard=average_ranking %}
             {% set unit="Punkte/Tipp" %}
-            {% include "components/ranking_table.html" %}
+            {% include "components/../ranking/ranking_table.html" %}
         </div>
         <div class="column">
             <h3>Teilnahme</h3>
             {% set leaderboard=participation_ranking %}
             {% set unit="%" %}
-            {% include "components/ranking_table.html" %}
+            {% include "components/../ranking/ranking_table.html" %}
         </div>
     </div>
 

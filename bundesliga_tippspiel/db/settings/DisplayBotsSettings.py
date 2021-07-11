@@ -48,3 +48,22 @@ class DisplayBotsSettings(ModelMixin, db.Model):
         "User",
         backref=db.backref("display_bot_settings", cascade="all, delete")
     )
+
+    @classmethod
+    def get_state(cls, user: User):
+        """
+        Retrieves the state of the settings for a give user
+        :param user: The user for which to retrieve the seetings
+        :return: True if active, False otherwise
+        """
+        bot_setting = DisplayBotsSettings.query.filter_by(
+            user_id=user.id
+        ).first()
+        return bot_setting is not None and bot_setting.display_bots
+
+    @staticmethod
+    def bot_symbol() -> str:
+        """
+        :return: "🤖"
+        """
+        return "🤖"

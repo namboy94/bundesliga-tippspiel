@@ -25,6 +25,7 @@ from bundesliga_tippspiel.db.match_data.Goal import Goal
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.db.stats.LeaderboardEntry import LeaderboardEntry
 from bundesliga_tippspiel.db.user_generated.SeasonWinner import SeasonWinner
 from bundesliga_tippspiel.db.user_generated.ChatMessage import ChatMessage
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
@@ -41,7 +42,8 @@ models: List[db.Model] = [
     SeasonEvent,
     ReminderSettings,
     DisplayBotsSettings,
-    ChatMessage
+    ChatMessage,
+    LeaderboardEntry
 ]
 """
 The database models of the application

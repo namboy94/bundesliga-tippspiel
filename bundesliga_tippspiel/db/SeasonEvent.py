@@ -46,7 +46,8 @@ class SeasonEvent(ModelMixin, db.Model):
 
     __tablename__ = "season_events"
 
-    season: int = db.Column(db.Integer, nullable=False, primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True)
+    league: int = db.Column(db.String(255), primary_key=True)
     event_type: SeasonEventType = db.Column(
         db.Enum(SeasonEventType),
         primary_key=True
