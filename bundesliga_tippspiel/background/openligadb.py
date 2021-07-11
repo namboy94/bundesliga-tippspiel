@@ -35,7 +35,7 @@ def update_match_data(
 ):
     """
     Updates the database with the match data for
-    the specified league and season
+    the specified league and season using openligadb data
     :param league: The league for which to update the data
     :param season: The season for which to update the data
     :return: None
@@ -60,19 +60,19 @@ def update_match_data(
         app.logger.warning("Failed to update match data due to failed request")
         return
 
-    matches, goals, players, teams = [], [], [], []
+    for team_info in team_data:
+        team = parse_team(team_info)
+        db.session.merge(team)
 
-    # Generate Data Model Objects
-    for match_data in match_data:
-        match = parse_match(match_data, int(season))
-        matches.append(match)
+    for match_info in match_data:
+        match = parse_match(match_info, int(season))
+        match = db.session.merge(match)
 
         home_score = 0
-        for goal_data in match_data["Goals"]:
-            goal = parse_goal(goal_data, match.id)
+        for goal_data in match_info["Goals"]:
+            goal = parse_goal(goal_data, match)
             if goal is None:
                 continue
-            goals.append(goal)
 
             if home_score < goal.home_score:
                 team = 1
@@ -80,20 +80,18 @@ def update_match_data(
                 team = -1
             if goal.own_goal:
                 team *= -1
-            team_id = {1: match.home_team_id, -1: match.away_team_id}[team]
 
+            team_abbreviation = {
+                1: match.home_team_abbreviation,
+                -1: match.away_team_abbreviation
+            }[team]
+
+            goal.player_team_abbreviation = team_abbreviation
             home_score = goal.home_score
+            player = parse_player(goal_data, team_abbreviation)
 
-            player = parse_player(goal_data, team_id)
-            players.append(player)
-
-    for team_data in team_data:
-        teams.append(parse_team(team_data))
-
-    store_in_db(teams, Team)
-    store_in_db(players, Player)
-    store_in_db(matches, Match)
-    store_in_db(goals, Goal)
+            db.session.merge(goal)
+            db.session.merge(player)
 
 
 def parse_match(match_data: Dict[str, Any], season: int) -> Match:
@@ -125,10 +123,13 @@ def parse_match(match_data: Dict[str, Any], season: int) -> Match:
     started = datetime.utcnow() > kickoff
     kickoff = kickoff.strftime("%Y-%m-%d:%H-%M-%S")
 
+    home_team_abbreviation = get_team_data(match_data["Team1"]["TeamName"])[2]
+    away_team_abbreviation = get_team_data(match_data["Team2"]["TeamName"])[2]
+
     match = Match(
-        id=match_data["MatchID"],
-        home_team_id=match_data["Team1"]["TeamId"],
-        away_team_id=match_data["Team2"]["TeamId"],
+        home_team_abbreviation=home_team_abbreviation,
+        away_team_abbreviation=away_team_abbreviation,
+        season=season,
         matchday=match_data["Group"]["GroupOrderID"],
         home_current_score=cur_home,
         away_current_score=cur_away,
@@ -138,16 +139,15 @@ def parse_match(match_data: Dict[str, Any], season: int) -> Match:
         away_ft_score=ft_away,
         kickoff=kickoff,
         started=started,
-        finished=match_data["MatchIsFinished"],
-        season=season
+        finished=match_data["MatchIsFinished"]
     )
     return match
 
 
-def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
+def parse_goal(goal_data: Dict[str, Any], match: Match) -> Optional[Goal]:
     """
     Parses a goal JSON object and generates a Goal object
-    :param match_id: The match ID of the match in which the goal was scored
+    :param match: The match in which the goal was scored
     :param goal_data: The goal data to parse
     :return: The generated Goal object
     """
@@ -167,9 +167,11 @@ def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
         minute = 90
 
     goal = Goal(
-        id=goal_data["GoalID"],
-        match_id=match_id,
-        player_id=goal_data["GoalGetterID"],
+        home_team_abbreviation=match.home_team_abbreviation,
+        away_team_abbreviation=match.away_team_abbreviation,
+        season=match.season,
+        player_name=goal_data["GoalGetterName"],
+        player_team_abbreviation=None,
         minute=minute,
         minute_et=minute_et,
         home_score=goal_data["ScoreTeam1"],
@@ -184,16 +186,15 @@ def parse_goal(goal_data: Dict[str, Any], match_id: int) -> Optional[Goal]:
         return goal
 
 
-def parse_player(goal_data: Dict[str, Any], team_id: int) -> Player:
+def parse_player(goal_data: Dict[str, Any], team_abbreviation: str) -> Player:
     """
     Parses a Player object from a Goal JSON data object
     :param goal_data: The data of a goal the player scored
-    :param team_id: The Team of the player
+    :param team_abbreviation: The Team of the player
     :return: The generated Player object
     """
     return Player(
-        id=goal_data["GoalGetterID"],
-        team_id=team_id,
+        team_abbreviation=team_abbreviation,
         name=goal_data["GoalGetterName"]
     )
 
@@ -207,7 +208,6 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
     name, short_name, abbrev, icons = get_team_data(team_data["TeamName"])
     svg, png = icons
     return Team(
-        id=team_data["TeamId"],
         name=name,
         abbreviation=abbrev,
         short_name=short_name,

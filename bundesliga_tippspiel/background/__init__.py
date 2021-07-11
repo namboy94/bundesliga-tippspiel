@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Dict, Tuple, Callable
 from bundesliga_tippspiel.background.season_events import handle_season_events
-from bundesliga_tippspiel.background.match_data import update_match_data
+from bundesliga_tippspiel.background.openligadb import update_match_data
 from bundesliga_tippspiel.background.reminders import send_due_reminders
 
 

@@ -26,7 +26,7 @@ from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Player import Player
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
-from bundesliga_tippspiel.background.match_data import update_match_data
+from bundesliga_tippspiel.background.openligadb import update_match_data
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel import root_path
 from bundesliga_tippspiel.routes import blueprint_generators

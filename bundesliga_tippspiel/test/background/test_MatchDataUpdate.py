@@ -21,7 +21,7 @@ import time
 import requests
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.background.match_data import update_match_data
+from bundesliga_tippspiel.background.openligadb import update_match_data
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Goal import Goal
@@ -47,15 +47,18 @@ class TestMatchDataUpdate(_TestFramework):
         Tests if all team icon URLs are valid
         :return: None
         """
+        headers = {"User-Agent": "Mozilla/5.0"}
         update_match_data()
         for team in Team.query.all():
-            for url in [team.icon_svg, team.icon_png]:
-                resp = requests.head(url)
+            for url in [team.icon_svg]:
+                resp = requests.head(url, headers=headers)
                 time.sleep(1)
-                if resp.status_code == 429:
-                    time.sleep(15)
-                    resp = requests.head(url)
-                self.assertEqual(resp.status_code, 200)
+                retry_count = 0
+                while resp.status_code == 429 and retry_count < 5:
+                    time.sleep(30)
+                    resp = requests.head(url, headers=headers)
+                    retry_count += 1
+                self.assertEqual(200, resp.status_code)
 
     def assert_db_state(self):
         """
@@ -70,13 +73,19 @@ class TestMatchDataUpdate(_TestFramework):
             self.assertEqual(len(matches), 9)
 
             for match in matches:
-                for team_id in [match.home_team.id, match.away_team.id]:
-                    self.assertFalse(team_id in teams)
-                    teams.append(team_id)
+                for team_abbreviation in [
+                    match.home_team_abbreviation, match.away_team_abbreviation
+                ]:
+                    self.assertFalse(team_abbreviation in teams)
+                    teams.append(team_abbreviation)
 
                 goal_count = \
                     match.home_current_score + match.away_current_score
-                goals = Goal.query.filter_by(match_id=match.id).all()
+                goals = Goal.query.filter_by(
+                    home_team_abbreviation=match.home_team_abbreviation,
+                    away_team_abbreviation=match.away_team_abbreviation,
+                    season=match.season
+                ).all()
                 self.assertEqual(goal_count, len(goals))
 
         all_teams = Team.query.all()
@@ -86,11 +95,15 @@ class TestMatchDataUpdate(_TestFramework):
             self.assertTrue(len(team.short_name) <= 16)
             self.assertTrue(len(team.abbreviation) == 3)
 
-        fcb_tsg = Match.query.get(51121)  # type: Match
+        fcb_tsg = Match.query.get(("FCB", "TSG", 2018))  # type: Match
         self.assertEqual(3, fcb_tsg.home_current_score)
         self.assertEqual(1, fcb_tsg.away_current_score)
 
-        goals = Goal.query.filter_by(match_id=fcb_tsg.id).all()
+        goals = Goal.query.filter_by(
+            home_team_abbreviation=fcb_tsg.home_team_abbreviation,
+            away_team_abbreviation=fcb_tsg.away_team_abbreviation,
+            season=fcb_tsg.season
+        ).all()
         self.assertEqual(len(goals), 4)
         self.assertEqual(goals[0].player.name, "Thomas Müller")
 

@@ -45,7 +45,7 @@ class TestReminders(_TestFramework):
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
         self.reminder = ReminderSettings(
-            id=1, user_id=self.user.id,
+            user_id=self.user.id,
             reminder_type=ReminderType.EMAIL,
             last_reminder=now_str,
             reminder_time=48 * 60 * 60
