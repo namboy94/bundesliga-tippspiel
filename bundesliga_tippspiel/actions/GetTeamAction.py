@@ -19,23 +19,23 @@ LICENSE"""
 
 from typing import Dict, Any, Optional
 from bundesliga_tippspiel.Config import Config
-from bundesliga_tippspiel.actions.Action import GetAction
+from bundesliga_tippspiel.actions.Action import Action
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 
-class GetTeamAction(GetAction):
+class GetTeamAction(Action):
     """
     Action that allows retrieving teams from the database
     """
 
-    def __init__(self, _id: Optional[int] = None):
+    def __init__(self, abbreviation: Optional[str] = None):
         """
         Initializes the GetTeamAction object
-        :param _id: If provided, will only fetch the selected ID
+        :param abbreviation: If provided, will only fetch the selected team
         :raises: ActionException if any problems occur
         """
-        super().__init__(_id)
+        self.abbreviation = abbreviation
 
     def validate_data(self):
         """

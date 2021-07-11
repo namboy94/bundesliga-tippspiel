@@ -53,7 +53,7 @@ class TestSetReminderRoute(_RouteTestFramework):
             "hours": 10,
             ReminderType.EMAIL.value: "on"
         })
-        self.assertTrue(b"Erinnerungsdaten gespeichert" in resp.data)
+        self.assertTrue(b"Erinnerungseinstellungen gespeichert" in resp.data)
         self.assertEqual(len(ReminderSettings.query.all()), len(ReminderType))
 
     def test_unsuccessful_requests(self):

@@ -20,7 +20,7 @@ LICENSE"""
 import json
 import requests
 from datetime import datetime
-from typing import Dict, Any, Optional, List, Tuple, Type
+from typing import Dict, Any, Optional, Tuple
 from jerrycan.base import db, app
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
@@ -92,6 +92,7 @@ def update_match_data(
 
             db.session.merge(goal)
             db.session.merge(player)
+    db.session.commit()
 
 
 def parse_match(match_data: Dict[str, Any], season: int) -> Match:
@@ -214,31 +215,6 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
         icon_svg=svg,
         icon_png=png
     )
-
-
-def store_in_db(objects: List[db.Model], model_cls: Type[db.Model]):
-    """
-    Stores a list of objects in the database. While doing so, will
-    either update existing objects or create new one if they don't exist
-    :param objects: The objects to add
-    :param model_cls: The model class of these objects
-    :return: None
-    """
-    existing = model_cls.query.all()
-    idmap = {}
-    for obj in existing:
-        idmap[obj.id] = obj
-
-    tracker: List[int] = []
-    for obj in objects:
-        if obj.id in tracker:
-            continue
-        if obj.id in idmap:
-            model_cls.query.filter_by(id=obj.id).update(obj.__json__())
-        else:
-            tracker.append(obj.id)
-            db.session.add(obj)
-    db.session.commit()
 
 
 def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:

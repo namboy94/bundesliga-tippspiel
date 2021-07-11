@@ -48,7 +48,9 @@ class TestMatchRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/match/{}".format(self.match.id), [], "VS", True
+        url = f"/match/{self.match.home_team_abbreviation}/" \
+              f"{self.match.away_team_abbreviation}/{self.match.season}"
+        return url, [], "VS", True
 
     def test_successful_requests(self):
         """

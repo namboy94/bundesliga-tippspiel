@@ -20,8 +20,6 @@ LICENSE"""
 from bundesliga_tippspiel.routes.betting import define_blueprint as __betting
 from bundesliga_tippspiel.routes.information import define_blueprint \
     as __information
-from bundesliga_tippspiel.routes.reminder import define_blueprint \
-    as __reminder
 from bundesliga_tippspiel.routes.settings import define_blueprint as __settings
 from bundesliga_tippspiel.routes.api.putters import define_blueprint \
     as __putters
@@ -33,7 +31,6 @@ from flask.blueprints import Blueprint
 from typing import List, Tuple, Callable
 
 blueprint_generators: List[Tuple[Callable[[str], Blueprint], str]] = [
-    (__reminder, "reminder"),
     (__information, "information"),
     (__putters, "putters"),
     (__getters, "getters"),
