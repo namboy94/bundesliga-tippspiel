@@ -101,17 +101,11 @@ class Bet(ModelMixin, db.Model):
         else:
             return False  # pragma: no cover
 
-    def evaluate(self, when_finished: bool = False) -> int:
+    def evaluate(self) -> int:
         """
-        Evaluates the points score on this bet
-        :param when_finished: Only calculate the value
-                              when the match is finished.
-                              Otherwise, returns 0
+        Evaluates the current points score on this bet
         :return: The calculated points
         """
-        if when_finished and not self.match.finished:
-            return 0
-
         points = 0
         bet_diff = self.home_score - self.away_score
         match_diff = \

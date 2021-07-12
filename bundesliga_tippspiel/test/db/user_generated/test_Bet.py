@@ -146,7 +146,7 @@ class TestBet(_ModelTestFramework):
         self.bet.away_score = 0
         self.bet.match.finished = False
         self.assertEqual(self.bet.evaluate(), 15)
-        self.assertEqual(self.bet.evaluate(True), 0)
+        # self.assertEqual(self.bet.evaluate(True), 0) No longer supported
 
     def test_cascades(self):
         """

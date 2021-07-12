@@ -22,6 +22,6 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% elif bet is none %}
     <span class="tag is-danger">0</span>
 {% else %}
-    {% set points=bet.evaluate() %}
+    {% set points=bet.points %}
     <span class="tag is-{{ get_pill_class(points) }}">{{ points }}</span>
 {% endif %}

@@ -128,10 +128,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             ]
         bets.sort(key=lambda x: x.user_id)
         if match_item.has_started:
-            bets.sort(
-                key=lambda x: x.evaluate(when_finished=False),
-                reverse=True
-            )
+            bets.sort(key=lambda x: x.points, reverse=True)
 
         return render_template(
             "info/match.html",

@@ -83,7 +83,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
 
         matchday_points = 0
         for bet in bets:
-            matchday_points += bet.evaluate(when_finished=False)
+            matchday_points += bet.points
 
         bet_match_map = {
             (x.home_team_abbreviation, x.away_team_abbreviation): x

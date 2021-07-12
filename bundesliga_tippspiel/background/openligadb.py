@@ -324,10 +324,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
             "Arminia Bielefeld", "Bielefeld", "BIE",
             wikimedia_icon_urls("en/9/9b/Arminia_Bielefeld_logo.svg")
         )
-    }.get(team_name, (
-        team_name, team_name, team_name[0:3],
-        wikimedia_icon_urls("en/d/df/Bundesliga_logo_(2017).svg")
-    ))
+    }[team_name]
 
 
 def wikimedia_icon_urls(path: str, png_size: int = 500) -> Tuple[str, str]:
