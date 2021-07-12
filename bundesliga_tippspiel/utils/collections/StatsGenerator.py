@@ -86,7 +86,8 @@ class StatsGenerator(Leaderboard):
         matchday = min(self.selected_matchday, self.midpoint)
         return list(sorted([
             (user, position.points)
-            for user, position in self.per_day_history[matchday].items()
+            for user, position
+            in self.per_day_history.get(matchday, {}).items()
         ], key=lambda x: x[1], reverse=True))
 
     def get_second_half_ranking(self) -> List[Tuple[User, int]]:
@@ -100,8 +101,8 @@ class StatsGenerator(Leaderboard):
             first_half_mapping = {user: points for user, points in first_half}
             return list(sorted([
                 (user, position.points - first_half_mapping[user])
-                for user, position in
-                self.per_day_history[self.selected_matchday].items()
+                for user, position
+                in self.per_day_history.get(self.selected_matchday, {}).items()
             ], key=lambda x: x[1], reverse=True))
 
     def get_correct_bets_ranking(self) -> List[Tuple[User, int]]:
@@ -122,7 +123,7 @@ class StatsGenerator(Leaderboard):
             (user, points[0])
             for user, points
             in self.calculate_point_distribution_per_user().items()
-        ], key=lambda x: x[0], reverse=True))
+        ], key=lambda x: x[1], reverse=True))
 
     def get_points_average_ranking(self) -> List[Tuple[User, float]]:
         """
@@ -131,10 +132,12 @@ class StatsGenerator(Leaderboard):
         per_user = {user: [] for user in self.users}
         for bet in self.bets:
             per_user[bet.user].append(bet.points)
-        return list(sorted([
-            (user, (sum(points)/len(points)))
-            for user, points in per_user.items()
-        ], key=lambda x: x[0], reverse=True))
+        ranking = []
+        for user, points in per_user.items():
+            total = len(points)
+            avg = 0.0 if total == 0 else sum(points) / total
+            ranking.append((user, avg))
+        return list(sorted(ranking, key=lambda x: x[1], reverse=True))
 
     def get_participation_ranking(self) -> List[Tuple[User, float]]:
         """
@@ -146,9 +149,9 @@ class StatsGenerator(Leaderboard):
             for bet in match.bets:
                 participation[bet.user] += 1
         return list(sorted([
-            (user, (count / total))
+            (user, 0.0 if total == 0 else (count / total))
             for user, count in participation.items()
-        ], key=lambda x: x[0], reverse=True))
+        ], key=lambda x: x[1], reverse=True))
 
     def get_points_distribution(self) -> Dict[int, int]:
         """
@@ -195,7 +198,10 @@ class StatsGenerator(Leaderboard):
                 bet.away_team_abbreviation
             ]:
                 points[team].append(bet.points)
-        return list(sorted([
-            (team_map[team], sum(results) / len(results))
-            for team, results in points.items()
-        ], key=lambda x: x[1], reverse=True))
+        ranking = []
+        for team_name, results in points.items():
+            total = len(results)
+            avg = 0.0 if total == 0 else sum(results) / total
+            team = team_map[team_name]
+            ranking.append((team, avg))
+        return list(sorted(ranking, key=lambda x: x[1], reverse=True))

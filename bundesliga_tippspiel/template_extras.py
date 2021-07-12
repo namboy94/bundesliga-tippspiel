@@ -21,8 +21,7 @@ from typing import Dict, Any
 from flask_login import current_user
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings
-from bundesliga_tippspiel.actions.GetReminderSettingsAction import \
-    GetReminderSettingsAction
+from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 
 
 def profile_extras() -> Dict[str, Any]:
@@ -31,7 +30,10 @@ def profile_extras() -> Dict[str, Any]:
     reminders.
     :return: The variables to forward to the template
     """
-    reminder_settings = GetReminderSettingsAction().execute()["settings"]
+    reminder_settings = {
+        x.reminder_type: x for x in
+        ReminderSettings.query.filter_by(user=current_user).all()
+    }
     reminder_time = None
     for reminder in reminder_settings.values():
         if reminder is not None:

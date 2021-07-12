@@ -50,11 +50,11 @@ class Goal(ModelMixin, db.Model):
         )
     )
 
-    home_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
-    away_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
     league: str = db.Column(db.String(255), primary_key=True)
     season: int = db.Column(db.Integer, primary_key=True)
     matchday: int = db.Column(db.Integer, primary_key=True)
+    home_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
+    away_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
     home_score: int = db.Column(db.Integer, primary_key=True)
     away_score: int = db.Column(db.Integer, primary_key=True)
 

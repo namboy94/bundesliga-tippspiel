@@ -43,6 +43,9 @@ class Match(ModelMixin, db.Model):
         """
         super().__init__(*args, **kwargs)
 
+    league: str = db.Column(db.String(255), primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True)
+    matchday: int = db.Column(db.Integer, primary_key=True)
     home_team_abbreviation: str = db.Column(
         db.String(3),
         db.ForeignKey("teams.abbreviation"),
@@ -53,9 +56,6 @@ class Match(ModelMixin, db.Model):
         db.ForeignKey("teams.abbreviation"),
         primary_key=True
     )
-    season: int = db.Column(db.Integer, primary_key=True)
-    league: str = db.Column(db.String(255), primary_key=True)
-    matchday: int = db.Column(db.Integer, primary_key=True)
 
     home_current_score: int = db.Column(db.Integer, nullable=False)
     away_current_score: int = db.Column(db.Integer, nullable=False)

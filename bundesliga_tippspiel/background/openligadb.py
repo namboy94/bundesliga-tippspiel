@@ -65,7 +65,7 @@ def update_match_data(
         db.session.merge(team)
 
     for match_info in match_data:
-        match = parse_match(match_info, int(season))
+        match = parse_match(match_info, league, int(season))
         match = db.session.merge(match)
 
         home_score = 0
@@ -95,10 +95,11 @@ def update_match_data(
     db.session.commit()
 
 
-def parse_match(match_data: Dict[str, Any], season: int) -> Match:
+def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
     """
     Parses a Match object from JSON match data
     :param match_data: The match data to parse
+    :param league: The league
     :param season: The season
     :return: The generated Match object
     """
@@ -131,6 +132,7 @@ def parse_match(match_data: Dict[str, Any], season: int) -> Match:
         home_team_abbreviation=home_team_abbreviation,
         away_team_abbreviation=away_team_abbreviation,
         season=season,
+        league=league,
         matchday=match_data["Group"]["GroupOrderID"],
         home_current_score=cur_home,
         away_current_score=cur_away,
@@ -171,6 +173,8 @@ def parse_goal(goal_data: Dict[str, Any], match: Match) -> Optional[Goal]:
         home_team_abbreviation=match.home_team_abbreviation,
         away_team_abbreviation=match.away_team_abbreviation,
         season=match.season,
+        league=match.league,
+        matchday=match.matchday,
         player_name=goal_data["GoalGetterName"],
         player_team_abbreviation=None,
         minute=minute,

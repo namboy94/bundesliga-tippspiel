@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import Tuple, List, Dict
 from jerrycan.db.User import User
-from bundesliga_tippspiel.db import Team, LeaderboardEntry, Bet
+from bundesliga_tippspiel.db import Team, LeaderboardEntry
 from bundesliga_tippspiel.utils.collections.StatsGenerator import \
     StatsGenerator
 
@@ -47,10 +47,11 @@ class UserStatsGenerator(StatsGenerator):
         """
         super().__init__(league, season, matchday, include_bots)
         self.user = user
-        self.user_history = [
+        histories = [
             history for history_user, history in self.history
             if history_user.id == self.user.id
-        ][0]
+        ]
+        self.user_history = [] if len(histories) == 0 else histories[0]
         self.per_day_user_history: Dict[int, LeaderboardEntry] = {
             x.matchday: x for x in self.user_history
         }
@@ -60,8 +61,11 @@ class UserStatsGenerator(StatsGenerator):
         """
         :return: The current position of the user
         """
-        return self.per_day_user_history[self.selected_matchday]\
-            .get_position_info(self.include_bots)[0]
+        history = self.per_day_user_history.get(self.selected_matchday)
+        if history is None:
+            return 0
+        else:
+            return history.get_position_info(self.include_bots)[0]
 
     def get_user_first_half_position(self) -> int:
         """
@@ -99,7 +103,8 @@ class UserStatsGenerator(StatsGenerator):
         """
         :return: The user's current point total
         """
-        return self.per_day_user_history[self.selected_matchday].points
+        history = self.per_day_user_history.get(self.selected_matchday)
+        return 0 if history is None else history.points
 
     def get_user_bet_count(self) -> int:
         """
@@ -112,7 +117,8 @@ class UserStatsGenerator(StatsGenerator):
         :return: The average points per bet of the user
         """
         points = [bet.points for bet in self.user_bets]
-        return sum(points) / len(points)
+        total = len(points)
+        return 0.0 if total == 0 else sum(points) / total
 
     def get_user_participation(self) -> float:
         """
@@ -156,7 +162,10 @@ class UserStatsGenerator(StatsGenerator):
         :param ranking: The ranking to extract from
         :return: The extracted value
         """
-        return [x for x in ranking if x[0].id == self.user.id][0][1]
+        try:
+            return [x for x in ranking if x[0].id == self.user.id][0][1]
+        except IndexError:
+            return 0.0
 
     def get_user_points_distribution(self) -> Dict[int, int]:
         """

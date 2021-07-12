@@ -217,7 +217,8 @@ class TestMatch(_ModelTestFramework):
         self.assertEqual(
             self.match.url,
             self.config.base_url() +
-            f"/match/{self.match.league}/{self.match.season}/"
+            f"/match/"
+            f"{self.match.league}/{self.match.season}/{self.match.matchday}/"
             f"{self.match.home_team_abbreviation}_"
             f"{self.match.away_team_abbreviation}"
         )

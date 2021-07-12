@@ -95,7 +95,7 @@ class TestMatchDataUpdate(_TestFramework):
             self.assertTrue(len(team.short_name) <= 16)
             self.assertTrue(len(team.abbreviation) == 3)
 
-        fcb_tsg = Match.query.get(("FCB", "TSG", 2018))  # type: Match
+        fcb_tsg = Match.query.get(("bl1", 2018, 1, "FCB", "TSG"))  # type: Match
         self.assertEqual(3, fcb_tsg.home_current_score)
         self.assertEqual(1, fcb_tsg.away_current_score)
 
