@@ -38,7 +38,7 @@ class TestStatsRoute(_RouteTestFramework):
         team_one, team_two, _, match, _ = self.generate_sample_match_data()
         finished_match = Match(
             home_team=team_two, away_team=team_one,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=True, finished=True,
             home_current_score=0, away_current_score=0,
             season=self.config.season(),

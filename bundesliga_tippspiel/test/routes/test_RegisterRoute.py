@@ -20,9 +20,10 @@ LICENSE"""
 from unittest import mock
 from typing import List, Optional, Tuple
 # noinspection PyProtectedMember
+from jerrycan.db.User import User
+
 from bundesliga_tippspiel.test.routes.RouteTestFramework import \
     _RouteTestFramework
-from bundesliga_tippspiel.utils.db import username_exists
 from bundesliga_tippspiel.Config import Config
 
 
@@ -52,7 +53,7 @@ class TestRegisterRoute(_RouteTestFramework):
         Tests (a) successful request(s)
         :return: None
         """
-        self.assertFalse(username_exists("TestUser"))
+        self.assertFalse("TestUser" in [x.username for x in User.query.all()])
         post = self.client.post("/register", follow_redirects=True, data={
             "username": "TestUser",
             "email": Config.SMTP_ADDRESS,
@@ -62,14 +63,14 @@ class TestRegisterRoute(_RouteTestFramework):
         })
         self.assertEqual(post.status_code, 200)
         self.assertTrue(b"Siehe in deiner Email-Inbox nach" in post.data)
-        self.assertTrue(username_exists("TestUser"))
+        self.assertTrue("TestUser" in [x.username for x in User.query.all()])
 
     def test_unsuccessful_requests(self):
         """
         Tests (an) unsuccessful request(s)
         :return: None
         """
-        self.assertFalse(username_exists("TestUser"))
+        self.assertFalse("TestUser" in [x.username for x in User.query.all()])
         failed_post = self.client.post(
             "/register",
             follow_redirects=True,
@@ -83,4 +84,4 @@ class TestRegisterRoute(_RouteTestFramework):
         )
         self.assertFalse(b"Siehe in deiner Email-Inbox" in failed_post.data)
         self.assertTrue(b"Die angegebenen Passw" in failed_post.data)
-        self.assertFalse(username_exists("TestUser2"))
+        self.assertFalse("TestUser2" in [x.username for x in User.query.all()])

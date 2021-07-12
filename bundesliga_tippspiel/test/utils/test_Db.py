@@ -20,8 +20,6 @@ LICENSE"""
 from jerrycan.db.User import User
 # noinspection PyProtectedMember
 from bundesliga_tippspiel.test.TestFramework import _TestFramework
-from bundesliga_tippspiel.utils.db import user_exists, username_exists, \
-    email_exists
 
 
 class TestDb(_TestFramework):
@@ -37,10 +35,14 @@ class TestDb(_TestFramework):
         existing = self.generate_sample_user()[0]
         not_existing = User(id=3, username="NA", email="na@na.com")
 
-        self.assertTrue(user_exists(existing.id))
-        self.assertTrue(email_exists(existing.email))
-        self.assertTrue(username_exists(existing.username))
+        users = User.query.all()
+        user_ids = [x.id for x in users]
+        emails = [x.email for x in users]
+        usernames = [x.username for x in users]
 
-        self.assertFalse(user_exists(not_existing.id))
-        self.assertFalse(email_exists(not_existing.email))
-        self.assertFalse(username_exists(not_existing.username))
+        self.assertTrue(existing.id in user_ids)
+        self.assertTrue(existing.email in emails)
+        self.assertTrue(existing.username in usernames)
+        self.assertFalse(not_existing.id in user_ids)
+        self.assertFalse(not_existing.email in emails)
+        self.assertFalse(not_existing.username in usernames)

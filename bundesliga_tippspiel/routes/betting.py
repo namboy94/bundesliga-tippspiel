@@ -18,12 +18,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List
-from flask import render_template, request, Blueprint, flash, url_for, redirect
+from flask import render_template, request, Blueprint, flash, url_for, redirect, abort
 from flask_login import login_required, current_user
 from jerrycan.base import db
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db import Match
-from bundesliga_tippspiel.utils.matchday import get_matchday_info
+from bundesliga_tippspiel.utils.matchday import validate_matchday
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
 
@@ -42,11 +42,8 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Displays all matches for the current matchday with entries for betting.
         :return: The response
         """
-        return get_bets(
-            Config.OPENLIGADB_LEAGUE,
-            Config.season(),
-            get_matchday_info()[0]
-        )
+        league, season, matchday = validate_matchday(None, None, None)
+        return get_bets(league, season, matchday)
 
     @blueprint.route("/bets/<string:league>/<int:season>/<int:matchday>",
                      methods=["GET"])
@@ -59,6 +56,11 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :param matchday: The matchday to display
         :return: The response
         """
+        validated = validate_matchday(None, None, None)
+        if validated is None:
+            return abort(404)
+        league, season, matchday = validated
+
         matches: List[Match] = Match.query.filter_by(
             matchday=matchday,
             season=season,
@@ -145,6 +147,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         db.session.commit()
 
         flash("Tipps erfolgreich gesetzt", "success")
-        return redirect(url_for("betting.get_bets"))
+        return redirect(url_for("betting.get_current_bets"))
 
     return blueprint

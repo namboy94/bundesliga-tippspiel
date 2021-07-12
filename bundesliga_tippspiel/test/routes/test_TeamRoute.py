@@ -63,7 +63,7 @@ class TestTeamRoute(_RouteTestFramework):
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_three,
-            matchday=3, kickoff="2019-01-01:01:02:03",
+            matchday=3, kickoff="2019-01-01:01-02-03",
             started=True, finished=True,
             home_current_score=2, away_current_score=1,
             season=self.config.season(),
@@ -84,7 +84,7 @@ class TestTeamRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        return "/team/{}".format(self.team_one.id), \
+        return "/team/{}".format(self.team_one.abbreviation), \
                [], \
                self.team_one.name, \
                True
@@ -109,5 +109,7 @@ class TestTeamRoute(_RouteTestFramework):
         :return: None
         """
         self.login()
-        resp = self.client.get("/team/1000000000")
+        resp = self.client.get("/team/abc")
+        self.assertTrue(b"Error 404" in resp.data)
+        resp = self.client.get("/team/abcde")
         self.assertTrue(b"Error 404" in resp.data)

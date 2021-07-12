@@ -19,7 +19,7 @@ LICENSE"""
 
 from typing import List
 from jerrycan.base import db
-from flask import render_template, Blueprint, flash, redirect, url_for
+from flask import render_template, Blueprint, abort
 from flask_login import login_required, current_user
 from bundesliga_tippspiel.db import Team, Player, DisplayBotsSettings, Bet, Match
 
@@ -45,8 +45,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         ).options(db.joinedload(Team.players)
                   .subqueryload(Player.goals)).first()
         if team_info is None:
-            flash("Dieses Team existiert nicht", "danger")
-            return redirect(url_for("static.index"))
+            return abort(404)
 
         recent_matches = [x for x in team_info.matches if x.finished]
         recent_matches.sort(key=lambda x: x.kickoff, reverse=True)
@@ -88,39 +87,41 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             matches=match_data
         )
 
-    @blueprint.route("/match/<string:league>/<int:season>/<string:matchup>",
+    @blueprint.route("/match/<string:league>/<int:season>/"
+                     "<int:matchday>/<string:matchup>",
                      methods=["GET"])
     @login_required
-    def match(league: str, season: int, matchup: str):
+    def match(league: str, season: int, matchday: int, matchup: str):
         """
         Displays a single match
         :param league: The league of the match
         :param season: The season of the match
+        :param matchday: The matchday of the match
         :param matchup: The matchup string ('hometeam_awayteam')
         :return: The Response
         """
         try:
-            home, away = matchup.lower().split("_")
+            home, away = matchup.split("_")
             match_item = Match.query.filter_by(
                 league=league,
                 season=season,
+                matchday=matchday,
                 home_team_abbreviation=home,
                 away_team_abbreviation=away
             ).options(db.joinedload(Match.goals)).first()
             if match_item is None:
                 raise ValueError()
         except ValueError:
-            flash("Den angegebenen Spieltag gibt es nicht", "danger")
-            return redirect(url_for("bets.get_bets"))
+            return abort(404)
 
         bets: List[Bet] = Bet.query.filter_by(
             league=league,
             season=season,
+            matchday=matchday,
             home_team_abbreviation=home,
             away_team_abbreviation=away
         ).options(db.joinedload(Bet.user)).all()
-        bot_setting = DisplayBotsSettings.get_state(current_user)
-        if bot_setting is None or not bot_setting.display_bots:
+        if not DisplayBotsSettings.get_state(current_user):
             bets = [
                 x for x in bets
                 if DisplayBotsSettings.bot_symbol() not in x.user.username

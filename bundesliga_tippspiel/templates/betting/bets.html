@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 {% extends "core/base_layout.html" %}
-{% set max_matchday = get_matchday_info()[1] %}
+{% set max_matchday = get_matchday_info(config.OPENLIGADB_LEAGUE, config.season())[1] %}
 {% block body %}
 
     <div class="columns is-mobile is-vcentered has-text-centered">

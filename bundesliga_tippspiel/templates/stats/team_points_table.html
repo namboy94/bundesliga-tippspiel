@@ -31,9 +31,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </tr>
     </thead>
     <tbody>
-        {% for index, (team, points) in team_points %}
+        {% for team, points in team_points %}
             <tr>
-                <td>{{ index + 1 }}</td>
+                <td>{{ loop.index + 1 }}</td>
                 <td>
                     <a href="{{ team.url }}">
                         {{ team.name }}

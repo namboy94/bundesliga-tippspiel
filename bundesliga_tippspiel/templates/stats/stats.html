@@ -25,13 +25,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="columns">
         <div class="column">
             <h3>Rangliste Hinrunde</h3>
-            {% set leaderboard=first_leaderboard %}
-            {% include "components/../ranking/ranking_table.html" %}
+            {% set ranking_data=stats.get_first_half_ranking() %}
+            {% include "ranking/ranking_table.html" %}
         </div>
         <div class="column">
             <h3>Rangliste Rückrunde</h3>
-            {% set leaderboard=second_leaderboard %}
-            {% include "components/../ranking/ranking_table.html" %}
+            {% set ranking_data=stats.get_second_half_ranking() %}
+            {% include "ranking/ranking_table.html" %}
         </div>
     </div>
 
@@ -39,40 +39,42 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="columns">
         <div class="column">
             <h3>Korrekte Tipps</h3>
-            {% set leaderboard=max_leaderboard %}
-            {% include "components/../ranking/ranking_table.html" %}
+            {% set ranking_data=stats.get_correct_bets_ranking() %}
+            {% include "ranking/ranking_table.html" %}
         </div>
         <div class="column">
             <h3>Komplett falsche Tipps</h3>
-            {% set leaderboard=zero_leaderboard %}
-            {% include "components/../ranking/ranking_table.html" %}
+            {% set ranking_data=stats.get_wrong_bets_ranking() %}
+            {% include "ranking/ranking_table.html" %}
         </div>
     </div>
 
     <div class="columns">
         <div class="column">
             <h3>Punkte/Tipp</h3>
-            {% set leaderboard=average_ranking %}
+            {% set ranking_data=stats.get_points_average_ranking() %}
             {% set unit="Punkte/Tipp" %}
-            {% include "components/../ranking/ranking_table.html" %}
+            {% include "ranking/ranking_table.html" %}
         </div>
         <div class="column">
             <h3>Teilnahme</h3>
-            {% set leaderboard=participation_ranking %}
+            {% set ranking_data=stats.get_participation_ranking() %}
             {% set unit="%" %}
-            {% include "components/../ranking/ranking_table.html" %}
+            {% include "ranking/ranking_table.html" %}
         </div>
     </div>
 
     <div class="columns">
         <div class="column is-6 is-offset-3">
-            {% include "components/points_distribution_pie_chart.html" %}
+            {% set distribution = stats.get_points_distribution() %}
+            {% include "stats/points_distribution_pie_chart.html" %}
         </div>
     </div>
 
     <div class="container is-fluid">
         <h3>Punkte pro Team</h3>
-        {% include "components/team_points_table.html" %}
+        {% set team_points = stats.calculate_average_points_per_team() %}
+        {% include "stats/team_points_table.html" %}
     </div>
 
 {% endblock %}

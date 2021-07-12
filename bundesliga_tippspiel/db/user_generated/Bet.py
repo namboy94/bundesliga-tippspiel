@@ -29,6 +29,9 @@ class Bet(ModelMixin, db.Model):
     Model that describes the 'bets' SQL table
     """
 
+    MAX_POINTS: int = 15
+    POSSIBLE_POINTS: List[int] = [0, 3, 7, 10, 12, 15]
+
     def __init__(self, *args, **kwargs):
         """
         Initializes the Model
@@ -60,6 +63,7 @@ class Bet(ModelMixin, db.Model):
 
     home_score: int = db.Column(db.Integer, nullable=False)
     away_score: int = db.Column(db.Integer, nullable=False)
+    points: int = db.Column(db.Integer, nullable=True)
 
     user: User = db.relationship(
         "User", backref=db.backref("bets", cascade="all, delete")

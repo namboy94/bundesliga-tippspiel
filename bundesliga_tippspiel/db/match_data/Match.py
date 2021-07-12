@@ -179,6 +179,7 @@ class Match(ModelMixin, db.Model):
             "info.match",
             league=self.league,
             season=self.season,
+            matchday=self.matchday,
             matchup=f"{self.home_team_abbreviation}_"
                     f"{self.away_team_abbreviation}"
         )

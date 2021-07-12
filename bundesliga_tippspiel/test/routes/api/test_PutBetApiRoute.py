@@ -47,21 +47,21 @@ class TestPutBetApiRoute(_ApiRouteTestFramework):
         self.db.session.commit()
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=False, finished=True,
             home_current_score=0, away_current_score=0,
             season=self.config.season()
         )
         self.match_two = Match(
             home_team=self.team_two, away_team=self.team_one,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=False, finished=False,
             home_current_score=0, away_current_score=0,
             season=self.config.season()
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_three,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=True, finished=False,
             home_current_score=0, away_current_score=0,
             season=self.config.season()

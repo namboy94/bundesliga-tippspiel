@@ -23,7 +23,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h1>{{ user.username }}</h1>
     <div class="container is-hidden-mobile ranking-chart-container">
         <h3>Positionsentwicklung</h3>
-        {% include "components/../tables/../ranking/leaderboard_chart.html" %}
+        {% set chart_history=user_stats.history_to_chart_data() %}
+        {% include "ranking/leaderboard_chart.html" %}
     </div>
     <div class="columns">
         <div class="column is-6">
@@ -32,61 +33,63 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 <tbody>
                     <tr>
                         <td>Position</td>
-                        <td>{{ player_current_placement }}</td>
+                        <td>{{ user_stats.get_user_position() }}</td>
                     </tr>
                     <tr>
                         <td>Position (Hinrunde)</td>
-                        <td>{{ player_hinrunde_placement }}</td>
+                        <td>{{ user_stats.get_user_first_half_position() }}</td>
                     </tr>
                     <tr>
                         <td>Position (Rückrunde)</td>
-                        <td>{{ player_ruckrunde_placement }}</td>
+                        <td>{{ user_stats.get_user_second_half_position() }}</td>
                     </tr>
                     <tr>
                         <td>Beste Position</td>
-                        <td>{{ player_best_placement }}</td>
+                        <td>{{ user_stats.get_user_best_position() }}</td>
                     </tr>
                     <tr>
                         <td>Schlechteste Position</td>
-                        <td>{{ player_worst_placement }}</td>
+                        <td>{{ user_stats.get_user_worst_position() }}</td>
                     </tr>
                     <tr>
                         <td>Punkte</td>
-                        <td>{{ player_points }}</td>
+                        <td>{{ user_stats.get_user_points() }}</td>
                     </tr>
                     <tr>
                         <td>Anzahl Tipps</td>
-                        <td>{{ player_bet_count }}</td>
+                        <td>{{ user_stats.get_user_bet_count() }}</td>
                     </tr>
                     <tr>
                         <td>Punkteschnitt</td>
-                        <td>{{ player_avg_points }}</td>
+                        <td>{{ user_stats.get_user_betting_average() }}</td>
                     </tr>
                     <tr>
                         <td>Teilnahme</td>
-                        <td>{{ player_participation }}</td>
+                        <td>{{ user_stats.get_user_participation() }}</td>
                     </tr>
                     <tr>
                         <td>Korrekte Tipps</td>
-                        <td>{{ player_correct_bets_count }}</td>
+                        <td>{{ user_stats.get_user_correct_bets() }}</td>
                     </tr>
                     <tr>
                         <td>Komplett falsche Tipps</td>
-                        <td>{{ player_incorrect_bets_count }}</td>
+                        <td>{{ user_stats.get_user_wrong_bets() }}</td>
                     </tr>
                     <tr>
                         <td>Bestes Team</td>
                         <td>
-                            <a href="{{ player_best_team[0].url }}">
-                                {{ player_best_team[0].short_name }} ({{ player_best_team[1] }})
+                            {% set best_team, best_team_avg = user_stats.get_user_best_team() %}
+                            <a href="{{ best_team.url }}">
+                                {{ best_team.short_name }} ({{ best_team_avg }})
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td>Schlechtestes Team</td>
                         <td>
-                            <a href="{{ player_worst_team[0].url }}">
-                                {{ player_worst_team[0].short_name }}  ({{ player_worst_team[1] }})
+                            {% set worst_team, worst_team_avg = user_stats.get_user_worst_team() %}
+                            <a href="{{ worst_team.url }}">
+                                {{ worst_team.short_name }} ({{ worst_team_avg }})
                             </a>
                         </td>
                     </tr>
@@ -94,11 +97,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </table>
         </div>
         <div class="column is-6">
-            {% include "components/points_distribution_pie_chart.html" %}
+            {% set distribution = user_stats.get_user_points_distribution() %}
+            {% include "stats/points_distribution_pie_chart.html" %}
         </div>
     </div>
     <div class="container is-fluid">
         <h3>Punkte pro Team</h3>
-        {% include "components/team_points_table.html" %}
+        {% set team_points = user_stats.get_user_average_points_per_team() %}
+        {% include "stats/team_points_table.html" %}
     </div>
 {% endblock %}

@@ -18,14 +18,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Optional
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, abort
 from flask_login import login_required, current_user
-from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db import DisplayBotsSettings
 from bundesliga_tippspiel.utils.collections.Leaderboard import Leaderboard
 from bundesliga_tippspiel.utils.collections.LeagueTable import LeagueTable
-from bundesliga_tippspiel.utils.routes import action_route
-from bundesliga_tippspiel.utils.matchday import get_matchday_info
+from bundesliga_tippspiel.utils.matchday import validate_matchday
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -42,7 +40,6 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         methods=["GET"]
     )
     @login_required
-    @action_route
     def leaderboard(
             league: Optional[str] = None,
             season: Optional[int] = None,
@@ -55,10 +52,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :param matchday: The matchday for which to display the leaderboard
         :return: The Response
         """
-        if league is None or season is None or matchday is None:
-            league = Config.OPENLIGADB_LEAGUE
-            season = Config.season()
-            matchday = get_matchday_info()[0]
+        validated = validate_matchday(league, season, matchday)
+        if validated is None:
+            return abort(404)
+        league, season, matchday = validated
 
         matchday_leaderboard = Leaderboard(
             league,
@@ -90,10 +87,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :param matchday: The matchday to display
         :return: The response
         """
-        if league is None or season is None or matchday is None:
-            league = Config.OPENLIGADB_LEAGUE
-            season = Config.season()
-            matchday = get_matchday_info()[0]
+        validated = validate_matchday(league, season, matchday)
+        if validated is None:
+            return abort(404)
+        league, season, matchday = validated
 
         user = None
         title = "Aktuelle Bundesliga Tabelle"

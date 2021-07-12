@@ -48,7 +48,7 @@ class TestBetsRoute(_RouteTestFramework):
         self.db.session.commit()
         self.match_one = Match(
             home_team=self.team_one, away_team=self.team_two,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=False, finished=True,
             home_current_score=0, away_current_score=0,
             season=self.config.season(),
@@ -56,7 +56,7 @@ class TestBetsRoute(_RouteTestFramework):
         )
         self.match_two = Match(
             home_team=self.team_two, away_team=self.team_one,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=False, finished=False,
             home_current_score=0, away_current_score=0,
             season=self.config.season(),
@@ -64,7 +64,7 @@ class TestBetsRoute(_RouteTestFramework):
         )
         self.match_three = Match(
             home_team=self.team_one, away_team=self.team_three,
-            matchday=1, kickoff="2019-01-01:01:02:03",
+            matchday=1, kickoff="2019-01-01:01-02-03",
             started=True, finished=False,
             home_current_score=1, away_current_score=3,
             season=self.config.season(),
@@ -111,6 +111,7 @@ class TestBetsRoute(_RouteTestFramework):
         self.login()
         self.assertEqual(len(Bet.query.all()), 0)
         match_id = f"{self.match_one.league}_{self.match_one.season}_" \
+                   f"{self.match_one.matchday}_" \
                    f"{self.match_one.home_team_abbreviation}_" \
                    f"{self.match_one.away_team_abbreviation}"
         resp = self.client.post(self.route_path, follow_redirects=True, data={

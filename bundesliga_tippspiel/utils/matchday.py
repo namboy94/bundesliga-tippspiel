@@ -17,21 +17,50 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Tuple
+from typing import Tuple, Optional
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Match import Match
 
 
-def get_matchday_info() -> Tuple[int, int]:
+def get_matchday_info(league: str, season: int) -> Tuple[int, int]:
     """
     Retrieves information on matchdays
+    :param league: The league for which to retrieve the information
+    :param season: The season for which to retrieve the information
     :return: The current matchday as well as the maximum matchday
     """
     all_matches = Match.query.filter_by(
-        season=Config.season(),
-        league=Config.OPENLIGADB_LEAGUE
+        season=season,
+        league=league
     ).all()
     started = [x for x in all_matches if x.has_started]
     current_matchday = max(started, key=lambda x: x.matchday).matchday
     max_matchday = max(all_matches, key=lambda x: x.matchday).matchday
     return current_matchday, max_matchday
+
+
+def validate_matchday(
+        league: Optional[str],
+        season: Optional[str],
+        matchday: Optional[int]
+) -> Optional[Tuple[str, int, int]]:
+    """
+    Performs checks that a league/season/matchday combination is valid.
+    Can also fill these values with default values
+    :param league: The league to check
+    :param season: The season to check
+    :param matchday: The matchday to check
+    :return: league, season, matchday if valid, None if invalid
+    """
+    if league is None:
+        league = Config.OPENLIGADB_LEAGUE
+    if season is None:
+        season = Config.season()
+    current_matchday, max_matchday = get_matchday_info(league, season)
+    if matchday is None:
+        matchday = current_matchday
+
+    if not 1 <= matchday <= max_matchday:
+        return None
+    else:
+        return league, season, matchday

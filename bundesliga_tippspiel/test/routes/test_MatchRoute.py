@@ -48,8 +48,10 @@ class TestMatchRoute(_RouteTestFramework):
                  None if no such page exists,
                  An indicator for if the page requires authentication or not
         """
-        url = f"/match/{self.match.home_team_abbreviation}/" \
-              f"{self.match.away_team_abbreviation}/{self.match.season}"
+        url = f"/match/{self.match.league}/{self.match.season}/" \
+              f"{self.match.matchday}/" \
+              f"{self.match.home_team_abbreviation}_" \
+              f"{self.match.away_team_abbreviation}"
         return url, [], "VS", True
 
     def test_successful_requests(self):
@@ -58,11 +60,15 @@ class TestMatchRoute(_RouteTestFramework):
         :return: None
         """
         self.login()
-        resp = self.client.get(self.route_path).data
-        self.assertTrue(self.team_one.short_name.encode("utf-8") in resp)
-        self.assertTrue(self.team_two.short_name.encode("utf-8") in resp)
-        self.assertTrue(self.goal.player.name.encode("utf-8") in resp)
-        self.assertTrue(self.bet.user.username.encode("utf-8") in resp)
+        print(self.route_path)
+        resp = self.client.get(self.route_path)
+        data = resp.data
+        self.assertTrue(self.team_one.short_name.encode("utf-8") in data)
+        self.assertTrue(self.team_two.short_name.encode("utf-8") in data)
+        self.assertTrue(self.goal.player.name.encode("utf-8") in data)
+        with open("/tmp/x.html", "wb") as f:
+            f.write(data)
+        self.assertTrue(self.bet.user.username.encode("utf-8") in data)
 
     def test_unsuccessful_requests(self):
         """
@@ -76,5 +82,5 @@ class TestMatchRoute(_RouteTestFramework):
         )
 
         self.login()
-        resp = self.client.get("/match/1000")
+        resp = self.client.get("/match/bl1/2010/1/abc_def")
         self.assertTrue(b"Error 404" in resp.data)

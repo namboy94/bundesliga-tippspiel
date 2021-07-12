@@ -31,7 +31,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         </tr>
     </thead>
     <tbody>
-        {% for position, tendency, tendency_class, user, season_wins, matchday_wins, points in ranking_data %}
+        {% for entry in ranking_data %}
+            {% if entry|length == 2 %}
+                {% set tendency, tendency_class, season_wins, matchday_wins = [none, none, [], []] %}
+                {% set position = loop.index + 1 %}
+                {% set user, points = entry %}
+            {% else %}
+                {% set position, tendency, tendency_class, user, season_wins, matchday_wins, points = entry%}
+            {% endif %}
             <tr class="{% if position == 1 %}table-top{% elif current_user.id == user.id %}is-selected{% endif %}">
                 <td>
                     {% if tendency is not none %}
