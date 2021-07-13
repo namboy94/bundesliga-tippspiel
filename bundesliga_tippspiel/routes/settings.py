@@ -17,10 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import Blueprint, request, flash, redirect, url_for
+from flask import Blueprint, request, flash, redirect, url_for, make_response, abort
 from flask_login import login_required, current_user
-from jerrycan.base import db
+from jerrycan.base import db, app
 from jerrycan.enums import AlertSeverity
+from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings
 from bundesliga_tippspiel.db.settings.ReminderSettings import \
@@ -82,5 +83,25 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             flash("Erinnerungseinstellungen gespeichert", "success")
 
         return redirect(url_for("user_management.profile"))
+
+    @blueprint.route("/change_league", methods=["GET"])
+    @login_required
+    def change_league():
+        """
+        Changes the user's currently displayed league by storing these
+        values in a cookie
+        :return: None
+        """
+        try:
+            league = request.args.get("league", Config.OPENLIGADB_LEAGUE)
+            season = request.args.get("season", Config.OPENLIGADB_SEASON)
+            int(season)
+        except ValueError:
+            return abort(400)
+        app.logger.info(request.referrer)
+        response = make_response(redirect(request.referrer))
+        response.set_cookie("league", league)
+        response.set_cookie("season", season)
+        return response
 
     return blueprint

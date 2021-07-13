@@ -93,7 +93,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         league, season, matchday = validated
 
         user = None
-        title = "Aktuelle Bundesliga Tabelle"
+        title = "Aktuelle Ligatabelle"
         if request.args.get("use_bets") == "1":
             user = current_user
             title = f"Tabelle nach {current_user.username}'s Tipps"

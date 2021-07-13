@@ -18,6 +18,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, Optional
+
+from flask import request
+
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Match import Match
 
@@ -55,10 +58,16 @@ def validate_matchday(
     :param matchday: The matchday to check
     :return: league, season, matchday if valid, None if invalid
     """
+    try:
+        default_league, default_season = get_selected_league()
+    except RuntimeError:
+        default_league, default_season = \
+            Config.OPENLIGADB_LEAGUE, Config.season()
+
     if league is None:
-        league = Config.OPENLIGADB_LEAGUE
+        league = default_league
     if season is None:
-        season = Config.season()
+        season = default_season
     current_matchday, max_matchday = get_matchday_info(league, season)
     if matchday is None:
         matchday = current_matchday
@@ -67,3 +76,15 @@ def validate_matchday(
         return None
     else:
         return league, season, matchday
+
+
+def get_selected_league() -> Tuple[str, int]:
+    """
+    :return: The league currently selected by the user by means of cookies
+    """
+    league = str(request.cookies.get("league", Config.OPENLIGADB_LEAGUE))
+    try:
+        season = int(request.cookies.get("season", Config.season()))
+    except ValueError:
+        season = Config.season()
+    return league, season

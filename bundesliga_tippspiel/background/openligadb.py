@@ -224,3 +224,12 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
         icon_svg=svg,
         icon_png=png
     )
+
+
+def update_extra_leagues():
+    """
+    Updates any extra leagues
+    :return: None
+    """
+    for league, season in Config.OPENLIGADB_EXTRA_LEAGUES:
+        update_match_data(league, str(season))

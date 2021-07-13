@@ -164,7 +164,7 @@ def __handle_reminder(
 
             send_email(
                 user.email,
-                f"Bundesliga Tippspiel Saison {Config.season_string()}",
+                f"Fußball Tippspiel Saison {Config.season_string()}",
                 message,
                 Config.SMTP_HOST,
                 Config.SMTP_ADDRESS,

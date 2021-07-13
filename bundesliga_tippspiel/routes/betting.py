@@ -20,11 +20,13 @@ LICENSE"""
 from typing import List
 
 from bundesliga_tippspiel.utils.collections.Leaderboard import Leaderboard
-from flask import render_template, request, Blueprint, flash, url_for, redirect, abort
+from flask import render_template, request, Blueprint, flash, url_for, \
+    redirect, abort
 from flask_login import login_required, current_user
 from jerrycan.base import db
 from bundesliga_tippspiel.db import Match, DisplayBotsSettings
-from bundesliga_tippspiel.utils.matchday import validate_matchday
+from bundesliga_tippspiel.utils.matchday import validate_matchday, \
+    get_selected_league
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
 

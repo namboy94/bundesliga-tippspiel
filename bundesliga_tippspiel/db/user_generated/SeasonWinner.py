@@ -53,6 +53,6 @@ class SeasonWinner(ModelMixin, db.Model):
     @property
     def season_string(self) -> str:
         """
-        :return: The season string, e.g. 2019/20
+        :return: The season string, e.g. Bundesliga 2019/20
         """
-        return Config.season_string(self.season)
+        return Config.league_string(self.league, self.season)

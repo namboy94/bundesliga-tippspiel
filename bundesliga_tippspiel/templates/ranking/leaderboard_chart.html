@@ -26,9 +26,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         type: 'line',
         data: {
             labels: [
-                {% for i in range(0, chart_history[0][2]|length - 1) %}
-                    "{{ i + 1 }}",
-                {% endfor %}
+                {% if chart_history|length > 0 %}
+                    {% for i in range(0, chart_history[0][2]|length - 1) %}
+                        "{{ i + 1 }}",
+                    {% endfor %}
+                {% endif %}
                 "Jetzt"
             ],
             datasets: [

@@ -21,7 +21,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img alt="Bundesliga Tippspiel"
+            <img alt="Fußball Tippspiel"
                  class="brand-image"
                  src="{{ url_for('static', filename='images/logo.png') }}">
         </a>
@@ -36,6 +36,24 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="navbar-menu" id="navbar-menu">
 
         <div class="navbar-start">
+
+            {% if current_user.is_authenticated %}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    {% set selected_league, selected_season = get_selected_league() %}
+                    {% set selected_league_string = config.league_string(selected_league, selected_season) %}
+                    <a class="navbar-link">{{ selected_league_string }}</a>
+                    <div class="navbar-dropdown">
+                        {% for league, season in  config.all_leagues() %}
+                            {% set league_string = config.league_string(league, season) %}
+                            <a class="navbar-item {% if selected_league_string == league_string %} active {% endif %}"
+                               href="{{url_for("settings.change_league")}}?season={{ season }}&league={{ league }}">
+                                {{ league_string }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
             <a class="navbar-item {% if request.path == "/" %} active {% endif %}"
                href="{{ url_for("static.index") }}">Home</a>
             {% if not current_user.is_authenticated %}
