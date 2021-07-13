@@ -31,7 +31,7 @@ def send_due_reminders():
     app.logger.info("Checking for new email reminders")
     reminders = ReminderSettings.query.join(ReminderSettings.user).all()
 
-    all_users = User.query.all()
+    all_users = User.query.filter_by(confirmed=True).all()
     for reminder_type in ReminderType:
         reminder_users = [
             reminder.user_id

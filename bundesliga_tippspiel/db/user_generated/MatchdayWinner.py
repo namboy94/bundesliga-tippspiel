@@ -44,7 +44,7 @@ class MatchdayWinner(ModelMixin, db.Model):
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
-        nullable=False
+        nullable=True
     )
 
     user: User = db.relationship(

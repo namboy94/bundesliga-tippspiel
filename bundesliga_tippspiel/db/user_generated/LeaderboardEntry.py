@@ -38,7 +38,7 @@ class LeaderboardEntry(ModelMixin, db.Model):
 
     __tablename__ = "leaderboard_entries"
 
-    league: int = db.Column(db.String(), primary_key=True)
+    league: int = db.Column(db.String(255), primary_key=True)
     season: int = db.Column(db.Integer, primary_key=True)
     matchday: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(

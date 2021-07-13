@@ -9,6 +9,7 @@ RUN apt update && \
     pip3 install flask
 
 RUN pip3 install bundesliga_tippspiel && pip3 uninstall bundesliga_tippspiel -y
+RUN pip3 install jerrycan --upgrade
 
 ADD . flask-app
 RUN cd flask-app && python3 setup.py install

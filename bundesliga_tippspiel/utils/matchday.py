@@ -41,7 +41,7 @@ def get_matchday_info(league: str, season: int) -> Tuple[int, int]:
 
 def validate_matchday(
         league: Optional[str],
-        season: Optional[str],
+        season: Optional[int],
         matchday: Optional[int]
 ) -> Optional[Tuple[str, int, int]]:
     """

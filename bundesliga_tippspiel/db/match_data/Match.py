@@ -43,6 +43,8 @@ class Match(ModelMixin, db.Model):
         """
         super().__init__(*args, **kwargs)
 
+    __tablename__ = "matches"
+
     league: str = db.Column(db.String(255), primary_key=True)
     season: int = db.Column(db.Integer, primary_key=True)
     matchday: int = db.Column(db.Integer, primary_key=True)

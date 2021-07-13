@@ -56,7 +56,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         :param matchday: The matchday to display
         :return: The response
         """
-        validated = validate_matchday(None, None, None)
+        validated = validate_matchday(league, season, matchday)
         if validated is None:
             return abort(404)
         league, season, matchday = validated

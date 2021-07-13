@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from jerrycan.base import db
+import time
+from jerrycan.base import db, app
 from jerrycan.db.User import User
 from typing import List, Dict, Tuple
 from bundesliga_tippspiel.db import Bet, Match, LeaderboardEntry, \
-    DisplayBotsSettings
+    DisplayBotsSettings, MatchdayWinner
+from bundesliga_tippspiel.utils.matchday import get_matchday_info
 
 
 def update_leaderboard():
@@ -29,10 +31,13 @@ def update_leaderboard():
     Updates the leaderboard entries
     :return: None
     """
+    start = time.time()
+    app.logger.info("Updating leaderboard entries")
     update_bet_points()
-    users = User.query.all()
+    users = User.query.filter_by(confirmed=True).all()
     seasons = create_categorized_matches()
     season_points = calculate_matchday_points(users, seasons)
+    process_matchday_winners(season_points)
 
     for (league, season), user_points in season_points.items():
 
@@ -44,6 +49,9 @@ def update_leaderboard():
             process_league_table(
                 league, season, matchday, user_totals
             )
+
+    app.logger.debug(f"Finished leaderboard update in "
+                     f"{time.time()-start:.2f}s")
 
 
 def update_bet_points():
@@ -103,8 +111,40 @@ def calculate_matchday_points(
             for match in matches:
                 for bet in match.bets:
                     user_points[matchday][bet.user] += bet.points
+
         season_points[league_season] = user_points
     return season_points
+
+
+def process_matchday_winners(
+        per_matchday_data: Dict[Tuple[str, int], Dict[int, Dict[User, int]]]
+):
+    """
+    Processes the matchday winners
+    :param per_matchday_data: The points of each user per matchday
+    :return: None
+    """
+    for (league, season), matchday_info in per_matchday_data.items():
+        current_matchday = get_matchday_info(league, season)[0]
+        for matchday, user_points in matchday_info.items():
+            if matchday > current_matchday:
+                continue
+
+            best_user_id, best_points = None, 0
+            for user, points in user_points.items():
+                if points > best_points:
+                    best_user_id, best_points = user.id, points
+                elif points == best_points:
+                    best_user_id = None
+
+            matchday_winner = MatchdayWinner(
+                league=league,
+                season=season,
+                matchday=matchday,
+                user_id=best_user_id
+            )
+            db.session.merge(matchday_winner)
+    db.session.commit()
 
 
 def process_league_table(
@@ -120,7 +160,7 @@ def process_league_table(
     :return: None
     """
     bot_symbol = DisplayBotsSettings.bot_symbol()
-    ranking = [(user, points) for user, points in user_points]
+    ranking = [(user, points) for user, points in user_points.items()]
     ranking.sort(key=lambda x: x[1], reverse=True)
 
     no_bot_ranking = [x for x in ranking if bot_symbol not in x[0].username]

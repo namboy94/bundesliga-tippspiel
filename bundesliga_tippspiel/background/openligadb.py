@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
+import time
 import json
 import requests
 from datetime import datetime
@@ -40,7 +41,8 @@ def update_match_data(
     :param season: The season for which to update the data
     :return: None
     """
-    app.logger.info("Updating match data")
+    start = time.time()
+    app.logger.info("Updating match data using OpenLigaDB")
 
     if league is None:
         league = Config.OPENLIGADB_LEAGUE
@@ -90,9 +92,11 @@ def update_match_data(
             home_score = goal.home_score
             player = parse_player(goal_data, team_abbreviation)
 
-            db.session.merge(goal)
             db.session.merge(player)
+            db.session.merge(goal)
+
     db.session.commit()
+    app.logger.debug(f"Finished OpenLigaDB update in {time.time()-start:.2f}s")
 
 
 def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
