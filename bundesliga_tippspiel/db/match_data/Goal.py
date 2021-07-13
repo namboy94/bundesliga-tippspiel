@@ -66,5 +66,5 @@ class Goal(ModelMixin, db.Model):
     own_goal: bool = db.Column(db.Boolean, nullable=False, default=False)
     penalty: bool = db.Column(db.Boolean, nullable=False, default=False)
 
-    match: Match = db.relationship("Match")
-    player: Player = db.relationship("Player")
+    match: Match = db.relationship("Match", overlaps="goals")
+    player: Player = db.relationship("Player", overlaps="goals")

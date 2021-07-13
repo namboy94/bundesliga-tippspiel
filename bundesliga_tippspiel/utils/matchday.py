@@ -34,7 +34,10 @@ def get_matchday_info(league: str, season: int) -> Tuple[int, int]:
         league=league
     ).all()
     started = [x for x in all_matches if x.has_started]
-    current_matchday = max(started, key=lambda x: x.matchday).matchday
+    if len(started) == 0:
+        current_matchday = 1
+    else:
+        current_matchday = max(started, key=lambda x: x.matchday).matchday
     max_matchday = max(all_matches, key=lambda x: x.matchday).matchday
     return current_matchday, max_matchday
 

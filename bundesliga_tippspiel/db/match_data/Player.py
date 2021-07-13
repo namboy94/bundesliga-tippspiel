@@ -47,5 +47,5 @@ class Player(ModelMixin, db.Model):
         primary_key=True
     )
 
-    team: Team = db.relationship("Team")
+    team: Team = db.relationship("Team", overlaps="players")
     goals: List["Goal"] = db.relationship("Goal", cascade="all, delete")

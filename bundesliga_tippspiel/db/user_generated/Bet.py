@@ -68,7 +68,7 @@ class Bet(ModelMixin, db.Model):
     user: User = db.relationship(
         "User", backref=db.backref("bets", cascade="all, delete")
     )
-    match: Match = db.relationship("Match")
+    match: Match = db.relationship("Match", overlaps="bets")
 
     def __repr__(self) -> str:
         """
