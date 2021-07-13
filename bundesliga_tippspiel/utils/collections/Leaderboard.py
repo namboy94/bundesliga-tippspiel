@@ -46,7 +46,7 @@ class Leaderboard:
         """
         self.league = league
         self.season = season
-        self.matchday = matchday,
+        self.matchday = matchday
         self.include_bots = include_bots
 
         self.season_winners: Dict[int, List[str]] = {}
@@ -73,7 +73,8 @@ class Leaderboard:
                 matchday=matchday
             ).options(db.joinedload(LeaderboardEntry.user)).all()
         self.ranking.sort(key=lambda x: x.position)
-        self.history = LeaderboardEntry.load_history(league, season, matchday)
+        self.history: List[Tuple[User, List["LeaderboardEntry"]]] \
+            = LeaderboardEntry.load_history(league, season, matchday)
 
         if not include_bots:
             self.ranking = [
@@ -112,6 +113,52 @@ class Leaderboard:
                 item.points
             ))
         return table_data
+
+    def matchday_ranking_to_table_data(self) -> List[Tuple[
+        int, None, None, User, List[str], List[int], int
+    ]]:
+        """
+        Calculates the leaderboard ranking to table data for the current
+        matchday only
+        :return: The data as tuple with the following attributes:
+                    - position
+                    - tendency (None in this case)
+                    - tendency-class (None in this case)
+                    - user
+                    - previous season wins (Empty list in this case)
+                    - The matchday wins for the current mtchday only
+                    - points on this matchday
+        """
+        table_data = []
+        matchday_winners = [
+            user_id for user_id, matchdays in self.matchday_winners.items()
+            if self.matchday in matchdays
+        ]
+
+        user_histories = dict(self.history)
+        for item in self.ranking:
+            points = item.points
+            if item.matchday > 1:
+                previous = user_histories[item.user][-2]
+                points -= previous.points
+
+            table_data.append([
+                0,
+                None,
+                None,
+                item.user,
+                [],
+                [self.matchday] if item.user_id in matchday_winners else [],
+                points
+            ])
+        table_data.sort(key=lambda x: x[6], reverse=True)
+        for i in range(0, len(table_data)):
+            table_data[i][0] = i + 1
+
+        table: List[Tuple[
+            int, None, None, User, List[str], List[int], int
+        ]] = [tuple(x) for x in table_data]
+        return table
 
     def history_to_chart_data(self) -> List[Tuple[str, str, List[int]]]:
         """

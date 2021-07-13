@@ -18,11 +18,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List
+
+from bundesliga_tippspiel.utils.collections.Leaderboard import Leaderboard
 from flask import render_template, request, Blueprint, flash, url_for, redirect, abort
 from flask_login import login_required, current_user
 from jerrycan.base import db
-from bundesliga_tippspiel.Config import Config
-from bundesliga_tippspiel.db import Match
+from bundesliga_tippspiel.db import Match, DisplayBotsSettings
 from bundesliga_tippspiel.utils.matchday import validate_matchday
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
@@ -73,6 +74,8 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             flash("Den angegebenen Spieltag gibt es nicht", "danger")
             return redirect(url_for("bets.get_bets"))
         matches.sort(key=lambda x: x.kickoff)
+        has_started = matches[0].has_started
+        all_started = matches[-1].has_started
 
         bets = Bet.query.filter_by(
             matchday=matchday,
@@ -98,13 +101,25 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             )
             bet_infos.append((match_item, bet_match_map.get(index)))
 
+        leaderboard = None
+        if has_started:
+            leaderboard = Leaderboard(
+                league,
+                season,
+                matchday,
+                DisplayBotsSettings.get_state(current_user)
+            )
+
         return render_template(
             "betting/bets.html",
             matchday=matchday,
             season=season,
             league=league,
             bet_infos=bet_infos,
-            matchday_points=matchday_points
+            matchday_points=matchday_points,
+            has_started=has_started,
+            all_started=all_started,
+            leaderboard=leaderboard
         )
 
     @blueprint.route("/bets", methods=["POST"])

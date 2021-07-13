@@ -56,4 +56,9 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         {% include "betting/bet_row/bet_form.html" %}
     {% endwith %}
 
+    {% if has_started %}
+        {% set ranking_data=leaderboard.matchday_ranking_to_table_data() %}
+        {% include "ranking/ranking_table.html" %}
+    {% endif %}
+
 {% endblock %}

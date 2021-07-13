@@ -41,13 +41,20 @@ def update_leaderboard():
 
     for (league, season), user_points in season_points.items():
 
+        previous_positions = {}
+        previous_no_bot_positions = {}
         user_totals = {user: 0 for user in users}
         for matchday, matchday_points in user_points.items():
             for user, points in matchday_points.items():
                 user_totals[user] += points
 
             process_league_table(
-                league, season, matchday, user_totals
+                league,
+                season,
+                matchday,
+                user_totals,
+                previous_positions,
+                previous_no_bot_positions
             )
 
     app.logger.debug(f"Finished leaderboard update in "
@@ -132,6 +139,9 @@ def process_matchday_winners(
 
             best_user_id, best_points = None, 0
             for user, points in user_points.items():
+
+                if DisplayBotsSettings.bot_symbol() in user.username:
+                    continue
                 if points > best_points:
                     best_user_id, best_points = user.id, points
                 elif points == best_points:
@@ -148,7 +158,12 @@ def process_matchday_winners(
 
 
 def process_league_table(
-        league: str, season: int, matchday: int, user_points: Dict[User, int]
+        league: str,
+        season: int,
+        matchday: int,
+        user_points: Dict[User, int],
+        previous_positions: Dict[User, int],
+        previous_no_bot_positions: Dict[User, int]
 ):
     """
     Processes the league table entries and updates their corresponding database
@@ -156,7 +171,12 @@ def process_league_table(
     :param league: The league to process
     :param season: The season to process
     :param matchday: The matchday to process
-    :param user_points: The points for every user to process
+    :param user_points: The points for every user to process:
+    :param previous_positions: Dictionary that keeps track of the previous
+                               positions of the users
+    :param previous_no_bot_positions: Dictionary that keeps track of the
+                                      previous positions of the users
+                                      disregarding bots
     :return: None
     """
     bot_symbol = DisplayBotsSettings.bot_symbol()
@@ -169,17 +189,16 @@ def process_league_table(
         position = i + 1
         no_bot_positions[user] = position
 
-    previous_positions = {}
-    no_bot_previous_positions = {}
     for i, (user, points) in enumerate(ranking):
         position = i + 1
         no_bot_position = no_bot_positions.get(user, position)
+
         previous_position = previous_positions.get(user, position)
-        no_bot_previous_position = no_bot_previous_positions.get(
+        previous_positions[user] = position
+        no_bot_previous_position = previous_no_bot_positions.get(
             user, no_bot_position
         )
-        previous_positions[user] = position
-        no_bot_previous_positions[user] = no_bot_position
+        previous_no_bot_positions[user] = no_bot_position
 
         entry = LeaderboardEntry(
             league=league,

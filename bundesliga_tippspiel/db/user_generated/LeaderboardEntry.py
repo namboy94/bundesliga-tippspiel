@@ -93,9 +93,9 @@ class LeaderboardEntry(ModelMixin, db.Model):
         current, previous = self.get_position_info(include_bots)
 
         if current < previous:
-            return "chevron-circle-down"
-        elif current > previous:
             return "chevron-circle-up"
+        elif current > previous:
+            return "chevron-circle-down"
         else:
             return "minus-circle"
 

@@ -38,7 +38,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         data: {{ positions }},
                         fill: false,
                         borderColor: "{{ color }}",
-                        {% if show_all == True
+                        {% if (show_all == True and loop.index <= 10)
                            or username == current_user.username
                            or (user is defined and username == user.username) %}
                             hidden: false,
