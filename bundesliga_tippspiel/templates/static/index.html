@@ -19,7 +19,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "core/base_layout.html" %}
 {% block body %}
-    <h1>Fußball Tippspiel zur Saison {{ config.season_string() }}</h1>
+    <h1>Fußball Tippspiel zur {{ config.league_name(get_selected_league()[0]) }} Saison {{ config.season_string() }}</h1>
     <p>
         Beim Fußball Tippspiel kannst du dein Fußballwissen (und dein Glück)
         mit deinen Freunden messen!
@@ -56,13 +56,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
-    <h3>Neu in der Saison {{ config.season_string() }}</h3>
+    <h3>Neu in der Saison {{ config.league_name() }}</h3>
     <ul>
+        <li>Die Spieltag-Seite zeigt jetzt für den Spieltag eine Tabelle an</li>
         <li>Der Spieler der die meisten Punkte an einem Spieltag erhält,
             bekommt in der Rangliste eine Medaille</li>
         <li>Tipps und Spiele der vergangenen Saison sind ebenfalls einsehbar</li>
+        <li>Es kann jetzt auf Spiele der zweiten Bundesliga getippt werden</li>
         <li>Statistiken laden jetzt viel schneller</li>
-        <li>Die Spieltag-Seite zeigt jetzt für den Spieltag eine Tabelle an</li>
     </ul>
 
     <hr>

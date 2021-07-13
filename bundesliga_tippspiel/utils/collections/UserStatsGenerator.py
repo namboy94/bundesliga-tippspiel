@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Union, Any
 from jerrycan.db.User import User
 from bundesliga_tippspiel.db import Team, LeaderboardEntry
 from bundesliga_tippspiel.utils.collections.StatsGenerator import \
@@ -124,19 +124,31 @@ class UserStatsGenerator(StatsGenerator):
         """
         :return: The user's participation up to this point
         """
-        return int(self.extract_user_value(self.get_participation_ranking()))
+        ranking = self.get_participation_ranking()
+        try:
+            return [x for x in ranking if x[0].id == self.user.id][0][1]
+        except IndexError:
+            return 0
 
     def get_user_correct_bets(self) -> int:
         """
         :return: The amount of correct bets for this user
         """
-        return int(self.extract_user_value(self.get_correct_bets_ranking()))
+        ranking = self.get_correct_bets_ranking()
+        try:
+            return [x for x in ranking if x[0].id == self.user.id][0][1]
+        except IndexError:
+            return 0
 
     def get_user_wrong_bets(self) -> int:
         """
         :return: The amount of wrong bets for this user
         """
-        return int(self.extract_user_value(self.get_wrong_bets_ranking()))
+        ranking = self.get_wrong_bets_ranking()
+        try:
+            return [x for x in ranking if x[0].id == self.user.id][0][1]
+        except IndexError:
+            return 0
 
     def get_user_best_team(self) -> Tuple[Team, float]:
         """
@@ -156,7 +168,7 @@ class UserStatsGenerator(StatsGenerator):
         """
         return self.calculate_average_points_per_team(self.user_bets)
 
-    def extract_user_position(self, ranking: List[Tuple[User, float]]) -> int:
+    def extract_user_position(self, ranking: List[Tuple[User, Any]]) -> int:
         """
         Extracts the user's position from a ranking
         :return: The position in the ranking
@@ -166,17 +178,6 @@ class UserStatsGenerator(StatsGenerator):
             return order.index(self.user.id) + 1
         except ValueError:
             return 0
-
-    def extract_user_value(self, ranking: List[Tuple[User, float]]) -> float:
-        """
-        Extracts the user's value from a ranking
-        :param ranking: The ranking to extract from
-        :return: The extracted value
-        """
-        try:
-            return [x for x in ranking if x[0].id == self.user.id][0][1]
-        except IndexError:
-            return 0.0
 
     def get_user_points_distribution(self) -> Dict[int, int]:
         """

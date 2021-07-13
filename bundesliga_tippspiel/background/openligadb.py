@@ -78,16 +78,16 @@ def update_match_data(
                 continue
 
             if home_score < goal.home_score:
-                team = 1
+                goal_team = 1
             else:
-                team = -1
+                goal_team = -1
             if goal.own_goal:
-                team *= -1
+                goal_team *= -1
 
             team_abbreviation = {
                 1: match.home_team_abbreviation,
                 -1: match.away_team_abbreviation
-            }[team]
+            }[goal_team]
 
             goal.player_team_abbreviation = team_abbreviation
             home_score = goal.home_score

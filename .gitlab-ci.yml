@@ -37,6 +37,12 @@ unittest:
     - python-unittest
     - rm .env
 
+pylint:
+  stage: test
+  tags: [docker]
+  script:
+    - pylint --disable=all --enable=missing-docstring bundesliga_tippspiel
+
 type_check:
   stage: test
   tags: [docker]

@@ -80,7 +80,7 @@ def create_categorized_matches() -> Dict[
     :return: The matches categorized like this:
                 {(league, season): {matchday: [match, ...]}}
     """
-    seasons = {}
+    seasons: Dict[Tuple[str, int], Dict[int, List[Match]]] = {}
     for match in Match.query.options(
             db.joinedload(Match.bets).subqueryload(Bet.user)
     ).all():

@@ -48,6 +48,8 @@ class Config(BaseConfig):
         :param league: The league string (like 'bl1')
         :return: The league name (like 'Bundesliga')
         """
+        if league is None:
+            league = cls.OPENLIGADB_LEAGUE
         return {
             "bl1": "Bundesliga",
             "bl2": "2. Bundesliga"

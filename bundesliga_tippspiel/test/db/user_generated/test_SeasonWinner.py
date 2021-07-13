@@ -98,4 +98,4 @@ class TestSeasonWinner(_ModelTestFramework):
         Tests the season string
         :return: None
         """
-        self.assertEqual(self.winner.season_string, "2010/11")
+        self.assertEqual(self.winner.season_string, "Bundesliga 2010/11")

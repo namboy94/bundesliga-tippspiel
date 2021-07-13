@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Dict, Union
 
 from jerrycan.base import db
 from jerrycan.db.User import User
@@ -84,6 +84,7 @@ class LeagueTable:
                     - goal difference
                     - points
         """
+        teams = {team.abbreviation: team for team in self.teams}
         team_data = {
             team.abbreviation: {
                 "matches": 0,
@@ -92,8 +93,7 @@ class LeagueTable:
                 "losses": 0,
                 "goals_for": 0,
                 "goals_against": 0,
-                "points": 0,
-                "team": team
+                "points": 0
             }
             for team in self.teams
         }
@@ -139,13 +139,13 @@ class LeagueTable:
                 else:
                     team_data[team]["draws"] += 1
                     team_data[team]["points"] += 1
-        team_values = list(team_data.values())
-        team_values.sort(key=lambda x: x["points"], reverse=True)
+        team_values = list(team_data.items())
+        team_values.sort(key=lambda x: x[1]["points"], reverse=True)
         data_tuples = []
-        for i, data in enumerate(team_values):
+        for i, (team_abbreviation, data) in enumerate(team_values):
             data_tuples.append((
                 i + 1,
-                data["team"],
+                teams[team_abbreviation],
                 data["matches"],
                 data["wins"],
                 data["draws"],

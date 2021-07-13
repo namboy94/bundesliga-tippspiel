@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Any
 
 from jerrycan.base import db
 from jerrycan.db.User import User
@@ -129,7 +129,7 @@ class Leaderboard:
                     - The matchday wins for the current mtchday only
                     - points on this matchday
         """
-        table_data = []
+        table_data: List[Tuple[User, List[int], int]] = []
         matchday_winners = [
             user_id for user_id, matchdays in self.matchday_winners.items()
             if self.matchday in matchdays
@@ -142,22 +142,26 @@ class Leaderboard:
                 previous = user_histories[item.user][-2]
                 points -= previous.points
 
-            table_data.append([
-                0,
-                None,
-                None,
+            table_data.append((
                 item.user,
-                [],
                 [self.matchday] if item.user_id in matchday_winners else [],
                 points
-            ])
-        table_data.sort(key=lambda x: x[6], reverse=True)
-        for i in range(0, len(table_data)):
-            table_data[i][0] = i + 1
+            ))
+        table_data.sort(key=lambda x: x[2], reverse=True)
+        table: List[Tuple[int, None, None, User, List[str], List[int], int]] \
+            = []
 
-        table: List[Tuple[
-            int, None, None, User, List[str], List[int], int
-        ]] = [tuple(x) for x in table_data]
+        for i, data in enumerate(table_data):
+            empty: List[str] = []
+            table.append((
+                i + 1,
+                None,
+                None,
+                data[0],
+                empty,
+                data[1],
+                data[2]
+            ))
         return table
 
     def history_to_chart_data(self) -> List[Tuple[str, str, List[int]]]:

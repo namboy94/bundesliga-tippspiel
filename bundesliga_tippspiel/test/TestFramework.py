@@ -121,7 +121,8 @@ class _TestFramework(Framework):
             league=match.league,
             matchday=match.matchday,
             home_score=2,
-            away_score=1
+            away_score=1,
+            points=0
         )
         self.db.session.add(bet)
         self.db.session.commit()

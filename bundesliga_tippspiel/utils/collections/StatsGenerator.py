@@ -129,7 +129,7 @@ class StatsGenerator(Leaderboard):
         """
         :return: A ranking for the average points per bet for each user
         """
-        per_user = {user: [] for user in self.users}
+        per_user: Dict[User, List[int]] = {user: [] for user in self.users}
         for bet in self.bets:
             per_user[bet.user].append(bet.points)
         ranking = []
@@ -193,7 +193,7 @@ class StatsGenerator(Leaderboard):
         :return: A ranking of the average points per team
         """
         team_map = {x.abbreviation: x for x in self.teams}
-        points = {x.abbreviation: [] for x in self.teams}
+        points: Dict[str, List[int]] = {x.abbreviation: [] for x in self.teams}
         for bet in bets:
             for team in [
                 bet.home_team_abbreviation,

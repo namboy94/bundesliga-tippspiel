@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 from jerrycan.base import db
 from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.User import User
@@ -121,7 +121,7 @@ class LeaderboardEntry(ModelMixin, db.Model):
         ]
         entries.sort(key=lambda x: x.matchday)
 
-        history_dict = {}
+        history_dict: Dict[int, List[LeaderboardEntry]] = {}
         for entry in entries:
             if entry.user_id not in history_dict:
                 history_dict[entry.user_id] = []

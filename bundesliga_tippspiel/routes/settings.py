@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import Blueprint, request, flash, redirect, url_for, make_response, abort
+from flask import Blueprint, request, flash, redirect, url_for, \
+    make_response, abort
 from flask_login import login_required, current_user
 from jerrycan.base import db, app
 from jerrycan.enums import AlertSeverity

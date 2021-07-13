@@ -21,7 +21,8 @@ from typing import List
 from jerrycan.base import db
 from flask import render_template, Blueprint, abort
 from flask_login import login_required, current_user
-from bundesliga_tippspiel.db import Team, Player, DisplayBotsSettings, Bet, Match
+from bundesliga_tippspiel.db import Team, Player, DisplayBotsSettings, \
+    Bet, Match
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:

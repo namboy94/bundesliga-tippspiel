@@ -22,9 +22,11 @@ from flask import render_template, abort, Blueprint
 from flask_login import login_required, current_user
 from jerrycan.db.User import User
 from bundesliga_tippspiel.db import DisplayBotsSettings
-from bundesliga_tippspiel.utils.collections.StatsGenerator import StatsGenerator
-from bundesliga_tippspiel.utils.collections.UserStatsGenerator import UserStatsGenerator
 from bundesliga_tippspiel.utils.matchday import validate_matchday
+from bundesliga_tippspiel.utils.collections.StatsGenerator import \
+    StatsGenerator
+from bundesliga_tippspiel.utils.collections.UserStatsGenerator import \
+    UserStatsGenerator
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -42,7 +44,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     def user(
             user_id: int,
             league: Optional[str] = None,
-            season: Optional[str] = None,
+            season: Optional[int] = None,
             matchday: Optional[int] = None
     ):
         """
@@ -80,7 +82,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
     @login_required
     def stats(
             league: Optional[str] = None,
-            season: Optional[str] = None,
+            season: Optional[int] = None,
             matchday: Optional[int] = None,
     ):
         """
