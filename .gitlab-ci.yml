@@ -47,6 +47,7 @@ type_check:
   stage: test
   tags: [docker]
   script:
+    - pip3 install types-pytz
     - python-static-type-check
 
 gitstats:
