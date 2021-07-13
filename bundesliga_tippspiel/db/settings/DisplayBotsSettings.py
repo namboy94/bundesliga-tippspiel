@@ -64,6 +64,6 @@ class DisplayBotsSettings(ModelMixin, db.Model):
     @staticmethod
     def bot_symbol() -> str:
         """
-        :return: "🤖"
+        :return: "The bot unicode symbol"
         """
         return "🤖"
