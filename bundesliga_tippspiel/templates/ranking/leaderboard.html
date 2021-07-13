@@ -23,10 +23,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <h1>Rangliste</h1>
     {% set unit="Punkte" %}
     {% set ranking_data=leaderboard.ranking_to_table_data() %}
-    {% set chart_history=leaderboard.history_to_chart_data() %}
     {% include "ranking/ranking_table.html" %}
     <hr class="is-hidden-mobile">
     <div class="container is-hidden-mobile ranking-chart-container">
+        {% set chart_history=leaderboard.history_to_chart_data() %}
+        {% set show_all=True %}
         {% include "ranking/leaderboard_chart.html" %}
     </div>
 {% endblock %}

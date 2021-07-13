@@ -139,7 +139,7 @@ class StatsGenerator(Leaderboard):
             ranking.append((user, avg))
         return list(sorted(ranking, key=lambda x: x[1], reverse=True))
 
-    def get_participation_ranking(self) -> List[Tuple[User, float]]:
+    def get_participation_ranking(self) -> List[Tuple[User, int]]:
         """
         :return: A ranking for the participation rate for each user
         """
@@ -147,9 +147,11 @@ class StatsGenerator(Leaderboard):
         participation = {user: 0 for user in self.users}
         for match in self.matches:
             for bet in match.bets:
-                participation[bet.user] += 1
+                is_bot = DisplayBotsSettings.bot_symbol() in bet.user.username
+                if self.include_bots or not is_bot:
+                    participation[bet.user] += 1
         return list(sorted([
-            (user, 0.0 if total == 0 else (count / total))
+            (user, 0 if total == 0 else int(100 * (count / total)))
             for user, count in participation.items()
         ], key=lambda x: x[1], reverse=True))
 

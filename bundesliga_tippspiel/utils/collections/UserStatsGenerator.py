@@ -71,13 +71,13 @@ class UserStatsGenerator(StatsGenerator):
         """
         :return: The user's position in the first half of the season
         """
-        return int(self.extract_user_value(self.get_first_half_ranking()))
+        return self.extract_user_position(self.get_first_half_ranking())
 
     def get_user_second_half_position(self) -> int:
         """
         :return: The user's position in the second half of the season
         """
-        return int(self.extract_user_value(self.get_second_half_ranking()))
+        return self.extract_user_position(self.get_second_half_ranking())
 
     def get_user_best_position(self) -> int:
         """
@@ -120,11 +120,11 @@ class UserStatsGenerator(StatsGenerator):
         total = len(points)
         return 0.0 if total == 0 else sum(points) / total
 
-    def get_user_participation(self) -> float:
+    def get_user_participation(self) -> int:
         """
         :return: The user's participation up to this point
         """
-        return self.extract_user_value(self.get_participation_ranking())
+        return int(self.extract_user_value(self.get_participation_ranking()))
 
     def get_user_correct_bets(self) -> int:
         """
@@ -155,6 +155,17 @@ class UserStatsGenerator(StatsGenerator):
         :return: The average points per team for this user
         """
         return self.calculate_average_points_per_team(self.user_bets)
+
+    def extract_user_position(self, ranking: List[Tuple[User, float]]) -> int:
+        """
+        Extracts the user's position from a ranking
+        :return: The position in the ranking
+        """
+        try:
+            order = [x[0].id for x in ranking]
+            return order.index(self.user.id) + 1
+        except ValueError:
+            return 0
 
     def extract_user_value(self, ranking: List[Tuple[User, float]]) -> float:
         """

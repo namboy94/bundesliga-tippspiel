@@ -61,11 +61,11 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     </tr>
                     <tr>
                         <td>Punkteschnitt</td>
-                        <td>{{ user_stats.get_user_betting_average() }}</td>
+                        <td>{{ user_stats.get_user_betting_average()|round(2) }}</td>
                     </tr>
                     <tr>
                         <td>Teilnahme</td>
-                        <td>{{ user_stats.get_user_participation() }}</td>
+                        <td>{{ user_stats.get_user_participation()|round(2) }}%</td>
                     </tr>
                     <tr>
                         <td>Korrekte Tipps</td>
@@ -80,7 +80,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         <td>
                             {% set best_team, best_team_avg = user_stats.get_user_best_team() %}
                             <a href="{{ best_team.url }}">
-                                {{ best_team.short_name }} ({{ best_team_avg }})
+                                {{ best_team.short_name }} ({{ best_team_avg|round(2) }})
                             </a>
                         </td>
                     </tr>
@@ -89,7 +89,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         <td>
                             {% set worst_team, worst_team_avg = user_stats.get_user_worst_team() %}
                             <a href="{{ worst_team.url }}">
-                                {{ worst_team.short_name }} ({{ worst_team_avg }})
+                                {{ worst_team.short_name }} ({{ worst_team_avg|round(2) }})
                             </a>
                         </td>
                     </tr>

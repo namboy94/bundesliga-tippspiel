@@ -33,9 +33,13 @@ h3 {
 }
 
 a {
-    color: $default-text-color;
+    color: $link-text-color;
+}
+
+.green-link {
+    color: $green-link-text-color;
 }
 
 a:hover {
-    color: $default-text-hover-color;
+    color: $link-color;
 }

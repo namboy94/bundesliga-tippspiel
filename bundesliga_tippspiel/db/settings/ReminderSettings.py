@@ -96,9 +96,6 @@ class ReminderSettings(ModelMixin, db.Model):
         user still needs to bet on.
         :return: The matches for which the reminder is due
         """
-        app.logger.debug("Checking for due reminders for user {}."
-                         .format(self.user.username))
-
         now = datetime.utcnow()
         start = max(now, self.last_reminder_datetime)
         start_str = start.strftime("%Y-%m-%d:%H-%M-%S")
@@ -125,8 +122,6 @@ class ReminderSettings(ModelMixin, db.Model):
             if identifier not in user_bet_matches:
                 to_remind.append(match)
 
-        app.logger.debug("Matches to remind: {}.".format(to_remind))
-
         return to_remind
 
     def send_reminder(self):
@@ -136,7 +131,6 @@ class ReminderSettings(ModelMixin, db.Model):
         """
         due = self.get_due_matches()
         if len(due) < 1:
-            app.logger.debug("No due reminders found")
             return
         else:
             app.logger.debug("Sending reminder to {}.".format(self.user.email))

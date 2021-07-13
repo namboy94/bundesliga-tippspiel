@@ -34,7 +34,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
         {% for entry in ranking_data %}
             {% if entry|length == 2 %}
                 {% set tendency, tendency_class, season_wins, matchday_wins = [none, none, [], []] %}
-                {% set position = loop.index + 1 %}
+                {% set position = loop.index %}
                 {% set user, points = entry %}
             {% else %}
                 {% set position, tendency, tendency_class, user, season_wins, matchday_wins, points = entry%}
@@ -61,7 +61,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                         </span>
                     {% endfor %}
                 </td>
-                <td>{{ points }}</td>
+                <td>
+                    {% if points is integer %}
+                        {{ points }}
+                    {% else %}
+                        {{ points|round(2) }}
+                    {% endif %}
+                    {% if unit == "%" %}%{% endif %}
+                </td>
             </tr>
         {% endfor %}
     </tbody>

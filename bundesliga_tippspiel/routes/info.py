@@ -48,7 +48,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             return abort(404)
 
         recent_matches = [x for x in team_info.matches if x.finished]
-        recent_matches.sort(key=lambda x: x.kickoff, reverse=True)
+        recent_matches.sort(key=lambda x: x.kickoff)
         recent_matches = recent_matches[-7:]
 
         match_data = []

@@ -73,7 +73,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="container is-fluid">
         <h3>Punkte pro Team</h3>
-        {% set team_points = stats.calculate_average_points_per_team() %}
+        {% set team_points = stats.get_average_points_per_team() %}
         {% include "stats/team_points_table.html" %}
     </div>
 

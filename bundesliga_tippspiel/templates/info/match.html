@@ -75,7 +75,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
-    <h2>Tore</h2>
+    <!--h2>Tore</h2-->
 
     <table class="table is-bordered is-striped has-text-centered">
         <thead>
@@ -88,7 +88,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
         </thead>
         <tbody>
-            {% for goal in goals %}
+            {% for goal in match.goals %}
                 <tr>
                     <td>
                         {% if goal.penalty %}
@@ -108,15 +108,12 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                     <td>{{ goal.minute }}</td>
                     <td>{{ goal.home_score }}:{{ goal.away_score }}</td>
                     <td>
-                        {% if goal.own_goal %}
-                            {% set team = match.home_team %}
-                            {% if team == goal.player.team %}
-                                {% set team = match.away_team %}
-                            {% endif %}
-                        {% else %}
-                            {% set team = goal.player.team %}
+                        {% set team = match.home_team %}
+                        {% if goal.own_goal and team.abbreviation == goal.player_team_abbreviation %}
+                            {% set team = match.away_team %}
+                        {% elif not goal.own_goal and team.abbreviation != goal.player_team_abbreviation %}
+                            {% set team = match.away_team %}
                         {% endif %}
-
                         <a href="{{  team.url }}">
                             <img src="{{ team.icon_svg }}"
                                  alt="{{ team.name }}" class="goals-table-team-logo">
@@ -131,7 +128,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
-    <h2>Tipps</h2>
+    <!--h2>Tipps</h2-->
 
     <table class="table is-bordered is-striped has-text-centered equal-column-table">
         <thead>
