@@ -6,7 +6,7 @@ stages:
   - release
 
 default:
-  image: namboy94/ci-docker-environment:0.14.0
+  image: namboy94/ci-docker-environment:0.18.0
   before_script:
     - echo "$SERVER_ACCESS_KEY" > ~/.ssh/id_rsa
     - chmod 0600 ~/.ssh/id_rsa
@@ -36,6 +36,12 @@ unittest:
     - echo "$ENV_FILE" > .env
     - python-unittest
     - rm .env
+
+pylint:
+  stage: test
+  tags: [docker]
+  script:
+    - pylint --disable=all --enable=missing-docstring bundesliga_tippspiel
 
 type_check:
   stage: test

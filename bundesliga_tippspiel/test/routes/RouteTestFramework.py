@@ -109,6 +109,7 @@ class _RouteTestFramework(_TestFramework):
                     self.route_path, follow_redirects=True
                 )
                 self.assertEqual(unauthorized.status_code, 200)
+                print(unauthorized.status_code)
                 self.assertTrue(
                     b"Du bist nicht angemeldet. Bitte melde dich an."
                     in unauthorized.data

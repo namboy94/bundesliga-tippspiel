@@ -37,34 +37,22 @@ class SeasonWinner(ModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "season_winners"
-    """
-    The name of the table
-    """
 
-    season: int = db.Column(db.Integer, unique=True, nullable=False)
-    """
-    The season for which this is the winner
-    """
-
+    league: str = db.Column(db.String(255), primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
         nullable=False
     )
-    """
-    The ID of the user that won the competition
-    """
 
     user: User = db.relationship(
         "User", backref=db.backref("season_winners", cascade="all, delete")
     )
-    """
-    The user that won the competition
-    """
 
     @property
     def season_string(self) -> str:
         """
-        :return: The season string, e.g. 2019/20
+        :return: The season string, e.g. Bundesliga 2019/20
         """
-        return Config.season_string(self.season)
+        return Config.league_string(self.league, self.season)

@@ -21,7 +21,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img alt="Bundesliga Tippspiel"
+            <img alt="Fußball Tippspiel"
                  class="brand-image"
                  src="{{ url_for('static', filename='images/logo.png') }}">
         </a>
@@ -36,6 +36,24 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
     <div class="navbar-menu" id="navbar-menu">
 
         <div class="navbar-start">
+
+            {% if current_user.is_authenticated %}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    {% set selected_league, selected_season = get_selected_league() %}
+                    {% set selected_league_string = config.league_string(selected_league, selected_season) %}
+                    <a class="navbar-link">{{ selected_league_string }}</a>
+                    <div class="navbar-dropdown">
+                        {% for league, season in  config.all_leagues() %}
+                            {% set league_string = config.league_string(league, season) %}
+                            <a class="navbar-item {% if selected_league_string == league_string %} active {% endif %}"
+                               href="{{url_for("settings.change_league")}}?season={{ season }}&league={{ league }}">
+                                {{ league_string }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
             <a class="navbar-item {% if request.path == "/" %} active {% endif %}"
                href="{{ url_for("static.index") }}">Home</a>
             {% if not current_user.is_authenticated %}
@@ -45,22 +63,20 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                    href="{{url_for("user_management.register")}}">Registrieren</a>
             {% else %}
                 <a class="navbar-item {% if request.path == "/bets" %} active {% endif %}"
-                   href="{{url_for("betting.bets")}}">Spieltag</a>
-                <a class="navbar-item {% if request.path == "/bets/season" %} active {% endif %}"
-                   href="{{url_for("betting.season_bets")}}">Saison</a>
+                   href="{{url_for("betting.get_current_bets")}}">Spieltag</a>
                 <a class="navbar-item {% if request.path == "/leaderboard" %} active {% endif %}"
-                   href="{{url_for("information.leaderboard")}}">Rangliste</a>
+                   href="{{url_for("tables.leaderboard")}}">Rangliste</a>
                 <a class="navbar-item {% if request.path == "/stats" %} active {% endif %}"
-                   href="{{url_for("information.stats")}}">Statistiken</a>
+                   href="{{url_for("stats.stats")}}">Statistiken</a>
 
                 <div class="navbar-item has-dropdown is-hoverable
                            {% if request.path in ["/league_table", "/user_league_table"] %} active {% endif %}">
                     <a class="navbar-link">Tabelle</a>
                     <div class="navbar-dropdown">
                         <a class="navbar-item {% if request.path == "/league_table" %} active {% endif %}"
-                       href="{{url_for("information.league_table")}}">Aktuell</a>
+                       href="{{url_for("tables.league_table")}}">Aktuell</a>
                         <a class="navbar-item {% if request.path == "/user_league_table" %} active {% endif %}"
-                           href="{{url_for("information.user_league_table")}}">Nach Tipps</a>
+                           href="{{url_for("tables.league_table") + '?use_bets=1'}}">Nach Tipps</a>
                     </div>
                 </div>
                 <a class="navbar-item {% if request.path == "/chat" %} active {% endif %}"

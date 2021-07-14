@@ -1,0 +1,75 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<table class="table is-bordered is-striped has-text-centered ranking-table">
+    <colgroup>
+        <col span="1" class="first">
+        <col span="1" class="second">
+        <col span="1" class="third">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>{{ unit }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in ranking_data %}
+            {% if entry|length == 2 %}
+                {% set tendency, tendency_class, season_wins, matchday_wins = [none, none, [], []] %}
+                {% set position = loop.index %}
+                {% set user, points = entry %}
+            {% else %}
+                {% set position, tendency, tendency_class, user, season_wins, matchday_wins, points = entry%}
+            {% endif %}
+            <tr class="{% if position == 1 %}table-top{% elif current_user.id == user.id %}is-selected{% endif %}">
+                <td>
+                    {% if tendency is not none %}
+                        <span class="tendency-icon" title="{{ tendency }}"><i class="fas fa-{{ tendency_class }}"></i></span>
+                    {% endif %}
+                    {{ position }}
+                </td>
+                <td>
+                    <a href="{{ url_for("stats.user", user_id=user.id) }}">
+                        {{ user.username }}
+                    </a>
+                    {% for season in season_wins %}
+                        <span title="Sieger {{ season }}">
+                            <i class="fas fa-crown"></i>
+                        </span>
+                    {% endfor %}
+                    {% for matchday in matchday_wins %}
+                        <span title="Spieltagsieger {{ matchday }}">
+                            <i class="fas fa-medal"></i>
+                        </span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if points is integer %}
+                        {{ points }}
+                    {% else %}
+                        {{ points|round(2) }}
+                    {% endif %}
+                    {% if unit == "%" %}%{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

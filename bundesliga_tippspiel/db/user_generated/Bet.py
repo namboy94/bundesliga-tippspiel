@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 from jerrycan.base import db
 from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.User import User
@@ -29,6 +29,9 @@ class Bet(ModelMixin, db.Model):
     Model that describes the 'bets' SQL table
     """
 
+    MAX_POINTS: int = 15
+    POSSIBLE_POINTS: List[int] = [0, 3, 7, 10, 12, 15]
+
     def __init__(self, *args, **kwargs):
         """
         Initializes the Model
@@ -38,62 +41,34 @@ class Bet(ModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "bets"
-    """
-    The name of the table
-    """
-
     __table_args__ = (
-        db.UniqueConstraint(
-            "user_id",
-            "match_id",
-            name="unique_bet"
+        db.ForeignKeyConstraint(
+            ("home_team_abbreviation", "away_team_abbreviation",
+             "league", "season", "matchday"),
+            (Match.home_team_abbreviation, Match.away_team_abbreviation,
+             Match.league, Match.season, Match.matchday)
         ),
     )
-    """
-    Table arguments for unique constraints
-    """
 
+    league: str = db.Column(db.String(255), primary_key=True)
+    season: int = db.Column(db.Integer, primary_key=True)
+    matchday: int = db.Column(db.Integer, primary_key=True)
+    home_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
+    away_team_abbreviation: str = db.Column(db.String(3), primary_key=True)
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
-        nullable=False
+        primary_key=True
     )
-    """
-    The ID of the user associated with this bet
-    """
+
+    home_score: int = db.Column(db.Integer, nullable=False)
+    away_score: int = db.Column(db.Integer, nullable=False)
+    points: int = db.Column(db.Integer, nullable=True)
 
     user: User = db.relationship(
         "User", backref=db.backref("bets", cascade="all, delete")
     )
-    """
-    The user associated with this bet
-    """
-
-    match_id: int = db.Column(
-        db.Integer,
-        db.ForeignKey("matches.id"),
-        nullable=False
-    )
-    """
-    The ID of the match that this bet refers to.
-    """
-
-    match: Match = db.relationship(
-        "Match", back_populates="bets"
-    )
-    """
-    The match that this bet refers to
-    """
-
-    home_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The score bet on the home team
-    """
-
-    away_score: int = db.Column(db.Integer, nullable=False)
-    """
-    The score bet on the away team
-    """
+    match: Match = db.relationship("Match", overlaps="bets")
 
     def __repr__(self) -> str:
         """
@@ -116,24 +91,23 @@ class Bet(ModelMixin, db.Model):
         :return: True if the objects are equal, False otherwise
         """
         if isinstance(other, Bet):
-            return self.id == other.id \
-                   and self.user_id == other.user_id \
-                   and self.match_id == other.match_id \
+            return self.user_id == other.user_id \
+                   and self.home_team_abbreviation == \
+                   other.home_team_abbreviation \
+                   and self.away_team_abbreviation == \
+                   other.away_team_abbreviation \
                    and self.home_score == other.home_score \
                    and self.away_score == other.away_score
         else:
             return False  # pragma: no cover
 
-    def evaluate(self, when_finished: bool = False) -> int:
+    def evaluate(self) -> Optional[int]:
         """
-        Evaluates the points score on this bet
-        :param when_finished: Only calculate the value
-                              when the match is finished.
-                              Otherwise, returns 0
-        :return: The calculated points
+        Evaluates the current points score on this bet
+        :return: The calculated points (or None if the math hasn't started yet)
         """
-        if when_finished and not self.match.finished:
-            return 0
+        if not self.match.has_started:
+            return None
 
         points = 0
         bet_diff = self.home_score - self.away_score
@@ -153,18 +127,3 @@ class Bet(ModelMixin, db.Model):
             points += 3
 
         return points
-
-    def __json__(
-            self,
-            include_children: bool = False,
-            ignore_keys: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
-        """
-        Includes the points achieved by the user
-        :param include_children: Whether or not to include child objects
-        :param ignore_keys: Which keys to ignore
-        :return: The JSON data
-        """
-        data = super().__json__(include_children, ignore_keys)
-        data["points"] = self.evaluate()
-        return data

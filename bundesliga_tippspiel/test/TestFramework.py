@@ -26,7 +26,7 @@ from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.db.match_data.Player import Player
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
-from bundesliga_tippspiel.background.match_data import update_match_data
+from bundesliga_tippspiel.background.openligadb import update_match_data
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel import root_path
 from bundesliga_tippspiel.routes import blueprint_generators
@@ -70,18 +70,30 @@ class _TestFramework(Framework):
             name="E", short_name="F", abbreviation="G",
             icon_svg="H1", icon_png="H2"
         )
-        player = Player(name="I", team=team_one)
+        player = Player(
+            name="I",
+            team_abbreviation=team_one.abbreviation
+        )
         match = Match(
             matchday=1, kickoff="2017-01-01:01-02-03",
             finished=True, started=True,
-            home_team=team_one, away_team=team_two,
+            home_team_abbreviation=team_one.abbreviation,
+            away_team_abbreviation=team_two.abbreviation,
             home_current_score=1, away_current_score=0,
             home_ht_score=0, away_ht_score=0,
             home_ft_score=1, away_ft_score=0,
-            season=self.config.season()
+            season=self.config.season(),
+            league=self.config.OPENLIGADB_LEAGUE
         )
         goal = Goal(
-            match=match, player=player, minute=67, minute_et=None,
+            home_team_abbreviation=match.home_team_abbreviation,
+            away_team_abbreviation=match.away_team_abbreviation,
+            season=match.season,
+            league=match.league,
+            matchday=match.matchday,
+            player_name=player.name,
+            player_team_abbreviation=player.team_abbreviation,
+            minute=67, minute_et=None,
             home_score=1, away_score=0, own_goal=False, penalty=False
         )
 
@@ -101,7 +113,17 @@ class _TestFramework(Framework):
         :param match: The match for which to generate the bet
         :return: The bet
         """
-        bet = Bet(user=user, match=match, home_score=2, away_score=1)
+        bet = Bet(
+            user=user,
+            home_team_abbreviation=match.home_team_abbreviation,
+            away_team_abbreviation=match.away_team_abbreviation,
+            season=match.season,
+            league=match.league,
+            matchday=match.matchday,
+            home_score=2,
+            away_score=1,
+            points=0
+        )
         self.db.session.add(bet)
         self.db.session.commit()
         return bet

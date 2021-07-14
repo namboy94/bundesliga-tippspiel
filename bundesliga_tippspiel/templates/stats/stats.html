@@ -1,0 +1,80 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "core/base_layout.html" %}
+{% set requires_charts=True %}
+{% block body %}
+
+    {% set unit="Punkte" %}
+    <div class="columns">
+        <div class="column">
+            <h3>Rangliste Hinrunde</h3>
+            {% set ranking_data=stats.get_first_half_ranking() %}
+            {% include "ranking/ranking_table.html" %}
+        </div>
+        <div class="column">
+            <h3>Rangliste Rückrunde</h3>
+            {% set ranking_data=stats.get_second_half_ranking() %}
+            {% include "ranking/ranking_table.html" %}
+        </div>
+    </div>
+
+    {% set unit="Anzahl" %}
+    <div class="columns">
+        <div class="column">
+            <h3>Korrekte Tipps</h3>
+            {% set ranking_data=stats.get_correct_bets_ranking() %}
+            {% include "ranking/ranking_table.html" %}
+        </div>
+        <div class="column">
+            <h3>Komplett falsche Tipps</h3>
+            {% set ranking_data=stats.get_wrong_bets_ranking() %}
+            {% include "ranking/ranking_table.html" %}
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <h3>Punkte/Tipp</h3>
+            {% set ranking_data=stats.get_points_average_ranking() %}
+            {% set unit="Punkte/Tipp" %}
+            {% include "ranking/ranking_table.html" %}
+        </div>
+        <div class="column">
+            <h3>Teilnahme</h3>
+            {% set ranking_data=stats.get_participation_ranking() %}
+            {% set unit="%" %}
+            {% include "ranking/ranking_table.html" %}
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-6 is-offset-3">
+            {% set distribution = stats.get_points_distribution() %}
+            {% include "stats/points_distribution_pie_chart.html" %}
+        </div>
+    </div>
+
+    <div class="container is-fluid">
+        <h3>Punkte pro Team</h3>
+        {% set team_points = stats.get_average_points_per_team() %}
+        {% include "stats/team_points_table.html" %}
+    </div>
+
+{% endblock %}

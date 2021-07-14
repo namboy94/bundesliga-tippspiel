@@ -36,29 +36,34 @@ class DisplayBotsSettings(ModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "display_bot_settings"
-    """
-    The name of the table
-    """
-
     user_id: int = db.Column(
         db.Integer,
         db.ForeignKey("users.id"),
-        nullable=False,
-        unique=True
+        primary_key=True
     )
-    """
-    The ID of the user associated with this setting
-    """
+
+    display_bots = db.Column(db.Boolean, nullable=False, default=True)
 
     user: User = db.relationship(
         "User",
         backref=db.backref("display_bot_settings", cascade="all, delete")
     )
-    """
-    The user associated with this setting
-    """
 
-    display_bots = db.Column(db.Boolean, nullable=False, default=True)
-    """
-    Whether or not to show bots
-    """
+    @classmethod
+    def get_state(cls, user: User):
+        """
+        Retrieves the state of the settings for a give user
+        :param user: The user for which to retrieve the seetings
+        :return: True if active, False otherwise
+        """
+        bot_setting = DisplayBotsSettings.query.filter_by(
+            user_id=user.id
+        ).first()
+        return bot_setting is not None and bot_setting.display_bots
+
+    @staticmethod
+    def bot_symbol() -> str:
+        """
+        :return: "The bot unicode symbol"
+        """
+        return "🤖"

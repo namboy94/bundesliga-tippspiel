@@ -1,0 +1,70 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<canvas id="rankings-chart"></canvas>
+
+<!--suppress JSUnusedGlobalSymbols, JSUnusedLocalSymbols, JSDuplicatedDeclaration -->
+<script async>
+    let ctx = document.getElementById("rankings-chart").getContext("2d");
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [
+                {% if chart_history|length > 0 %}
+                    {% for i in range(0, chart_history[0][2]|length - 1) %}
+                        "{{ i + 1 }}",
+                    {% endfor %}
+                {% endif %}
+                "Jetzt"
+            ],
+            datasets: [
+                {% for username, color, positions in chart_history %}
+                    {
+                        label: "{{ username }}",
+                        data: {{ positions }},
+                        fill: false,
+                        borderColor: "{{ color }}",
+                        {% if (show_all == True and loop.index <= 10)
+                           or username == current_user.username
+                           or (user is defined and username == user.username) %}
+                            hidden: false,
+                        {% else %}
+                            hidden: true,
+                        {% endif %}
+                    },
+                {% endfor %}
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        begin:1,
+                        min:1,
+                        max:{{ chart_history|length  }},
+                        reverse: true,
+                        callback: function(value) {
+                            if (value % 1 === 0) {return value;}
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>

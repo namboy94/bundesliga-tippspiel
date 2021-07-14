@@ -61,14 +61,18 @@ def load_season_events() -> List[SeasonEvent]:
     """
     existing = {
         x.event_type: x
-        for x in SeasonEvent.query.filter_by(season=Config.season()).all()
+        for x in SeasonEvent.query.filter_by(
+            season=Config.season(),
+            league=Config.OPENLIGADB_LEAGUE
+        ).all()
     }
     for event_type in SeasonEventType:
         if event_type not in existing:
             new = SeasonEvent(
                 event_type=event_type,
                 executed=False,
-                season=Config.season()
+                season=Config.season(),
+                league=Config.OPENLIGADB_LEAGUE
             )
             db.session.add(new)
             existing[event_type] = new
@@ -160,7 +164,7 @@ def __handle_reminder(
 
             send_email(
                 user.email,
-                f"Bundesliga Tippspiel Saison {Config.season_string()}",
+                f"Fußball Tippspiel Saison {Config.season_string()}",
                 message,
                 Config.SMTP_HOST,
                 Config.SMTP_ADDRESS,

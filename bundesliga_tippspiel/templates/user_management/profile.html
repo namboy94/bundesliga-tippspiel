@@ -47,7 +47,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <h2>Erinnerungen</h2>
 
-    <form method="post" action="{{ url_for("reminder.set_reminder") }}">
+    <form method="post" action="{{ url_for("settings.set_reminder") }}">
         {% with label_name="Stunden vor Spielbeginn",
                 min_value=1, max_value=48, step=1,
                 value=24 if reminder_time is none else (reminder_time / 3600)|int,

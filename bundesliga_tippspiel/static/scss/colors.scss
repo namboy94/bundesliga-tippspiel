@@ -53,6 +53,8 @@ $default-text-color: #363636;
 $default-text-hover-color: blue;
 // Color for the crown indicating a season winner
 $crown-color: gold;
+// Color for the medal inidcating a matchday winner
+$medal-color: silver;
 
 // Standard colors
 $danger-color: #f14668;
@@ -70,7 +72,8 @@ $warning-text-color: #4f451b;
 $success-text-color: #ffffff;
 $info-text-color: #ffffff;
 $primary-text-color: #ffffff;
-$link-text-color: #ffffff;
+$link-text-color: #363636;
+$green-link-text-color: #00c940;
 $dark-text-color: #ffffff;
 $light-text-color: #4c4c4c;
 $black-text-color: #ffffff;

@@ -36,25 +36,26 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             </tr>
         </thead>
         <tbody>
-            {% for team_data in league_table %}
-                {% set team=team_data["team"] %}
+            {% for position, team, matches, wins, draws, losses, goals_for,
+                   goals_against, goal_difference, points
+                   in league_table.calculate_table() %}
                 <tr>
-                    <td>{{ loop.index }}</td>
+                    <td>{{ position }}</td>
                     <td>
-                        <a href="{{ url_for("information.team", team_id=team.id) }}">
+                        <a href="{{ team.url }}">
                             <img src="{{ team.icon_svg }}"
                                  alt="{{ team.name }}"
                                  class="league-table-logo">
                         </a>
                     </td>
                     <td class="is-hidden-mobile">{{ team.name }}</td>
-                    <td>{{ team_data["matches"] }}</td>
-                    <td class="is-hidden-mobile">{{ team_data["wins"] }}</td>
-                    <td class="is-hidden-mobile">{{ team_data["draws"] }}</td>
-                    <td class="is-hidden-mobile">{{ team_data["losses"] }}</td>
-                    <td>{{ team_data["goals_for"] }}:{{ team_data["goals_against"] }}</td>
-                    <td class="is-hidden-mobile">{{ team_data["goal_difference"] }}</td>
-                    <td>{{ team_data["points"] }}</td>
+                    <td>{{ matches }}</td>
+                    <td class="is-hidden-mobile">{{ wins }}</td>
+                    <td class="is-hidden-mobile">{{ draws }}</td>
+                    <td class="is-hidden-mobile">{{ losses }}</td>
+                    <td>{{ goals_for}}:{{ goals_against }}</td>
+                    <td class="is-hidden-mobile">{{ goal_difference }}</td>
+                    <td>{{ points }}</td>
                 </tr>
             {% endfor %}
         </tbody>

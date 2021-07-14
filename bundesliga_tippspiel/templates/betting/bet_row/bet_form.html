@@ -17,25 +17,24 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<form action="{{ url_for("betting.bets") }}" method="post"
+<form action="{{ url_for("betting.place_bets") }}" method="post"
       class="has-text-centered {% if form_mode == "desktop" %} is-hidden-mobile {% else %} is-hidden-tablet {% endif %}">
-    {% for match in matches %}
-        {% with match=match, bet=betmap[match.id],
-                first=loop.index == 1, last=loop.index == matches|length %}
-            {% if form_mode == "desktop" %}
-                {% include "betting/bet_row/bet_row_desktop.html" %}
-            {% else %}
-                {% include "betting/bet_row/bet_row_mobile.html" %}
-            {% endif %}
-        {% endwith %}
+    {% for match, bet in bet_infos %}
+        {% if form_mode == "desktop" %}
+            {% include "betting/bet_row/bet_row_desktop.html" %}
+        {% else %}
+            {% include "betting/bet_row/bet_row_mobile.html" %}
+        {% endif %}
     {% endfor %}
 
-    {% with button_name="Bestätigen" %}
-        {% include "components/forms/submit_button.html" %}
-    {% endwith %}
+    {% if not all_started %}
+        {% with button_name="Bestätigen" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    {% endif %}
 
     <h3>
-        {% if matches[0].started %}
+        {% if has_started %}
             Erreichte Punktzahl:
             <span class="badge badge-{{ get_matchday_total_pill_class(matchday_points) }} badge-pill">
                 {{ matchday_points }}

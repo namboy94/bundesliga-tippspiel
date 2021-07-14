@@ -45,35 +45,12 @@ class SeasonEvent(ModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "season_events"
-    """
-    The name of the table
-    """
 
-    __table_args__ = (
-        db.UniqueConstraint(
-            "event_type",
-            "season",
-            name="unique_season_event"
-        ),
-    )
-    """
-    Table arguments for unique constraints
-    """
-
+    season: int = db.Column(db.Integer, primary_key=True)
+    league: int = db.Column(db.String(255), primary_key=True)
     event_type: SeasonEventType = db.Column(
         db.Enum(SeasonEventType),
-        nullable=False
+        primary_key=True
     )
-    """
-    The type of event
-    """
 
     executed: bool = db.Column(db.Boolean, nullable=False, default=False)
-    """
-    Whether the event was executed or not
-    """
-
-    season: int = db.Column(db.Integer, nullable=False)
-    """
-    The season this event is for
-    """

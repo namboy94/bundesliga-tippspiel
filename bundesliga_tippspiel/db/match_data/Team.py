@@ -18,15 +18,13 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import List, TYPE_CHECKING
+
+from flask import url_for
 from jerrycan.base import db
 from jerrycan.db.ModelMixin import ModelMixin
+from bundesliga_tippspiel.db.match_data.Match import Match
 if TYPE_CHECKING:  # pragma: no cover
     from bundesliga_tippspiel.db.match_data.Player import Player
-    # from bundesliga_tippspiel.db.match_data.Match import Match
-    from bundesliga_tippspiel.db.user_generated.SeasonTeamBet import \
-        SeasonTeamBet
-    from bundesliga_tippspiel.db.user_generated.SeasonPositionBet import \
-        SeasonPositionBet
 
 
 class Team(ModelMixin, db.Model):
@@ -45,70 +43,59 @@ class Team(ModelMixin, db.Model):
         super().__init__(*args, **kwargs)
 
     __tablename__ = "teams"
-    """
-    The name of the table
-    """
 
+    abbreviation: str = db.Column(db.String(3), primary_key=True)
     name: str = db.Column(db.String(50), nullable=False, unique=True)
-    """
-    The full name of the team. Has to be unique.
-    Example: FC Bayern München
-    """
-
     short_name: str = db.Column(db.String(16), nullable=False, unique=True)
-    """
-    The shortened version of the team's name. Has to be unique.
-    Example: Bayern
-    """
-
-    abbreviation: str = db.Column(db.String(3), nullable=False, unique=True)
-    """
-    A three-letter abbreviation of the team's name. Has to be unique.
-    Example: FCB
-    """
-
     icon_svg: str = db.Column(db.String(255), nullable=False)
-    """
-    The URL of an image file representing the team's logo in SVG format
-    """
-
     icon_png: str = db.Column(db.String(255), nullable=False)
-    """
-    The URL of an image file representing the team's logo in PNG format
-    """
 
-    # TODO Figure out how to fix this
-    # home_matches: List["Match"] = db.relationship(
-    #     "Match", back_populates="home_team", cascade="all, delete"
-    # )
-    # """
-    # The home matches this team plays in.
-    # """
-    #
-    # away_matches: List["Match"] = db.relationship(
-    #     "Match", back_populates="away_team", cascade="all, delete"
-    # )
-    # """
-    # The away matches this team plays in.
-    # """
+    players: List["Player"] = db.relationship("Player", cascade="all, delete")
 
-    players: List["Player"] = db.relationship(
-        "Player", back_populates="team", cascade="all, delete"
-    )
-    """
-    The players of this team
-    """
+    @property
+    def home_matches(self) -> List[Match]:
+        """
+        :return: A list of home matches for the team
+        """
+        return Match.query.filter_by(
+            home_team_abbreviation=self.abbreviation
+        ).all()
 
-    season_position_bets: List["SeasonPositionBet"] = db.relationship(
-        "SeasonPositionBet", back_populates="team", cascade="all, delete"
-    )
-    """
-    The players of this team
-    """
+    @property
+    def away_matches(self) -> List[Match]:
+        """
+        :return: A list of away matches for the team
+        """
+        return Match.query.filter_by(
+            away_team_abbreviation=self.abbreviation
+        ).all()
 
-    season_team_bets: List["SeasonTeamBet"] = db.relationship(
-        "SeasonTeamBet", back_populates="team", cascade="all, delete"
-    )
-    """
-    The players of this team
-    """
+    @property
+    def matches(self) -> List[Match]:
+        """
+        :return: A list of matches for the team
+        """
+        return self.home_matches + self.away_matches
+
+    @property
+    def url(self) -> str:
+        """
+        :return: The URL for this teams's info page
+        """
+        return url_for("info.team", team_abbreviation=self.abbreviation)
+
+    @classmethod
+    def get_teams_for_season(cls, league: str, season: int) -> List["Team"]:
+        """
+        Retrieves a list of all teams in a particular season
+        :param league: The league in which to search for teams
+        :param season: The season in which to search for teams
+        :return: The list of teams
+        """
+
+        match_samples = Match.query.filter_by(
+            league=league, season=season, matchday=1
+        ).all()
+        home_teams = [x.home_team for x in match_samples]
+        away_teams = [x.away_team for x in match_samples]
+        return home_teams + away_teams

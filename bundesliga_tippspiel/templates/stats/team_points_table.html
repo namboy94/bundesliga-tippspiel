@@ -1,0 +1,46 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<table class="table is-bordered is-striped has-text-centered ranking-table">
+    <colgroup>
+        <col span="1" class="first">
+        <col span="1" class="second">
+        <col span="1" class="third">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Punkte</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team, points in team_points %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="{{ team.url }}">
+                        {{ team.name }}
+                    </a>
+                </td>
+                <td>{{ points|round(2) }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -17,10 +17,17 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from flask import Blueprint
-from flask_login import login_required
-from bundesliga_tippspiel.actions.ChangeSettingsAction import \
-    ChangeSettingsAction
+from flask import Blueprint, request, flash, redirect, url_for, \
+    make_response, abort
+from flask_login import login_required, current_user
+from jerrycan.base import db, app
+from jerrycan.enums import AlertSeverity
+from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
+    DisplayBotsSettings
+from bundesliga_tippspiel.db.settings.ReminderSettings import \
+    ReminderSettings
+from bundesliga_tippspiel.enums import ReminderType
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -38,11 +45,64 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Allows the user to change their miscellaneous settings
         :return: The response
         """
-        action = ChangeSettingsAction.from_site_request()
-        return action.execute_with_redirects(
-            "user_management.profile",
-            "Einstellungen gespeichert",
-            "user_management.profile"
+        setting = DisplayBotsSettings(
+            user_id=current_user.id,
+            display_bots=request.form.get("display_bots", "off") == "on"
         )
+        db.session.merge(setting)
+        db.session.commit()
+
+        flash("Einstellungen gespeichert", AlertSeverity.SUCCESS.value)
+        return redirect(url_for("user_management.profile"))
+
+    @blueprint.route("/set_reminder", methods=["POST"])
+    @login_required
+    def set_reminder():
+        """
+        Allows the user to set an email reminder
+        :return: The response
+        """
+        hours = int(request.form["hours"])
+        reminder_states = {
+            reminder_type:
+                request.form.get(reminder_type.value) in ["on", True]
+            for reminder_type in ReminderType
+        }
+
+        if not 0 < hours < 49:
+            flash("Ungültige Anzahl Stunden eingegeben", "danger")
+        else:
+            for reminder_type, reminder_state in reminder_states.items():
+                setting = ReminderSettings(
+                    user_id=current_user.id,
+                    reminder_type=reminder_type,
+                    active=reminder_state,
+                    reminder_time=hours
+                )
+                db.session.merge(setting)
+            db.session.commit()
+            flash("Erinnerungseinstellungen gespeichert", "success")
+
+        return redirect(url_for("user_management.profile"))
+
+    @blueprint.route("/change_league", methods=["GET"])
+    @login_required
+    def change_league():
+        """
+        Changes the user's currently displayed league by storing these
+        values in a cookie
+        :return: None
+        """
+        try:
+            league = request.args.get("league", Config.OPENLIGADB_LEAGUE)
+            season = request.args.get("season", Config.OPENLIGADB_SEASON)
+            int(season)
+        except ValueError:
+            return abort(400)
+        app.logger.info(request.referrer)
+        response = make_response(redirect(request.referrer))
+        response.set_cookie("league", league)
+        response.set_cookie("season", season)
+        return response
 
     return blueprint

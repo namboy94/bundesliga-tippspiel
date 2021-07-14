@@ -18,7 +18,7 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 import os
-from typing import Type, List, Dict, Optional
+from typing import Type, List, Dict, Optional, Tuple
 from jerrycan.Config import Config as BaseConfig
 
 
@@ -28,13 +28,32 @@ class Config(BaseConfig):
     """
     OPENLIGADB_SEASON: str
     """
-    The openligadb season to use
+    The default openligadb season to use
     """
 
     OPENLIGADB_LEAGUE: str
     """
-    The openligadb league to use
+    The default openligadb league to use
     """
+
+    OPENLIGADB_EXTRA_LEAGUES: List[Tuple[str, int]]
+    """
+    Extra openligadb seasons and leagues
+    """
+
+    @classmethod
+    def league_name(cls, league: Optional[str] = None) -> str:
+        """
+        Generates a name for the openligadb league
+        :param league: The league string (like 'bl1')
+        :return: The league name (like 'Bundesliga')
+        """
+        if league is None:
+            league = cls.OPENLIGADB_LEAGUE
+        return {
+            "bl1": "Bundesliga",
+            "bl2": "2. Bundesliga"
+        }.get(league, league)
 
     @classmethod
     def season_string(cls, year: Optional[int] = None) -> str:
@@ -47,11 +66,34 @@ class Config(BaseConfig):
         return f"{year}/{second}"
 
     @classmethod
+    def league_string(cls, league: str, season: int) -> str:
+        """
+        Creates a league string, like "Bundesliga 2020/21"
+        :param league: The league for which to generate the string
+        :param season: The season for which to generate the string
+        :return: The generated string
+        """
+        season_string = cls.season_string(season)
+        league_name = cls.league_name(league)
+        return f"{league_name} {season_string}"
+
+    @classmethod
     def season(cls) -> int:
         """
         :return: The current season
         """
         return int(Config.OPENLIGADB_SEASON)
+
+    @classmethod
+    def all_leagues(cls) -> List[Tuple[str, int]]:
+        """
+        :return: A list of all leagues
+        """
+        leagues = [(cls.OPENLIGADB_LEAGUE, cls.season())] + \
+            cls.OPENLIGADB_EXTRA_LEAGUES
+        leagues.sort(key=lambda x: x[0])
+        leagues.sort(key=lambda x: x[1])
+        return leagues
 
     @classmethod
     def environment_variables(cls) -> Dict[str, List[str]]:
@@ -62,11 +104,10 @@ class Config(BaseConfig):
                  required or optional
         """
         base = super().environment_variables()
-        base["required"] += [
-            "OPENLIGADB_SEASON"
-        ]
         base["optional"] += [
-            "OPENLIGADB_LEAGUE"
+            "OPENLIGADB_LEAGUE",
+            "OPENLIGADB_SEASON",
+            "OPENLIGADB_EXTRA_LEAGUES"
         ]
         return base
 
@@ -77,8 +118,18 @@ class Config(BaseConfig):
         :param parent: The base configuration
         :return: None
         """
-        Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2019")
+        Config.OPENLIGADB_SEASON = os.environ.get("OPENLIGADB_SEASON", "2021")
         Config.OPENLIGADB_LEAGUE = os.environ.get("OPENLIGADB_LEAGUE", "bl1")
+        Config.OPENLIGADB_EXTRA_LEAGUES = []
+        openligdb_extras = \
+            os.environ.get("OPENLIGADB_EXTRA_LEAGUES", "").strip().split(",")
+        for entry in openligdb_extras:
+            try:
+                league, _season = entry.split(":")
+                season = int(_season)
+                Config.OPENLIGADB_EXTRA_LEAGUES.append((league, season))
+            except ValueError:
+                pass
         from bundesliga_tippspiel.template_extras import profile_extras
         parent.API_VERSION = "2"
         parent.STRINGS.update({

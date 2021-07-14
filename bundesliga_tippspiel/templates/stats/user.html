@@ -1,0 +1,109 @@
+{#
+Copyright 2017 Hermann Krumrey <hermann@krumreyh.com>
+
+This file is part of bundesliga-tippspiel.
+
+bundesliga-tippspiel is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+bundesliga-tippspiel is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "core/base_layout.html" %}
+{% set requires_charts=True %}
+{% block body %}
+    <h1>{{ user.username }}</h1>
+    <div class="container is-hidden-mobile ranking-chart-container">
+        <h3>Positionsentwicklung</h3>
+        {% set chart_history=user_stats.history_to_chart_data() %}
+        {% include "ranking/leaderboard_chart.html" %}
+    </div>
+    <div class="columns">
+        <div class="column is-6">
+            <h3>Übersicht</h3>
+            <table class="table is-bordered is-striped has-text-centered">
+                <tbody>
+                    <tr>
+                        <td>Position</td>
+                        <td>{{ user_stats.get_user_position() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Position (Hinrunde)</td>
+                        <td>{{ user_stats.get_user_first_half_position() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Position (Rückrunde)</td>
+                        <td>{{ user_stats.get_user_second_half_position() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Beste Position</td>
+                        <td>{{ user_stats.get_user_best_position() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Schlechteste Position</td>
+                        <td>{{ user_stats.get_user_worst_position() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Punkte</td>
+                        <td>{{ user_stats.get_user_points() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Anzahl Tipps</td>
+                        <td>{{ user_stats.get_user_bet_count() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Punkteschnitt</td>
+                        <td>{{ user_stats.get_user_betting_average()|round(2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Teilnahme</td>
+                        <td>{{ user_stats.get_user_participation()|round(2) }}%</td>
+                    </tr>
+                    <tr>
+                        <td>Korrekte Tipps</td>
+                        <td>{{ user_stats.get_user_correct_bets() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Komplett falsche Tipps</td>
+                        <td>{{ user_stats.get_user_wrong_bets() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bestes Team</td>
+                        <td>
+                            {% set best_team, best_team_avg = user_stats.get_user_best_team() %}
+                            <a href="{{ best_team.url }}">
+                                {{ best_team.short_name }} ({{ best_team_avg|round(2) }})
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Schlechtestes Team</td>
+                        <td>
+                            {% set worst_team, worst_team_avg = user_stats.get_user_worst_team() %}
+                            <a href="{{ worst_team.url }}">
+                                {{ worst_team.short_name }} ({{ worst_team_avg|round(2) }})
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="column is-6">
+            {% set distribution = user_stats.get_user_points_distribution() %}
+            {% include "stats/points_distribution_pie_chart.html" %}
+        </div>
+    </div>
+    <div class="container is-fluid">
+        <h3>Punkte pro Team</h3>
+        {% set team_points = user_stats.get_user_average_points_per_team() %}
+        {% include "stats/team_points_table.html" %}
+    </div>
+{% endblock %}

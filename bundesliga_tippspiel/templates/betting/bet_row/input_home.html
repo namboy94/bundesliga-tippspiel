@@ -18,10 +18,10 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 <input class="input bet-row-input"
-       name="{{ match.id }}-home"
+       name="{{ match.league }}_{{ match.season }}_{{ match.matchday }}_{{ match.home_team_abbreviation }}_{{ match.away_team_abbreviation }}_home"
        title="Home"
        pattern="[0-9]*"
        maxlength="2"
        {% if bet is not none %}value="{{ bet.home_score }}"{% endif %}
-       {% if match.started %} disabled="" {% endif %}
+       {% if match.has_started %} disabled="" {% endif %}
 >

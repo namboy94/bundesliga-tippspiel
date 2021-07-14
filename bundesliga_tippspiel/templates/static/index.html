@@ -19,38 +19,52 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
 {% extends "core/base_layout.html" %}
 {% block body %}
-    <h1>Tippspiel zur Bundesliga Saison {{ config.season_string() }}</h1>
+    <h1>Fußball Tippspiel zur {{ config.league_name(get_selected_league()[0]) }} Saison {{ config.season_string() }}</h1>
     <p>
-        Beim Bundesliga Tippspiel kannst du dein Fußballwissen (und dein Glück)
+        Beim Fußball Tippspiel kannst du dein Fußballwissen (und dein Glück)
         mit deinen Freunden messen!
     </p>
 
     {% if current_user.is_authenticated %}
-        <p>
-            Um zu tippen, besuche die
-            <a href="{{ url_for("betting.bets") }}">Spieltag</a>
-            Seite.
-        </p>
-        <p>
+        <ul>
+            <li>
+                Um zu tippen, besuche die
+                <a class="green-link" href="{{ url_for("betting.get_current_bets") }}">Spieltag</a>
+                Seite.
+            </li>
+        <li>
             Eine Rangliste aller Spieler kann man auf der
-            <a href="{{ url_for("information.leaderboard") }}">Rangliste</a>
+            <a class="green-link" href="{{ url_for("tables.leaderboard") }}">Rangliste</a>
             Seite einsehen.
-        </p>
-        <p>
+        </li>
+        <li>
             Um Änderungen an deinem Profil vorzunehmen, kannst du die
-            <a href="{{ url_for("user_management.profile") }}">Einstellungen</a>
+            <a class="green-link" href="{{ url_for("user_management.profile") }}">Einstellungen</a>
             Seite benutzen.
-        </p>
+        </li>
+        </ul>
     {% else %}
         <p>
-            Hast du bereits ein Account, kannst du
+            Hast du bereits einen Account, kannst du
             dich mithilfe der Anmeldefunktion
-            <a href="{{ url_for("user_management.login") }}">hier</a>
+            <a class="green-link" href="{{ url_for("user_management.login") }}">hier</a>
             anmelden, ansonsten kannst du dich
-            <a href="{{ url_for("user_management.register") }}">hier</a>
+            <a class="green-link" href="{{ url_for("user_management.register") }}">hier</a>
             registrieren.
         </p>
     {% endif %}
+
+    <hr>
+
+    <h3>Neu in der Saison 2021/22</h3>
+    <ul>
+        <li>Die Spieltag-Seite zeigt jetzt für den ausgewählten Spieltag eine Tabelle an</li>
+        <li>Der Spieler der die meisten Punkte an einem Spieltag erhält,
+            bekommt in der Rangliste eine Medaille</li>
+        <li>Tipps und Spiele der vergangenen Saison sind ebenfalls einsehbar</li>
+        <li>Es kann jetzt auf Spiele der zweiten Bundesliga getippt werden</li>
+        <li>Statistiken laden jetzt viel schneller</li>
+    </ul>
 
     <hr>
 
@@ -98,10 +112,4 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% endfor %}
         </tbody>
     </table>
-
-    <p>
-    Außerdem werden am Ende der Saison Punkte für saisonübergreifende Wetten
-    verteilt.
-    </p>
-
 {% endblock %}

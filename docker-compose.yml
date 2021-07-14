@@ -31,6 +31,7 @@ services:
       - net
     volumes:
       - data:/var/lib/postgresql/data
+      - /home/hermann/git/bundesliga-tippspiel/data:/data
     restart: always
 volumes:
   logs: ~

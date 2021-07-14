@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
-<a tabindex="-1" href="{{ url_for("information.team", team_id=match.home_team.id) }}">
+<a tabindex="-1" href="{{ match.home_team.url }}">
     <img src="{{ match.home_team.icon_svg }}"
          alt="{{ match.home_team.name }}"
          class="bet-row-logo"

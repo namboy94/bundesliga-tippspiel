@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 #}
 <input class="input bet-row-input"
-       name="{{ match.id }}-away"
+       name="{{ match.league }}_{{ match.season }}_{{ match.matchday }}_{{ match.home_team_abbreviation }}_{{ match.away_team_abbreviation }}_away"
        title="Away"
        pattern="[0-9]*"
        maxlength="2"
        {% if bet is not none %}value="{{ bet.away_score }}"{% endif %}
-       {% if match.started %} disabled="" {% endif %}
+       {% if match.has_started %} disabled="" {% endif %}
 >
