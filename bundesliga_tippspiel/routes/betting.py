@@ -25,8 +25,7 @@ from flask import render_template, request, Blueprint, flash, url_for, \
 from flask_login import login_required, current_user
 from jerrycan.base import db
 from bundesliga_tippspiel.db import Match, DisplayBotsSettings
-from bundesliga_tippspiel.utils.matchday import validate_matchday, \
-    get_selected_league
+from bundesliga_tippspiel.utils.matchday import validate_matchday
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
 
 
@@ -148,9 +147,16 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             except ValueError:
                 continue
 
+        matches = {
+            (x.home_team_abbreviation, x.away_team_abbreviation): x
+            for x in Match.query.all()
+        }
         for (league, season, matchday, home, away), scores in bet_data.items():
             if "home" not in scores or "away" not in scores:
                 continue
+            match = matches.get((home, away))
+            if match is None or match.has_started:
+                continue  # Can't bet on existing matches
             bet = Bet(
                 league=league,
                 season=season,
