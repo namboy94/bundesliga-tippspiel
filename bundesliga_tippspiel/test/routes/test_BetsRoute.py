@@ -110,6 +110,8 @@ class TestBetsRoute(_RouteTestFramework):
         """
         self.login()
         self.assertEqual(len(Bet.query.all()), 0)
+        self.match_one.kickoff = "3000-01-01:01-01-01"
+        self.db.session.commit()
         match_id = f"{self.match_one.league}_{self.match_one.season}_" \
                    f"{self.match_one.matchday}_" \
                    f"{self.match_one.home_team_abbreviation}_" \

@@ -62,10 +62,12 @@ class TestReminders(_TestFramework):
         """
         self.db.session.delete(self.reminder)
         self.db.session.commit()
+        self.assertEqual(0, len(ReminderSettings.query.all()))
         with mock.patch("bundesliga_tippspiel.db.settings."
                         "ReminderSettings.send_email") as mocked:
             send_due_reminders()
-            self.assertEqual(0, mocked.call_count)
+            self.assertEqual(1, mocked.call_count)
+        self.assertEqual(1, len(ReminderSettings.query.all()))
 
     def test_with_non_due_reminder(self):
         """
