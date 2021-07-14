@@ -117,7 +117,8 @@ def calculate_matchday_points(
         ):
             for match in matches:
                 for bet in match.bets:
-                    user_points[matchday][bet.user] += bet.points
+                    if bet.points is not None:
+                        user_points[matchday][bet.user] += bet.points
 
         season_points[league_season] = user_points
     return season_points

@@ -96,11 +96,16 @@ def update_openligadb():
     Updates all OpenLigaDB leagues in the configuration
     :return: None
     """
+    start = time.time()
+    app.logger.debug("Updating OpenLigaDB data")
     for league, season in Config.all_leagues():
         update_required = UpdateTracker.update_required(league, season)
         if update_required:
             UpdateTracker.UPDATES[(league, season)] = int(time.time())
             update_match_data(league, str(season))
+    app.logger.debug(
+        f"Finished OpenLigaDB update in {time.time() - start:.2f}s"
+    )
 
 
 def update_match_data(
@@ -114,8 +119,7 @@ def update_match_data(
     :param season: The season for which to update the data
     :return: None
     """
-    start = time.time()
-    app.logger.info("Updating match data using OpenLigaDB")
+    app.logger.info(f"Updating match data for {league}/{season}")
 
     if league is None:
         league = Config.OPENLIGADB_LEAGUE
@@ -169,7 +173,6 @@ def update_match_data(
             db.session.merge(goal)
 
     db.session.commit()
-    app.logger.debug(f"Finished OpenLigaDB update in {time.time()-start:.2f}s")
 
 
 def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
