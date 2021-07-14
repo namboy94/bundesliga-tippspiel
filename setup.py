@@ -71,7 +71,7 @@ if __name__ == "__main__":
             "puffotter[crypto]",
             "beautifulsoup4",
             "pytz",
-            "jerrycan>=0.3.1"
+            "jerrycan>=0.3.2"
         ],
         include_package_data=True,
         zip_safe=False
