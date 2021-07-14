@@ -21,7 +21,7 @@ import time
 import json
 import requests
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple, List
 from jerrycan.base import db, app
 from bundesliga_tippspiel.db.match_data.Match import Match
 from bundesliga_tippspiel.db.match_data.Goal import Goal
@@ -29,6 +29,78 @@ from bundesliga_tippspiel.db.match_data.Player import Player
 from bundesliga_tippspiel.db.match_data.Team import Team
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.utils.teams import get_team_data
+
+
+class UpdateTracker:
+    """
+    Class that keeps track of OpenLigaDB updates, which is useful to avoid
+    rate limiting
+    """
+    UPDATES: Dict[Tuple[str, int], int] = {}
+
+    @staticmethod
+    def update_required(league: str, season: int) -> bool:
+        """
+        Checks if a league requires updating
+        :param league: The league to check
+        :param season: The season to check
+        :return: True if update required, False otherwise
+        """
+        league_tuple = (league, season)
+        last_update = UpdateTracker.UPDATES.get(league_tuple, 0)
+        now = datetime.utcnow()
+        delta = time.time() - last_update
+
+        matches: List[Match] = \
+            Match.query.filter_by(season=season, league=league).all()
+
+        if len(matches) == 0:  # Initial filling of DB
+            return True
+
+        matches.sort(key=lambda x: x.kickoff)
+        last_match = matches[-1]
+
+        last_match_delta_days = (now - last_match.kickoff_datetime).days
+
+        # Don't update after 30 days after the season ends
+        if last_match_delta_days > 30:
+            return False
+
+        started_matches = [
+            match for match in matches
+            if match.has_started
+        ]
+        is_primary = \
+            league_tuple == (Config.OPENLIGADB_LEAGUE, Config.season())
+
+        if delta > 60 * 60 * 24:  # Once a day minimum update
+            return True
+        elif len(started_matches) > 0:
+            last_started_match = started_matches[-1]
+            last_started_delta = last_started_match.kickoff_datetime - now
+            last_started_hours_delta = last_started_delta.seconds
+            # Increase update frequency during and after matches
+            if last_started_hours_delta < 60 * 180:
+                return True
+            else:
+                return False
+        elif is_primary and delta > 60 * 60:
+            # Update Primary league once an hour
+            return True
+        else:
+            return False
+
+
+def update_openligadb():
+    """
+    Updates all OpenLigaDB leagues in the configuration
+    :return: None
+    """
+    for league, season in Config.all_leagues():
+        update_required = UpdateTracker.update_required(league, season)
+        if update_required:
+            UpdateTracker.UPDATES[(league, season)] = int(time.time())
+            update_match_data(league, str(season))
 
 
 def update_match_data(
@@ -224,12 +296,3 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
         icon_svg=svg,
         icon_png=png
     )
-
-
-def update_extra_leagues():
-    """
-    Updates any extra leagues
-    :return: None
-    """
-    for league, season in Config.OPENLIGADB_EXTRA_LEAGUES:
-        update_match_data(league, str(season))

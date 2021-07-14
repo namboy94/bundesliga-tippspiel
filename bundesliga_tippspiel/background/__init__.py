@@ -21,13 +21,11 @@ from typing import Dict, Tuple, Callable
 from bundesliga_tippspiel.background.season_events import handle_season_events
 from bundesliga_tippspiel.background.reminders import send_due_reminders
 from bundesliga_tippspiel.background.pointscalc import update_leaderboard
-from bundesliga_tippspiel.background.openligadb import update_match_data, \
-    update_extra_leagues
+from bundesliga_tippspiel.background.openligadb import update_match_data
 
 
 bg_tasks: Dict[str, Tuple[int, Callable]] = {
-    "update_db_data": (60, update_match_data),
-    "update_extra_db_data": (60 * 5, update_extra_leagues),
+    "update_db_data": (30, update_match_data),
     "send_due_reminders": (60, send_due_reminders),
     "handle_season_events": (60 * 60 * 24, handle_season_events),
     "update_leaderboard": (30, update_leaderboard)

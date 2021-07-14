@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 from jerrycan.base import db
 from jerrycan.db.ModelMixin import ModelMixin
 from jerrycan.db.User import User
@@ -101,11 +101,14 @@ class Bet(ModelMixin, db.Model):
         else:
             return False  # pragma: no cover
 
-    def evaluate(self) -> int:
+    def evaluate(self) -> Optional[int]:
         """
         Evaluates the current points score on this bet
-        :return: The calculated points
+        :return: The calculated points (or None if the math hasn't started yet)
         """
+        if not self.match.has_started:
+            return None
+
         points = 0
         bet_diff = self.home_score - self.away_score
         match_diff = \
@@ -124,18 +127,3 @@ class Bet(ModelMixin, db.Model):
             points += 3
 
         return points
-
-    def __json__(
-            self,
-            include_children: bool = False,
-            ignore_keys: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
-        """
-        Includes the points achieved by the user
-        :param include_children: Whether or not to include child objects
-        :param ignore_keys: Which keys to ignore
-        :return: The JSON data
-        """
-        data = super().__json__(include_children, ignore_keys)
-        data["points"] = self.evaluate()
-        return data
