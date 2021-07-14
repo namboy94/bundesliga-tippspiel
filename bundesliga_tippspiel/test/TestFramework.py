@@ -52,6 +52,7 @@ class _TestFramework(Framework):
         :return: None
         """
         super().setUp()
+        self.app.config["PREFERRED_URL_SCHEME"] = "https"
         self.config.OPENLIGADB_LEAGUE = "bl1"
         self.config.OPENLIGADB_SEASON = "2018"
 
