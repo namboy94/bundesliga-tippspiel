@@ -27,6 +27,7 @@ from jerrycan.base import db
 from bundesliga_tippspiel.db import Match, DisplayBotsSettings
 from bundesliga_tippspiel.utils.matchday import validate_matchday
 from bundesliga_tippspiel.db.user_generated.Bet import Bet
+from bundesliga_tippspiel.utils.bets import place_bets as _place_bets
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -147,29 +148,16 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             except ValueError:
                 continue
 
-        matches = {
-            (x.home_team_abbreviation, x.away_team_abbreviation): x
-            for x in Match.query.all()
-        }
+        bets = []
         for (league, season, matchday, home, away), scores in bet_data.items():
             if "home" not in scores or "away" not in scores:
                 continue
-            match = matches.get((home, away))
-            if match is None or match.has_started:
-                continue  # Can't bet on existing matches
-            bet = Bet(
-                league=league,
-                season=season,
-                matchday=matchday,
-                home_team_abbreviation=home,
-                away_team_abbreviation=away,
-                user_id=current_user.id,
-                home_score=scores["home"],
-                away_score=scores["away"]
-            )
-            db.session.merge(bet)
-        db.session.commit()
-
+            else:
+                bets.append((
+                    league, season, matchday,
+                    home, away, scores["home"], scores["away"]
+                ))
+        _place_bets(current_user, bets)
         flash("Tipps erfolgreich gesetzt", "success")
         return redirect(url_for("betting.get_current_bets"))
 
