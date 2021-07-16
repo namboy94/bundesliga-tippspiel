@@ -69,7 +69,7 @@ deploy_app:
   before_script: []
   script:
     - echo "$ENV_FILE" > .env
-    - docker-compose build
+    - docker-compose build --no-cache
     - bin/backup.sh backup.tar.gz
     - docker-compose up -d
     - rm .env
