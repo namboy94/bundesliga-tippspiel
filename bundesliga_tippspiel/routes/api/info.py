@@ -18,12 +18,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 from typing import Optional
 
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_login import login_required
 from jerrycan.routes.decorators import api, api_login_required
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db import Match
-from bundesliga_tippspiel.utils.matchday import get_matchday_info
+from bundesliga_tippspiel.utils.collections.LeagueTable import LeagueTable
+from bundesliga_tippspiel.utils.matchday import validate_matchday, \
+    get_matchday_info
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -77,8 +79,10 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         Retrieves the matches for a particular matchday
         :return: The list of available leagues
         """
-        if matchday is None:
-            matchday = get_matchday_info(league, season)[0]
+        validated = validate_matchday(league, season, matchday)
+        if validated is None:
+            return abort(404)
+        league, season, matchday = validated
 
         matches = Match.query.filter_by(
             league=league, season=season, matchday=matchday
@@ -88,5 +92,49 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             match.__json__(include_children=False) for match in matches
         ]
         return {"matches": matches_json}
+
+    @blueprint.route(f"{api_base_path}/league_table/"
+                     f"<string:league>/<int:season>", methods=["GET"])
+    @blueprint.route(f"{api_base_path}/league_table/"
+                     f"<string:league>/<int:season>/<int:matchday>",
+                     methods=["GET"])
+    @api
+    def api_get_league_table(
+            league: str,
+            season: int,
+            matchday: Optional[int] = None
+    ):
+        """
+        Retrieves a league table
+        :param league: The league for which to retrieve the table
+        :param season: The season for which to retrieve the table
+        :param matchday: The matchday for which to retrieve the table
+        :return: The leaderboard table
+        """
+        validated = validate_matchday(league, season, matchday)
+        if validated is None:
+            return abort(404)
+        league, season, matchday = validated
+
+        table_data = LeagueTable(league, season, matchday, None)\
+            .calculate_table()
+        league_table = []
+        for entry in table_data:
+            league_table.append((
+                entry[0],
+                entry[1].__json__(),
+                entry[2],
+                entry[3],
+                entry[4],
+                entry[5],
+                entry[6],
+                entry[7],
+                entry[8],
+                entry[9]
+            ))
+
+        return {
+            "league_table": league_table
+        }
 
     return blueprint
