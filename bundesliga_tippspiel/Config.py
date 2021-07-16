@@ -131,7 +131,7 @@ class Config(BaseConfig):
             except ValueError:
                 pass
         from bundesliga_tippspiel.template_extras import profile_extras
-        parent.API_VERSION = "2"
+        parent.API_VERSION = "3"
         parent.STRINGS.update({
             "401_message": "Du bist nicht angemeldet. Bitte melde dich an.",
             "500_message": "The server encountered an internal error and "
