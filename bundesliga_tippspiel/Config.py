@@ -52,7 +52,8 @@ class Config(BaseConfig):
             league = cls.OPENLIGADB_LEAGUE
         return {
             "bl1": "Bundesliga",
-            "bl2": "2. Bundesliga"
+            "bl2": "2. Bundesliga",
+            "bl3": "3. Liga"
         }.get(league, league)
 
     @classmethod
