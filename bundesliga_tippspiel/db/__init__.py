@@ -30,6 +30,7 @@ from bundesliga_tippspiel.db.user_generated.ChatMessage import ChatMessage
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
 from bundesliga_tippspiel.db.user_generated.MatchdayWinner import \
     MatchdayWinner
+from bundesliga_tippspiel.db.user_generated.UserProfile import UserProfile
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings
 from bundesliga_tippspiel.db.user_generated.LeaderboardEntry import \
@@ -47,7 +48,8 @@ models: List[db.Model] = [
     ReminderSettings,
     DisplayBotsSettings,
     ChatMessage,
-    LeaderboardEntry
+    LeaderboardEntry,
+    UserProfile
 ]
 """
 The database models of the application

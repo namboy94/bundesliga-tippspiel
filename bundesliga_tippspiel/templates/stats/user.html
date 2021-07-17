@@ -21,6 +21,30 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 {% set requires_charts=True %}
 {% block body %}
     <h1>{{ user.username }}</h1>
+
+    {% if user.profile is not none %}
+        <hr>
+        <div class="container">
+            <div class="columns">
+                <div class="column has-text-centered is-6">
+                    <h2>Über mich: </h2>
+                    {% if user.profile.description is not none %}
+                        <h4>{{ user.profile.description }}</h4>
+                    {% endif %}
+                </div>
+                <div class="column has-text-centered is-6">
+                    <h2>Lieblingsteam: </h2>
+                    {% if user.profile.favourite_team is not none %}
+                    <img class="user-favourite-team-logo"
+                         src="{{ user.profile.favourite_team.icon_svg }}"
+                         alt="{{ user.profile.favourite_team.name }}">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr>
+    {% endif %}
+
     <div class="container is-hidden-mobile ranking-chart-container">
         <h3>Positionsentwicklung</h3>
         {% set chart_history=user_stats.history_to_chart_data() %}

@@ -21,8 +21,10 @@ from typing import List
 from jerrycan.base import db
 from flask import render_template, Blueprint, abort
 from flask_login import login_required, current_user
+from jerrycan.db.User import User
+
 from bundesliga_tippspiel.db import Team, Player, DisplayBotsSettings, \
-    Bet, Match
+    Bet, Match, UserProfile
 
 
 def define_blueprint(blueprint_name: str) -> Blueprint:
@@ -121,7 +123,9 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
             matchday=matchday,
             home_team_abbreviation=home,
             away_team_abbreviation=away
-        ).options(db.joinedload(Bet.user)).all()
+        ).options(db.joinedload(Bet.user)
+                  .subqueryload(User.profile)
+                  .subqueryload(UserProfile.favourite_team)).all()
         if not DisplayBotsSettings.get_state(current_user):
             bets = [
                 x for x in bets

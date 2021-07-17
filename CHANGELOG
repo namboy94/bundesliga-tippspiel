@@ -1,3 +1,7 @@
+V 2.0.3:
+  - Only sends out season reminders for the primary league
+  - Adds user profile options
+  - Adds support for the third German division
 V 2.0.2:
   - Make sure to use --no-cache when building docker image
 V 2.0.1:

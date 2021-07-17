@@ -137,7 +137,9 @@ def __handle_reminder(
     kickoff_times = [
         x.kickoff_datetime
         for x in Match.query.filter_by(
-            matchday=matchday, season=Config.season()
+            matchday=matchday,
+            season=Config.season(),
+            league=Config.OPENLIGADB_LEAGUE
         ).all()
     ]
 

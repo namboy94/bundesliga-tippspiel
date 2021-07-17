@@ -23,6 +23,7 @@ from flask_login import login_required, current_user
 from jerrycan.base import db, app
 from jerrycan.enums import AlertSeverity
 from bundesliga_tippspiel.Config import Config
+from bundesliga_tippspiel.db import Team, UserProfile
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings
 from bundesliga_tippspiel.db.settings.ReminderSettings import \
@@ -104,5 +105,32 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         response.set_cookie("league", league)
         response.set_cookie("season", season)
         return response
+
+    @blueprint.route("/set_profile_info", methods=["POST"])
+    @login_required
+    def set_profile_info():
+        """
+        Sets the profile info for a user
+        :return: The response
+        """
+        team_names = [x.abbreviation for x in Team.query.all()]
+
+        description = request.form.get("about_me")
+        favourite_team = request.form.get("favourite_team")
+        if not description:
+            description = None
+        if favourite_team not in team_names:
+            favourite_team = None
+        country = None
+
+        profile_info = UserProfile(
+            user_id=current_user.id,
+            description=description,
+            favourite_team_abbreviation=favourite_team,
+            country=country
+        )
+        db.session.merge(profile_info)
+        db.session.commit()
+        return redirect(url_for("user_management.profile"))
 
     return blueprint
