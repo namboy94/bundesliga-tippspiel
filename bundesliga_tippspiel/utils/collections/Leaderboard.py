@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
-from typing import List, Tuple, Dict, Any
-
+from typing import List, Tuple, Dict
 from jerrycan.base import db
 from jerrycan.db.User import User
 from bundesliga_tippspiel.db import SeasonWinner, LeaderboardEntry, \
-    DisplayBotsSettings, MatchdayWinner
+    DisplayBotsSettings, MatchdayWinner, UserProfile
 
 
 class Leaderboard:
@@ -71,7 +70,9 @@ class Leaderboard:
                 league=league,
                 season=season,
                 matchday=matchday
-            ).options(db.joinedload(LeaderboardEntry.user)).all()
+            ).options(db.joinedload(LeaderboardEntry.user)
+                      .subqueryload(User.profile)
+                      .subqueryload(UserProfile.favourite_team)).all()
         self.ranking.sort(key=lambda x: x.position)
         self.history: List[Tuple[User, List["LeaderboardEntry"]]] \
             = LeaderboardEntry.load_history(league, season, matchday)

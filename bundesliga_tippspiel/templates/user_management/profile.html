@@ -23,22 +23,44 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 
     <hr>
 
-    <h2>Passwort ändern</h2>
+    <h2>Profil</h2>
 
-    <form method="post" action="{{ url_for("user_management.change_password") }}">
-        {% with label_name="Derzeitiges Passwort", placeholder="Passwort",
-                var_name="old_password", icon_name="lock" %}
-            {% include "components/forms/password_input.html" %}
+    <form method="post" action="{{ url_for("settings.set_profile_info") }}">
+
+        {% if user_profile is none or user_profile.description is none %}
+            {% set description = "" %}
+        {% else %}
+            {% set description = user_profile.description %}
+        {% endif %}
+        {% with label_name="Über mich", placeholder="",
+                var_name="about_me", value=description %}
+            {% include "components/forms/text_input.html" %}
         {% endwith %}
-        {% with label_name="Neues Passwort", placeholder="Passwort",
-                var_name="new_password", icon_name="lock" %}
-            {% include "components/forms/password_input.html" %}
-        {% endwith %}
-        {% with label_name="Neues Passwort (Wiederholen)", placeholder="Passwort",
-                var_name="password_repeat", icon_name="lock" %}
-            {% include "components/forms/password_input.html" %}
-        {% endwith %}
-        {% with button_name="Ändern" %}
+
+    <div class="field">
+        <label for="favourite_team_select" class="label">Lieblingsteam</label>
+        <div class="control">
+            <div class="select">
+                {% if user_profile is none or user_profile.favourite_team_abbreviation is none %}
+                    {% set favourite_team = "" %}
+                {% else %}
+                    {% set favourite_team = user_profile.favourite_team_abbreviation %}
+                {% endif %}
+                <select id="favourite_team_select" name="favourite_team">
+                    {% if favourite_team == "" %}
+                        <option value="" selected></option>
+                    {% endif %}
+                    {% for team in teams %}
+                        <option value="{{ team.abbreviation }}"
+                                {% if team.abbreviation == favourite_team %}selected{% endif %}>
+                            {{ team.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+        {% with button_name="Bestätigen" %}
             {% include "components/forms/submit_button.html" %}
         {% endwith %}
     </form>
@@ -99,6 +121,28 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
             {% include "components/forms/bool_input.html" %}
         {% endwith %}
         {% with button_name="Bestätigen" %}
+            {% include "components/forms/submit_button.html" %}
+        {% endwith %}
+    </form>
+
+    <hr>
+
+    <h2>Passwort ändern</h2>
+
+    <form method="post" action="{{ url_for("user_management.change_password") }}">
+        {% with label_name="Derzeitiges Passwort", placeholder="Passwort",
+                var_name="old_password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Neues Passwort", placeholder="Passwort",
+                var_name="new_password", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with label_name="Neues Passwort (Wiederholen)", placeholder="Passwort",
+                var_name="password_repeat", icon_name="lock" %}
+            {% include "components/forms/password_input.html" %}
+        {% endwith %}
+        {% with button_name="Ändern" %}
             {% include "components/forms/submit_button.html" %}
         {% endwith %}
     </form>

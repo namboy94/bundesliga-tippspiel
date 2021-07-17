@@ -48,6 +48,14 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
                 </td>
                 <td>
                     <a href="{{ url_for("stats.user", user_id=user.id) }}">
+                        {% if user.profile is not none and user.profile.favourite_team is not none %}
+                            {% set favourite_team = user.profile.favourite_team %}
+                            <span title="Lieblingsteam">
+                                <img class="favourite-team-logo"
+                                     src="{{ favourite_team.icon_svg }}"
+                                     alt="{{ favourite_team.name }}">
+                            </span>
+                        {% endif %}
                         {{ user.username }}
                     </a>
                     {% for season in season_wins %}

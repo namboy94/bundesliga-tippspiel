@@ -19,6 +19,7 @@ LICENSE"""
 
 from typing import Dict, Any
 from flask_login import current_user
+from bundesliga_tippspiel.db import Team, UserProfile
 from bundesliga_tippspiel.db.settings.DisplayBotsSettings import \
     DisplayBotsSettings
 from bundesliga_tippspiel.db.settings.ReminderSettings import ReminderSettings
@@ -30,6 +31,9 @@ def profile_extras() -> Dict[str, Any]:
     reminders.
     :return: The variables to forward to the template
     """
+    teams = Team.query.all()
+    teams.sort(key=lambda x: x.name)
+    user_profile = UserProfile.query.filter_by(user=current_user).first()
     reminder_settings = {
         x.reminder_type: x for x in
         ReminderSettings.query.filter_by(user=current_user).all()
@@ -40,6 +44,8 @@ def profile_extras() -> Dict[str, Any]:
             reminder_time = reminder.reminder_time
             break
     return {
+        "teams": teams,
+        "user_profile": user_profile,
         "reminder_settings": reminder_settings,
         "reminder_time": reminder_time,
         "display_bots_setting":
