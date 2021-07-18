@@ -182,6 +182,7 @@ def process_league_table(
     """
     bot_symbol = DisplayBotsSettings.bot_symbol()
     ranking = [(user, points) for user, points in user_points.items()]
+    ranking.sort(key=lambda x: x[0].id)
     ranking.sort(key=lambda x: x[1], reverse=True)
 
     no_bot_ranking = [x for x in ranking if bot_symbol not in x[0].username]

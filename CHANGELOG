@@ -1,5 +1,6 @@
 V 2.0.4:
   - Sort leaderboards by user ID if points are equal
+  -
 V 2.0.3:
   - Only sends out season reminders for the primary league
   - Adds user profile options

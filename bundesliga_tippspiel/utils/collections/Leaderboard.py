@@ -73,7 +73,6 @@ class Leaderboard:
             ).options(db.joinedload(LeaderboardEntry.user)
                       .subqueryload(User.profile)
                       .subqueryload(UserProfile.favourite_team)).all()
-        self.ranking.sort(key=lambda x: x.user_id)
         self.ranking.sort(key=lambda x: x.position)
         self.history: List[Tuple[User, List["LeaderboardEntry"]]] \
             = LeaderboardEntry.load_history(league, season, matchday)
@@ -149,7 +148,6 @@ class Leaderboard:
                 [self.matchday] if item.user_id in matchday_winners else [],
                 points
             ))
-        table_data.sort(key=lambda x: x[0].user_id)
         table_data.sort(key=lambda x: x[2], reverse=True)
         table: List[Tuple[int, None, None, User, List[str], List[int], int]] \
             = []
