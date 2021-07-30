@@ -18,9 +18,8 @@ along with bundesliga-tippspiel.  If not, see <http://www.gnu.org/licenses/>.
 LICENSE"""
 
 from typing import Tuple, Optional
-
 from flask import request
-
+from datetime import datetime
 from bundesliga_tippspiel.Config import Config
 from bundesliga_tippspiel.db.match_data.Match import Match
 
@@ -36,12 +35,18 @@ def get_matchday_info(league: str, season: int) -> Tuple[int, int]:
         season=season,
         league=league
     ).all()
+    max_matchday = max(all_matches, key=lambda x: x.matchday).matchday
+
     started = [x for x in all_matches if x.has_started]
     if len(started) == 0:
         current_matchday = 1
     else:
-        current_matchday = max(started, key=lambda x: x.matchday).matchday
-    max_matchday = max(all_matches, key=lambda x: x.matchday).matchday
+        now = datetime.utcnow()
+        latest_match: Match = max(started, key=lambda x: x.kickoff)
+        current_matchday = latest_match.matchday
+        if (now - latest_match.kickoff_datetime).days >= 1:
+            current_matchday = min(max_matchday, current_matchday + 1)
+
     return current_matchday, max_matchday
 
 
