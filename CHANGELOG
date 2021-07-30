@@ -1,6 +1,7 @@
 V 2.0.4:
   - Sort leaderboards by user ID if points are equal
-  -
+  - Fix current matchday calculation
+  - Makes sure that logins are remembered
 V 2.0.3:
   - Only sends out season reminders for the primary league
   - Adds user profile options
