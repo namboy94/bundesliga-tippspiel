@@ -27,6 +27,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
     :return: A tuple containing the
             name, short_name, abbreviation, svg URL, png URL
     """
+    # Tuples: abbrv: openligadb name, full name, short name, logos
     team_map = {
         "FCN": (
             "1. FC Nürnberg", "1. FC Nürnberg", "1. FC Nürnberg",
@@ -41,7 +42,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
             wikimedia_icon_urls("de/f/f7/Bayer_Leverkusen_Logo.svg")
         ),
         "BVB": (
-            "BV Borussia Dortmund 09", "Borussia Dortmund", "BVB Dortmund",
+            "Borussia Dortmund", "Borussia Dortmund", "BVB Dortmund",
             wikimedia_icon_urls("commons/6/67/Borussia_Dortmund_logo.svg")
         ),
         "BMG": (
