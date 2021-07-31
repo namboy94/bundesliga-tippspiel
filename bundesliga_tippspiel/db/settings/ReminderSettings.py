@@ -103,7 +103,10 @@ class ReminderSettings(ModelMixin, db.Model):
         then_str = then.strftime("%Y-%m-%d:%H-%M-%S")
 
         due_matches: List[Match] = [
-            x for x in Match.query.filter_by(season=Config.season()).all()
+            x for x in Match.query.filter_by(
+                season=Config.season(),
+                league=Config.OPENLIGADB_LEAGUE
+            ).all()
             if start_str < x.kickoff < then_str
         ]
         user_bet_matches = [
@@ -111,7 +114,9 @@ class ReminderSettings(ModelMixin, db.Model):
              bet.match.away_team_abbreviation,
              bet.match.season)
             for bet in Bet.query.filter_by(
-                user_id=self.user_id, season=Config.season()
+                user_id=self.user_id,
+                season=Config.season(),
+                league=Config.OPENLIGADB_LEAGUE
             ).options(db.joinedload(Bet.match)).all()
         ]
         to_remind = []

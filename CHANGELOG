@@ -1,3 +1,5 @@
+V 2.0.5:
+  - Only send reminders for primary league
 V 2.0.4:
   - Sort leaderboards by user ID if points are equal
   - Fix current matchday calculation
