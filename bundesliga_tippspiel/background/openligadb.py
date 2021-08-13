@@ -48,26 +48,28 @@ class UpdateTracker:
         """
         league_tuple = (league, season)
         last_update = UpdateTracker.UPDATES.get(league_tuple, 0)
+
+        if last_update == 0:
+            return True  # Update on startup
+
         now = datetime.utcnow()
         delta = time.time() - last_update
 
-        matches: List[Match] = \
-            Match.query.filter_by(season=season, league=league).all()
+        matches: List[Match] = Match.query.filter_by(
+            season=season, league=league
+        ).all()
+        unfinished_matches = [x for x in matches if not x.finished]
 
         if len(matches) == 0:  # Initial filling of DB
             return True
 
-        matches.sort(key=lambda x: x.kickoff)
-        last_match = matches[-1]
-
-        last_match_delta_days = (now - last_match.kickoff_datetime).days
-
-        # Don't update after 30 days after the season ends
-        if last_match_delta_days > 30:
+        unfinished_matches.sort(key=lambda x: x.kickoff)
+        # Don't update after the season ends
+        if len(unfinished_matches) == 0:
             return False
 
         started_matches = [
-            match for match in matches
+            match for match in unfinished_matches
             if match.has_started
         ]
         is_primary = \
@@ -75,18 +77,18 @@ class UpdateTracker:
 
         if delta > 60 * 60 * 24:  # Once a day minimum update
             return True
-        elif len(started_matches) > 0:
-            last_started_match = started_matches[-1]
-            last_started_delta = last_started_match.kickoff_datetime - now
-            last_started_hours_delta = last_started_delta.seconds
-            # Increase update frequency during and after matches
-            if last_started_hours_delta < 60 * 180:
-                return True
-            else:
-                return False
         elif is_primary and delta > 60 * 60:
             # Update Primary league once an hour
             return True
+        elif len(started_matches) > 0:
+            last_started_match = started_matches[-1]
+            last_started_delta = last_started_match.kickoff_datetime - now
+            last_started_seconds_delta = last_started_delta.seconds
+            # Increase update frequency during and after matches
+            if last_started_seconds_delta < 60 * 180:
+                return True
+            else:
+                return False
         else:
             return False
 
