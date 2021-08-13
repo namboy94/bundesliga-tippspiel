@@ -101,7 +101,7 @@ def define_blueprint(blueprint_name: str) -> Blueprint:
         except ValueError:
             return abort(400)
         app.logger.info(request.referrer)
-        response = make_response(redirect(request.referrer))
+        response = make_response(redirect(url_for("betting.get_current_bets")))
         response.set_cookie("league", league)
         response.set_cookie("season", season)
         return response
