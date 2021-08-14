@@ -65,7 +65,7 @@ docgen:
 deploy_app:
   stage: deploy
   tags: [privileged, hk-tippspiel]
-  only: [master]
+  only: [master, develop]
   before_script: []
   script:
     - echo "$ENV_FILE" > .env
