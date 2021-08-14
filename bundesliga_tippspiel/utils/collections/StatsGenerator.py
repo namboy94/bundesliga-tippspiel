@@ -143,9 +143,10 @@ class StatsGenerator(Leaderboard):
         """
         :return: A ranking for the participation rate for each user
         """
-        total = len(self.matches)
+        matches = [x for x in self.matches if x.has_started]
+        total = len(matches)
         participation = {user: 0 for user in self.users}
-        for match in self.matches:
+        for match in matches:
             if not match.has_started:
                 continue
             for bet in match.bets:
