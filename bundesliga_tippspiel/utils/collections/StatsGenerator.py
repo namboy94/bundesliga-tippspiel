@@ -146,6 +146,8 @@ class StatsGenerator(Leaderboard):
         total = len(self.matches)
         participation = {user: 0 for user in self.users}
         for match in self.matches:
+            if not match.has_started:
+                continue
             for bet in match.bets:
                 is_bot = DisplayBotsSettings.bot_symbol() in bet.user.username
                 if self.include_bots or not is_bot:
