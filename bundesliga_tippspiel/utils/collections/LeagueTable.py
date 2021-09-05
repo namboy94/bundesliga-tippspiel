@@ -140,6 +140,11 @@ class LeagueTable:
                     team_data[team]["draws"] += 1
                     team_data[team]["points"] += 1
         team_values = list(team_data.items())
+        team_values.sort(key=lambda x: x[1]["goals_for"], reverse=True)
+        team_values.sort(
+            key=lambda x: x[1]["goals_for"] - x[1]["goals_against"],
+            reverse=True
+        )
         team_values.sort(key=lambda x: x[1]["points"], reverse=True)
         data_tuples = []
         for i, (team_abbreviation, data) in enumerate(team_values):
