@@ -38,11 +38,14 @@ def get_matchday_info(league: str, season: int) -> Tuple[int, int]:
     max_matchday = max(all_matches, key=lambda x: x.matchday).matchday
 
     started = [x for x in all_matches if x.has_started]
+    in_window = [x for x in started if x.minutes_since_kickoff < 60 * 24 * 14]
     if len(started) == 0:
         current_matchday = 1
+    elif len(in_window) == 0:
+        current_matchday = max_matchday
     else:
         now = datetime.utcnow()
-        latest_match: Match = max(started, key=lambda x: x.kickoff)
+        latest_match: Match = max(in_window, key=lambda x: x.kickoff)
         current_matchday = latest_match.matchday
         if (now - latest_match.kickoff_datetime).days >= 1:
             current_matchday = min(max_matchday, current_matchday + 1)
