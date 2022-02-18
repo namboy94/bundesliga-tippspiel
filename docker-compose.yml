@@ -24,7 +24,7 @@ services:
       - DEBUG_LOGGING_PATH=/var/logs/bundesliga_tippspiel_debug.log
     restart: always
   db:
-    image: postgres
+    image: postgres:13
     container_name: "bundesliga-tippspiel-db"
     env_file: .env
     networks:
