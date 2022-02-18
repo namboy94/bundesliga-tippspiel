@@ -43,6 +43,12 @@ def get_matchday_info(league: str, season: int) -> Tuple[int, int]:
     else:
         now = datetime.utcnow()
         latest_match: Match = max(started, key=lambda x: x.kickoff)
+        latest_matchday_match: Match = max(started, key=lambda x: x.matchday)
+
+        if latest_matchday_match.matchday > latest_match.matchday + 1:
+            # Show delayed matches for up to 2 matchdays
+            latest_match = latest_matchday_match
+
         current_matchday = latest_match.matchday
         if (now - latest_match.kickoff_datetime).days >= 1:
             current_matchday = min(max_matchday, current_matchday + 1)

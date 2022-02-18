@@ -79,6 +79,15 @@ class Match(ModelMixin, db.Model):
     bets: List["Bet"] = db.relationship("Bet", cascade="all, delete")
 
     @property
+    def minutes_since_kickoff(self) -> int:
+        """
+        :return: The amount of minutes elapsed since kickoff
+        """
+        delta = (datetime.utcnow() - self.kickoff_datetime).total_seconds()
+        delta = int(delta / 60)
+        return delta
+
+    @property
     def minute_display(self) -> str:
         """
         This generates a string for displaying the current match minute.
@@ -86,8 +95,7 @@ class Match(ModelMixin, db.Model):
         minute, this can only offer an approximation.
         :return: A formatted string displaying the current match minute
         """
-        delta = (datetime.utcnow() - self.kickoff_datetime).total_seconds()
-        delta = int(delta / 60)
+        delta = self.minutes_since_kickoff
 
         if self.finished:
             return "Ende"

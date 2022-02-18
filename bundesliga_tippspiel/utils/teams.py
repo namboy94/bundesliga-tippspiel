@@ -105,7 +105,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
         ),
         "FCU": (
             "1. FC Union Berlin", "1. FC Union Berlin", "Union Berlin",
-            wikimedia_icon_urls("commons/4/44/1._FC_Union_Berlin_Logo.svg")
+            wikimedia_icon_urls("fr/0/0a/1._FC_Union_Berlin_-_Logo.svg")
         ),
         "SCP": (
             "SC Paderborn 07", "SC Paderborn 07", "Paderborn",
@@ -117,7 +117,7 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
         ),
         "DSC": (
             "Arminia Bielefeld", "Arminia Bielefeld", "Bielefeld",
-            wikimedia_icon_urls("en/9/9b/Arminia_Bielefeld_logo.svg")
+            wikimedia_icon_urls("commons/2/26/Arminia-wappen-2021.svg")
         ),
         "SGF": (
             "SpVgg Greuther Fürth", "SpVgg Greuther Fürth", "Greuther Fürth",

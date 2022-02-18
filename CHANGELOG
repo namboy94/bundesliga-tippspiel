@@ -1,3 +1,11 @@
+V 2.0.9:
+  - Fixed broken logos
+  - Fixed current matchdays with started, but never finished matches
+  - Fixed issues calculating the current matchday when matches are delayed
+V 2.0.8:
+  - Fixed leaderboard calculation
+V 2.0.7:
+  - Fixed participation calculation
 V 2.0.6:
   - Attempt to fix updating
 V 2.0.5:

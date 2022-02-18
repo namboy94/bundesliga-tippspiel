@@ -37,6 +37,7 @@ def update_leaderboard():
     users = User.query.filter_by(confirmed=True).all()
     seasons = create_categorized_matches()
     season_points = calculate_matchday_points(users, seasons)
+
     process_matchday_winners(season_points)
 
     for (league, season), user_points in season_points.items():
@@ -44,10 +45,11 @@ def update_leaderboard():
         previous_positions = {}
         previous_no_bot_positions = {}
         user_totals = {user: 0 for user in users}
-        for matchday, matchday_points in user_points.items():
+        for matchday, matchday_points in sorted(
+                user_points.items(), key=lambda x: x[0]
+        ):
             for user, points in matchday_points.items():
                 user_totals[user] += points
-
             process_league_table(
                 league,
                 season,
@@ -76,7 +78,7 @@ def create_categorized_matches() -> Dict[
     Tuple[str, int], Dict[int, List[Match]]
 ]:
     """
-    Sorts matches into seasons and matchdars
+    Sorts matches into seasons and matchdays
     :return: The matches categorized like this:
                 {(league, season): {matchday: [match, ...]}}
     """

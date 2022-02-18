@@ -60,12 +60,13 @@ class UpdateTracker:
         ).all()
         unfinished_matches = [x for x in matches if not x.finished]
 
-        if len(matches) == 0:  # Initial filling of DB
+        if len(matches) == 0:
+            app.logger.debug("Initial Filling of database")
             return True
 
         unfinished_matches.sort(key=lambda x: x.kickoff)
-        # Don't update after the season ends
         if len(unfinished_matches) == 0:
+            app.logger.debug("Season ended, no update required")
             return False
 
         started_matches = [
@@ -76,20 +77,25 @@ class UpdateTracker:
             league_tuple == (Config.OPENLIGADB_LEAGUE, Config.season())
 
         if delta > 60 * 60 * 24:  # Once a day minimum update
+            app.logger.debug("Minimum daily update")
             return True
         elif is_primary and delta > 60 * 60:
-            # Update Primary league once an hour
+            app.logger.debug("Minimum hourly update for primary league")
             return True
         elif len(started_matches) > 0:
             last_started_match = started_matches[-1]
-            last_started_delta = last_started_match.kickoff_datetime - now
+            last_started_delta = now - last_started_match.kickoff_datetime
             last_started_seconds_delta = last_started_delta.seconds
             # Increase update frequency during and after matches
             if last_started_seconds_delta < 60 * 180:
+                app.logger.debug("Updating because of matches in progress")
                 return True
             else:
+                app.logger.warning("Some games have started 180+ "
+                                   "minutes ago but have not ended")
                 return False
         else:
+            app.logger.debug("No update required")
             return False
 
 
@@ -226,6 +232,8 @@ def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
         started=started,
         finished=match_data["MatchIsFinished"]
     )
+    if match.has_started and match.minutes_since_kickoff > 1440:
+        match.finished = True
     return match
 
 
