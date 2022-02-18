@@ -232,6 +232,8 @@ def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
         started=started,
         finished=match_data["MatchIsFinished"]
     )
+    if match.has_started and match.minutes_since_kickoff > 1440:
+        match.finished = True
     return match
 
 
