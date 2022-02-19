@@ -49,4 +49,5 @@ def send_due_reminders():
     db.session.commit()
 
     for reminder in reminders:
-        reminder.send_reminder()
+        if reminder.active:
+            reminder.send_reminder()
