@@ -156,7 +156,7 @@ def update_match_data(
         match = db.session.merge(match)
 
         home_score = 0
-        for goal_data in match_info["Goals"]:
+        for goal_data in match_info["goals"]:
             goal = parse_goal(goal_data, match)
             if goal is None:
                 continue
@@ -196,32 +196,32 @@ def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
     ft_home = 0
     ft_away = 0
 
-    for result in match_data["MatchResults"]:
-        if result["ResultName"] == "Halbzeit":
-            ht_home = result["PointsTeam1"]
-            ht_away = result["PointsTeam2"]
-        elif result["ResultName"] == "Endergebnis":
-            ft_home = result["PointsTeam1"]
-            ft_away = result["PointsTeam2"]
+    for result in match_data["matchResults"]:
+        if result["resultName"] == "halbzeit":
+            ht_home = result["pointsTeam1"]
+            ht_away = result["pointsTeam2"]
+        elif result["resultName"] == "endergebnis":
+            ft_home = result["pointsTeam1"]
+            ft_away = result["pointsTeam2"]
         else:  # pragma: no cover
             pass
     cur_home = max(ht_home, ft_home)
     cur_away = max(ht_away, ft_away)
 
-    kickoff = match_data["MatchDateTimeUTC"]
+    kickoff = match_data["matchDateTimeUTC"]
     kickoff = datetime.strptime(kickoff, "%Y-%m-%dT%H:%M:%SZ")
     started = datetime.utcnow() > kickoff
     kickoff = kickoff.strftime("%Y-%m-%d:%H-%M-%S")
 
-    home_team_abbreviation = get_team_data(match_data["Team1"]["TeamName"])[2]
-    away_team_abbreviation = get_team_data(match_data["Team2"]["TeamName"])[2]
+    home_team_abbreviation = get_team_data(match_data["team1"]["teamName"])[2]
+    away_team_abbreviation = get_team_data(match_data["team2"]["teamName"])[2]
 
     match = Match(
         home_team_abbreviation=home_team_abbreviation,
         away_team_abbreviation=away_team_abbreviation,
         season=season,
         league=league,
-        matchday=match_data["Group"]["GroupOrderID"],
+        matchday=match_data["group"]["groupOrderID"],
         home_current_score=cur_home,
         away_current_score=cur_away,
         home_ht_score=ht_home,
@@ -230,7 +230,7 @@ def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
         away_ft_score=ft_away,
         kickoff=kickoff,
         started=started,
-        finished=match_data["MatchIsFinished"]
+        finished=match_data["matchIsFinished"]
     )
     if match.has_started and match.minutes_since_kickoff > 1440:
         match.finished = True
@@ -244,10 +244,10 @@ def parse_goal(goal_data: Dict[str, Any], match: Match) -> Optional[Goal]:
     :param goal_data: The goal data to parse
     :return: The generated Goal object
     """
-    if goal_data["GoalGetterID"] == 0:
+    if goal_data["goalGetterID"] == 0:
         return None
 
-    minute = goal_data["MatchMinute"]
+    minute = goal_data["matchMinute"]
 
     # Minute defaults to 0 in case the minute data is missing.
     # This keeps the entire thing from imploding.
@@ -265,14 +265,14 @@ def parse_goal(goal_data: Dict[str, Any], match: Match) -> Optional[Goal]:
         season=match.season,
         league=match.league,
         matchday=match.matchday,
-        player_name=goal_data["GoalGetterName"],
+        player_name=goal_data["goalGetterName"],
         player_team_abbreviation=None,
         minute=minute,
         minute_et=minute_et,
-        home_score=goal_data["ScoreTeam1"],
-        away_score=goal_data["ScoreTeam2"],
-        own_goal=goal_data["IsOwnGoal"],
-        penalty=goal_data["IsPenalty"]
+        home_score=goal_data["scoreTeam1"],
+        away_score=goal_data["scoreTeam2"],
+        own_goal=goal_data["isOwnGoal"],
+        penalty=goal_data["isPenalty"]
     )
 
     if goal.home_score == 0 and goal.away_score == 0:
@@ -290,7 +290,7 @@ def parse_player(goal_data: Dict[str, Any], team_abbreviation: str) -> Player:
     """
     return Player(
         team_abbreviation=team_abbreviation,
-        name=goal_data["GoalGetterName"]
+        name=goal_data["goalGetterName"]
     )
 
 
@@ -300,7 +300,7 @@ def parse_team(team_data: Dict[str, Any]) -> Team:
     :param team_data: The team data to parse
     :return: The generated Team object
     """
-    name, short_name, abbrev, icons = get_team_data(team_data["TeamName"])
+    name, short_name, abbrev, icons = get_team_data(team_data["teamName"])
     svg, png = icons
     return Team(
         name=name,

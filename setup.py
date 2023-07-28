@@ -59,19 +59,20 @@ if __name__ == "__main__":
         packages=find_packages(),
         scripts=list(map(lambda x: os.path.join("bin", x), os.listdir("bin"))),
         install_requires=[
-            "flask",
-            "flask_login",
-            "flask_sqlalchemy",
+            "flask==2.0.3",
+            "flask_login==0.5.0",
+            "flask_sqlalchemy==2.5.1",
             "requests",
             "blinker",
             "sentry-sdk",
-            "sqlalchemy",
-            "werkzeug",
+            "sqlalchemy==1.4.31",
+            "werkzeug==2.0.3",
             "cherrypy",
             "puffotter[crypto]",
             "beautifulsoup4",
             "pytz",
-            "jerrycan>=0.3.2"
+            "jerrycan>=0.3.2",
+            "python-telegram-bot==13.11"
         ],
         include_package_data=True,
         zip_safe=False

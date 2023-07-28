@@ -259,6 +259,10 @@ def get_team_data(team_name: str) -> Tuple[str, str, str, Tuple[str, str]]:
         "ZWI": (
             "FSV Zwickau", "FSV Zwickau", "Zwickau",
             wikimedia_icon_urls("de/0/01/FSV_Zwickau_Logo.svg")
+        ),
+        "SVE": (
+            "SV Elversberg 07", "SV Elversberg", "Elversberg",
+            wikimedia_icon_urls("commons/d/d4/SV_Elversberg_Logo_2021.svg")
         )
     }
     openligadb_map = {
