@@ -37,13 +37,13 @@ def place_bets(
     """
     successful = []
     matches = {
-        (x.home_team_abbreviation, x.away_team_abbreviation): x
+        (x.home_team_abbreviation, x.away_team_abbreviation, x.season): x
         for x in Match.query.all()
     }
     for bet_tuple in bets:
         league, season, matchday, home, away, home_score, away_score = \
             bet_tuple
-        match = matches.get((home, away))
+        match = matches.get((home, away, season))
         if match is None or match.has_started:
             continue  # Can't bet on started matches
         bet = Bet(
