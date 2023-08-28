@@ -197,10 +197,10 @@ def parse_match(match_data: Dict[str, Any], league: str, season: int) -> Match:
     ft_away = 0
 
     for result in match_data["matchResults"]:
-        if result["resultName"] == "halbzeit":
+        if result["resultName"] == "Halbzeitergebnis":
             ht_home = result["pointsTeam1"]
             ht_away = result["pointsTeam2"]
-        elif result["resultName"] == "endergebnis":
+        elif result["resultName"] == "Endergebnis":
             ft_home = result["pointsTeam1"]
             ft_away = result["pointsTeam2"]
         else:  # pragma: no cover
